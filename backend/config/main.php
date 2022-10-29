@@ -1,9 +1,7 @@
 <?php
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
-    require __DIR__ . '/../../common/config/params-local.php',
-    require __DIR__ . '/params.php',
-    require __DIR__ . '/params-local.php'
+    require __DIR__ . '/params.php'
 );
 
 return [
@@ -37,14 +35,21 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
-            'enablePrettyUrl' => true,
+            'class' => 'yii\web\UrlManager',
+            // Disable index.php
             'showScriptName' => false,
+            // Disable r= routes
+            'enablePrettyUrl' => true,
+            'normalizer' => [
+                'class' => 'yii\web\UrlNormalizer',
+                'collapseSlashes' => true,
+                'normalizeTrailingSlash' => true,
+            ],
             'rules' => [
+
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

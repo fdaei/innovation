@@ -1,6 +1,6 @@
 <?php
 
-namespace api\controllers;
+namespace api\modules\v1\controllers;
 
 use yii\rest\Controller;
 
@@ -21,21 +21,6 @@ class SiteController extends Controller
     {
         return parent::verbs();
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-                'layout' => 'error',
-                'view' => 'error'
-            ]
-        ];
-    }
-
     
     public function actionIndex()
     {
