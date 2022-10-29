@@ -9,12 +9,17 @@ use yii\rest\Controller;
  */
 class SiteController extends Controller
 {
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
+    ];
+
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
-
+        return parent::behaviors();
     }
 
     protected function verbs()
