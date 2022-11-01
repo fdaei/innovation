@@ -43,6 +43,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        // locale_get_all_variants
         return [];
     }
 }
