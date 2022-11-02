@@ -28,7 +28,8 @@
     "filsh/yii2-oauth2-server": "*",
     "ext-pdo": "*",
     "aminbbb92/yii2-user": "@dev",
-    "aminbbb92/yii2-rbac": "@dev"
+    "aminbbb92/yii2-rbac": "@dev",
+    "bizley/migration": "^4.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
