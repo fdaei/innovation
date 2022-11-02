@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m221102_082955_create_foreign_keys extends Migration
+class m221102_100713_create_foreign_keys extends Migration
 {
     public function safeUp()
     {
@@ -61,37 +61,10 @@ class m221102_082955_create_foreign_keys extends Migration
             'CASCADE'
         );
         $this->addForeignKey(
-            'business_stat_ibfk_1',
-            '{{%business_stat}}',
-            ['business_id'],
-            '{{%business}}',
-            ['id'],
-            'CASCADE',
-            'CASCADE'
-        );
-        $this->addForeignKey(
-            'business_stat_ibfk_2',
-            '{{%business_stat}}',
-            ['created_by'],
-            '{{%user}}',
-            ['id'],
-            'CASCADE',
-            'CASCADE'
-        );
-        $this->addForeignKey(
-            'business_stat_ibfk_3',
-            '{{%business_stat}}',
-            ['update_by'],
-            '{{%user}}',
-            ['id'],
-            'CASCADE',
-            'CASCADE'
-        );
-        $this->addForeignKey(
             'business_gallery_ibfk_1',
             '{{%business_gallery}}',
-            ['business_id'],
-            '{{%business}}',
+            ['created_by'],
+            '{{%user}}',
             ['id'],
             'CASCADE',
             'CASCADE'
@@ -99,7 +72,7 @@ class m221102_082955_create_foreign_keys extends Migration
         $this->addForeignKey(
             'business_gallery_ibfk_2',
             '{{%business_gallery}}',
-            ['created_by'],
+            ['updated_by'],
             '{{%user}}',
             ['id'],
             'CASCADE',
@@ -108,8 +81,8 @@ class m221102_082955_create_foreign_keys extends Migration
         $this->addForeignKey(
             'business_gallery_ibfk_3',
             '{{%business_gallery}}',
-            ['updated_by'],
-            '{{%user}}',
+            ['business_id'],
+            '{{%business}}',
             ['id'],
             'CASCADE',
             'CASCADE'
@@ -121,9 +94,6 @@ class m221102_082955_create_foreign_keys extends Migration
         $this->dropForeignKey('business_gallery_ibfk_3', '{{%business_gallery}}');
         $this->dropForeignKey('business_gallery_ibfk_2', '{{%business_gallery}}');
         $this->dropForeignKey('business_gallery_ibfk_1', '{{%business_gallery}}');
-        $this->dropForeignKey('business_stat_ibfk_3', '{{%business_stat}}');
-        $this->dropForeignKey('business_stat_ibfk_2', '{{%business_stat}}');
-        $this->dropForeignKey('business_stat_ibfk_1', '{{%business_stat}}');
         $this->dropForeignKey('business_timeline_ibfk_3', '{{%business_timeline}}');
         $this->dropForeignKey('business_timeline_ibfk_2', '{{%business_timeline}}');
         $this->dropForeignKey('business_timeline_ibfk_1', '{{%business_timeline}}');

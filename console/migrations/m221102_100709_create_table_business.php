@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m221102_082951_create_table_business extends Migration
+class m221102_100709_create_table_business extends Migration
 {
     public function safeUp()
     {
@@ -15,7 +15,7 @@ class m221102_082951_create_table_business extends Migration
             '{{%business}}',
             [
                 'id' => $this->primaryKey(),
-                'user_id' => $this->integer()->notNull(),
+                'user_id' => $this->integer()->unsigned()->notNull(),
                 'city_id' => $this->integer()->notNull(),
                 'title' => $this->string()->notNull(),
                 'logo' => $this->string()->notNull(),
@@ -24,9 +24,9 @@ class m221102_082951_create_table_business extends Migration
                 'success_story' => $this->text()->notNull(),
                 'status' => $this->boolean()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
-                'created_by' => $this->integer()->notNull(),
+                'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
-                'updated_by' => $this->integer()->notNull(),
+                'updated_by' => $this->integer()->unsigned()->notNull(),
                 'deleted_at' => $this->integer()->unsigned()->notNull(),
             ],
             $tableOptions
