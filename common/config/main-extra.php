@@ -6,9 +6,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=127.0.0.1;dbname=innovation',
-            'username' => 'root',
-            'password' => 'Root@12root',
+            'dsn' => Env::get('DB_DSN'),
+            'username' => Env::get('DB_USERNAME'),
+            'password' => Env::get('DB_PASSWORD'),
             'enableSlaves' => Env::get('ENABLE_SLAVES'),
             'slaveConfig' => [
                 'username' => Env::get('SLAVE_DB_USERNAME'),
