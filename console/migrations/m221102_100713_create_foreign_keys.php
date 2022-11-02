@@ -87,6 +87,42 @@ class m221102_100713_create_foreign_keys extends Migration
             'CASCADE',
             'CASCADE'
         );
+        $this->addForeignKey(
+            'city_ibfk_1',
+            '{{%city}}',
+            ['province_id'],
+            '{{%province}}',
+            ['id'],
+            'CASCADE',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'city_ibfk_2',
+            '{{%city}}',
+            ['created_by'],
+            '{{%user}}',
+            ['id'],
+            'CASCADE',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'city_ibfk_3',
+            '{{%city}}',
+            ['updated_by'],
+            '{{%user}}',
+            ['id'],
+            'CASCADE',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'profile_ibfk_1',
+            '{{%profile}}',
+            ['user_id'],
+            '{{%user}}',
+            ['id'],
+            'CASCADE',
+            'CASCADE'
+        );
     }
 
     public function safeDown()
@@ -100,5 +136,9 @@ class m221102_100713_create_foreign_keys extends Migration
         $this->dropForeignKey('business_ibfk_3', '{{%business}}');
         $this->dropForeignKey('business_ibfk_2', '{{%business}}');
         $this->dropForeignKey('business_ibfk_1', '{{%business}}');
+        $this->dropForeignKey('profile_ibfk_1', '{{%profile}}');
+        $this->dropForeignKey('city_ibfk_3', '{{%city}}');
+        $this->dropForeignKey('city_ibfk_2', '{{%city}}');
+        $this->dropForeignKey('city_ibfk_1', '{{%city}}');
     }
 }
