@@ -8,6 +8,12 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'modules' => [
+        'rbac' => 'dektrium\rbac\RbacWebModule',
+        'user' => [
+            'class' => 'aminbbb92\user\Module',
+        ],
+    ],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
