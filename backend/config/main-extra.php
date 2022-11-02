@@ -1,7 +1,7 @@
 <?php
 use common\components\Env;
 
-return [
+$config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -11,3 +11,19 @@ return [
         ],
     ],
 ];
+
+if (YII_ENV_DEV) {
+    // configuration adjustments for 'dev' environment
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = [
+        'generators' => [
+//            'mongoDbModel' => [
+//                'class' => 'yii\mongodb\gii\model\Generator'
+//            ]
+        ],
+        'class' => 'yii\gii\Module',
+        'allowedIPs' => ['127.0.0.1', '::1', '172.18.0.1'],
+    ];
+}
+
+return $config;
