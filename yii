@@ -1,23 +1,43 @@
 #!/usr/bin/env php
 <?php
+
+use common\components\Env;
+use Dotenv\Dotenv;
+use yii\helpers\ArrayHelper;
+
 /**
  * Yii console bootstrap file.
  */
 
-defined('YII_DEBUG') or define('YII_DEBUG', false);
-defined('YII_ENV') or define('YII_ENV', 'prod');
-
 require __DIR__ . '/vendor/autoload.php';
+require(__DIR__ . '/common/components/Env.php');
+//Loads environment variables from .env file
+$dotenv = Dotenv::createImmutable(__DIR__ . '/env-config');
+$dotenv->load();
+
+defined('YII_DEBUG') or define('YII_DEBUG', Env::get('YII_DEBUG', true));
+defined('YII_ENV') or define('YII_ENV', Env::get('YII_ENV', 'dev'));
+
 require __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
 require __DIR__ . '/common/config/bootstrap.php';
 require __DIR__ . '/console/config/bootstrap.php';
 
+//if (Env::get('SERVICE_UNAVAILABLE', false)) {
+//    exit('Service is unavailable!');
+//}
+
 $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/common/config/main.php',
     require __DIR__ . '/common/config/main-extra.php',
-    require __DIR__ . '/console/config/main.php',
-    require __DIR__ . '/console/config/main-extra.php'
+    require __DIR__ . '/console/config/main.php'
 );
+
+// Unset debug module (not working with console application)
+ArrayHelper::removeValue($config['bootstrap'], 'debug');
+unset($config['modules']['debug']);
+
+ini_set('memory_limit', -1);
+ini_set('max_execution_time', 18000);
 
 $application = new yii\console\Application($config);
 $exitCode = $application->run();

@@ -10,22 +10,18 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
-        'rbac' => 'dektrium\rbac\RbacConsoleModule',
+        'rbac' => 'aminbbb92\rbac\RbacConsoleModule',
     ],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'controllerMap' => [
         'fixture' => [
             'class' => \yii\console\controllers\FixtureController::class,
             'namespace' => 'common\fixtures',
           ],
-        'migration' => [
-            'class' => 'bizley\migration\controllers\MigrationController',
-        ],
-
     ],
     'components' => [
         'log' => [
