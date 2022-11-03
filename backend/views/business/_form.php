@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use aminbbb92\user\models\User;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Business $model */
@@ -13,6 +15,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model,'user_id')->dropDownList(
+    ArrayHelper::map(User::find()->all(),'id','name'),
+    ['prompt'=>'Select user']
+    )?>
 
     <?= $form->field($model, 'city_id')->textInput() ?>
 
