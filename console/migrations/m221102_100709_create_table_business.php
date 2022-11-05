@@ -18,8 +18,8 @@ class m221102_100709_create_table_business extends Migration
                 'user_id' => $this->integer()->unsigned()->notNull(),
                 'city_id' => $this->integer()->notNull(),
                 'title' => $this->string()->notNull(),
-                'logo' => $this->string()->notNull(),
-                'wallpaper' => $this->string()->notNull(),
+                'logo' => $this->string()->Null(),
+                'wallpaper' => $this->string()->Null(),
                 'short_description' => $this->text()->notNull(),
                 'success_story' => $this->text()->notNull(),
                 'status' => $this->boolean()->notNull(),
@@ -27,7 +27,7 @@ class m221102_100709_create_table_business extends Migration
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
-                'deleted_at' => $this->integer()->unsigned()->notNull(),
+                'deleted_at' => $this->integer()->unsigned()->Null(),
             ],
             $tableOptions
         );

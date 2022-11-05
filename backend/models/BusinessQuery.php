@@ -31,4 +31,9 @@ class BusinessQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function active(): BusinessQuery
+    {
+        return $this->andWhere(['status' => Business::STATUS_ACTIVE])->orWhere(['status' => Business::STATUS_INACTIVE]);
+    }
 }

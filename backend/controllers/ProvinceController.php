@@ -4,6 +4,10 @@ namespace backend\controllers;
 
 use backend\models\Province;
 use backend\models\ProvinceSearch;
+use Yii;
+//use yii\behaviors\TimestampBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,6 +42,7 @@ class ProvinceController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new ProvinceSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -68,9 +73,14 @@ class ProvinceController extends Controller
     public function actionCreate()
     {
         $model = new Province();
-
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+
+                $model->created_by=1;
+                $model->updated_by=1;
+                $model->save();
+//                var_dump($model->getErrors());
+//                die();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -111,7 +121,7 @@ class ProvinceController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->softdelete();
 
         return $this->redirect(['index']);
     }

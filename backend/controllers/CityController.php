@@ -70,7 +70,10 @@ class CityController extends Controller
         $model = new City();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_by=1;
+                $model->updated_by=1;
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -111,7 +114,7 @@ class CityController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->softdelete();
 
         return $this->redirect(['index']);
     }

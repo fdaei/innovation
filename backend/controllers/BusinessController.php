@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Business;
 use backend\models\BusinessSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,7 +71,12 @@ class BusinessController extends Controller
         $model = new Business();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->created_by=1;
+                $model->updated_by=1;
+                $model->logo="djdjd";
+                $model->wallpaper="dkskss";
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -93,7 +99,12 @@ class BusinessController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->created_by=1;
+            $model->updated_by=1;
+            $model->logo="djdjd";
+            $model->wallpaper="dkskss";
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -111,7 +122,7 @@ class BusinessController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->softdelete();
 
         return $this->redirect(['index']);
     }

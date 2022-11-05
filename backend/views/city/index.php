@@ -29,13 +29,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'province_id',
+            [
+                'attribute'=>'province_id',
+                'value'=>'province.name',
+            ],
             'name',
             'latitude',
             'logitude',
-            //'status',
+            [
+                'attribute'=>'status',
+                'value'=>function($model){
+                    if($model->status==2)
+                    {
+                        return "inactive";
+                    }elseif ($model->status==1){
+                        return "active";
+                    }
+                },
+            ],
             //'created_at',
             //'created_by',
             //'updated_at',

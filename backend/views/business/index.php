@@ -31,14 +31,33 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
-            'city_id',
+            [
+                'attribute'=>'user_id',
+                'value'=>'user.username',
+            ],
+            [
+                'attribute'=>'city_id',
+                'value'=>function($model){
+
+        return $model->city?->name;
+                },
+            ],
             'title',
-            'logo',
+//            'logo',
             //'wallpaper',
             //'short_description:ntext',
             //'success_story:ntext',
-            //'status',
+            [
+                'attribute'=>'status',
+                'value'=>function($model){
+                    if($model->status==2)
+                    {
+                        return "inactive";
+                    }elseif ($model->status==1){
+                        return "active";
+                    }
+                },
+            ],
             //'created_at',
             //'created_by',
             //'updated_at',

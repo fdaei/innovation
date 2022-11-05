@@ -27,7 +27,7 @@ class BusinessStat extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'business_stat';
+        return '{{%business_stat}}';
     }
 
     /**

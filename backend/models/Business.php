@@ -2,7 +2,10 @@
 
 namespace backend\models;
 
+use aminbbb92\user\models\User;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "business".
@@ -30,27 +33,43 @@ use Yii;
  */
 class Business extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'business';
+        return '{{%business}}';
     }
-
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className()
+            ], 'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::className(),
+                'softDeleteAttributeValues' => [
+                    'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED
+                ],
+            ],
+        ];
+    }
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'logo', 'wallpaper', 'short_description', 'success_story', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'required'],
-            [['user_id', 'city_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status','created_by', 'updated_by'], 'required'],
+            [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['short_description', 'success_story'], 'string'],
             [['title', 'logo', 'wallpaper'], 'string', 'max' => 64],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+//            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+//            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+//            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -122,10 +141,20 @@ class Business extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|UserQuery
      */
-    public function getUser()
+    public function getUser(): \yii\db\ActiveQuery|UserQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+    /**
+     * Gets query for [[City]].
+     *
+     * @return \yii\db\ActiveQuery|CityQuery
+     */
+    public function getCity(): \yii\db\ActiveQuery|CityQuery
+    {
+        return $this->hasOne(City::class, [ 'id' => 'city_id' ]);
+    }
+
 
     /**
      * {@inheritdoc}
@@ -133,6 +162,7 @@ class Business extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        return new BusinessQuery(get_called_class());
+        $query = new ProvinceQuery(get_called_class());
+        return $query->active();
     }
 }

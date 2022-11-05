@@ -2,7 +2,10 @@
 
 namespace backend\models;
 
+use common\models\User;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "province".
@@ -20,15 +23,35 @@ use Yii;
  * @property City[] $cities
  * @property User $createdBy
  * @property User $updatedBy
+ * @mixin SoftDeleteBehavior
  */
 class Province extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'province';
+        return '{{%province}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className()
+            ], 'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::className(),
+                'softDeleteAttributeValues' => [
+                    'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED
+                ],
+            ],
+        ];
     }
 
     /**
@@ -37,11 +60,10 @@ class Province extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'center_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'required'],
-            [['center_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['center_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+//            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+//            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -97,8 +119,9 @@ class Province extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return ProvinceQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): ProvinceQuery
     {
-        return new ProvinceQuery(get_called_class());
+        $query = new ProvinceQuery(get_called_class());
+        return $query->active();
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
 namespace backend\models;
-
+use aminbbb92\user\models\User;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "city".
@@ -25,26 +27,43 @@ use Yii;
  */
 class City extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'city';
-    }
 
+        return '{{%city}}';
+    }
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className()
+            ], 'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::className(),
+                'softDeleteAttributeValues' => [
+                    'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED
+                ],
+            ],
+        ];
+    }
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['province_id', 'name', 'latitude', 'logitude', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'required'],
-            [['province_id', 'latitude', 'logitude', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['province_id', 'name', 'latitude', 'logitude', 'status', 'created_by', 'updated_by'], 'required'],
+            [['province_id', 'latitude', 'logitude', 'status',  'created_by', 'updated_by', 'deleted_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::class, 'targetAttribute' => ['province_id' => 'id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+//            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+//            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -67,7 +86,6 @@ class City extends \yii\db\ActiveRecord
             'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
     }
-
     /**
      * Gets query for [[CreatedBy]].
      *
@@ -104,6 +122,7 @@ class City extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        return new ProvinceQuery(get_called_class());
+        $query = new ProvinceQuery(get_called_class());
+        return $query->active();
     }
 }

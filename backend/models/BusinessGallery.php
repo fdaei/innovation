@@ -30,7 +30,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'business_gallery';
+        return '{{%business_gallery}}';
     }
 
     /**

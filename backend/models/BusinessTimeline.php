@@ -29,7 +29,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'business_timeline';
+        return '{{%business_timeline}}';
     }
 
     /**

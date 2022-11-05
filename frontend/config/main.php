@@ -9,7 +9,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
-        'rbac' => 'dektrium\rbac\RbacWebModule',
+        'rbac' => 'aminbbb92\rbac\RbacWebModule',
         'user' => [
             'class' => 'aminbbb92\user\Module',
         ],
