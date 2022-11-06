@@ -30,7 +30,8 @@
     "aminbbb92/yii2-user": "@dev",
     "aminbbb92/yii2-rbac": "@dev",
     "bizley/migration": "^4.4",
-    "yii2tech/ar-softdelete": "^1.0"
+    "yii2tech/ar-softdelete": "^1.0",
+    "yiisoft/yii2-httpclient": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

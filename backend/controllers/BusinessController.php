@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\models\Business;
 use backend\models\BusinessSearch;
 use Yii;
+use yii\httpclient\Client;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -74,6 +75,18 @@ class BusinessController extends Controller
             if ($model->load($this->request->post())) {
                 $model->created_by=1;
                 $model->updated_by=1;
+                $client = new Client([
+                    'transport' => 'yii\httpclient\CurlTransport',
+                ]);
+//              urlTransport  $response = $client->createRequest()
+//                    ->setMethod('POST')
+//                    ->setUrl('http://localhost/business/create')
+//                    ->addFile('logo', $model->logo)
+//                    ->addFile('wallpaper', $model->wallpaper)
+//                    ->send();
+
+                var_dump($model);
+                die();
                 $model->logo="djdjd";
                 $model->wallpaper="dkskss";
                 $model->save();

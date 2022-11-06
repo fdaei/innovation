@@ -28,6 +28,7 @@ use aminbbb92\user\models\User;
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     <br/>
     <?= $form->field($model, 'logo')->fileInput() ?>
+
     <br/>
     <?= $form->field($model, 'wallpaper')->fileInput() ?>
     <br/>
