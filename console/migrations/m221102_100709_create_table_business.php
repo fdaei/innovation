@@ -14,20 +14,20 @@ class m221102_100709_create_table_business extends Migration
         $this->createTable(
             '{{%business}}',
             [
-                'id' => $this->primaryKey(),
+                'id' => $this->primaryKey()->unsigned(),
                 'user_id' => $this->integer()->unsigned()->notNull(),
                 'city_id' => $this->integer()->notNull(),
-                'title' => $this->string()->notNull(),
-                'logo' => $this->string()->Null(),
-                'wallpaper' => $this->string()->Null(),
+                'title' => $this->string(256)->notNull(),
+                'logo' => $this->string(128)->Null(),
+                'wallpaper' => $this->string(128)->Null(),
                 'short_description' => $this->text()->notNull(),
                 'success_story' => $this->text()->notNull(),
-                'status' => $this->boolean()->notNull(),
+                'status' => $this->tinyInteger()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
-                'deleted_at' => $this->integer()->unsigned()->Null(),
+                'deleted_at' => $this->integer()->unsigned()->defaultValue(0),
             ],
             $tableOptions
         );

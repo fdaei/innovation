@@ -15,14 +15,14 @@ class m221105_065353_create_table_ince_province extends Migration
             '{{%province}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
-                'name' => $this->string()->notNull(),
+                'name' => $this->string()->unique()->notNull(),
                 'center_id' => $this->integer()->unsigned()->notNull(),
-                'status' => $this->integer()->notNull(),
-                'created_at' => $this->integer()->notNull(),
+                'status' => $this->tinyInteger()->unsigned()->notNull(),
+                'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
-                'updated_at' => $this->integer()->notNull(),
+                'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
-                'deleted_at' => $this->integer()->Null(),
+                'deleted_at' => $this->integer()->unsigned()->defaultValue(0),
             ],
             $tableOptions
         );
@@ -36,8 +36,8 @@ class m221105_065353_create_table_ince_province extends Migration
             ['created_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'ince_province_ibfk_2',
@@ -45,8 +45,17 @@ class m221105_065353_create_table_ince_province extends Migration
             ['updated_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
+        );
+        $this->addForeignKey(
+            'ince_province_ibfk_3',
+            '{{%province}}',
+            ['center_id'],
+            '{{%city}}',
+            ['id'],
+            'RESTRICT',
+            'RESTRICT'
         );
     }
 

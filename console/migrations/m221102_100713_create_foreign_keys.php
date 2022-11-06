@@ -12,8 +12,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['user_id'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_ibfk_2',
@@ -21,8 +21,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['created_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_ibfk_3',
@@ -30,8 +30,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['updated_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_timeline_ibfk_1',
@@ -39,8 +39,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['business_id'],
             '{{%business}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_timeline_ibfk_2',
@@ -48,8 +48,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['created_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_timeline_ibfk_3',
@@ -57,8 +57,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['updated_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_gallery_ibfk_1',
@@ -66,8 +66,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['created_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_gallery_ibfk_2',
@@ -75,8 +75,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['updated_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'business_gallery_ibfk_3',
@@ -84,8 +84,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['business_id'],
             '{{%business}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'city_ibfk_1',
@@ -93,8 +93,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['province_id'],
             '{{%province}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'city_ibfk_2',
@@ -102,8 +102,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['created_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'city_ibfk_3',
@@ -111,8 +111,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['updated_by'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
         $this->addForeignKey(
             'profile_ibfk_1',
@@ -120,8 +120,8 @@ class m221102_100713_create_foreign_keys extends Migration
             ['user_id'],
             '{{%user}}',
             ['id'],
-            'CASCADE',
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
     }
 

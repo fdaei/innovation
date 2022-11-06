@@ -15,15 +15,15 @@ class m221102_100710_create_table_business_timeline extends Migration
             '{{%business_timeline}}',
             [
                 'id' => $this->primaryKey(),
-                'business_id' => $this->integer()->notNull(),
-                'year' => $this->date()->notNull(),
+                'business_id' => $this->integer()->unsigned()->notNull(),
+                'year' => $this->integer()->unsigned()->notNull(),
                 'description' => $this->text()->notNull(),
-                'status' => $this->boolean()->notNull(),
+                'status' => $this->tinyInteger()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
-                'deleted_at' => $this->integer()->unsigned()->notNull(),
+                'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue(0),
             ],
             $tableOptions
         );
