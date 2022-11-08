@@ -17,7 +17,7 @@ class CitySearch extends City
     public function rules()
     {
         return [
-            [['id', 'province_id', 'latitude', 'logitude', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['id', 'province_id', 'latitude', 'longitude', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -61,7 +61,7 @@ class CitySearch extends City
             'id' => $this->id,
             'province_id' => $this->province_id,
             'latitude' => $this->latitude,
-            'logitude' => $this->logitude,
+            'longitude' => $this->longitude,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

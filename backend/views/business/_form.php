@@ -4,7 +4,7 @@ use backend\models\City;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use aminbbb92\user\models\User;
+use common\models\User;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Business $model */

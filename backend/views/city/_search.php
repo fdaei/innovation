@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'latitude') ?>
 
-    <?= $form->field($model, 'logitude') ?>
+    <?= $form->field($model, 'longitude') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 

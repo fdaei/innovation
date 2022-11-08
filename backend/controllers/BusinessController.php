@@ -85,7 +85,7 @@ class BusinessController extends Controller
 //                    ->addFile('wallpaper', $model->wallpaper)
 //                    ->send();
 
-                var_dump($model);
+                var_dump($model->logo);
                 die();
                 $model->logo="djdjd";
                 $model->wallpaper="dkskss";

@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'latitude',
-            'logitude',
+            'longitude',
             [
                 'attribute'=>'status',
                 'value'=>function($model){

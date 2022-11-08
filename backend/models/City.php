@@ -13,7 +13,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $province_id
  * @property string $name
  * @property int $latitude
- * @property int $logitude
+ * @property int $longitude
  * @property int $status
  * @property int $created_at
  * @property int $created_by
@@ -58,8 +58,8 @@ class City extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['province_id', 'name', 'latitude', 'logitude', 'status', 'created_by', 'updated_by'], 'required'],
-            [['province_id', 'latitude', 'logitude', 'status',  'created_by', 'updated_by', 'deleted_at'], 'integer'],
+            [['province_id', 'name', 'latitude', 'longitude', 'status', 'created_by', 'updated_by'], 'required'],
+            [['province_id', 'latitude', 'longitude', 'status',  'created_by', 'updated_by', 'deleted_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::class, 'targetAttribute' => ['province_id' => 'id']],
 //            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -77,7 +77,7 @@ class City extends \yii\db\ActiveRecord
             'province_id' => Yii::t('app', 'Province ID'),
             'name' => Yii::t('app', 'Name'),
             'latitude' => Yii::t('app', 'Latitude'),
-            'logitude' => Yii::t('app', 'Logitude'),
+            'longitude' => Yii::t('app', 'longitude'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),

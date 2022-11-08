@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'latitude')->textInput() ?>
 
-    <?= $form->field($model, 'logitude')->textInput() ?>
+    <?= $form->field($model, 'longitude')->textInput() ?>
 
     <?= $form->field($model,'status')->dropDownList( ['1' => 'active', '2' => 'inactive'])?>
 

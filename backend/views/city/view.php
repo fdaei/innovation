@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'province_id',
             'name',
             'latitude',
-            'logitude',
+            'longitude',
             'status',
             'created_at',
             'created_by',
