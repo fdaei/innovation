@@ -9,6 +9,7 @@ use yii\httpclient\Client;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * BusinessController implements the CRUD actions for Business model.
@@ -70,26 +71,18 @@ class BusinessController extends Controller
     public function actionCreate()
     {
         $model = new Business();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->created_by=1;
-                $model->updated_by=1;
-                $client = new Client([
-                    'transport' => 'yii\httpclient\CurlTransport',
-                ]);
-//              urlTransport  $response = $client->createRequest()
-//                    ->setMethod('POST')
-//                    ->setUrl('http://localhost/business/create')
-//                    ->addFile('logo', $model->logo)
-//                    ->addFile('wallpaper', $model->wallpaper)
-//                    ->send();
-
-                var_dump($model->logo);
-                die();
-                $model->logo="djdjd";
-                $model->wallpaper="dkskss";
+                $model->logo = UploadedFile::getInstance($model, 'logo');
                 $model->save();
+                var_dump($model->getErrors());
+                die();
+                $model->wallpaper = UploadedFile::getInstance($model, 'wallpaper');
+                if ($model->upload()) {
+                    $model->save();
+                }
+                var_dump("fail");
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
