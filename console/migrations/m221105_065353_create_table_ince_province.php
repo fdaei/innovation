@@ -15,7 +15,7 @@ class m221105_065353_create_table_ince_province extends Migration
             '{{%province}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
-                'name' => $this->string()->unique()->notNull(),
+                'name' => $this->string(256)->unique()->notNull(),
                 'center_id' => $this->integer()->unsigned()->notNull(),
                 'status' => $this->tinyInteger()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),

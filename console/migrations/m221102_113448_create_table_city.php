@@ -16,15 +16,15 @@ class m221102_113448_create_table_city extends Migration
             [
                 'id' => $this->primaryKey(),
                 'province_id' => $this->integer()->unsigned()->notNull(),
-                'name' => $this->string()->notNull(),
+                'name' => $this->string(256)->notNull(),
                 'latitude' => $this->float()->notNull(),
                 'logitude' => $this->float()->notNull(),
-                'status' => $this->boolean()->notNull(),
+                'status' => $this->tinyInteger()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
-                'deleted_at' => $this->integer()->unsigned()->notNull(),
+                'deleted_at' => $this->integer()->unsigned()->defaultValue(0),
             ],
             $tableOptions
         );

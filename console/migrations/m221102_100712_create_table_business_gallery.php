@@ -16,15 +16,15 @@ class m221102_100712_create_table_business_gallery extends Migration
             [
                 'id' => $this->primaryKey(),
                 'business_id' => $this->integer()->notNull(),
-                'image' => $this->string()->notNull(),
-                'title' => $this->string()->notNull(),
+                'image' => $this->string(128)->notNull(),
+                'title' => $this->string(256)->notNull(),
                 'description' => $this->text()->notNull(),
-                'status' => $this->boolean()->notNull(),
+                'status' => $this->tinyInteger()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
-                'deleted_at' => $this->integer()->unsigned()->notNull(),
+                'deleted_at' => $this->integer()->unsigned()->defaultValue(0),
             ],
             $tableOptions
         );
