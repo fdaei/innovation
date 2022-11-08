@@ -1,7 +1,7 @@
 <?php
 
 namespace backend\models;
-use aminbbb92\user\models\User;
+use common\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;

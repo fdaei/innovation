@@ -2,7 +2,7 @@
 
 namespace backend\models;
 
-use aminbbb92\user\models\User;
+use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
