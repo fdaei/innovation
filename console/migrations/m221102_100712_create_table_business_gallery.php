@@ -14,8 +14,8 @@ class m221102_100712_create_table_business_gallery extends Migration
         $this->createTable(
             '{{%business_gallery}}',
             [
-                'id' => $this->primaryKey(),
-                'business_id' => $this->integer()->notNull(),
+                'id' => $this->primaryKey()->unsigned(),
+                'business_id' => $this->integer()->unsigned()->notNull(),
                 'image' => $this->string(128)->notNull(),
                 'title' => $this->string(256)->notNull(),
                 'description' => $this->text()->notNull(),

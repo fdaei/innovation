@@ -14,11 +14,11 @@ class m221102_113448_create_table_city extends Migration
         $this->createTable(
             '{{%city}}',
             [
-                'id' => $this->primaryKey(),
+                'id' => $this->primaryKey()->unsigned(),
                 'province_id' => $this->integer()->unsigned()->notNull(),
-                'name' => $this->string(256)->notNull(),
+                'name' => $this->string(128)->notNull(),
                 'latitude' => $this->float()->notNull(),
-                'logitude' => $this->float()->notNull(),
+                'longitude' => $this->float()->notNull(),
                 'status' => $this->tinyInteger()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),

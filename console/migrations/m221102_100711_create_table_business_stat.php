@@ -15,8 +15,8 @@ class m221102_100711_create_table_business_stat extends Migration
             '{{%business_stat}}',
             [
                 'id' => $this->primaryKey(),
-                'business_id' => $this->integer()->notNull(),
-                'type' => $this->string(128)->notNull(),
+                'business_id' => $this->integer()->unsigned()->notNull(),
+                'type' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(1),
                 'title' => $this->string(256)->notNull(),
                 'subtitle' => $this->string(256)->notNull(),
                 'icon' => $this->string(128)->notNull(),
@@ -32,7 +32,7 @@ class m221102_100711_create_table_business_stat extends Migration
 
         $this->createIndex('business_id', '{{%business_stat}}', ['business_id']);
         $this->createIndex('business_stat_ibfk_2', '{{%business_stat}}', ['created_by']);
-        $this->createIndex('business_stat_ibfk_3', '{{%business_stat}}', ['update_by']);
+        $this->createIndex('business_stat_ibfk_3', '{{%business_stat}}', ['updated_by']);
     }
 
     public function safeDown()
