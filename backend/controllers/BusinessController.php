@@ -74,14 +74,10 @@ class BusinessController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->logo = UploadedFile::getInstance($model, 'logo');
-                $model->save();
-                var_dump($model->getErrors());
-                die();
                 $model->wallpaper = UploadedFile::getInstance($model, 'wallpaper');
                 if ($model->upload()) {
-                    $model->save();
+                    $model->save(false);
                 }
-                var_dump("fail");
 
                 return $this->redirect(['view', 'id' => $model->id]);
             }

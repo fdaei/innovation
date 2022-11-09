@@ -26,6 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <?= Html::img(Yii::getAlias('@web/uploads/' . $model->logo)) ?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
