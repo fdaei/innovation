@@ -1,8 +1,7 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
-use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;

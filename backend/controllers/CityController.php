@@ -2,8 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\City;
-use backend\models\CitySearch;
+
+use common\models\City;
+use common\models\CitySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 /**
- * This is the ActiveQuery class for [[BusinessStat]].
+ * This is the ActiveQuery class for [[BusinessTimeline]].
  *
- * @see BusinessStat
+ * @see BusinessTimeline
  */
-class BusinessStatQuery extends \yii\db\ActiveQuery
+class BusinessTimelineQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class BusinessStatQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return BusinessStat[]|array
+     * @return BusinessTimeline[]|array
      */
     public function all($db = null)
     {
@@ -25,10 +25,11 @@ class BusinessStatQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return BusinessStat|array|null
+     * @return BusinessTimeline|array|null
      */
     public function one($db = null)
     {
         return parent::one($db);
     }
+
 }

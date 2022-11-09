@@ -1,12 +1,12 @@
 <?php
 
-use backend\models\Business;
+use common\models\Business;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var backend\models\BusinessGallery $model */
+/** @var common\models\BusinessGallery $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

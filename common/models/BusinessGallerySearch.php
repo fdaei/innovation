@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\BusinessTimeline;
+use common\models\BusinessGallery;
 
 /**
- * BusinessTimelineSearch represents the model behind the search form of `backend\models\BusinessTimeline`.
+ * BusinessGallerySearch represents the model behind the search form of `backend\models\BusinessGallery`.
  */
-class BusinessTimelineSearch extends BusinessTimeline
+class BusinessGallerySearch extends BusinessGallery
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class BusinessTimelineSearch extends BusinessTimeline
     {
         return [
             [['id', 'business_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
-            [['year', 'description'], 'safe'],
+            [['image', 'title', 'description'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class BusinessTimelineSearch extends BusinessTimeline
      */
     public function search($params)
     {
-        $query = BusinessTimeline::find();
+        $query = BusinessGallery::find();
 
         // add conditions that should always apply here
 
@@ -60,7 +60,6 @@ class BusinessTimelineSearch extends BusinessTimeline
         $query->andFilterWhere([
             'id' => $this->id,
             'business_id' => $this->business_id,
-            'year' => $this->year,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -69,7 +68,9 @@ class BusinessTimelineSearch extends BusinessTimeline
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

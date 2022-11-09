@@ -2,8 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\BusinessStat;
-use backend\models\BusinessStatSearch;
+
+use common\models\BusinessStat;
+use common\models\BusinessStatSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

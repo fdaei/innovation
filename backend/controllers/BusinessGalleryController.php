@@ -2,8 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\BusinessGallery;
-use backend\models\BusinessGallerySearch;
+
+use common\models\BusinessGallery;
+use common\models\BusinessGallerySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

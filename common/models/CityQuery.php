@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 /**
  * This is the ActiveQuery class for [[City]].
  *
  * @see City
  */
-class ProvinceQuery extends \yii\db\ActiveQuery
+class CityQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -33,10 +33,10 @@ class ProvinceQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @return ProvinceQuery
+     * @return CityQuery
      */
-    public function active(): ProvinceQuery
+    public function active(): CityQuery
     {
-        return $this->andWhere(['status' => Province::STATUS_ACTIVE])->orWhere(['status' => Province::STATUS_INACTIVE]);
+        return $this->andWhere(['status' => City::STATUS_ACTIVE])->orWhere(['status' => City::STATUS_INACTIVE]);
     }
 }

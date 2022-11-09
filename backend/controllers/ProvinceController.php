@@ -2,8 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\Province;
-use backend\models\ProvinceSearch;
+
+use common\models\Province;
+use common\models\ProvinceSearch;
 use Yii;
 //use yii\behaviors\TimestampBehavior;
 use yii\behaviors\TimestampBehavior;

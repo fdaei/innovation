@@ -2,8 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\BusinessTimeline;
-use backend\models\BusinessTimelineSearch;
+
+use common\models\BusinessTimeline;
+use common\models\BusinessTimelineSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\models;
-
+namespace common\models;
+use common\models\BusinessStat;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\City;
+
 
 /**
- * CitySearch represents the model behind the search form of `backend\models\City`.
+ * BusinessStatSearch represents the model behind the search form of `backend\models\BusinessStat`.
  */
-class CitySearch extends City
+class BusinessStatSearch extends BusinessStat
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class CitySearch extends City
     public function rules()
     {
         return [
-            [['id', 'province_id', 'latitude', 'longitude', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'business_id', 'status', 'created_at', 'created_by', 'update_at', 'update_by', 'deleted_at'], 'integer'],
+            [['type', 'title', 'subtitle', 'icon'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class CitySearch extends City
      */
     public function search($params)
     {
-        $query = City::find();
+        $query = BusinessStat::find();
 
         // add conditions that should always apply here
 
@@ -50,27 +50,28 @@ class CitySearch extends City
 
         $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
+//        if (!$this->validate()) {
+//            // uncomment the following line if you do not want to return any records when validation fails
+//            // $query->where('0=1');
+//            return $dataProvider;
+//        }
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'province_id' => $this->province_id,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
+            'business_id' => $this->business_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
+//            'update_at' => $this->update_at,
+//            'update_by' => $this->update_by,
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'subtitle', $this->subtitle])
+            ->andFilterWhere(['like', 'icon', $this->icon]);
 
         return $dataProvider;
     }

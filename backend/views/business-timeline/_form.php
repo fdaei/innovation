@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Business;
+use common\models\Business;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

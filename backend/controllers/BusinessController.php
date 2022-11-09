@@ -2,8 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\Business;
-use backend\models\BusinessSearch;
+
+use common\models\Business;
+use common\models\BusinessSearch;
 use Yii;
 use yii\httpclient\Client;
 use yii\web\Controller;

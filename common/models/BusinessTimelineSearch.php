@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Province;
+use common\models\BusinessTimeline;
 
 /**
- * ProvinceSearch represents the model behind the search form of `backend\models\Province`.
+ * BusinessTimelineSearch represents the model behind the search form of `backend\models\BusinessTimeline`.
  */
-class ProvinceSearch extends Province
+class BusinessTimelineSearch extends BusinessTimeline
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class ProvinceSearch extends Province
     public function rules()
     {
         return [
-            [['id', 'center_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'business_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['year', 'description'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class ProvinceSearch extends Province
      */
     public function search($params)
     {
-        $query = Province::find();
+        $query = BusinessTimeline::find();
 
         // add conditions that should always apply here
 
@@ -59,7 +59,8 @@ class ProvinceSearch extends Province
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'center_id' => $this->center_id,
+            'business_id' => $this->business_id,
+            'year' => $this->year,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -68,7 +69,7 @@ class ProvinceSearch extends Province
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

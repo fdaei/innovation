@@ -1,13 +1,13 @@
 <?php
 
-use backend\models\City;
+use common\models\City;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\User;
 
 /** @var yii\web\View $this */
-/** @var backend\models\Business $model */
+/** @var common\models\Business $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

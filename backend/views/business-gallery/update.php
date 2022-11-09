@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var backend\models\BusinessGallery $model */
+/** @var common\models\BusinessGallery $model */
 
 $this->title = Yii::t('app', 'Update Business Gallery: {name}', [
     'name' => $model->title,

@@ -1,13 +1,13 @@
 <?php
 
-use backend\models\BusinessStat;
+use common\models\BusinessStat;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var backend\models\BusinessStatSearch $searchModel */
+/** @var common\models\BusinessStatSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'Business Stats');

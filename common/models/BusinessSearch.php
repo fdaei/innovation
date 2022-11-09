@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Business;
+use common\models\Business;
 
 /**
  * BusinessSearch represents the model behind the search form of `backend\models\Business`.

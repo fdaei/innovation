@@ -1,13 +1,14 @@
 <?php
 
-use backend\models\City;
+
+use common\models\City;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var backend\models\CitySearch $searchModel */
+/** @var common\models\CitySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'Cities');

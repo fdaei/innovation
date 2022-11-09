@@ -1,15 +1,14 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\BusinessStat;
 
 /**
- * BusinessStatSearch represents the model behind the search form of `backend\models\BusinessStat`.
+ * ProvinceSearch represents the model behind the search form of `backend\models\Province`.
  */
-class BusinessStatSearch extends BusinessStat
+class ProvinceSearch extends Province
 {
     /**
      * {@inheritdoc}
@@ -17,8 +16,8 @@ class BusinessStatSearch extends BusinessStat
     public function rules()
     {
         return [
-            [['id', 'business_id', 'status', 'created_at', 'created_by', 'update_at', 'update_by', 'deleted_at'], 'integer'],
-            [['type', 'title', 'subtitle', 'icon'], 'safe'],
+            [['id', 'center_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -40,7 +39,7 @@ class BusinessStatSearch extends BusinessStat
      */
     public function search($params)
     {
-        $query = BusinessStat::find();
+        $query = Province::find();
 
         // add conditions that should always apply here
 
@@ -59,19 +58,16 @@ class BusinessStatSearch extends BusinessStat
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'business_id' => $this->business_id,
+            'center_id' => $this->center_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
-            'update_at' => $this->update_at,
-            'update_by' => $this->update_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'subtitle', $this->subtitle])
-            ->andFilterWhere(['like', 'icon', $this->icon]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

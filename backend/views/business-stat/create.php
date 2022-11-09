@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var backend\models\BusinessStat $model */
+/** @var common\models\BusinessStat $model */
 
 $this->title = Yii::t('app', 'Create Business Stat');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Business Stats'), 'url' => ['index']];

@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Province;
+use common\models\Province;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
