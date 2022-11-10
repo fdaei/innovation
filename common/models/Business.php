@@ -164,7 +164,7 @@ class Business extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        $query = new ProvinceQuery(get_called_class());
+        $query = new BusinessQuery(get_called_class());
         return $query->active();
     }
 

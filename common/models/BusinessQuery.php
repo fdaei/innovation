@@ -9,11 +9,6 @@ namespace common\models;
  */
 class BusinessQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * {@inheritdoc}
      * @return Business[]|array
@@ -34,6 +29,6 @@ class BusinessQuery extends \yii\db\ActiveQuery
 
     public function active(): BusinessQuery
     {
-        return $this->andWhere(['status' => Business::STATUS_ACTIVE])->orWhere(['status' => Business::STATUS_INACTIVE]);
+        return $this->onCondition(['<>', 'status' => Business::STATUS_DELETED]);
     }
 }

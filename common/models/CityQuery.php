@@ -9,11 +9,6 @@ namespace common\models;
  */
 class CityQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * {@inheritdoc}
      * @return City[]|array
@@ -37,6 +32,6 @@ class CityQuery extends \yii\db\ActiveQuery
      */
     public function active(): CityQuery
     {
-        return $this->andWhere(['status' => City::STATUS_ACTIVE])->orWhere(['status' => City::STATUS_INACTIVE]);
+        return $this->onCondition(['<>', 'status' => City::STATUS_DELETED]);
     }
 }
