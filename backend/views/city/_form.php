@@ -3,7 +3,7 @@
 use common\models\Province;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var backend\models\City $model */

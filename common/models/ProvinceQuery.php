@@ -37,6 +37,6 @@ class ProvinceQuery extends \yii\db\ActiveQuery
      */
     public function active(): ProvinceQuery
     {
-        return $this->andWhere(['status' => Province::STATUS_ACTIVE])->orWhere(['status' => Province::STATUS_INACTIVE]);
+        return $this->onCondition(['<>', 'status' => Province::STATUS_DELETED]);
     }
 }

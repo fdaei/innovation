@@ -31,4 +31,9 @@ class BusinessGalleryQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function active(): BusinessGalleryQuery
+    {
+        return $this->onCondition(['<>', 'status' => BusinessGallery::STATUS_DELETED]);
+    }
 }

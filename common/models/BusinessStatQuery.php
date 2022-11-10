@@ -31,4 +31,9 @@ class BusinessStatQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function active(): BusinessStatQuery
+    {
+        return $this->onCondition(['<>', 'status' => BusinessStat::STATUS_DELETED]);
+    }
 }
