@@ -110,6 +110,15 @@ class Province extends \yii\db\ActiveRecord
         $query = new ProvinceQuery(get_called_class());
         return $query->active();
     }
+    public function canDelete()
+    {
+        $city = City::find()->active()->andWhere(['province_id' => $this->id])->limit(1)->one();
+
+        if ($city) {
+            return false;
+        }
+        return true;
+    }
     public function behaviors()
     {
         return [

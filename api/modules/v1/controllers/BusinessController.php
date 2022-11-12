@@ -1,52 +1,52 @@
 <?php
 
-namespace backend\controllers;
+namespace api\modules\v1\controllers;
 
-
+use yii\rest\ActiveController;
+use yii\rest\Controller;
 use common\models\Business;
 use common\models\BusinessSearch;
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * BusinessController implements the CRUD actions for Business model.
  */
-class BusinessController extends Controller
+class BusinessController extends ActiveController
 {
-    /**
-     * @inheritDoc
-     */
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
+    ];
+
+    public $modelClass='common\models\Business';
+
     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => \yii\filters\VerbFilter::class,
                     'actions' => [
-                        'delete' => ['POST'],
+                        'index'  => ['GET'],
+                        'view'   => ['GET'],
+                        'create' => ['GET', 'POST'],
+                        'update' => ['GET', 'PUT', 'POST'],
+                        'delete' => ['POST', 'DELETE'],
                     ],
                 ],
             ]
         );
     }
 
-    /**
-     * Lists all Business models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new BusinessSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $dataProvider;
     }
 
     /**
@@ -57,9 +57,7 @@ class BusinessController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->findModel($id);
     }
 
     /**
@@ -70,26 +68,13 @@ class BusinessController extends Controller
     public function actionCreate()
     {
         $model = new Business();
-        $transaction = \Yii::$app->db->beginTransaction();
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                try {
-                    if($model->save(false)){
-                        $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
-                    }
-
-                } catch (\Exception $e) {
-                    $transaction->rollBack();
-                    throw $e;
-                }
-            }
+        if($model->load(yii::$app->request->post()) && $model->validate())
+        {
+            $model->save();
+            return array('status' => true, 'data'=> 'bussiness record is successfully updated');
         } else {
-            $model->loadDefaultValues();
+            return array('status'=>false,'data'=>$model->getErrors());
         }
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -103,23 +88,13 @@ class BusinessController extends Controller
     {
         $model = $this->findModel($id);
 
-        $transaction = \Yii::$app->db->beginTransaction();
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                try {
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } catch (\Exception $e) {
-                    $transaction->rollBack();
-                    throw $e;
-                }
-            }
+        if($model->load(yii::$app->request->post()) && $model->validate())
+        {
+            $model->save();
+            return array('status' => true, 'data'=> 'bussiness record is successfully updated');
         } else {
-            $model->loadDefaultValues();
+            return array('status'=>false,'data'=>$model->getErrors());
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -133,7 +108,7 @@ class BusinessController extends Controller
     {
         if ($this->findModel($id)->canDelete()) {
             $this->findModel($id)->softdelete();
-            return $this->redirect(['index']);
+            return array('status' => true, 'data'=> 'bussiness record is successfully deleted');
         } else {
             $this->addError('قادر به حذف نیستیم ');
         }

@@ -115,6 +115,10 @@ class BusinessGallery extends \yii\db\ActiveRecord
         $query = new BusinessGalleryQuery(get_called_class());
         return $query->active();
     }
+    public function canDelete()
+    {
+        return true;
+    }
     public function behaviors()
     {
         return [

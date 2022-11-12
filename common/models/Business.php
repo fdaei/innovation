@@ -55,7 +55,7 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'logo', 'wallpaper', 'short_description', 'success_story', 'status'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['short_description', 'success_story'], 'string'],
@@ -78,7 +78,7 @@ class Business extends \yii\db\ActiveRecord
 
     public function validateTEST($attribute, $params)
     {
-        if (strlen($this->title) < 65) {
+        if (strlen($this->title) > 65) {
             $this->addError($attribute, 'تعداد کاراکتر باید کمتر از ۶۵ باشد ');
         }
     }
@@ -174,6 +174,16 @@ class Business extends \yii\db\ActiveRecord
     {
         $query = new BusinessQuery(get_called_class());
         return $query->active();
+    }
+
+    public function canDelete()
+    {
+        $stat = BusinessStat::find()->active()->andWhere(['business_id' => $this->id])->limit(1)->one();
+
+        if ($stat) {
+            return false;
+        }
+        return true;
     }
 
     public function behaviors()

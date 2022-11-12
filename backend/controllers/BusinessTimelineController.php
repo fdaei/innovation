@@ -112,9 +112,14 @@ class BusinessTimelineController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if($this->findModel($id)->canDelete()){
+            $this->findModel($id)->softdelete();
+            return $this->redirect(['index']);
+        }
+        else{
+            $this->addError('قادر به حذف نیستیم ');
+        }
 
-        return $this->redirect(['index']);
     }
 
     /**

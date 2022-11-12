@@ -113,6 +113,10 @@ class BusinessTimeline extends \yii\db\ActiveRecord
         $query = new BusinessTimelineQuery(get_called_class());
         return $query->active();
     }
+    public function canDelete()
+    {
+        return true;
+    }
     public function behaviors()
     {
         return [

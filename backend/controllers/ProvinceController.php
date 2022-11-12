@@ -122,11 +122,15 @@ class ProvinceController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->softdelete();
+        if($this->findModel($id)->canDelete()){
+            $this->findModel($id)->softdelete();
+            return $this->redirect(['index']);
+        }
+        else{
+            $this->addError('قادر به حذف نیستیم ');
+        }
 
-        return $this->redirect(['index']);
     }
-
     /**
      * Finds the Province model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

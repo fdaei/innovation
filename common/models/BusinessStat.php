@@ -79,6 +79,10 @@ class BusinessStat extends \yii\db\ActiveRecord
         $query = new BusinessStatQuery(get_called_class());
         return $query->active();
     }
+    public function canDelete()
+    {
+        return true;
+    }
     public function behaviors()
     {
         return [
