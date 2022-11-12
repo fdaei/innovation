@@ -9,11 +9,6 @@ namespace common\models;
  */
 class BusinessGalleryQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * {@inheritdoc}
      * @return BusinessGallery[]|array
@@ -34,6 +29,6 @@ class BusinessGalleryQuery extends \yii\db\ActiveQuery
 
     public function active(): BusinessGalleryQuery
     {
-        return $this->onCondition(['<>', 'status' => BusinessGallery::STATUS_DELETED]);
+        return $this->onCondition(['<>', 'status', BusinessGallery::STATUS_DELETED]);
     }
 }

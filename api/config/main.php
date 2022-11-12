@@ -61,6 +61,18 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/business',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\w+>'
+                    ]
+                ],
+
                 'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
             ],
         ],

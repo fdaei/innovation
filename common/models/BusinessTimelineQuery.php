@@ -34,7 +34,7 @@ class BusinessTimelineQuery extends \yii\db\ActiveQuery
 
     public function active(): BusinessTimelineQuery
     {
-        return $this->onCondition(['<>', 'status' => BusinessTimeline::STATUS_DELETED]);
+        return $this->onCondition(['<>', 'status', BusinessTimeline::STATUS_DELETED]);
     }
 
 }

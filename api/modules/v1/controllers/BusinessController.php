@@ -2,12 +2,11 @@
 
 namespace api\modules\v1\controllers;
 
-use yii\rest\ActiveController;
-use yii\rest\Controller;
 use common\models\Business;
 use common\models\BusinessSearch;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -20,7 +19,7 @@ class BusinessController extends ActiveController
         'collectionEnvelope' => 'items',
     ];
 
-    public $modelClass='common\models\Business';
+    public $modelClass = 'common\models\Business';
 
     public function behaviors()
     {
@@ -28,18 +27,17 @@ class BusinessController extends ActiveController
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => \yii\filters\VerbFilter::class,
+                    'class' => VerbFilter::class,
                     'actions' => [
-                        'index'  => ['GET'],
-                        'view'   => ['GET'],
-                        'create' => ['GET', 'POST'],
-                        'update' => ['GET', 'PUT', 'POST'],
-                        'delete' => ['POST', 'DELETE'],
+                        'index' => ['GET'],
+                        'view' => ['GET']
                     ],
                 ],
             ]
         );
     }
+
+    // TODO unset Create, Update, Delete actions
 
     public function actionIndex()
     {
@@ -52,67 +50,12 @@ class BusinessController extends ActiveController
     /**
      * Displays a single Business model.
      * @param int $id ID
-     * @return string
+     * @return Business
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
         return $this->findModel($id);
-    }
-
-    /**
-     * Creates a new Business model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Business();
-        if($model->load(yii::$app->request->post()) && $model->validate())
-        {
-            $model->save();
-            return array('status' => true, 'data'=> 'bussiness record is successfully updated');
-        } else {
-            return array('status'=>false,'data'=>$model->getErrors());
-        }
-    }
-
-    /**
-     * Updates an existing Business model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if($model->load(yii::$app->request->post()) && $model->validate())
-        {
-            $model->save();
-            return array('status' => true, 'data'=> 'bussiness record is successfully updated');
-        } else {
-            return array('status'=>false,'data'=>$model->getErrors());
-        }
-    }
-
-    /**
-     * Deletes an existing Business model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        if ($this->findModel($id)->canDelete()) {
-            $this->findModel($id)->softdelete();
-            return array('status' => true, 'data'=> 'bussiness record is successfully deleted');
-        } else {
-            $this->addError('قادر به حذف نیستیم ');
-        }
-
     }
 
     /**
