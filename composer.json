@@ -32,8 +32,12 @@
     "bizley/migration": "^4.4",
     "yii2tech/ar-softdelete": "^1.0",
     "yiisoft/yii2-httpclient": "^2.0",
-    "aws/aws-sdk-php": "^3.241"
-    },
+    "aws/aws-sdk-php": "^3.241",
+    "yiisoft/yii2-imagine": "~2.2.0",
+    "omnilight/yii2-scheduling": "*",
+    "yiisoft/yii2-mongodb": "^2.1",
+    "yiisoft/yii2-redis": "~2.0.0"
+  },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
         "yiisoft/yii2-gii": "~2.2.0",

@@ -29,6 +29,6 @@ class BusinessQuery extends \yii\db\ActiveQuery
 
     public function active(): BusinessQuery
     {
-        return $this->onCondition(['<>', 'status' => Business::STATUS_DELETED]);
+        return $this->onCondition(['<>', 'status', Business::STATUS_DELETED]);
     }
 }

@@ -32,6 +32,6 @@ class CityQuery extends \yii\db\ActiveQuery
      */
     public function active(): CityQuery
     {
-        return $this->onCondition(['<>', 'status' => City::STATUS_DELETED]);
+        return $this->onCondition(['<>', 'status', City::STATUS_DELETED]);
     }
 }

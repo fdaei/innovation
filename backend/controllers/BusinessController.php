@@ -6,11 +6,9 @@ namespace backend\controllers;
 use common\models\Business;
 use common\models\BusinessSearch;
 use Yii;
-use yii\httpclient\Client;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
  * BusinessController implements the CRUD actions for Business model.
@@ -73,13 +71,8 @@ class BusinessController extends Controller
     {
         $model = new Business();
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->logo = UploadedFile::getInstance($model, 'logo');
-                $model->wallpaper = UploadedFile::getInstance($model, 'wallpaper');
-                if ($model->upload()) {
-                    $model->save(false);
-                }
-
+            if ($model->load($this->request->post()) && $model->validate()) {
+                $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -103,10 +96,10 @@ class BusinessController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $model->created_by=1;
-            $model->updated_by=1;
-            $model->logo="djdjd";
-            $model->wallpaper="dkskss";
+            $model->created_by = 1;
+            $model->updated_by = 1;
+            $model->logo = "djdjd";
+            $model->wallpaper = "dkskss";
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }

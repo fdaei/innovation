@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -31,6 +32,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $updatedBy
  * @property User $user
  * @property string successStory
+ * @mixin CdnUploadImageBehavior
  */
 class Business extends \yii\db\ActiveRecord
 {
@@ -53,17 +55,18 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'logo', 'wallpaper', 'short_description', 'success_story', 'status'], 'required', 'on'=>[self::SCENARIO_DEFAULT]],
-            [['user_id', 'city_id', 'title','status'], 'required', 'on'=>[self::SCENARIO_UPDATE]],
+            [['user_id', 'city_id', 'title', 'logo', 'wallpaper', 'short_description', 'success_story', 'status'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
+            [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['short_description', 'success_story'], 'string'],
             [['logo', "wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
-            [['title','validateTEST']],
+            [['title'], 'validateTEST'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
+
     public function scenarios()
     {
         $scenarios = parent::scenarios();
@@ -72,22 +75,11 @@ class Business extends \yii\db\ActiveRecord
 
         return $scenarios;
     }
+
     public function validateTEST($attribute, $params)
     {
-        if (strlen($this->title)<65) {
+        if (strlen($this->title) < 65) {
             $this->addError($attribute, 'تعداد کاراکتر باید کمتر از ۶۵ باشد ');
-        }
-    }
-    public function upload()
-    {
-        if ($this->validate()) {
-            $this->logo->saveAs(Yii::getAlias('@webroot/uploads/' . $this->logo->baseName . '.' . $this->logo->extension));
-            $this->wallpaper->saveAs(Yii::getAlias('@webroot/uploads/' . $this->wallpaper->baseName . '.' . $this->wallpaper->extension));
-            $this->logo = $this->logo->baseName . '.' . $this->logo->extension;
-            $this->wallpaper = $this->wallpaper->baseName . '.' . $this->wallpaper->extension;
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -113,6 +105,7 @@ class Business extends \yii\db\ActiveRecord
             'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
     }
+
     /**
      * Gets query for [[BusinessGalleries]].
      *
@@ -207,20 +200,47 @@ class Business extends \yii\db\ActiveRecord
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
             ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'logo',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Business",
+                'basePath' => "@inceRoot/Business",
+                'path' => "@inceRoot/Business",
+                'url' => "@cdnWeb/Business"
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'wallpaper',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Business",
+                'basePath' => "@inceRoot/Business",
+                'path' => "@inceRoot/Business",
+                'url' => "@cdnWeb/Business"
+            ],
         ];
     }
 
     public function fields()
     {
         return [
-            'id'=>'id',
-            'user_id'=>'user_id',
-            'city_id'=>'city_id',
+            'id',
+            'cityId' => 'city_id',
             'title' => 'title',
-            'logo' =>'logo',
+            'logo' => 'logo',
             'wallpaper' => 'wallpaper',
-            'short_description' => 'short_description',
-            'success_story' => 'successStory',
+            'shortDescription' => 'short_description',
+            'successStory' => 'success_story',
         ];
     }
 
@@ -228,14 +248,14 @@ class Business extends \yii\db\ActiveRecord
     {
         return parent::extraFields(); // TODO: Change the autogenerated stub
     }
+
     public function beforeSoftDelete()
     {
-        $this->deletedAt = time(); // log the deletion date
         return true;
     }
 
     public function beforeRestore()
     {
-        return $this->deletedAt > (time() - 3600); // allow restoration only for the records, being deleted during last hour
+        return true;
     }
 }
