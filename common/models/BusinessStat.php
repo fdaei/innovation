@@ -22,6 +22,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $update_at
  * @property int $update_by
  * @property int $deleted_at
+ *  *
+ * @property Business $business
+ * @property User $createdBy
+ * @property User $updatedBy
  */
 class BusinessStat extends \yii\db\ActiveRecord
 {
@@ -75,6 +79,31 @@ class BusinessStat extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return BusinessStatQuery the active query used by this AR class.
      */
+    public function getBusiness()
+    {
+        return $this->hasOne(Business::class, ['id' => 'business_id']);
+    }
+
+    /**
+     * Gets query for [[CreatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|UserQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    /**
+     * Gets query for [[UpdatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|UserQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
     public static function find(): BusinessStatQuery
     {
         $query = new BusinessStatQuery(get_called_class());

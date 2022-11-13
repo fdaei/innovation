@@ -28,6 +28,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property BusinessGallery[] $businessGalleries
  * @property BusinessTimeline[] $businessTimelines
+ * @property BusinessStates[] $businessStates
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
@@ -115,7 +116,10 @@ class Business extends \yii\db\ActiveRecord
     {
         return $this->hasMany(BusinessGallery::class, ['business_id' => 'id']);
     }
-
+    public function getBusinessStates()
+    {
+        return $this->hasMany(BusinessGallery::class, ['business_id' => 'id']);
+    }
     /**
      * Gets query for [[BusinessTimelines]].
      *
@@ -258,7 +262,8 @@ class Business extends \yii\db\ActiveRecord
     {
         return [
             'timeLines' => 'businessTimelines',
-            'galleries' => 'businessGalleries'
+            'galleries' => 'businessGalleries',
+            'satat' => 'businessStates',
         ];
     }
 

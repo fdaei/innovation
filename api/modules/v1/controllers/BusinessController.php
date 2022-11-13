@@ -39,6 +39,14 @@ class BusinessController extends ActiveController
 
     // TODO unset Create, Update, Delete actions
 
+    public function actions()
+    {
+        $actions = parent::actions();
+        // disable the "delete" and "create" actions
+        unset($actions['delete'], $actions['create'],$actions['update']);
+        return $actions;
+    }
+
     public function actionIndex()
     {
         $searchModel = new BusinessSearch();

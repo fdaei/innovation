@@ -33,6 +33,33 @@ class m221102_100711_create_table_business_stat extends Migration
         $this->createIndex('business_id', '{{%business_stat}}', ['business_id']);
         $this->createIndex('business_stat_ibfk_2', '{{%business_stat}}', ['created_by']);
         $this->createIndex('business_stat_ibfk_3', '{{%business_stat}}', ['updated_by']);
+        $this->addForeignKey(
+            'business_stat_ibfk_1',
+            '{{%business_stat}}',
+            ['created_by'],
+            '{{%user}}',
+            ['id'],
+            'RESTRICT',
+            'RESTRICT'
+        );
+        $this->addForeignKey(
+            'business_stat_ibfk_2',
+            '{{%business_stat}}',
+            ['updated_by'],
+            '{{%user}}',
+            ['id'],
+            'RESTRICT',
+            'RESTRICT'
+        );
+        $this->addForeignKey(
+            'business_stat_ibfk_3',
+            '{{%business_stat}}',
+            ['business_id'],
+            '{{%business}}',
+            ['id'],
+            'RESTRICT',
+            'RESTRICT'
+        );
     }
 
     public function safeDown()
