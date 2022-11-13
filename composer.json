@@ -36,7 +36,8 @@
     "yiisoft/yii2-imagine": "~2.2.0",
     "omnilight/yii2-scheduling": "*",
     "yiisoft/yii2-mongodb": "^2.1",
-    "yiisoft/yii2-redis": "~2.0.0"
+    "yiisoft/yii2-redis": "~2.0.0",
+    "ignatenkovnikita/yii2-swagger": "dev-master"
   },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
