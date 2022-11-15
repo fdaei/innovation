@@ -12,13 +12,16 @@ class Module extends \yii\base\Module
      *
      *
      * @OA\Swagger(
-     *     basePath="{{basePath}}",
-     *     host="{{host}}",
-     *     schemes={"http"},
+     *     @OA\Server(
+     *          url="http://api.ince.local"
+     *     ),
+     *     @OA\Server(
+     *          url="http://api.avapardaz.vc"
+     *     ),
      *     @OA\Info(
      *         version="1.0",
      *         title="Example API",
-     *         @SWG\Contact(name="Example", url="http://example.ru"),
+     *         @OA\Contact(name="Example", url="http://example.ru"),
      *     )
      * )
      */

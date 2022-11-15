@@ -1,5 +1,6 @@
 <?php
 use common\components\Env;
+use common\components\swagger\SwaggerApi;
 
 $config = [
     'components' => [
@@ -8,9 +9,11 @@ $config = [
             'cookieValidationKey' => Env::get('BACKEND_COOKIE_VALIDATION_KEY'),
                         'trustedHosts' => ['0.0.0.0/0'],
             'ipHeaders' => ['X-Real-Ip']
-        ],
+        ]
+    ],
+    'modules' => [
         'swagger' => [
-            'class' => \ignatenkovnikita\swagger\Module::class,
+            'class' => SwaggerApi::class,
             //  'url' => 'http://petstore.swagger.io/v2/swagger.json',
             'path' => '@api/modules/v1',
             // disable page with your logic
@@ -22,7 +25,7 @@ $config = [
                 return $content;
             }
         ]
-    ],
+    ]
 ];
 
 if (YII_ENV_DEV) {
