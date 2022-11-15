@@ -20,8 +20,8 @@ class Module extends \yii\base\Module
      *     ),
      *     @OA\Info(
      *         version="1.0",
-     *         title="Example API",
-     *         @OA\Contact(name="Example", url="http://example.ru"),
+     *         title="Innovation Center API",
+     *         @OA\Contact(name="Innovation Center", url="https://avapardaz.vc"),
      *     )
      * )
      */
