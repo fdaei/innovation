@@ -42,7 +42,6 @@ class BusinessController extends Controller
     {
         $searchModel = new BusinessSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -73,6 +72,7 @@ class BusinessController extends Controller
         $transaction = \Yii::$app->db->beginTransaction();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
+
                 try {
                     if($model->save(false)){
                         $transaction->commit();

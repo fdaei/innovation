@@ -22,6 +22,8 @@ class m221102_100709_create_table_business extends Migration
                 'wallpaper' => $this->string(128)->Null(),
                 'short_description' => $this->text()->notNull(),
                 'success_story' => $this->text()->notNull(),
+                'link'=> $this->string(256)->notNull(),
+                'slug'=> $this->string(256)->notNull(),
                 'status' => $this->tinyInteger()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),

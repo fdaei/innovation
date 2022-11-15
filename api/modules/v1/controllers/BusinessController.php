@@ -47,7 +47,14 @@ class BusinessController extends ActiveController
         unset($actions['delete'], $actions['create'],$actions['update']);
         return $actions;
     }
-
+    /**
+     * @OA\Info(
+     *   version="1.0.0",
+     *   title="My API",
+     *   @OA\License(name="MIT"),
+     *   @OA\Attachable()
+     * )
+     */
     /**
      * @OA\Get(
      *    path = "/business/index",

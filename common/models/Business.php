@@ -15,6 +15,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $user_id
  * @property int $city_id
  * @property string $title
+ * @property string $link
+ * @property string $slug
  * @property string $logo
  * @property string $wallpaper
  * @property string $short_description
@@ -56,7 +58,7 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status','link','slug'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['short_description', 'success_story'], 'string'],
@@ -94,6 +96,8 @@ class Business extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'city_id' => Yii::t('app', 'City ID'),
             'title' => Yii::t('app', 'Title'),
+            'link' => Yii::t('app', 'Link'),
+            'slug' => Yii::t('app', 'Slug'),
             'logo' => Yii::t('app', 'Logo'),
             'wallpaper' => Yii::t('app', 'Wallpaper'),
             'short_description' => Yii::t('app', 'Short Description'),
@@ -245,16 +249,22 @@ class Business extends \yii\db\ActiveRecord
         ];
     }
 
+    public function makeslug($id){
+        return "/v1/business/".$id;
+
+    }
     public function fields()
     {
         return [
             'id',
-            'cityId' => 'city_id',
+//            'cityId' => 'city_id',
             'title' => 'title',
             'logo' => 'logo',
             'wallpaper' => 'wallpaper',
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
+            'slug'=>'slug',
+            'link'=>'link'
         ];
     }
 

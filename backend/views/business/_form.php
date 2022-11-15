@@ -26,6 +26,10 @@ use common\models\User;
     )?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
     <br/>
     <?= $form->field($model, 'logo')->fileInput() ?>
 
