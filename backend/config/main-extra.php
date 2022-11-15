@@ -9,6 +9,19 @@ $config = [
                         'trustedHosts' => ['0.0.0.0/0'],
             'ipHeaders' => ['X-Real-Ip']
         ],
+        'swagger' => [
+            'class' => \ignatenkovnikita\swagger\Module::class,
+            //  'url' => 'http://petstore.swagger.io/v2/swagger.json',
+            'path' => '@api/modules/v1',
+            // disable page with your logic
+            'isDisable' => function () {
+                return false;
+            },
+            // replace placeholders in swagger content
+            'afterRender' => function ($content) {
+                return $content;
+            }
+        ]
     ],
 ];
 

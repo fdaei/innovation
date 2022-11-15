@@ -8,10 +8,12 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
+use OpenApi\Annotations as OA;
 
 /**
  * BusinessController implements the CRUD actions for Business model.
  */
+class OpenApi {}
 class BusinessController extends ActiveController
 {
     public $serializer = [
@@ -47,6 +49,25 @@ class BusinessController extends ActiveController
         return $actions;
     }
 
+    /**
+     * @OA\Post(
+     *    path = "/business/index",
+     *    tags = {"user-device"},
+     *    operationId = "userDevice",
+     *    summary = "Регистрация устройства",
+     *    description = "Регистрация устройства",
+     *	@OA\Parameter(
+     *        in = "body",
+     *        name = "body",
+     *        description = "Тело запроса",
+     *        required = true,
+     *        type = "string",
+     *      @OA\Schema(ref = "#/definitions/UserDeviceForm")
+     *    ),
+     *	@OA\Response(response = 200, description = "success")
+     *)
+     * @throws HttpException
+     */
     public function actionIndex()
     {
         $searchModel = new BusinessSearch();

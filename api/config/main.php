@@ -23,14 +23,15 @@ return [
                 ],
                 'refresh_token' => [
                     'class' => 'OAuth2\GrantType\RefreshToken',
-                    'always_issue_new_refresh_token' => true
+//                    'always_issue_new_refresh_token' => true
                 ]
-            ]
+            ],
+
         ],
         'v1' => [
             'basePath' => '@app/modules/v1',
             'class' => 'api\modules\v1\Module'
-        ],
+        ]
     ],
     'components' => [
         'request' => [
