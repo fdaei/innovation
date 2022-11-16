@@ -33,5 +33,11 @@ return [
             // Name of the cache component used to store schema information
             'schemaCache' => Env::get('DB_SCHEMA_CACHE_COMPONENT', 'cache'),
         ],
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => Env::get('REDIS_HOST_NAME'),
+            'port' => Env::get('REDIS_PORT', 6379),
+            'database' => Env::get('REDIS_DATABASE', 0)
+        ],
     ]
 ];
