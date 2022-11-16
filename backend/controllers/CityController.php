@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
-
 use common\models\City;
 use common\models\CitySearch;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CityController implements the CRUD actions for City model.
@@ -22,6 +23,15 @@ class CityController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -72,8 +82,8 @@ class CityController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->created_by=1;
-                $model->updated_by=1;
+                $model->created_by = 1;
+                $model->updated_by = 1;
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -115,11 +125,10 @@ class CityController extends Controller
      */
     public function actionDelete($id)
     {
-        if($this->findModel($id)->canDelete()){
+        if ($this->findModel($id)->canDelete()) {
             $this->findModel($id)->softdelete();
             return $this->redirect(['index']);
-        }
-        else{
+        } else {
             $this->addError('قادر به حذف نیستیم ');
         }
 

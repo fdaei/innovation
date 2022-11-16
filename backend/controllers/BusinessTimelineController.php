@@ -5,9 +5,10 @@ namespace backend\controllers;
 
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineSearch;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * BusinessTimelineController implements the CRUD actions for BusinessTimeline model.
@@ -22,8 +23,17 @@ class BusinessTimelineController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -113,11 +123,10 @@ class BusinessTimelineController extends Controller
      */
     public function actionDelete($id)
     {
-        if($this->findModel($id)->canDelete()){
+        if ($this->findModel($id)->canDelete()) {
             $this->findModel($id)->softdelete();
             return $this->redirect(['index']);
-        }
-        else{
+        } else {
             $this->addError('قادر به حذف نیستیم ');
         }
 
