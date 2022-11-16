@@ -254,8 +254,12 @@ class Business extends \yii\db\ActiveRecord
         return [
             'id',
             'title' => 'title',
-            'logo' => 'logo',
-            'wallpaper' => 'wallpaper',
+            'logo' => function(self $model) {
+                return $model->getUploadUrl('logo');
+            },
+            'wallpaper' => function(self $model) {
+                return $model->getUploadUrl('wallpaper');
+            },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
             'slug'=>'slug',
