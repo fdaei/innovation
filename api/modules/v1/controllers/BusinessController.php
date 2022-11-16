@@ -57,7 +57,7 @@ class BusinessController extends ActiveController
      */
     /**
      * @OA\Get(
-     *    path = "/business/index",
+     *    path = "/business",
      *    tags = {"Business"},
      *    operationId = "Business",
      *    summary = "Business List",

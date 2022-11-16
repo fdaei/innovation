@@ -13,10 +13,10 @@ class Module extends \yii\base\Module
      *
      * @OA\Swagger(
      *     @OA\Server(
-     *          url="http://api.ince.local"
+     *          url="http://api.ince.local/v1"
      *     ),
      *     @OA\Server(
-     *          url="http://api.avapardaz.vc"
+     *          url="http://api.avapardaz.vc/v1"
      *     ),
      *     @OA\Info(
      *         version="1.0",

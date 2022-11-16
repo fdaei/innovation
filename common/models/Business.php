@@ -58,7 +58,7 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status','link','slug'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['short_description', 'success_story'], 'string'],
