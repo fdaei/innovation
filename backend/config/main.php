@@ -55,6 +55,51 @@ return [
 
             ],
         ],
+        'assetManager' => [
+            'appendTimestamp' => true,
+            'hashCallback' => function($path) {
+                return str_replace([Yii::getAlias('@vendor/'), Yii::getAlias('@backend/'), Yii::getAlias('@common/')], '', $path);
+            },
+            'assetMap' => [
+                'yii2-dynamic-form.js' => '@web/js/yii2-dynamic-form.min.js',
+                'yii2-dynamic-form.min.js' => '@web/js/yii2-dynamic-form.min.js',
+                'froala_editor.min.js' => '@web/js/froala_editor.min.js',
+                'leaflet-src.js' => '@web/js/leaflet.js',
+                'leaflet.css' => '@web/css/leaflet.css',
+            ],
+            'bundles' => [
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => [],
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],
+                ],
+                'yii\bootstrap4\BootstrapPluginAsset' => [
+                    'basePath' => '@webroot/js',
+                    'baseUrl' => '@web/js',
+                    'js' => [
+                        'bootstrap/popper.min.js',
+                        'bootstrap/bootstrap.min.js',
+                    ]
+                ],
+                'yii\bootstrap4\BootstrapAsset' => [
+                    'basePath' => '@webroot/css',
+                    'baseUrl' => '@web/css',
+                    'css' => [
+                        'style.min.css',
+                    ],
+                ],
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,   // do not publish the bundle
+                    'basePath' => '@webroot/js',
+                    'baseUrl' => '@web/js',
+                    'js' => [
+                        'jquery.min.js',
+                    ]
+                ],
+            ],
+
+        ],
     ],
     'params' => $params,
 ];

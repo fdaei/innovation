@@ -1,9 +1,11 @@
 <?php
 
+use common\models\Business;
 use yii\helpers\Html;
+use yii\web\View;
 
-/** @var yii\web\View $this */
-/** @var common\models\Business $model */
+/** @var View $this */
+/** @var Business $model */
 
 $this->title = Yii::t('app', 'Update Business: {name}', [
     'name' => $model->title,
@@ -12,12 +14,14 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Businesses'), 'url' 
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="business-update">
+<div class="card material-card">
+    <div class="card-header">
+        <h3><?= Html::encode($this->title) ?></h3>
+    </div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <div class="card-body">
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
 </div>

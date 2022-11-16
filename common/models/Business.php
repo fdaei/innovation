@@ -30,7 +30,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property BusinessGallery[] $businessGalleries
  * @property BusinessTimeline[] $businessTimelines
- * @property BusinessStates[] $businessStates
+ * @property BusinessStat[] $businessStates
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user

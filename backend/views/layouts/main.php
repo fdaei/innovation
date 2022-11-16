@@ -1,81 +1,183 @@
 <?php
+/* @var $this \yii\web\View */
 
-/** @var \yii\web\View $this */
-/** @var string $content */
+/* @var $content string */
 
-use backend\assets\AppAsset;
+use backend\assets\AdminAsset;
 use common\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use yii\bootstrap4\Modal;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\Breadcrumbs;
 
-AppAsset::register($this);
+AdminAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+<html dir="rtl" lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php $this->registerCsrfMetaTags() ?>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2874f0">
+    <meta http-equiv="content-language" content="fa"/>
+    <meta name="city" content="Kerman">
+    <meta name="state" content="Kerman">
+    <meta name="country" content="Iran">
+    <?= Html::csrfMetaTags() ?>
+    <link rel="shortcut icon" href="<?= Yii::getAlias('@web') . '/img/favicon-back.png'; ?>"/>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+<body>
 
-<header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    }     
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menuItems,
-    ]);
-    if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-    } else {
-        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
-            )
-            . Html::endForm();
-    }
-    NavBar::end();
-    ?>
-</header>
-
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+<?php $this->beginBody(); ?>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
     </div>
-</main>
+</div>
 
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-        <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?= Yii::powered() ?></p>
+<div id="main-wrapper">
+    <?= $this->render('_header') ?>
+    <?= $this->render('_sidebar') ?>
+    <div class="page-wrapper">
+        <?php if (isset($this->params['breadcrumbs'])): ?>
+            <div class="page-breadcrumb bg-white">
+                <div class="row flex-column flex-md-row">
+                    <div class="col-12 col-lg-6 align-self-start align-self-md-center">
+                        <nav class="mt-2">
+                            <?= Breadcrumbs::widget([
+                                'options' => ['class' => 'breadcrumb mb-0 justify-content-start  p-0 bg-white'],
+                                'homeLink' => [
+                                    'label' => '<span class="fal fa-home"></span>',
+                                    'url' => Url::to(['default/index']),
+                                    'encode' => false// Requested feature
+                                ],
+                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                                'itemTemplate' => "<li class=\"breadcrumb-item\">{link}</li>\n",
+                                'activeItemTemplate' => "<li class=\"breadcrumb-item active\">{link}</li>\n",
+                            ]) ?>
+                        </nav>
+                    </div>
+                    <div class="col-12 col-lg-6 mt-2 mt-lg-0">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?= $this->render('_shortcut_business', ['base_url' => Url::to(['/business/index?id'])]) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div class="page-content container-fluid text-left">
+            <div>
+                <?= Alert::widget() ?>
+            </div>
+            <?= $content ?>
+
+            <?php
+            Modal::begin([
+                'headerOptions' => ['id' => 'modalPjaxHeader'],
+                'id' => 'modal-pjax',
+                'bodyOptions' => [
+                    'id' => 'modalPjaxContent',
+                    'class' => 'p-3',
+                    'data' => ['show-preloader' => 0]
+                ],
+                'options' => ['tabindex' => false]
+            ]); ?>
+            <div class="text-center">
+                <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <?php Modal::end(); ?>
+
+            <?php
+            Modal::begin([
+                'headerOptions' => ['id' => 'modalPjaxOverHeader'],
+                'id' => 'modal-pjax-over',
+                'bodyOptions' => [
+                    'id' => 'modalPjaxOverContent',
+                    'class' => 'p-3',
+                    'data' => ['show-preloader' => 0]
+                ],
+                'options' => ['tabindex' => false, 'style' => 'z-index:1051;']
+            ]); ?>
+            <div class="text-center">
+                <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <?php Modal::end(); ?>
+
+            <div class="modal fade top-modal-with-space" id="quickAccessModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content-wrap">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">
+                                    <span class="modal-title fas fa-rabbit-fast fa-2x text-danger"></span>
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control input-lg m-bot15"
+                                       placeholder="کسب و کار، کاربر"
+                                       id="shortCode" data-base-url="<?= Yii::$app->urlManager->baseUrl ?>">
+
+                                <div id="accordionHelp" class="card material-card mt-3 mb-0 panel-group">
+                                    <a class="card-header card-title accordion-toggle collapsed text-left" data-toggle="collapse"
+                                       href="#collapseHelp"
+                                       data-parent="#accordionHelp" aria-expanded="false"><i
+                                                class="fal fa-question-circle"></i> راهنما</a>
+                                    <div id="collapseHelp" class="card-body panel-collapse collapse"
+                                         aria-expanded="false">
+                                        <div class="feed-widget d-flex justify-content-between">
+                                            <ul class="feed-body list-style-none w-100">
+                                                <li class="feed-item d-flex align-items-center justify-content-between py-2">
+                                                    <div>
+                                                        <button class="btn btn-info btn-circle">
+                                                            <i class="far fa-list text-white"></i>
+                                                        </button>
+                                                        <span class="ml-3 font-light">لیست کسب و کارها</span>
+                                                    </div>
+                                                    <div class="ml-5">
+                                                        <span class="text-muted font-light">b + Enter </span>
+                                                    </div>
+                                                </li>
+                                                <li class="feed-item d-flex align-items-center justify-content-between py-2">
+                                                    <div>
+                                                        <button class="btn btn-info btn-circle">
+                                                            <i class="far fa-shopping-bag text-white"></i>
+                                                        </button>
+                                                        <span class="ml-3 font-light">جزئیات کسب و کار</span>
+                                                    </div>
+                                                    <div class="ml-5">
+                                                        <span class="text-muted font-light">b + id + Enter ==> o12345 </span>
+                                                    </div>
+                                                </li>
+                                                <hr>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</footer>
+    <?= $this->render('_customizer') ?>
+    <?= $this->render('_footer') ?>
+</div>
 
 <?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage();
+<?php $this->endPage() ?>
