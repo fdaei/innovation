@@ -16,7 +16,7 @@ use yii\web\View;
                 <!-- Logo icon -->
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <?= Html::img('@web/img/AVA.png', ['style' => 'width:70px;height:60px;']) ?>
+                    <?= Html::img('@web/img/logo.png', ['style' => 'width:190px;height:40px;']) ?>
                 </b>
                 <!--End Logo icon -->
             </a>
