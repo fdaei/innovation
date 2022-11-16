@@ -23,7 +23,8 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'icon')->fileInput() ?>
+
 
     <?= $form->field($model,'status')->dropDownList( ['1' => 'active', '2' => 'inactive', '3' => 'deleted'])?>
 

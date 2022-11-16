@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -19,8 +20,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $status
  * @property int $created_at
  * @property int $created_by
- * @property int $update_at
- * @property int $update_by
+ * @property int $updated_at
+ * @property int $updated_by
  * @property int $deleted_at
  *  *
  * @property Business $business
@@ -32,7 +33,7 @@ class BusinessStat extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
-
+    const DEFAULT_TYPE=1;
     /**
      * {@inheritdoc}
      */
@@ -47,10 +48,10 @@ class BusinessStat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'business_id', 'type', 'title', 'subtitle', 'icon', 'status'], 'required'],
-            [['id', 'business_id', 'status', 'created_at', 'created_by', 'update_at', 'update_by', 'deleted_at'], 'integer'],
-            [['type', 'title', 'subtitle', 'icon'], 'string', 'max' => 255],
-            [['id'], 'unique'],
+            [['business_id', 'type', 'title', 'subtitle', 'status'], 'required'],
+            [['business_id', 'status'], 'integer'],
+            [['type', 'title', 'subtitle'], 'string', 'max' => 255],
+            [['icon'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
         ];
     }
 
@@ -69,7 +70,7 @@ class BusinessStat extends \yii\db\ActiveRecord
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
-            'update_at' => Yii::t('app', 'Update At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
             'update_by' => Yii::t('app', 'Update By'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
@@ -138,6 +139,20 @@ class BusinessStat extends \yii\db\ActiveRecord
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'icon',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Business",
+                'basePath' => "@inceRoot/Business",
+                'path' => "@inceRoot/Business",
+                'url' => "@cdnWeb/Business"
             ],
         ];
     }

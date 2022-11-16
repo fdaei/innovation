@@ -71,7 +71,8 @@ class BusinessTimelineController extends Controller
         $model = new BusinessTimeline();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

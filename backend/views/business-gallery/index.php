@@ -1,6 +1,7 @@
 <?php
 
-use backend\models\BusinessGallery;
+
+use common\models\BusinessGallery;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;

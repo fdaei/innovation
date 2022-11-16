@@ -249,15 +249,10 @@ class Business extends \yii\db\ActiveRecord
         ];
     }
 
-    public function makeslug($id){
-        return "/v1/business/".$id;
-
-    }
     public function fields()
     {
         return [
             'id',
-//            'cityId' => 'city_id',
             'title' => 'title',
             'logo' => 'logo',
             'wallpaper' => 'wallpaper',
@@ -274,6 +269,7 @@ class Business extends \yii\db\ActiveRecord
             'timeLines' => 'businessTimelines',
             'galleries' => 'businessGalleries',
             'satat' => 'businessStates',
+            'cityId' => 'city_id',
         ];
     }
 

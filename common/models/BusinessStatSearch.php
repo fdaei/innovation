@@ -17,7 +17,7 @@ class BusinessStatSearch extends BusinessStat
     public function rules()
     {
         return [
-            [['id', 'business_id', 'status', 'created_at', 'created_by', 'update_at', 'update_by', 'deleted_at'], 'integer'],
+            [['id', 'business_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
             [['type', 'title', 'subtitle', 'icon'], 'safe'],
         ];
     }
@@ -63,8 +63,8 @@ class BusinessStatSearch extends BusinessStat
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
-//            'update_at' => $this->update_at,
-//            'update_by' => $this->update_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
             'deleted_at' => $this->deleted_at,
         ]);
 

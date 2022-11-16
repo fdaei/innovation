@@ -72,7 +72,6 @@ class BusinessController extends Controller
         $transaction = \Yii::$app->db->beginTransaction();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
-
                 try {
                     if($model->save(false)){
                         $transaction->commit();

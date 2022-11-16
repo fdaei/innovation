@@ -72,7 +72,8 @@ class BusinessStatController extends Controller
         $model = new BusinessStat();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post()) && $model->validate()) {
+                $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

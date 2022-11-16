@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -45,10 +46,9 @@ class BusinessGallery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id', 'image', 'title', 'description', 'status'], 'required'],
-            [['business_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['business_id', 'title', 'description', 'status'], 'required'],
+            [['business_id', 'status'], 'integer'],
             [['description'], 'string'],
-            [['image'], 'string', 'max' => 64],
             [['title'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -142,6 +142,20 @@ class BusinessGallery extends \yii\db\ActiveRecord
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'image',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Business",
+                'basePath' => "@inceRoot/Business",
+                'path' => "@inceRoot/Business",
+                'url' => "@cdnWeb/Business"
             ],
         ];
     }

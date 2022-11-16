@@ -44,11 +44,10 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'business_id', 'year', 'description', 'status'], 'required'],
-            [['id', 'business_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [[ 'business_id', 'year', 'description', 'status'], 'required'],
+            [[ 'business_id', 'status'], 'integer'],
             [['year'], 'safe'],
             [['description'], 'string'],
-            [['id'], 'unique'],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -159,12 +158,11 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     }
     public function beforeSoftDelete()
     {
-        $this->deletedAt = time(); // log the deletion date
         return true;
     }
 
     public function beforeRestore()
     {
-        return $this->deletedAt > (time() - 3600); // allow restoration only for the records, being deleted during last hour
+        return true;
     }
 }
