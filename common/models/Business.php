@@ -272,7 +272,7 @@ class Business extends \yii\db\ActiveRecord
         return [
             'timeLines' => 'businessTimelines',
             'galleries' => 'businessGalleries',
-            'satat' => 'businessStates',
+            'stats' => 'businessStates',
             'cityId' => 'city_id',
         ];
     }
