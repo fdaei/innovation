@@ -51,7 +51,7 @@ class BusinessStat extends \yii\db\ActiveRecord
             [['business_id', 'type', 'title', 'subtitle', 'status'], 'required'],
             [['business_id', 'status'], 'integer'],
             [['type', 'title', 'subtitle'], 'string', 'max' => 255],
-            [['icon'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
+            [['icon'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
         ];
     }
 
