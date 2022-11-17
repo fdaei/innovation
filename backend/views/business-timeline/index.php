@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var common\models\BusinessTimelineSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -13,42 +14,40 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Business Timelines');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="business-timeline-index">
+<div class="card material-card">
+    <div class="card-header d-flex justify-content-between">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Business Timeline'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+        <p>
+            <?= Html::a(Yii::t('app', 'Create Business Timeline'), ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+    </div>
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="card-body">
+        <?= $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'business_id',
-            'year',
-            'description:ntext',
-            'status',
-            //'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
-            //'deleted_at',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, BusinessTimeline $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'id',
+                'business_id',
+                'year',
+                'description:ntext',
+                'status',
+
+                [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, BusinessTimeline $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                    }
+                ],
             ],
-        ],
-    ]); ?>
-
+        ]); ?>
+    </div>
     <?php Pjax::end(); ?>
 
 </div>

@@ -11,7 +11,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Business Galleries')
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="business-gallery-view">
+<div class="card material-card">
+    <div class="card-header d-flex justify-content-between">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -25,7 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    </div>
 
+    <div class="card-body">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -42,5 +45,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'deleted_at',
         ],
     ]) ?>
-
+    </div>
 </div>

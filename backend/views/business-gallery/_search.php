@@ -1,11 +1,13 @@
 <?php
 
+use common\models\BusinessSearch;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\BusinessGallerySearch $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var View $this */
+/** @var BusinessSearch $model */
+/** @var ActiveForm $form */
 ?>
 
 <div class="business-gallery-search">
@@ -17,29 +19,23 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'business_id') ?>
-
-    <?= $form->field($model, 'image') ?>
-
-    <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'deleted_at') ?>
-
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($model, 'id') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'business_id') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'image') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'title') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'description') ?>
+        </div>
+    </div>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>

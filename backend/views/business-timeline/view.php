@@ -11,7 +11,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Business Timelines')
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="business-timeline-view">
+<div class="card material-card">
+    <div class="card-header d-flex justify-content-between">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+    </div>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -41,5 +42,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'deleted_at',
         ],
     ]) ?>
-
+</div>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var backend\models\BusinessTimelineSearch $model */
@@ -17,26 +17,23 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'business_id') ?>
-
-    <?= $form->field($model, 'year') ?>
-
-    <?= $form->field($model, 'description') ?>
-
-    <?= $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'deleted_at') ?>
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($model, 'id') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'business_id') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'year') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'description') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'status') ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
