@@ -122,7 +122,7 @@ class Business extends \yii\db\ActiveRecord
     }
     public function getBusinessStates()
     {
-        return $this->hasMany(BusinessGallery::class, ['business_id' => 'id']);
+        return $this->hasMany(BusinessStat::class, ['business_id' => 'id']);
     }
     /**
      * Gets query for [[BusinessTimelines]].
