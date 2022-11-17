@@ -20,6 +20,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $logo
  * @property string $wallpaper
  * @property string $short_description
+ * @property string $investor_description
  * @property string $success_story
  * @property int $status
  * @property int $created_at
@@ -61,7 +62,7 @@ class Business extends \yii\db\ActiveRecord
             [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['short_description', 'success_story'], 'string'],
+            [['short_description', 'success_story','investor_description'], 'string'],
             [['logo', "wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
             [['link'], 'url'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -101,6 +102,7 @@ class Business extends \yii\db\ActiveRecord
             'logo' => Yii::t('app', 'Logo'),
             'wallpaper' => Yii::t('app', 'Wallpaper'),
             'short_description' => Yii::t('app', 'Short Description'),
+            'investor_description' => Yii::t('app', 'Investor Description'),
             'success_story' => Yii::t('app', 'Success Story'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -120,9 +122,14 @@ class Business extends \yii\db\ActiveRecord
     {
         return $this->hasMany(BusinessGallery::class, ['business_id' => 'id']);
     }
+
     public function getBusinessStates()
     {
-        return $this->hasMany(BusinessStat::class, ['business_id' => 'id']);
+        return $this->hasMany(BusinessGallery::class, ['business_id' => 'id']);
+    }
+    public function getBusinessMembers()
+    {
+        return $this->hasMany(BusinessMember::class, ['business_id' => 'id']);
     }
     /**
      * Gets query for [[BusinessTimelines]].
@@ -273,6 +280,7 @@ class Business extends \yii\db\ActiveRecord
             'timeLines' => 'businessTimelines',
             'galleries' => 'businessGalleries',
             'stats' => 'businessStates',
+            'members' => 'businessMembers',
             'cityId' => 'city_id',
         ];
     }
