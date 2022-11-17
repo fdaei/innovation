@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'link',
                 'logo',
                 'wallpaper',
+                'investor_description',
                 'short_description:ntext',
                 'success_story:ntext',
                 'status',

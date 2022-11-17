@@ -52,6 +52,9 @@ use yii\web\View;
             <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
         </div>
         <div class="col-md-6">
+            <?= $form->field($model, 'investor_description')->textarea(['rows' => 6]) ?>
+        </div>
+        <div class="col-md-6">
             <?= $form->field($model, 'success_story')->textarea(['rows' => 6]) ?>
         </div>
 

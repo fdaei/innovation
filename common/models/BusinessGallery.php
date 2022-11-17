@@ -183,12 +183,11 @@ class BusinessGallery extends \yii\db\ActiveRecord
 
     public function beforeSoftDelete()
     {
-        $this->deletedAt = time(); // log the deletion date
         return true;
     }
 
     public function beforeRestore()
     {
-        return $this->deletedAt > (time() - 3600); // allow restoration only for the records, being deleted during last hour
+        return true;
     }
 }

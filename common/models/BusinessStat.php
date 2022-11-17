@@ -164,7 +164,9 @@ class BusinessStat extends \yii\db\ActiveRecord
             'type',
             'title',
             'subtitle',
-            'icon',
+            'icon' => function (self $model) {
+                return $model->getUploadUrl('icon');
+            },
         ];
     }
 
