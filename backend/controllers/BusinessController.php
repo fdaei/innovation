@@ -116,8 +116,10 @@ class BusinessController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 try {
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    if($model->save(false)){
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
                 } catch (\Exception $e) {
                     $transaction->rollBack();
                     throw $e;
