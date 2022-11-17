@@ -32,6 +32,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -115,10 +116,12 @@ class BusinessGallery extends \yii\db\ActiveRecord
         $query = new BusinessGalleryQuery(get_called_class());
         return $query->active();
     }
+
     public function canDelete()
     {
         return true;
     }
+
     public function behaviors()
     {
         return [
@@ -159,14 +162,17 @@ class BusinessGallery extends \yii\db\ActiveRecord
             ],
         ];
     }
+
     public function fields()
     {
         return [
-            'id'=>'id',
-            'business_id'=>'business_id',
-            'image'=>'image',
+            'id' => 'id',
+            'business_id' => 'business_id',
             'title' => 'title',
-            'description' =>'description',
+            'description' => 'description',
+            'image' => function (self $model) {
+                return $model->getUploadUrl('image');
+            },
         ];
     }
 

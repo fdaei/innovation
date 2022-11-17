@@ -62,7 +62,7 @@ class Business extends \yii\db\ActiveRecord
             [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['short_description', 'success_story'], 'string'],
-            [['logo', "wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
+            [['logo', "wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
             [['link'], 'url'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -254,8 +254,12 @@ class Business extends \yii\db\ActiveRecord
         return [
             'id',
             'title' => 'title',
-            'logo' => 'logo',
-            'wallpaper' => 'wallpaper',
+            'logo' => function(self $model) {
+                return $model->getUploadUrl('logo');
+            },
+            'wallpaper' => function(self $model) {
+                return $model->getUploadUrl('wallpaper');
+            },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
             'slug'=>'slug',

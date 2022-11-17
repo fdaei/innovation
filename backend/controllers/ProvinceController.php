@@ -2,16 +2,13 @@
 
 namespace backend\controllers;
 
-
 use common\models\Province;
 use common\models\ProvinceSearch;
 use Yii;
-//use yii\behaviors\TimestampBehavior;
-use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ProvinceController implements the CRUD actions for Province model.
@@ -26,8 +23,17 @@ class ProvinceController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -77,8 +83,8 @@ class ProvinceController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
 
-                $model->created_by=1;
-                $model->updated_by=1;
+                $model->created_by = 1;
+                $model->updated_by = 1;
                 $model->save();
 //                var_dump($model->getErrors());
 //                die();
@@ -122,15 +128,14 @@ class ProvinceController extends Controller
      */
     public function actionDelete($id)
     {
-        if($this->findModel($id)->canDelete()){
+        if ($this->findModel($id)->canDelete()) {
             $this->findModel($id)->softdelete();
             return $this->redirect(['index']);
-        }
-        else{
+        } else {
             $this->addError('قادر به حذف نیستیم ');
         }
-
     }
+
     /**
      * Finds the Province model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

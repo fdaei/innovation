@@ -13,8 +13,13 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'session' => [
+            'class' => 'yii\redis\Session',
+            //'class' => 'yii\web\Session',
+        ],
         'cache' => [
-            'class' => \yii\caching\FileCache::class,
+            'class' => 'yii\redis\Cache',
+            //'class' => 'yii\caching\FileCache',
         ],
     ],
 ];
