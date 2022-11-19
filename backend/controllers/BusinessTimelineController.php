@@ -93,7 +93,7 @@ class BusinessTimelineController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            $description
+            'description'=>$description
         ]);
     }
 

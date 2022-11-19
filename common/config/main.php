@@ -17,6 +17,9 @@ return [
             'class' => 'yii\redis\Session',
             //'class' => 'yii\web\Session',
         ],
+        'pdate' => [
+            'class' => 'common\components\Pdate'
+        ],
         'cache' => [
             'class' => 'yii\redis\Cache',
             //'class' => 'yii\caching\FileCache',

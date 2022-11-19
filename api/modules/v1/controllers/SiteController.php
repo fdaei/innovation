@@ -31,4 +31,11 @@ class SiteController extends Controller
     {
         return [];
     }
+
+    public  function actionTest(){
+        echo "<pre>";
+        var_dump(\Yii::$app->request->params);
+        echo "</pre>";
+        die();
+    }
 }
