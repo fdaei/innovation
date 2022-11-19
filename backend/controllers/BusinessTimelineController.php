@@ -5,6 +5,7 @@ namespace backend\controllers;
 
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineSearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -83,7 +84,7 @@ class BusinessTimelineController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->description='{"name":"John", "age":30, "car":null}';
+                $model->description = '{"name":"John", "age":30, "car":null}';
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -93,7 +94,7 @@ class BusinessTimelineController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'description'=>$description
+            'description' => $description
         ]);
     }
 
@@ -121,18 +122,20 @@ class BusinessTimelineController extends Controller
      * Deletes an existing BusinessTimeline model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return \yii\web\Response
+     * @return BusinessTimeline|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        if ($this->findModel($id)->canDelete()) {
+        $model = $this->findModel($id);
+
+        if ($model->canDelete()) {
             $this->findModel($id)->softdelete();
-            return $this->redirect(['index']);
         } else {
-            $this->addError('قادر به حذف نیستیم ');
+            $this->flash('error', array_values($model->errors)[0][0] ?? Yii::t('app', 'Error In Save Info'));
         }
 
+        return $this->redirect(['index']);
     }
 
     /**
@@ -149,5 +152,10 @@ class BusinessTimelineController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function flash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

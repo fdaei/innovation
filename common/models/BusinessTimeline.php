@@ -30,6 +30,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -44,8 +45,8 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'business_id', 'year', 'description', 'status'], 'required'],
-            [[ 'business_id', 'status'], 'integer'],
+            [['business_id', 'year', 'description', 'status'], 'required'],
+            [['business_id', 'status'], 'integer'],
             [['year'], 'safe'],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -114,12 +115,19 @@ class BusinessTimeline extends \yii\db\ActiveRecord
 
     public function convert($array, $mod = '')
     {
-        return Yii::$app->pdate->jdate_words($array, $mod = '');
+        return Yii::$app->formatter->asSpellout($this->year);
     }
+
     public function canDelete()
     {
+        if (1!=1) {
+            $this->addError('status', 'قادر به حذف نیستیم ');
+            return  false;
+        }
+
         return true;
     }
+
     public function behaviors()
     {
         return [
@@ -146,14 +154,15 @@ class BusinessTimeline extends \yii\db\ActiveRecord
             ],
         ];
     }
+
     public function fields()
     {
         return [
-            'id'=>'id',
-            'business_id'=>'business_id',
-//            'year'=>'year',
+            'id',
+            'businessId' => 'business_id',
+            'year',
             'description' => 'description',
-            'yearFa'=> function(self $model){
+            'yearFa' => function (self $model) {
                 return $model->convert([$model->year]);
             },
         ];
@@ -165,6 +174,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
 
         ];
     }
+
     public function beforeSoftDelete()
     {
         return true;

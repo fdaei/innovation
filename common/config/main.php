@@ -17,12 +17,21 @@ return [
             'class' => 'yii\redis\Session',
             //'class' => 'yii\web\Session',
         ],
-        'pdate' => [
-            'class' => 'common\components\Pdate'
+        'formatter' => [
+            'locale' => 'fa_IR@calendar=persian',
+            'calendar' => 0,
+            'dateFormat' => 'yyyy/MM/dd',
+            'decimalSeparator' => '.',
+            'thousandSeparator' => ',',
+            'currencyCode' => 'IRR',
+            'numberFormatterSymbols' => [8 => ' '],
         ],
         'cache' => [
             'class' => 'yii\redis\Cache',
             //'class' => 'yii\caching\FileCache',
+        ],
+        'pdate' => [
+            'class' => 'common\components\Pdate'
         ],
     ],
 ];

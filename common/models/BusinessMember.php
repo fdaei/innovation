@@ -31,6 +31,7 @@ class BusinessMember extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -45,7 +46,7 @@ class BusinessMember extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'image', 'position','status'], 'required'],
+            [['first_name', 'last_name', 'image', 'position', 'status'], 'required'],
             [['business_id'], 'integer'],
             [['first_name', 'last_name', 'position'], 'string', 'max' => 64],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
@@ -142,19 +143,19 @@ class BusinessMember extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-
+            'first_name',
+            'last_name',
+            'position',
+            'image' => function (self $model) {
+                return $model->getUploadUrl('image');
+            },
         ];
     }
 
     public function extraFields()
     {
         return [
-            'first_name',
-            'last_name',
-            'position',
-            'image' => function (self $model) {
-                return $model->getUploadUrl('icon');
-            },
+
         ];
     }
 
