@@ -47,7 +47,6 @@ class BusinessTimeline extends \yii\db\ActiveRecord
             [[ 'business_id', 'year', 'description', 'status'], 'required'],
             [[ 'business_id', 'status'], 'integer'],
             [['year'], 'safe'],
-            [['description'], 'string'],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],

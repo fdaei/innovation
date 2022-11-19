@@ -79,9 +79,11 @@ class BusinessTimelineController extends Controller
     public function actionCreate()
     {
         $model = new BusinessTimeline();
+        $description = [];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->description='{"name":"John", "age":30, "car":null}';
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -91,6 +93,7 @@ class BusinessTimelineController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            $description
         ]);
     }
 
