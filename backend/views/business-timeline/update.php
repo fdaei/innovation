@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var backend\models\BusinessTimeline $model */
+/** @var backend\models\BusinessTimelineItem $TimelineItem */
 
 $this->title = Yii::t('app', 'Update Business Timeline: {name}', [
     'name' => $model->id,
@@ -20,6 +21,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <div class="card-body">
         <?= $this->render('_form', [
             'model' => $model,
+            'TimelineItem' => $TimelineItem
         ]) ?>
     </div>
 </div>

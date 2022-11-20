@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var backend\models\BusinessTimeline $model */
+/** @var common\models\BusinessTimeline $model */
+/** @var common\models\BusinessTimelineItem $TimelineItem */
 
 $this->title = Yii::t('app', 'Create Business Timeline');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Business Timelines'), 'url' => ['index']];
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-body">
         <?= $this->render('_form', [
             'model' => $model,
-            $description
+            'TimelineItem' => $TimelineItem
         ]) ?>
     </div>
 </div>

@@ -17,8 +17,8 @@ class BusinessTimelineSearch extends BusinessTimeline
     public function rules()
     {
         return [
-            [['id', 'business_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
-            [['year', 'description'], 'safe'],
+            [['business_id'], 'integer'],
+            [['year', ], 'safe'],
         ];
     }
 
@@ -68,8 +68,6 @@ class BusinessTimelineSearch extends BusinessTimeline
             'updated_by' => $this->updated_by,
             'deleted_at' => $this->deleted_at,
         ]);
-
-        $query->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

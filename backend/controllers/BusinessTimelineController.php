@@ -4,10 +4,14 @@ namespace backend\controllers;
 
 
 use common\models\BusinessTimeline;
+use common\models\BusinessTimelineItem;
 use common\models\BusinessTimelineSearch;
+use Exception;
 use Yii;
+use backend\models\Model;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -36,7 +40,7 @@ class BusinessTimelineController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
-                        'delete' => ['POST'],
+                        'delete' => ['BusinessTimelineST'],
                     ],
                 ],
             ]
@@ -75,26 +79,45 @@ class BusinessTimelineController extends Controller
     /**
      * Creates a new BusinessTimeline model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|\yii\web\ResBusinessTimelinense
      */
     public function actionCreate()
     {
-        $model = new BusinessTimeline();
-        $description = [];
+        $model = new BusinessTimeline;
+        $TimelineItem = [new BusinessTimelineItem];
+        if ($model->load(Yii::$app->request->post())) {
+            $TimelineItem = Model::createMultiple(BusinessTimelineItem::className());
+            Model::loadMultiple($TimelineItem, Yii::$app->request->post());
+            var_dump();
+            die();
+            // validate all models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($TimelineItem) && $valid;
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->description = '{"name":"John", "age":30, "car":null}';
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($TimelineItem as $TimelineItem) {
+                            $TimelineItem->business_timeline_id = $model->id;
+                            if (! ($flag = $TimelineItem->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
         return $this->render('create', [
             'model' => $model,
-            'description' => $description
+            'TimelineItem' => (empty($TimelineItem)) ? [new BusinessTimelineItem] : $TimelineItem
         ]);
     }
 
@@ -102,14 +125,14 @@ class BusinessTimelineController extends Controller
      * Updates an existing BusinessTimeline model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string|\yii\web\Response
+     * @return string|\yii\web\ResBusinessTimelinense
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isBusinessTimelinest && $model->load($this->request->BusinessTimelinest()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -122,7 +145,7 @@ class BusinessTimelineController extends Controller
      * Deletes an existing BusinessTimeline model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return BusinessTimeline|\yii\web\Response
+     * @return BusinessTimeline|\yii\web\ResBusinessTimelinense
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)

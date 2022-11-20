@@ -18,7 +18,7 @@ return [
             //'class' => 'yii\web\Session',
         ],
         'formatter' => [
-            'locale' => 'fa_IR@calendar=persian',
+            'locale' => 'fa_IR@c\alendar=persian',
             'calendar' => 0,
             'dateFormat' => 'yyyy/MM/dd',
             'decimalSeparator' => '.',

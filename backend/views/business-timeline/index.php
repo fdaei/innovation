@@ -10,6 +10,7 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var common\models\BusinessTimelineSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var backend\models\BusinessTimelineItem $TimelineItem */
 
 $this->title = Yii::t('app', 'Business Timelines');
 $this->params['breadcrumbs'][] = $this->title;
@@ -29,14 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
                 'id',
                 'business_id',
                 'year',
-                'description:ntext',
                 'status',
 
                 [

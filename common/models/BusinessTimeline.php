@@ -13,7 +13,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $id
  * @property int $business_id
  * @property string $year
- * @property string $description
  * @property int $status
  * @property int $created_at
  * @property int $created_by
@@ -45,7 +44,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id', 'year', 'description', 'status'], 'required'],
+            [['business_id', 'year', 'status'], 'required'],
             [['business_id', 'status'], 'integer'],
             [['year'], 'safe'],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
@@ -63,7 +62,6 @@ class BusinessTimeline extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'business_id' => Yii::t('app', 'Business ID'),
             'year' => Yii::t('app', 'Year'),
-            'description' => Yii::t('app', 'Description'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
@@ -161,7 +159,6 @@ class BusinessTimeline extends \yii\db\ActiveRecord
             'id',
             'businessId' => 'business_id',
             'year',
-            'description' => 'description',
             'yearFa' => function (self $model) {
                 return $model->convert([$model->year]);
             },
@@ -173,15 +170,5 @@ class BusinessTimeline extends \yii\db\ActiveRecord
         return [
 
         ];
-    }
-
-    public function beforeSoftDelete()
-    {
-        return true;
-    }
-
-    public function beforeRestore()
-    {
-        return true;
     }
 }

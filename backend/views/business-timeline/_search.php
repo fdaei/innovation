@@ -28,9 +28,6 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'year') ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'description') ?>
-        </div>
-        <div class="col-md-3">
             <?= $form->field($model, 'status') ?>
         </div>
     </div>
