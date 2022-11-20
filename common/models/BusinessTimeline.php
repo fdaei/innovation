@@ -100,7 +100,10 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
-
+    public function getTimeLineIem()
+    {
+        return $this->hasMany(BusinessTimelineItem::class, ['business_timeline_id' => 'id']);
+    }
     /**
      * {@inheritdoc}
      * @return BusinessTimelineQuery the active query used by this AR class.
@@ -168,7 +171,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return [
-
+            'items'=>'timeLineIem'
         ];
     }
 }

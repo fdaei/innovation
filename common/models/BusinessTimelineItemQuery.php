@@ -26,4 +26,9 @@ class BusinessTimelineItemQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function active(): BusinessTimelineItemQuery
+    {
+        return $this->onCondition(['<>', 'status', BusinessTimelineItem::STATUS_DELETED]);
+    }
 }

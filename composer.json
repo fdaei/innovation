@@ -38,8 +38,7 @@
     "yiisoft/yii2-mongodb": "^2.1",
     "yiisoft/yii2-redis": "~2.0.0",
     "sadi01/yii2-swagger": "dev-master",
-    "wbraganca/yii2-dynamicform": "*",
-    "sadi01/yii2-more-settings": "*"
+    "wbraganca/yii2-dynamicform": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

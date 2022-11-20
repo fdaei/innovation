@@ -10,13 +10,26 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-        'moresettings' => [
-            'class' => 'sadi01\moresettings\SettingsModule',
-            'rootAlias' => '@webroot',
-            'webAlias' => '@web',
-        ],
+//        'moresettings' => [
+//            'class' => 'sadi01\moresettings\SettingsModule',
+//            'rootAlias' => '@webroot',
+//            'webAlias' => '@web',
+//        ],
     ],
     'components' => [
+//        'i18n' => [
+//            'translations' => [
+//                'app*' => [
+//                    'class' => 'yii\i18n\PhpMessageSource',
+//                    //'basePath' => '@app/messages',
+//                    //'sourceLanguage' => 'en-US',
+//                    'fileMap' => [
+//                        'app' => 'app.php',
+//                        'app/error' => 'error.php',
+//                    ],
+//                ],
+//            ],
+//        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
@@ -58,7 +71,7 @@ return [
         ],
         'assetManager' => [
             'appendTimestamp' => true,
-            'hashCallback' => function($path) {
+            'hashCallback' => function ($path) {
                 return str_replace([Yii::getAlias('@vendor/'), Yii::getAlias('@backend/'), Yii::getAlias('@common/')], '', $path);
             },
             'assetMap' => [
