@@ -89,7 +89,7 @@ class BusinessTimelineItem extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        $query =  BusinessTimelineItemQuery(get_called_class());
+        $query =  new BusinessTimelineItemQuery(get_called_class());
         return $query->active();
     }
 

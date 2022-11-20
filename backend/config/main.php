@@ -10,10 +10,11 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-//        'rbac' => 'aminbbb92\rbac\RbacWebModule',
-//        'user' => [
-//            'class' => 'aminbbb92\user\Module',
-//        ],
+        'moresettings' => [
+            'class' => 'sadi01\moresettings\SettingsModule',
+            'rootAlias' => '@webroot',
+            'webAlias' => '@web',
+        ],
     ],
     'components' => [
         'request' => [

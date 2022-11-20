@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 
+use common\models\BaseModel;
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
 use common\models\BusinessTimelineSearch;
@@ -79,45 +80,47 @@ class BusinessTimelineController extends Controller
     /**
      * Creates a new BusinessTimeline model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\ResBusinessTimelinense
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
         $model = new BusinessTimeline;
-        $TimelineItem = [new BusinessTimelineItem];
+        $TimelineItems = [new BusinessTimelineItem];
         if ($model->load(Yii::$app->request->post())) {
-            $TimelineItem = Model::createMultiple(BusinessTimelineItem::className());
-            Model::loadMultiple($TimelineItem, Yii::$app->request->post());
-            var_dump();
-            die();
+            $TimelineItems = BaseModel::createMultiple(BusinessTimelineItem::class);
+            BaseModel::loadMultiple($TimelineItems, Yii::$app->request->post());
+
             // validate all models
             $valid = $model->validate();
-            $valid = Model::validateMultiple($TimelineItem) && $valid;
+            $valid = BaseModel::validateMultiple($TimelineItems) && $valid;
 
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
-                    if ($flag = $model->save(false)) {
-                        foreach ($TimelineItem as $TimelineItem) {
+                    if (($flag = $model->save())) {
+                        foreach ($TimelineItems as $TimelineItem) {
+                            /** @var $TimelineItem BusinessTimelineItem*/
                             $TimelineItem->business_timeline_id = $model->id;
-                            if (! ($flag = $TimelineItem->save(false))) {
+                            if (!($flag = $TimelineItem->save(false))) {
                                 $transaction->rollBack();
                                 break;
                             }
                         }
                     }
+
                     if ($flag) {
                         $transaction->commit();
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
+                    throw $e;
                 }
             }
         }
         return $this->render('create', [
             'model' => $model,
-            'TimelineItem' => (empty($TimelineItem)) ? [new BusinessTimelineItem] : $TimelineItem
+            'TimelineItem' => (empty($TimelineItems)) ? [new BusinessTimelineItem] : $TimelineItems
         ]);
     }
 
@@ -125,7 +128,7 @@ class BusinessTimelineController extends Controller
      * Updates an existing BusinessTimeline model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string|\yii\web\ResBusinessTimelinense
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)

@@ -8,7 +8,7 @@ class m221119_083954_update_table_ince_business_timeline extends Migration
     {
         $this->dropColumn('{{%business_timeline}}', 'description');
 
-        $this->alterColumn('{{%business_timeline}}', 'id', $this->primaryKey()->unsigned());
+        $this->alterColumn('{{%business_timeline}}', 'id', $this->integer()->unsigned());
     }
 
     public function safeDown()
