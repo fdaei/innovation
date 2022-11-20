@@ -11,6 +11,8 @@ return [
         '@cdnRoot' => Env::get('CDN_ROOT'),
         '@cdnWeb' => Env::get('CDN_WEB')
     ],
+    'language' => 'fa-IR',
+    'timeZone' => 'Asia/Tehran',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'session' => [

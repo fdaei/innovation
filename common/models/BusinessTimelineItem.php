@@ -21,7 +21,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $updated_by
  * @property int $deleted_at
  *
- * @property BusinessTimelineItem $businessTimeline
+ * @property BusinessTimeline $businessTimeline
  * @property BusinessTimelineItem[] $businessTimelineItems
  */
 class BusinessTimelineItem extends \yii\db\ActiveRecord
