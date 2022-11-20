@@ -139,7 +139,7 @@ class BusinessTimelineController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             $oldIDs = ArrayHelper::map($modelItems, 'id', 'id');
-            $modelItems = BaseModel::createMultiple(BusinessTimelineItem::className(), $modelItems);
+            $modelItems = BaseModel::createMultiple(BusinessTimelineItem::class, multipleModels:$modelItems);
             BaseModel::loadMultiple($modelItems, Yii::$app->request->post());
 
             $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelItems, 'id', 'id')));
