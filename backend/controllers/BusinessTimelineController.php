@@ -39,12 +39,6 @@ class BusinessTimelineController extends Controller
                         ],
                     ],
                 ],
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['BusinessTimelineST'],
-                    ],
-                ],
             ]
         );
     }
@@ -154,9 +148,9 @@ class BusinessTimelineController extends Controller
                         if (! empty($deletedIDs)) {
                             BusinessTimelineItem::deleteAll(['id' => $deletedIDs]);
                         }
-                        foreach ($modelItems as $modelAddress) {
-                            $modelAddress->customer_id = $model->id;
-                            if (! ($flag = $modelAddress->save(false))) {
+                        foreach ($modelItems as $item) {
+                            $item->business_timeline_id = $model->id;
+                            if (! ($flag = $item->save(false))) {
                                 $transaction->rollBack();
                                 break;
                             }
@@ -191,7 +185,7 @@ class BusinessTimelineController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->canDelete()) {
+        if ($model->canDelete($model)) {
             $this->findModel($id)->softdelete();
         } else {
             $this->flash('error', array_values($model->errors)[0][0] ?? Yii::t('app', 'Error In Save Info'));

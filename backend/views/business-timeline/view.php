@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'business_id',
             'year',
-            'description:ntext',
             'status',
             'created_at',
             'created_by',

@@ -121,9 +121,9 @@ class BusinessTimeline extends \yii\db\ActiveRecord
         return Yii::$app->formatter->asSpellout($this->year);
     }
 
-    public function canDelete()
+    public function canDelete($model)
     {
-        if (1 != 1) {
+        if ($model->timeLineIem) {
             $this->addError('status', 'قادر به حذف نیستیم ');
             return false;
         }
