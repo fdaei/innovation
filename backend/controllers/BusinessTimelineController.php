@@ -8,6 +8,7 @@ use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
 use common\models\BusinessTimelineSearch;
 use Exception;
+use yii\web\Response;
 use Yii;
 use backend\models\Model;
 use yii\filters\AccessControl;
@@ -134,15 +135,50 @@ class BusinessTimelineController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelItems = $model->timeLineIem;
+        if ($model->load(Yii::$app->request->post())) {
 
-        if ($this->request->isBusinessTimelinest && $model->load($this->request->BusinessTimelinest()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $oldIDs = ArrayHelper::map($modelItems, 'id', 'id');
+            $modelItems = BaseModel::createMultiple(BusinessTimelineItem::className(), $modelItems);
+            BaseModel::loadMultiple($modelItems, Yii::$app->request->post());
+
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelItems, 'id', 'id')));
+            // validate all models
+            $valid = $model->validate();
+            $valid = BaseModel::validateMultiple($modelItems) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            BusinessTimelineItem::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($modelItems as $modelAddress) {
+                            $modelAddress->customer_id = $model->id;
+                            if (! ($flag = $modelAddress->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    return $e;
+                }
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'TimelineItem' => (empty($modelItems)) ? [new BusinessTimelineItem] : $modelItems
         ]);
     }
+
 
     /**
      * Deletes an existing BusinessTimeline model.

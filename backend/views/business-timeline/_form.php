@@ -33,9 +33,9 @@ use yii\helpers\Html;
     </div>
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4><i class="glyphicon glyphicon-envelope"></i> items</h4></div>
-            <div class="panel-body p-5">
+        <div class="card card-default">
+            <div class="card-heading"><h4><i class="glyphicon glyphicon-envelope"></i> items</h4></div>
+            <div class="card-body ">
                 <?php DynamicFormWidget::begin([
                     'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                     'widgetBody' => '.container-items', // required: css class selector
@@ -54,15 +54,14 @@ use yii\helpers\Html;
 
                 <div class="container-items"><!-- widgetContainer -->
                     <?php foreach ($TimelineItem as $i => $item): ?>
-                        <div class="item panel panel-default"><!-- widgetBody -->
-                            <div class="panel-heading">
-                                <h3 class="panel-title pull-left">ITEM</h3>
+                        <div class="item card card-default"><!-- widgetBody -->
+                            <div class="card-heading">
                                 <div class="">
                                     <button type="button" class="add-item btn btn-success btn-xs">+</button>
                                     <button type="button" class="remove-item btn btn-danger btn-xs">-</button>
                                 </div>
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <?php
                                 // necessary for update action.
                                 if (!$item->isNewRecord) {
@@ -83,7 +82,7 @@ use yii\helpers\Html;
                 </div>
                 <?php DynamicFormWidget::end(); ?>
             </div>
-            <div class="form-group p-5">
+            <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
             </div>
             <?php ActiveForm::end(); ?>
