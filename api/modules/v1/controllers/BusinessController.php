@@ -92,7 +92,7 @@ class BusinessController extends Controller
 
     public function actionSlug($slug)
     {
-        return $this->findSlug($slug);
+        return $this->findModelBySlug($slug);
     }
 
     /**
@@ -102,8 +102,8 @@ class BusinessController extends Controller
      * @return Business the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected  function  findSlug($slug){
-        if (($model = Business::find()->where(['slug'=> $slug])->all()) !== null) {
+    protected  function  findModelBySlug($slug){
+        if (($model = Business::find()->where(['slug'=> $slug])->one()) !== null) {
             return $model;
         }
 
