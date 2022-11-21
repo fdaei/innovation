@@ -17,19 +17,19 @@ return [
 //        ],
     ],
     'components' => [
-//        'i18n' => [
-//            'translations' => [
-//                'app*' => [
-//                    'class' => 'yii\i18n\PhpMessageSource',
-//                    //'basePath' => '@app/messages',
-//                    //'sourceLanguage' => 'en-US',
-//                    'fileMap' => [
-//                        'app' => 'app.php',
-//                        'app/error' => 'error.php',
-//                    ],
-//                ],
-//            ],
-//        ],
+        'i18n' => [
+            'translations' => [
+                'app' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    //'basepath' => @app/messages,
+                    'sourceLanguage' => 'fa-Item',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],

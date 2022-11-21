@@ -2,6 +2,6 @@
 return [
     'adminEmail' => 'admin@example.com',
     'languages'=>[
-        'Fa'=>"farsi",
+        'fa-IR'=>"farsi",
     ]
 ];
