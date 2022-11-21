@@ -269,6 +269,7 @@ class Business extends \yii\db\ActiveRecord
             },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
+            'investorDescription'=>'investor_description',
             'slug'=>'slug',
             'link'=>'link'
         ];
