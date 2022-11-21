@@ -42,4 +42,26 @@ if (YII_ENV_DEV) {
     ];
 }
 
+if (!YII_DEBUG) {
+    $config['components']['log']['targets'][] = [
+        'class' => 'notamedia\sentry\SentryTarget',
+        'dsn' => 'https://1d71a842350f442588b1eee331a82a71@sentry.avapardaz.org/17',
+        'levels' => ['error', 'warning'],
+        'except' => [
+            'yii\web\HttpException:401',
+            'yii\web\HttpException:403',
+            'yii\web\HttpException:410',
+        ],
+        // Write the context information (the default is true)
+        'context' => true,
+//        'extraCallback' => function ($message, $extra) {
+//            // some manipulation with data
+//            $extra['some_data'] = \Yii::$app->someComponent->someMethod();
+//            return $extra;
+//        },
+        // Additional options for `Sentry\init`:
+        //'clientOptions' => ['release' => 'my-project-name@2.3.12']
+    ];
+}
+
 return $config;
