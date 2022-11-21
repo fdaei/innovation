@@ -6,6 +6,7 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\HtmlPurifier;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -62,7 +63,7 @@ class Business extends \yii\db\ActiveRecord
             [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['short_description', 'success_story','investor_description'], 'string'],
+            [['short_description', 'success_story', 'investor_description'], 'string'],
             [['logo', "wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
             [['link'], 'url'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -127,10 +128,12 @@ class Business extends \yii\db\ActiveRecord
     {
         return $this->hasMany(BusinessStat::class, ['business_id' => 'id']);
     }
+
     public function getBusinessMembers()
     {
         return $this->hasMany(BusinessMember::class, ['business_id' => 'id']);
     }
+
     /**
      * Gets query for [[BusinessTimelines]].
      *
@@ -201,6 +204,15 @@ class Business extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function beforeSave($insert)
+    {
+        $this->short_description = HtmlPurifier::process($this->short_description);
+        $this->success_story = HtmlPurifier::process($this->success_story);
+        $this->investor_description = HtmlPurifier::process($this->investor_description);
+
+        return parent::beforeSave($insert);
+    }
+
     public function behaviors()
     {
         return [
@@ -261,17 +273,17 @@ class Business extends \yii\db\ActiveRecord
         return [
             'id',
             'title' => 'title',
-            'logo' => function(self $model) {
+            'logo' => function (self $model) {
                 return $model->getUploadUrl('logo');
             },
-            'wallpaper' => function(self $model) {
+            'wallpaper' => function (self $model) {
                 return $model->getUploadUrl('wallpaper');
             },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
-            'investorDescription'=>'investor_description',
-            'slug'=>'slug',
-            'link'=>'link'
+            'investorDescription' => 'investor_description',
+            'slug',
+            'link'
         ];
     }
 

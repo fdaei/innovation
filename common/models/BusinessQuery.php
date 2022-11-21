@@ -31,4 +31,9 @@ class BusinessQuery extends \yii\db\ActiveQuery
     {
         return $this->onCondition(['<>', 'status', Business::STATUS_DELETED]);
     }
+
+    public function bySlug($slug)
+    {
+        return $this->andWhere(Business::tableName() . '.slug=:slug', [':slug' => $slug]);
+    }
 }

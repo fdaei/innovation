@@ -43,7 +43,7 @@ class BusinessController extends Controller
     {
         $actions = parent::actions();
         // disable the "delete" and "create" actions
-        unset($actions['delete'], $actions['create'],$actions['update']);
+        unset($actions['delete'], $actions['create'], $actions['update']);
         return $actions;
 
     }
@@ -79,6 +79,7 @@ class BusinessController extends Controller
 
         return $dataProvider;
     }
+
     /**
      * Displays a single Business model.
      * @param int $id ID
@@ -102,13 +103,15 @@ class BusinessController extends Controller
      * @return Business the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected  function  findModelBySlug($slug){
-        if (($model = Business::find()->where(['slug'=> $slug])->one()) !== null) {
+    protected function findModelBySlug($slug)
+    {
+        if (($model = Business::find()->bySlug($slug)->limit(1)->one()) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
     protected function findModel($id)
     {
         if (($model = Business::findOne(['id' => $id])) !== null) {
