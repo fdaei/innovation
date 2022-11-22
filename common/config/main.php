@@ -19,7 +19,6 @@ return [
             'translations' => [
                 'app' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-//                    'basepath' => 'common\messages',
                     'sourceLanguage' => 'fa-items',
                     'fileMap' => [
                         'common' => 'common.php',
