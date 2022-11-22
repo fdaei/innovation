@@ -30,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'center_id',
             [
                 'attribute'=>'status',
                 'value'=>function($model){
@@ -42,11 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
             ],
-//            'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
-            //'deleted_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Province $model, $key, $index, $column) {

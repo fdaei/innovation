@@ -21,12 +21,6 @@ use yii\widgets\ActiveForm;
     ]); ?>
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'id') ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'business_id') ?>
-        </div>
-        <div class="col-md-3">
             <?= $form->field($model, 'image') ?>
         </div>
         <div class="col-md-3">

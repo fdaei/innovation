@@ -15,6 +15,19 @@ return [
     'timeZone' => 'Asia/Tehran',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'app' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+//                    'basepath' => 'common\messages',
+                    'sourceLanguage' => 'fa-items',
+                    'fileMap' => [
+                        'common' => 'common.php',
+                        'common/error' => 'error.php',
+                    ],
+                ],
+            ],
+        ],
         'session' => [
             'class' => 'yii\redis\Session',
             //'class' => 'yii\web\Session',

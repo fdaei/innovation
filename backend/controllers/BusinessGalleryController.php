@@ -80,14 +80,23 @@ class BusinessGalleryController extends Controller
     {
         $model = new BusinessGallery();
 
+        $transaction = \Yii::$app->db->beginTransaction();
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save(false)) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) && $model->validate()) {
+                try {
+                    if($model->save(false)){
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
+                    throw $e;
+                }
             }
         } else {
             $model->loadDefaultValues();
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -127,7 +136,7 @@ class BusinessGalleryController extends Controller
             return $this->redirect(['index']);
         }
         else{
-            $this->addError('قادر به حذف نیستیم ');
+            throw new NotFoundHttpException(Yii::t('app', 'امکان حذف وجود ندارد '));
         }
 
     }

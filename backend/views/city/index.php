@@ -48,11 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
             ],
-            //'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
-            //'deleted_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, City $model, $key, $index, $column) {

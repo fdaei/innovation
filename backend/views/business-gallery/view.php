@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'business_id',
             'image',
+            'mobile_image',
             'title',
             'description:ntext',
             'status',

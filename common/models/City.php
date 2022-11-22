@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\web\NotFoundHttpException;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -92,7 +93,7 @@ class City extends \yii\db\ActiveRecord
     public function validateCityName($attribute, $params)
     {
         if ($this->name == 'کرمان') {
-            $this->addError($attribute, 'نام شهر معتبر نیست');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 
