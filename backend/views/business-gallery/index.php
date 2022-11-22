@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'description:ntext',
 
                 [
-                    'class' => ActionColumn::className(),
+                    'class' => ActionColumn::class,
                     'urlCreator' => function ($action, BusinessGallery $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     }

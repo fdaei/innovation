@@ -37,7 +37,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
- * @property string successStory
  * @mixin CdnUploadImageBehavior
  */
 class Business extends \yii\db\ActiveRecord
@@ -45,9 +44,9 @@ class Business extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_CREATE = 'create';
-
 
     /**
      * {@inheritdoc}
@@ -313,7 +312,7 @@ class Business extends \yii\db\ActiveRecord
             'galleries' => 'businessGalleries',
             'stats' => 'businessStates',
             'members' => 'businessMembers',
-            'cityId' => 'city_id',
+            'city'
         ];
     }
 }
