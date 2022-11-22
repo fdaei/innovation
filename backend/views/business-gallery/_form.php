@@ -24,6 +24,9 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'image')->fileInput() ?>
         </div>
         <div class="col-md-3">
+            <?= $form->field($model, 'mobile_image')->fileInput() ?>
+        </div>
+        <div class="col-md-3">
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">

@@ -32,12 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
-                'id',
-                'business_id',
                 'year',
-                'status',
-
+                [
+                    'attribute'=>'status',
+                    'value'=>function($model){
+                        if($model->status==2)
+                        {
+                            return "inactive";
+                        }elseif ($model->status==1){
+                            return "active";
+                        }
+                    },
+                ],
                 [
                     'class' => ActionColumn::className(),
                     'urlCreator' => function ($action, BusinessTimeline $model, $key, $index, $column) {

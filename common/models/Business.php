@@ -20,6 +20,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $slug
  * @property string $logo
  * @property string $wallpaper
+ * @property string $mobile_wallpaper
  * @property string $short_description
  * @property string $investor_description
  * @property string $success_story
@@ -36,7 +37,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
- * @property string successStory
  * @mixin CdnUploadImageBehavior
  */
 class Business extends \yii\db\ActiveRecord
@@ -44,7 +44,9 @@ class Business extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+
     const SCENARIO_UPDATE = 'update';
+    const SCENARIO_CREATE = 'create';
 
     /**
      * {@inheritdoc}
@@ -60,12 +62,15 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
-            [['user_id', 'city_id', 'title', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
-            [['user_id', 'city_id', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['user_id', 'city_id',], 'integer'],
             [['short_description', 'success_story', 'investor_description'], 'string'],
-            [['logo', "wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
+            [['logo', "wallpaper", "mobile_wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
             [['link'], 'url'],
+            ['wallpaper', 'image', 'minWidth' => 1920, 'maxWidth' => 1920, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['mobile_wallpaper', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['logo', 'image', 'minHeight' => 56, 'maxHeight' => 56, 'extensions' => 'jpg, jpeg, png, svg', 'maxSize' => 1024 * 1024 * 2],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -76,16 +81,10 @@ class Business extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_UPDATE] = ['province_id', 'name', '!status'];
+        $scenarios[self::SCENARIO_CREATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper', '!status'];
+        $scenarios[self::SCENARIO_UPDATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', '!status'];
 
         return $scenarios;
-    }
-
-    public function validateTEST($attribute, $params)
-    {
-        if (strlen($this->title) > 65) {
-            $this->addError($attribute, 'تعداد کاراکتر باید کمتر از ۶۵ باشد ');
-        }
     }
 
     /**
@@ -102,6 +101,7 @@ class Business extends \yii\db\ActiveRecord
             'slug' => Yii::t('app', 'Slug'),
             'logo' => Yii::t('app', 'Logo'),
             'wallpaper' => Yii::t('app', 'Wallpaper'),
+            'mobile_wallpaper' => Yii::t('app', 'MobileWallpaper'),
             'short_description' => Yii::t('app', 'Short Description'),
             'investor_description' => Yii::t('app', 'Investor Description'),
             'success_story' => Yii::t('app', 'Success Story'),
@@ -284,6 +284,20 @@ class Business extends \yii\db\ActiveRecord
                 'path' => "@inceRoot/Business",
                 'url' => "@cdnWeb/Business"
             ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'mobile_wallpaper',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Business",
+                'basePath' => "@inceRoot/Business",
+                'path' => "@inceRoot/Business",
+                'url' => "@cdnWeb/Business"
+            ],
         ];
     }
 
@@ -298,11 +312,15 @@ class Business extends \yii\db\ActiveRecord
             'wallpaper' => function (self $model) {
                 return $model->getUploadUrl('wallpaper');
             },
+            'mobile_wallpaper' => function (self $model) {
+                return $model->getUploadUrl('mobile_wallpaper');
+            },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
             'investorDescription' => 'investor_description',
             'slug',
-            'link'
+            'link',
+            'mobileWallpaper' => 'mobile_wallpaper',
         ];
     }
 
@@ -313,17 +331,7 @@ class Business extends \yii\db\ActiveRecord
             'galleries' => 'businessGalleries',
             'stats' => 'businessStates',
             'members' => 'businessMembers',
-            'cityId' => 'city_id',
+            'city'
         ];
-    }
-
-    public function beforeSoftDelete()
-    {
-        return true;
-    }
-
-    public function beforeRestore()
-    {
-        return true;
     }
 }

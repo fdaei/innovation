@@ -62,10 +62,11 @@ class BusinessController extends Controller
      *    operationId = "Business",
      *    summary = "Business List",
      *    description = "List of all business",
+     *
      *	@OA\Parameter(
      *        in = "query",
      *        name = "expand",
-     *        description = "Extra Fields, Seperat by comma",
+     *        description = "timeLines,galleries,satat,members are expand of bussiness / items is expand of timeLines",
      *        required = false
      *    ),
      *	@OA\Response(response = 200, description = "success")
@@ -81,10 +82,24 @@ class BusinessController extends Controller
     }
 
     /**
-     * Displays a single Business model.
-     * @param int $id ID
-     * @return Business
-     * @throws NotFoundHttpException if the model cannot be found
+     * @OA\Info(
+     *   version="1.0.0",
+     *   title="My API",
+     *   @OA\License(name="MIT"),
+     *   @OA\Attachable()
+     * )
+     */
+    /**
+     * @OA\Get(
+     *    path = "/business/id",
+     *    tags = {"Business"},
+     *    operationId = "Business View",
+     *    summary = "view of business",
+     *    description = "GET /business/123: return the details of the business 123",
+     *
+     *	@OA\Response(response = 200, description = "success")
+     *)
+     * @throws HttpException
      */
     public function actionView($id)
     {

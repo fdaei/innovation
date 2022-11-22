@@ -48,6 +48,9 @@ use yii\web\View;
         <div class="col-md-3">
             <?= $form->field($model, 'wallpaper')->fileInput() ?>
         </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'mobile_wallpaper')->fileInput() ?>
+        </div>
         <div class="col-md-6">
             <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
         </div>

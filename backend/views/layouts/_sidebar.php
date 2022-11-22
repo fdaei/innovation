@@ -41,6 +41,12 @@ $menu_items = [
                 'icon'  => 'fas fa-building',
                 'url'   => ['/business-member/']
             ],
+            [
+                'group' => 'BusinessTimelineItem',
+                'label' => 'BusinessTimeline',
+                'icon'  => 'fas fa-building',
+                'url'   => ['/business-timeline-item/']
+            ],
         ],
     ]
 ];

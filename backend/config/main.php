@@ -10,26 +10,8 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-//        'moresettings' => [
-//            'class' => 'sadi01\moresettings\SettingsModule',
-//            'rootAlias' => '@webroot',
-//            'webAlias' => '@web',
-//        ],
     ],
     'components' => [
-        'i18n' => [
-            'translations' => [
-                'app' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    //'basepath' => @app/messages,
-                    'sourceLanguage' => 'fa-Item',
-                    'fileMap' => [
-                        'app' => 'app.php',
-                        'app/error' => 'error.php',
-                    ],
-                ],
-            ],
-        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
