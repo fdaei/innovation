@@ -213,6 +213,25 @@ class Business extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'Deleted')
+            ],
+            'StatusClass' => [
+                self::STATUS_DELETED => 'danger'
+            ],
+            'StatusColor' => [
+                self::STATUS_DELETED => '#ff5050',
+            ],
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
+    }
+
     public function behaviors()
     {
         return [
