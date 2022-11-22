@@ -50,28 +50,30 @@ class BusinessGallery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id', 'title', 'description','image','mobile_image'],'required', 'on' => [self::SCENARIO_CREATE]],
-            [['business_id', 'title', 'description'],'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['business_id', 'title', 'description', 'image', 'mobile_image'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['business_id', 'title', 'description'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['business_id', 'status'], 'integer'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 255],
             [['image', 'mobile_image'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
-            ['image', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, gif, png', 'maxSize' => 1024 * 1024 * 2],
-            ['mobile_image', 'image', 'minWidth' => 316, 'maxWidth' => 316, 'minHeight' => 224, 'maxHeight' => 224, 'extensions' => 'jpg, gif, png', 'maxSize' => 1024 * 1024 * 2],
+            ['image', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['mobile_image', 'image', 'minWidth' => 316, 'maxWidth' => 316, 'minHeight' => 224, 'maxHeight' => 224, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
         ];
     }
+
     public function scenarios()
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description','image','mobile_image','!status'];
-        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description','!status'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description', 'image', 'mobile_image', '!status'];
+        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description', '!status'];
 
         return $scenarios;
     }
+
     /**
      * {@inheritdoc}
      */
