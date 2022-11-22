@@ -54,7 +54,6 @@ class City extends \yii\db\ActiveRecord
             [['province_id', 'name', 'latitude', 'longitude', 'status'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             [['province_id', 'latitude', 'longitude', 'status', 'created_by', 'updated_by', 'deleted_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            ['name', 'validateCityName'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::class, 'targetAttribute' => ['province_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -88,13 +87,6 @@ class City extends \yii\db\ActiveRecord
             'updated_by' => Yii::t('app', 'Updated By'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
-    }
-
-    public function validateCityName($attribute, $params)
-    {
-        if ($this->name == 'کرمان') {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-        }
     }
 
     /**
@@ -191,14 +183,8 @@ class City extends \yii\db\ActiveRecord
     {
         return [
             'cityName' => 'name',
-            'province_id' => 'provinceID'
+            'provinceId' => 'provinceID'
         ];
-
-        $fields = parent::fields();
-
-        unset($fields['deleted_at']);
-
-        return $fields;
     }
 
     public function extraFields()
