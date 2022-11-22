@@ -32,7 +32,7 @@ use yii\helpers\Html;
         </div>
     </div>
 
-    <div class="row">
+    <div class="">
         <div class="card card-default">
             <div class="card-heading"><h4><i class="glyphicon glyphicon-envelope"></i> items</h4></div>
             <div class="card-body ">
