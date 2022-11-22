@@ -92,20 +92,14 @@ class BusinessController extends Controller
     /**
      * @OA\Get(
      *    path = "/business/id",
-     *    tags = {"BusinessView"},
-     *    operationId = "Business",
+     *    tags = {"Business"},
+     *    operationId = "Business View",
      *    summary = "view of business",
      *    description = "GET /business/123: return the details of the business 123",
      *
      *	@OA\Response(response = 200, description = "success")
      *)
      * @throws HttpException
-     */
-    /**
-     * Displays a single Business model.
-     * @param int $id ID
-     * @return Business
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
