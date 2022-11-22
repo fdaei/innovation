@@ -54,7 +54,7 @@ class BusinessStat extends \yii\db\ActiveRecord
             [['business_id', 'type', 'title', 'subtitle', 'status','icon'],'required', 'on' => [self::SCENARIO_UPDATE]],
             [['business_id', 'status'], 'integer'],
             [['type', 'title', 'subtitle'], 'string', 'max' => 255],
-            ['icon', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, gif, png', 'maxSize' => 648 * 348 * 2],
+            ['icon', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, gif, png', 'maxSize' => 1024 * 1024 * 2],
         ];
     }
     public function scenarios()
