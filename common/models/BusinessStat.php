@@ -51,7 +51,7 @@ class BusinessStat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id', 'type', 'title', 'subtitle', 'status'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['business_id', 'type', 'title', 'subtitle', 'status','icon'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['business_id', 'type', 'title', 'subtitle', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['business_id', 'status'], 'integer'],
             [['type', 'title', 'subtitle'], 'string', 'max' => 255],
@@ -62,8 +62,8 @@ class BusinessStat extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'type', 'title', 'subtitle', '!status'];
-        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'type', 'title', 'subtitle', '!status', 'icon'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'type', 'title', 'subtitle', 'status','icon'];
+        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'type', 'title', 'subtitle', 'status'];
 
         return $scenarios;
     }
@@ -164,7 +164,7 @@ class BusinessStat extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'icon',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
