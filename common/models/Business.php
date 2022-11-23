@@ -62,15 +62,16 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story','status','slug','logo', 'wallpaper', 'mobile_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story','status','slug'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id',], 'integer'],
             [['short_description', 'success_story', 'investor_description'], 'string'],
             [['logo', "wallpaper", "mobile_wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
             [['link'], 'url'],
+            [['slug'],'unique'],
             ['wallpaper', 'image', 'minWidth' => 1920, 'maxWidth' => 1920, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
-            ['mobile_wallpaper', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
-            ['logo', 'image', 'minHeight' => 56, 'maxHeight' => 56, 'extensions' => 'jpg, jpeg, png, svg', 'maxSize' => 1024 * 1024 * 2],
+            ['mobile_wallpaper', 'image', 'minWidth' => 360, 'maxWidth' => 360, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['logo','file','extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -81,8 +82,8 @@ class Business extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper', '!status'];
-        $scenarios[self::SCENARIO_UPDATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', '!status'];
+        $scenarios[self::SCENARIO_CREATE] = ['city_id','user_id', 'title', 'short_description', 'success_story','slug','status','link','investor_description','logo', 'wallpaper', 'mobile_wallpaper'];
+        $scenarios[self::SCENARIO_UPDATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story','slug', 'status','investor_description'];
 
         return $scenarios;
     }
@@ -259,7 +260,7 @@ class Business extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'logo',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -273,7 +274,7 @@ class Business extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'wallpaper',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -287,7 +288,7 @@ class Business extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'mobile_wallpaper',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,

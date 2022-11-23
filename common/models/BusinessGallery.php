@@ -50,12 +50,12 @@ class BusinessGallery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id', 'title', 'description', 'image', 'mobile_image'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['business_id', 'title', 'description', 'image', 'mobile_image','status'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['business_id', 'title', 'description'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['business_id', 'status'], 'integer'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 255],
-            [['image', 'mobile_image'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
+            [['image', 'mobile_image'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
             ['image', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             ['mobile_image', 'image', 'minWidth' => 316, 'maxWidth' => 316, 'minHeight' => 224, 'maxHeight' => 224, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -68,8 +68,8 @@ class BusinessGallery extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description', 'image', 'mobile_image', '!status'];
-        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description', '!status'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description','status','image','mobile_image'];
+        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description'];
 
         return $scenarios;
     }
@@ -167,7 +167,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'image',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -181,7 +181,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'mobile_image',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,

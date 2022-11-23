@@ -78,12 +78,12 @@ class BusinessController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Business();
+        $model = new Business(['scenario' => Business::SCENARIO_CREATE]);
         $transaction = \Yii::$app->db->beginTransaction();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 try {
-                    if($model->save(false)){
+                    if ($model->save(false)) {
                         $transaction->commit();
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
@@ -111,12 +111,12 @@ class BusinessController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->scenario = Business::SCENARIO_UPDATE;
         $transaction = \Yii::$app->db->beginTransaction();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 try {
-                    if($model->save(false)){
+                    if ($model->save(false)) {
                         $transaction->commit();
                         return $this->redirect(['view', 'id' => $model->id]);
                     }

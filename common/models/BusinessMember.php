@@ -51,7 +51,7 @@ class BusinessMember extends \yii\db\ActiveRecord
             [['first_name', 'last_name', 'image', 'position','status'],'required', 'on' => [self::SCENARIO_CREATE]],
             [['first_name', 'last_name', 'position','!status'],'required', 'on' => [self::SCENARIO_UPDATE]],
             [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
-            ['image', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, gif, png', 'maxSize' => 648 * 348 * 2],
+            ['image', 'image', 'minWidth' => 268, 'maxWidth' => 268, 'minHeight' => 248, 'maxHeight' => 248, 'extensions' => 'jpg, gif, png', 'maxSize' => 648 * 348 * 2],
             [['business_id'], 'integer'],
             [['first_name', 'last_name', 'position'], 'string', 'max' => 64],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
@@ -65,8 +65,8 @@ class BusinessMember extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['first_name', 'last_name', 'image', 'position','!status'];
-        $scenarios[self::SCENARIO_UPDATE] = ['first_name', 'last_name', 'position','!status'];
+        $scenarios[self::SCENARIO_CREATE] = ['first_name', 'last_name','position','!status'];
+        $scenarios[self::SCENARIO_UPDATE] = ['first_name', 'last_name', 'position','!status','image'];
 
         return $scenarios;
     }
