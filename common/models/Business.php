@@ -295,14 +295,13 @@ class Business extends \yii\db\ActiveRecord
                 return $model->getUploadUrl('wallpaper');
             },
             'mobile_wallpaper' => function (self $model) {
-                return $model->getUploadUrl('mobile_wallpaper');
+                return $model->getUploadUrl('mobileWallpaper');
             },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
             'investorDescription' => 'investor_description',
             'slug',
             'link',
-            'mobileWallpaper' => 'mobile_wallpaper',
         ];
     }
 
