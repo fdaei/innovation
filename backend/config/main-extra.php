@@ -28,17 +28,26 @@ $config = [
     ]
 ];
 
-if (YII_ENV_DEV) {
+if (!YII_ENV_PROD) {
     // configuration adjustments for 'dev' environment
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => ['127.0.0.1', '::1', '192.168.*.*', '10.61.195.143'] // adjust this to your needs
+    ];
+
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'generators' => [
-//            'mongoDbModel' => [
-//                'class' => 'yii\mongodb\gii\model\Generator'
-//            ]
-        ],
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['127.0.0.1', '::1', '172.18.0.1'],
+        'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.146.93'],
+        'generators' => [ //here
+            'crud' => [ // generator name
+                'class' => 'yii\gii\generators\crud\Generator', // generator class
+                'templates' => [ //setting for out templates
+                    'lel' => '@app/gii-generators/crud', // template name => path to template
+                ]
+            ]
+        ],
     ];
 }
 

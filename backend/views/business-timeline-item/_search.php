@@ -13,27 +13,29 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => [
+            'data-pjax' => 1
+        ],
     ]); ?>
+    <div class="row"><div class="col-md-3">    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'id') ?>
+</div><div class="col-md-3">    <?= $form->field($model, 'business_timeline_id') ?>
 
-    <?= $form->field($model, 'business_timeline_id') ?>
+</div><div class="col-md-3">    <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'description') ?>
+</div><div class="col-md-3">    <?= $form->field($model, 'status') ?>
 
-    <?= $form->field($model, 'status') ?>
+</div><div class="col-md-3">    <?= $form->field($model, 'created_at') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+</div><div class="col-md-3">    <?php // echo $form->field($model, 'created_by') ?>
 
-    <?php // echo $form->field($model, 'created_by') ?>
+</div><div class="col-md-3">    <?php // echo $form->field($model, 'updated_at') ?>
 
-    <?php // echo $form->field($model, 'updated_at') ?>
+</div><div class="col-md-3">    <?php // echo $form->field($model, 'updated_by') ?>
 
-    <?php // echo $form->field($model, 'updated_by') ?>
+</div><div class="col-md-3">    <?php // echo $form->field($model, 'deleted_at') ?>
 
-    <?php // echo $form->field($model, 'deleted_at') ?>
-
-    <div class="form-group">
+</div>    </div>    <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
     </div>
