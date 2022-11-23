@@ -46,7 +46,14 @@ if (!YII_ENV_PROD) {
                 'templates' => [ //setting for out templates
                     'lel' => '@app/gii-generators/crud', // template name => path to template
                 ]
+            ],
+            'model' => [ // generator name
+                'class' => 'yii\gii\generators\model\Generator', // generator class
+                'templates' => [ //setting for out templates
+                    'lel' => '@app/gii-generators/model/default', // template name => path to template
+                ]
             ]
+
         ],
     ];
 }
