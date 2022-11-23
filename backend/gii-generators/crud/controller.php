@@ -53,7 +53,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
