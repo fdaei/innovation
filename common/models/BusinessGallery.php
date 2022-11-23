@@ -68,8 +68,8 @@ class BusinessGallery extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description', 'image', 'mobile_image', '!status'];
-        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description', '!status'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description'];
+        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description', '!status','image','mobile_image'];
 
         return $scenarios;
     }

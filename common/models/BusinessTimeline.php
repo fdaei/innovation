@@ -124,7 +124,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     public function canDelete($model)
     {
         if ($model->timeLineIem) {
-            $this->addError('status', 'قادر به حذف نیستیم ');
+            $this->addError('status', 'امکان حذف وجود ندارد ');
             return false;
         }
 
