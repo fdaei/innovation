@@ -15,8 +15,8 @@ use yii\widgets\ActiveForm;
 
   </div><div class='col-md-3'> <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-  </div><div class='col-md-3'> <?= $form->field($model, 'status')->textInput() ?>
-
+  </div><div class='col-md-3'>
+            <?= $form->field($model,'status')->dropDownList( ['1' => 'active', '2' => 'inactive', '3' => 'deleted'])?>
   </div>    </div>    <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

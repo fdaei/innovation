@@ -4,11 +4,9 @@ namespace backend\controllers;
 
 use common\models\City;
 use common\models\CitySearch;
-use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
  * CityController implements the CRUD actions for City model.
@@ -23,17 +21,8 @@ class CityController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -60,7 +49,7 @@ class CityController extends Controller
 
     /**
      * Displays a single City model.
-     * @param int $id ID
+     * @param int $id ایدی
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -81,10 +70,7 @@ class CityController extends Controller
         $model = new City();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->created_by = 1;
-                $model->updated_by = 1;
-                $model->save();
+            if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -99,7 +85,7 @@ class CityController extends Controller
     /**
      * Updates an existing City model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
+     * @param int $id ایدی
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -119,25 +105,21 @@ class CityController extends Controller
     /**
      * Deletes an existing City model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
+     * @param int $id ایدی
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        if ($this->findModel($id)->canDelete()) {
-            $this->findModel($id)->softdelete();
-            return $this->redirect(['index']);
-        } else {
-            $this->addError('قادر به حذف نیستیم ');
-        }
+        $this->findModel($id)->delete();
 
+        return $this->redirect(['index']);
     }
 
     /**
      * Finds the City model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
+     * @param int $id ایدی
      * @return City the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

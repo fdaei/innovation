@@ -5,47 +5,59 @@ use common\components\Menu;
 $menu_items = [];
 $menu_items = [
     [
-        'group'  => 'site',
-        'label'  => 'سایت',
-        'icon'   => 'fas fa-desktop-alt',
-        'level'  => "first-level",
+        'group' => 'site',
+        'label' => 'سایت',
+        'icon' => 'fas fa-desktop-alt',
+        'level' => "first-level",
         'encode' => false,
-        'items'  => [
+        'items' => [
             [
                 'group' => 'Business',
                 'label' => 'Business',
-                'icon'  => 'fas fa-building',
-                'url'   => ['/business']
+                'icon' => 'fas fa-building',
+                'url' => ['/business']
             ],
             [
                 'group' => 'BusinessGallery',
                 'label' => 'BusinessGallery',
-                'icon'  => 'fas fa-building',
-                'url'   => ['/business-gallery/']
+                'icon' => 'fas fa-building',
+                'url' => ['/business-gallery/']
             ],
             [
                 'group' => 'BusinessStat',
                 'label' => 'BusinessStat',
-                'icon'  => 'fas fa-building',
-                'url'   => ['/business-stat/']
+                'icon' => 'fas fa-building',
+                'url' => ['/business-stat/']
             ],
             [
                 'group' => 'BusinessTimeline',
                 'label' => 'BusinessTimeline',
-                'icon'  => 'fas fa-building',
-                'url'   => ['/business-timeline/']
+                'icon' => 'fas fa-building',
+                'url' => ['/business-timeline/']
             ],
             [
                 'group' => 'BusinessMember',
                 'label' => 'BusinessMember',
-                'icon'  => 'fas fa-building',
-                'url'   => ['/business-member/']
+                'icon' => 'fas fa-building',
+                'url' => ['/business-member/']
             ],
             [
                 'group' => 'BusinessTimelineItem',
                 'label' => 'BusinessTimeline',
-                'icon'  => 'fas fa-building',
-                'url'   => ['/business-timeline-item/']
+                'icon' => 'fas fa-building',
+                'url' => ['/business-timeline-item/']
+            ],
+            [
+                'group' => 'City',
+                'label' => 'City',
+                'icon' => 'fas fa-building',
+                'url' => ['/city/']
+            ],
+            [
+                'group' => 'Province',
+                'label' => 'Province',
+                'icon' => 'fas fa-building',
+                'url' => ['/province/']
             ],
         ],
     ]
@@ -62,9 +74,9 @@ $menu_items = [
 
                 <?= Menu::widget(
                     [
-                        'options'     => ['id' => 'sidebarnav'],
+                        'options' => ['id' => 'sidebarnav'],
                         'itemOptions' => ['class' => 'sidebar-item'],
-                        'items'       => $menu_items,
+                        'items' => $menu_items,
                     ]
                 ) ?>
             </nav>

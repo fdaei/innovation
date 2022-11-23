@@ -4,9 +4,10 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\City;
 
 /**
- * CitySearch represents the model behind the search form of `backend\models\City`.
+ * CitySearch represents the model behind the search form of `common\models\City`.
  */
 class CitySearch extends City
 {
@@ -16,8 +17,9 @@ class CitySearch extends City
     public function rules()
     {
         return [
-            [['id', 'province_id', 'latitude', 'longitude', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['id', 'province_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
             [['name'], 'safe'],
+            [['latitude', 'longitude'], 'number'],
         ];
     }
 

@@ -4,9 +4,10 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\Province;
 
 /**
- * ProvinceSearch represents the model behind the search form of `backend\models\Province`.
+ * ProvinceSearch represents the model behind the search form of `common\models\Province`.
  */
 class ProvinceSearch extends Province
 {
