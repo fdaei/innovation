@@ -78,7 +78,7 @@ class BusinessGalleryController extends Controller
      */
     public function actionCreate()
     {
-        $model = new BusinessGallery();
+        $model = new BusinessGallery(['scenario' => BusinessGallery::SCENARIO_CREATE]);
 
         $transaction = \Yii::$app->db->beginTransaction();
         if ($this->request->isPost) {
@@ -112,7 +112,7 @@ class BusinessGalleryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->scenario = BusinessGallery::SCENARIO_UPDATE;
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
