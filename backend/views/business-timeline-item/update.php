@@ -13,11 +13,13 @@ $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="business-timeline-item-update">
-
+    <div class="card material-card">
+        <div class="card-header">
     <h1><?= Html::encode($this->title) ?></h1>
-
+        </div>
+        <div class="card-body">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
+        </div>
 </div>

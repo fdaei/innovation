@@ -13,15 +13,16 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Provinces');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="province-index">
-
+<div class="province-index card material-card">
+    <div class="card-header d-flex justify-content-between">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Province'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    </div>
     <?php Pjax::begin(); ?>
+    <div class="card-body">
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -29,18 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
             'name',
-            [
-                'attribute'=>'status',
-                'value'=>function($model){
-                    if($model->status==2)
-                    {
-                        return "inactive";
-                    }elseif ($model->status==1){
-                        return "active";
-                    }
-                },
-            ],
+            'status',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Province $model, $key, $index, $column) {
@@ -49,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
+    </div>
     <?php Pjax::end(); ?>
 
 </div>

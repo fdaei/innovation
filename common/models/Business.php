@@ -313,7 +313,7 @@ class Business extends \yii\db\ActiveRecord
             'wallpaper' => function (self $model) {
                 return $model->getUploadUrl('wallpaper');
             },
-            'mobile_wallpaper' => function (self $model) {
+            'mobileWallpaper' => function (self $model) {
                 return $model->getUploadUrl('mobile_wallpaper');
             },
             'shortDescription' => 'short_description',
@@ -321,7 +321,6 @@ class Business extends \yii\db\ActiveRecord
             'investorDescription' => 'investor_description',
             'slug',
             'link',
-            'mobileWallpaper' => 'mobile_wallpaper',
         ];
     }
 
