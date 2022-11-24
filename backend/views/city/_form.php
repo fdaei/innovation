@@ -3,29 +3,40 @@
 use common\models\Province;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var backend\models\City $model */
+/** @var common\models\City $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
 <div class="city-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model,'province_id')->dropDownList(
-        ArrayHelper::map(Province::find()->all(),'id','name'),
-        ['prompt'=>'Select Province']
-    )?>
+    <div class="row">
+        <div class='col-md-3'>
+            <?= $form->field($model, 'province_id')->dropDownList(
+                ArrayHelper::map(Province::find()->all(), 'id', 'name'),
+                ['prompt' => 'Select Province']
+            ) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-3'>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'latitude')->textInput() ?>
+        </div>
+        <div class='col-md-3'>
+            <?= $form->field($model, 'latitude')->textInput() ?>
 
-    <?= $form->field($model, 'longitude')->textInput() ?>
+        </div>
+        <div class='col-md-3'>
+            <?= $form->field($model, 'longitude')->textInput() ?>
 
-    <?= $form->field($model,'status')->dropDownList( ['1' => 'active', '2' => 'inactive'])?>
-
+        </div>
+        <div class='col-md-3'>
+            <?= $form->field($model,'status')->dropDownList( ['1' => 'active', '2' => 'inactive', '3' => 'deleted'])?>
+        </div>
+    </div>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

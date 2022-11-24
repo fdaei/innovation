@@ -1,6 +1,5 @@
 <?php
 
-
 use common\models\City;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -10,44 +9,30 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var common\models\CitySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var common\models\City $model */
 
 $this->title = Yii::t('app', 'Cities');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="city-index">
-
+<div class="city-index card material-card">
+    <div class="card-header d-flex justify-content-between">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create City'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    </div>
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="card-body">
+    <?=  $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute'=>'province_id',
-                'value'=>'province.name',
-            ],
             'name',
             'latitude',
             'longitude',
-            [
-                'attribute'=>'status',
-                'value'=>function($model){
-                    if($model->status==2)
-                    {
-                        return "inactive";
-                    }elseif ($model->status==1){
-                        return "active";
-                    }
-                },
-            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, City $model, $key, $index, $column) {
@@ -56,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
+    </div>
     <?php Pjax::end(); ?>
 
 </div>
