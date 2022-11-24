@@ -294,8 +294,8 @@ class Business extends \yii\db\ActiveRecord
             'wallpaper' => function (self $model) {
                 return $model->getUploadUrl('wallpaper');
             },
-            'mobile_wallpaper' => function (self $model) {
-                return $model->getUploadUrl('mobileWallpaper');
+            'mobileWallpaper' => function (self $model) {
+                return $model->getUploadUrl('mobile_wallpaper');
             },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
