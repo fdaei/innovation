@@ -31,6 +31,12 @@ return [
     "Latitude"=>"عرض جغرافیایی",
     "Longitude"=>"طول جغرافیایی",
     "Center ID"=>"مرکز استان",
+    "Province ID"=>"ایدی استان",
+    'DELETED'=>"حذف شده",
+    "ACTIVE"=>"فعال",
+    "INACTIVE"=>"غیرفعال",
+    "Select Status"=>"انتخاب وضعیت",
+    "Business Timeline ID"=>"ایدی تایم لاین",
 
 
 ] ?>

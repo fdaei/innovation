@@ -66,8 +66,14 @@ class BusinessController extends Controller
      */
     public function actionView($id)
     {
+        $model=$this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'gallery'=>$model->businessGalleries,
+            'members'=>$model->businessMembers,
+            'timeline'=>$model->businessTimelines,
+            'timelineitems'=> $model->businessTimeLineItems,
+            'stat'=>$model->businessStates,
         ]);
     }
 

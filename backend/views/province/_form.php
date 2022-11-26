@@ -1,6 +1,7 @@
 <?php
 
 use common\models\City;
+use common\models\Province;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -13,17 +14,21 @@ use yii\widgets\ActiveForm;
 <div class="province-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row"><div class='col-md-3'> <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class='col-md-3'> <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-  </div><div class='col-md-3'>
+        </div>
+        <div class='col-md-3'>
             <?= $form->field($model, 'center_id')->dropDownList(
                 ArrayHelper::map(City::find()->all(), 'id', 'name'),
                 ['prompt' => 'Select city']
             ) ?>
 
-  </div><div class='col-md-3'> <?= $form->field($model, 'status')->textInput() ?>
-
-  </div>    </div>    <div class="form-group">
+        </div>
+        <?= $form->field($model, 'status')->dropDownList(Province::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
+        </div>
+    </div>
+    <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
