@@ -9,7 +9,8 @@ use yii\web\AssetBundle;
  *
  * @author SADi <sadshafiei.01@gmail.com>
  */
-class AdminAsset extends AssetBundle {
+class AdminAsset extends AssetBundle
+{
 
     public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -29,7 +30,8 @@ class AdminAsset extends AssetBundle {
         'js/jquery.double-keypress.js',
         'js/jquery.tags-input.js',
         // sweetalert2 JavaScript -->
-        'js/sweetalert2.all.min.js'
+        'js/sweetalert2.all.min.js',
+        "js/horizontal-timeline.js",
     ];
 
     public $css = [
@@ -37,7 +39,8 @@ class AdminAsset extends AssetBundle {
         'css/fonts/font-awesome/css/all.min.css',
         //'css/bootstrap-4/bootstrap-rtl.css',
         //'css/table-responsive.css',
-        'css/sweetalert2.min.css'
+        'css/sweetalert2.min.css',
+        "css/horizontal-timeline.css",
     ];
 
     public $depends = [

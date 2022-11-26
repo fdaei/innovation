@@ -41,8 +41,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => Html::img($model->getUploadUrl('logo')),
                     'format' => 'raw'
                 ],
-                'wallpaper',
-                'mobile_wallpaper',
+                [
+                    'attribute' => 'wallpaper',
+                    'value' => Html::img($model->getUploadUrl('wallpaper')),
+                    'format' => 'raw'
+                ],
+                [
+                    'attribute' => 'mobile_wallpaper',
+                    'value' => Html::img($model->getUploadUrl('mobile_wallpaper')),
+                    'format' => 'raw'
+                ],
                 'investor_description',
                 'short_description:ntext',
                 'success_story:ntext',
@@ -119,18 +127,146 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $this->endBlock(); ?>
 
         <?php $this->beginBlock('Timeline'); ?>
-        <?php foreach ($timeline as $i => $item): ?>
-            <?=
-            DetailView::widget([
-                'model' => $item,
-                'attributes' => [
-                    'id',
-                    'year',
-                    'status',
-                ],
-            ]);
-            ?>
-        <?php endforeach; ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <section class="cd-horizontal-timeline">
+                            <div class="timeline">
+                                <div class="events-wrapper">
+                                    <div class="events">
+                                        <ol>
+                                            <?php foreach ($timeline as $i => $item): ?>
+                                                <li><a href="#0" data-date="<?= date("d/m/Y", $item->created_at) ?>" class="<?= $i == 0 ? 'selected' : '' ?>"><?= $item->year ?></a></li>
+                                                <?php endforeach; ?>
+                                        </ol>
+                                        <span class="filling-line" aria-hidden="true"></span>
+                                    </div>
+                                    <!-- .events -->
+                                </div>
+                                <!-- .events-wrapper -->
+                                <ul class="cd-timeline-navigation">
+                                    <li><a href="#0" class="prev inactive">Prev</a></li>
+                                    <li><a href="#0" class="next">Next</a></li>
+                                </ul>
+                                <!-- .cd-timeline-navigation -->
+                            </div>
+                            <!-- .timeline -->
+                            <div class="events-content">
+                                <ol>
+                                    <li class="selected" data-date="16/01/2014">
+                                        <div class="d-flex align-items-center">
+                                            <div><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user" src="../../assets/images/users/1.jpg"></div>
+                                            <div>
+                                                <h2> Horizontal Timeline</h2>
+                                                <h6>January 16th, 2014</h6></div>
+                                        </div>
+                                        <p class="pt-3">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p>
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="28/02/2014">
+                                        <div class="d-flex align-items-center">
+                                            <div><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user2" src="../../assets/images/users/8.jpg"></div>
+                                            <div>
+                                                <h2> Horizontal Timeline</h2>
+                                                <h6>January 16th, 2014</h6></div>
+                                        </div>
+                                        <p class="pt-3">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p class="pb-3">
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="20/04/2014">
+                                        <h2><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user3" src="../../assets/images/users/7.jpg"> Horizontal Timeline<br/><small>March 20th, 2014</small></h2>
+                                        <p class="mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p class="pb-3">
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="20/05/2014">
+                                        <h2><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user4" src="../../assets/images/users/6.jpg"> Horizontal Timeline<br/><small>May 20th, 2014</small></h2>
+                                        <p class="mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p class="pb-3">
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="09/07/2014">
+                                        <h2><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user5" src="../../assets/images/users/5.jpg"> Horizontal Timeline<br/><small>July 9th, 2014</small></h2>
+                                        <p class="mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p class="pb-3">
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="30/08/2014">
+                                        <h2><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user6" src="../../assets/images/users/4.jpg"> Horizontal Timeline<br/><small>August 30th, 2014</small></h2>
+                                        <p class="mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p class="pb-3">
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="15/09/2014">
+                                        <h2><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user7" src="../../assets/images/users/3.jpg"> Horizontal Timeline<br/><small>September 15th, 2014</small></h2>
+                                        <p class="mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p class="pb-3">
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="01/11/2014">
+                                        <h2><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user8" src="../../assets/images/users/2.jpg"> Horizontal Timeline<br/><small>November 01st, 2014</small></h2>
+                                        <p class="mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p>
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="10/12/2014">
+                                        <h2><img class="rounded-circle pull-left mr-3 mb-2" width="60" alt="user9" src="../../assets/images/users/1.jpg"> Horizontal Timeline<br/><small>December 10th, 2014</small></h2>
+                                        <p class="mt-5">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                        <p class="pb-3">
+                                            <button class="btn btn-rounded btn-outline-info mt-3">Read more</button>
+                                        </p>
+                                    </li>
+                                    <li data-date="19/01/2015">
+                                        <h2>Event title here</h2>
+                                        <em>January 19th, 2015</em>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                    </li>
+                                    <li data-date="03/03/2015">
+                                        <h2>Event title here</h2>
+                                        <em>March 3rd, 2015</em>
+                                        <p class="pb-3">
+                                            Lorem ipsum dolor dfsit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                                        </p>
+                                    </li>
+                                </ol>
+                            </div>
+                            <!-- .events-content -->
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
         <?php $this->endBlock(); ?>
 
         <?php echo Tabs::Widget([

@@ -85,9 +85,10 @@ class BusinessController extends Controller
     public function actionCreate()
     {
         $model = new Business(['scenario' => Business::SCENARIO_CREATE]);
-        $transaction = \Yii::$app->db->beginTransaction();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
+                $transaction = \Yii::$app->db->beginTransaction();
                 try {
                     if ($model->save(false)) {
                         $transaction->commit();
