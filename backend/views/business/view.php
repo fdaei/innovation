@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card material-card">
     <div class="card-body">
-        <?php echo Html::img('@web/uploads/'.$model->logo) ?>
         <?php $this->beginBlock('Business'); ?>
         <?= DetailView::widget([
             'model' => $model,
@@ -38,15 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'slug',
                 'link',
                 [
-                    'attribute'=>'logo',
-                    'value'=>Html::img(Yii::getAlias('@web').'/uploads/'.$model->logo),
-                ],
-                [
-                        'label' => 'Your Image',
-                    'value'=>function($model){
-                        return('@web/uploads/'.$model->logo);
-                    },
-
+                    'attribute' => 'logo',
+                    'value' => Html::img($model->getUploadUrl('logo')),
+                    'format' => 'raw'
                 ],
                 'wallpaper',
                 'mobile_wallpaper',
