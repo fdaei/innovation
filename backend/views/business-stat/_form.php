@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Business;
+use common\models\BusinessStat;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -36,8 +37,7 @@ use yii\bootstrap4\ActiveForm;
     <?= $form->field($model, 'icon')->fileInput() ?>
         </div>
         <div class="col-md-3">
-
-    <?= $form->field($model,'status')->dropDownList( ['1' => 'active', '2' => 'inactive', '3' => 'deleted'])?>
+            <?= $form->field($model, 'status')->dropDownList(BusinessStat::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
 
     <div class="form-group">

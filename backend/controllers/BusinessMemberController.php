@@ -68,7 +68,7 @@ class BusinessMemberController extends Controller
      */
     public function actionCreate()
     {
-        $model = new BusinessMember();
+        $model = new BusinessMember(['scenario' => BusinessMember::SCENARIO_CREATE]);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate() ) {
@@ -94,7 +94,7 @@ class BusinessMemberController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->scenario = BusinessMember::SCENARIO_UPDATE;
         if ($this->request->isPost && $model->load($this->request->post())  && $model->validate()) {
             $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);

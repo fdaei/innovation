@@ -48,8 +48,8 @@ class BusinessMember extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'image', 'position','status'],'required', 'on' => [self::SCENARIO_CREATE]],
-            [['first_name', 'last_name', 'position','!status'],'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['business_id','first_name','last_name','position','status',"image"],'required', 'on' => [self::SCENARIO_CREATE]],
+            [['business_id','first_name','last_name','position','status'],'required','on' => [self::SCENARIO_UPDATE]],
             [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
             ['image', 'image', 'minWidth' => 268, 'maxWidth' => 268, 'minHeight' => 248, 'maxHeight' => 248, 'extensions' => 'jpg, gif, png', 'maxSize' => 648 * 348 * 2],
             [['business_id'], 'integer'],
@@ -65,8 +65,8 @@ class BusinessMember extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['first_name', 'last_name','position','!status'];
-        $scenarios[self::SCENARIO_UPDATE] = ['first_name', 'last_name', 'position','!status','image'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id','first_name', 'last_name','position','status','image'];
+        $scenarios[self::SCENARIO_UPDATE] = ['business_id','first_name', 'last_name','position','status'];
 
         return $scenarios;
     }
@@ -113,6 +113,29 @@ class BusinessMember extends \yii\db\ActiveRecord
     {
         return true;
     }
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+            ],
+            'StatusClass' => [
+                self::STATUS_DELETED => 'danger',
+                self::STATUS_ACTIVE => 'success',
+                self::STATUS_INACTIVE => 'warning',
+            ],
+            'StatusColor' => [
+                self::STATUS_DELETED => '#ff5050',
+                self::STATUS_ACTIVE => '#04AA6D',
+                self::STATUS_INACTIVE => '#eea236',
+            ],];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
+    }
 
     public function behaviors()
     {
@@ -141,7 +164,7 @@ class BusinessMember extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'image',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,

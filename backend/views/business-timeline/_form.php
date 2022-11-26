@@ -28,7 +28,7 @@ use yii\helpers\Html;
             <?= $form->field($model, 'year')->textInput() ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(['1' => 'active', '2' => 'inactive', '3' => 'deleted']) ?>
+            <?= $form->field($model, 'status')->dropDownList(BusinessTimeline::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
     </div>
 
@@ -73,7 +73,7 @@ use yii\helpers\Html;
                                         <?= $form->field($item, "[{$i}]description")->textarea(['rows' => 6]) ?>
                                     </div>
                                     <div class="col-sm-6">
-                                        <?= $form->field($item, "[{$i}]status")->dropDownList(['1' => 'active', '2' => 'inactive', '3' => 'deleted']) ?>
+                                        <?= $form->field($item, "[{$i}]status")->dropDownList(Business::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
                                     </div>
                                 </div>
                             </div>

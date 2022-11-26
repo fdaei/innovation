@@ -1,5 +1,6 @@
 <?php
 
+use common\models\City;
 use common\models\Province;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -34,7 +35,7 @@ use yii\widgets\ActiveForm;
 
         </div>
         <div class='col-md-3'>
-            <?= $form->field($model,'status')->dropDownList( ['1' => 'active', '2' => 'inactive', '3' => 'deleted'])?>
+            <?= $form->field($model, 'status')->dropDownList(City::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
     </div>
     <div class="form-group">

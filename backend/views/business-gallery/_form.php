@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Business;
+use common\models\BusinessGallery;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -33,7 +34,7 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(['1' => 'active', '2' => 'inactive', '3' => 'deleted']) ?>
+            <?= $form->field($model, 'status')->dropDownList(BusinessGallery::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
     </div>
     <div class="form-group">

@@ -31,8 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card-body">
             <?= DetailView::widget([
             'model' => $model,
-            'attributes' => [
-                        'id',
+            'attributes' => ['id',
             'business_timeline_id:datetime',
             'description:ntext',
             'status',

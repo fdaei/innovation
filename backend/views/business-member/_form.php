@@ -1,9 +1,11 @@
 <?php
 
 use common\models\Business;
+use common\models\BusinessMember;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+
 
 /** @var yii\web\View $this */
 /** @var common\models\BusinessMember $model */
@@ -33,7 +35,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(['1' => 'active', '2' => 'inactive', '3' => 'deleted']) ?>
+            <?= $form->field($model, 'status')->dropDownList(BusinessMember::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
 
     </div>

@@ -17,7 +17,7 @@ return [
     'components' => [
         'i18n' => [
             'translations' => [
-                'app' => [
+                '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'fa-items',
                     'fileMap' => [

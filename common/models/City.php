@@ -2,42 +2,45 @@
 
 namespace common\models;
 
-use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
- * This is the model class for table "province".
+ * This is the model class for table "ince_city".
  *
  * @property int $id
+ * @property int $province_id
  * @property string $name
- * @property int $center_id
+ * @property float $latitude
+ * @property float $longitude
  * @property int $status
  * @property int $created_at
  * @property int $created_by
  * @property int $updated_at
  * @property int $updated_by
- * @property int $deleted_at
+ * @property int|null $deleted_at
  *
- * @property City[] $cities
  * @property User $createdBy
+ * @property Province $province
+ * @property Province[] $provinces
  * @property User $updatedBy
- * @mixin SoftDeleteBehavior
  */
-class Province extends \yii\db\ActiveRecord
+class City extends \yii\db\ActiveRecord
 {
-    const STATUS_ACTIVE = 1;
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 2;
 
     /**
      * {@inheritdoc}
      */
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
+
+
     public static function tableName()
     {
-        return '{{%province}}';
+        return 'ince_city';
     }
 
     /**
@@ -46,11 +49,13 @@ class Province extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['center_id', 'status'], 'integer'],
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['province_id', 'name', 'latitude', 'longitude', 'status'], 'required'],
+            [['province_id', 'status'], 'integer'],
+            [['latitude', 'longitude'], 'number'],
+            [['name'], 'string', 'max' => 128],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::class, 'targetAttribute' => ['province_id' => 'id']],
         ];
     }
 
@@ -61,8 +66,10 @@ class Province extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'province_id' => Yii::t('app', 'Province ID'),
             'name' => Yii::t('app', 'Name'),
-            'center_id' => Yii::t('app', 'Center ID'),
+            'latitude' => Yii::t('app', 'Latitude'),
+            'longitude' => Yii::t('app', Yii::t('models', 'Longitude')),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
@@ -73,19 +80,9 @@ class Province extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Cities]].
-     *
-     * @return \yii\db\ActiveQuery|ProvinceQuery
-     */
-    public function getCities()
-    {
-        return $this->hasMany(City::class, ['province_id' => 'id']);
-    }
-
-    /**
      * Gets query for [[CreatedBy]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
     public function getCreatedBy()
     {
@@ -93,9 +90,29 @@ class Province extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Province]].
+     *
+     * @return \yii\db\ActiveQuery|ProvinceQuery
+     */
+    public function getProvince()
+    {
+        return $this->hasOne(Province::class, ['id' => 'province_id']);
+    }
+
+    /**
+     * Gets query for [[Provinces]].
+     *
+     * @return \yii\db\ActiveQuery|ProvinceQuery
+     */
+    public function getProvinces()
+    {
+        return $this->hasMany(Province::class, ['center_id' => 'id']);
+    }
+
+    /**
      * Gets query for [[UpdatedBy]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
     public function getUpdatedBy()
     {
@@ -104,22 +121,19 @@ class Province extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return ProvinceQuery the active query used by this AR class.
+     * @return CityQuery the active query used by this AR class.
      */
-    public static function find(): ProvinceQuery
+    public static function find()
     {
-        $query = new ProvinceQuery(get_called_class());
+        $query = new CityQuery(get_called_class());
         return $query->active();
     }
+
     public function canDelete()
     {
-        $city = City::find()->active()->andWhere(['province_id' => $this->id])->limit(1)->one();
-
-        if ($city) {
-            return false;
-        }
         return true;
     }
+
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
@@ -143,6 +157,7 @@ class Province extends \yii\db\ActiveRecord
         else
             return isset($_items[$type]) ? $_items[$type] : false;
     }
+
 
     public function behaviors()
     {
@@ -171,18 +186,17 @@ class Province extends \yii\db\ActiveRecord
         ];
     }
 
-
     public function fields()
     {
         return [
-            'id'=>'id',
-            'name'=>'name',
-            'center_id'=>'center_id',
+            'name',
+            'latitude',
+            'longitude',
         ];
     }
 
     public function extraFields()
     {
-        return parent::extraFields(); // TODO: Change the autogenerated stub
+        return [];
     }
 }
