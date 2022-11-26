@@ -40,7 +40,7 @@ use yii\web\View;
             <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(['1' => 'active', '2' => 'inactive', '3' => 'deleted']) ?>
+            <?= $form->field($model, 'status')->dropDownList(Business::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'logo')->fileInput() ?>

@@ -62,16 +62,16 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story','status','slug','logo', 'wallpaper', 'mobile_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story','status','slug'], 'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id',], 'integer'],
             [['short_description', 'success_story', 'investor_description'], 'string'],
             [['logo', "wallpaper", "mobile_wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
             [['link'], 'url'],
-            [['slug'],'unique'],
+            [['slug'], 'unique'],
             ['wallpaper', 'image', 'minWidth' => 1920, 'maxWidth' => 1920, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             ['mobile_wallpaper', 'image', 'minWidth' => 360, 'maxWidth' => 360, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
-            ['logo','file','extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
+            ['logo', 'file', 'extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -82,8 +82,8 @@ class Business extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['city_id','user_id', 'title', 'short_description', 'success_story','slug','status','link','investor_description','logo', 'wallpaper', 'mobile_wallpaper'];
-        $scenarios[self::SCENARIO_UPDATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story','slug', 'status','investor_description'];
+        $scenarios[self::SCENARIO_CREATE] = ['city_id', 'user_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'link', 'investor_description', 'logo', 'wallpaper', 'mobile_wallpaper'];
+        $scenarios[self::SCENARIO_UPDATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'investor_description'];
 
         return $scenarios;
     }
@@ -145,6 +145,13 @@ class Business extends \yii\db\ActiveRecord
         return $this->hasMany(BusinessTimeline::class, ['business_id' => 'id']);
     }
 
+
+    public function getBusinessTimeLineItems()
+    {
+        return $this->hasMany(BusinessTimelineItem::class, ['business_timeline_id' => 'id'])
+            ->viaTable('ince_business_timeline', ['business_id' => 'id']);
+    }
+
     /**
      * Gets query for [[CreatedBy]].
      *
@@ -164,6 +171,7 @@ class Business extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
+
 
     /**
      * Gets query for [[User]].
@@ -214,6 +222,30 @@ class Business extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+            ],
+            'StatusClass' => [
+                self::STATUS_DELETED => 'danger',
+                self::STATUS_ACTIVE => 'success',
+                self::STATUS_INACTIVE => 'warning',
+            ],
+            'StatusColor' => [
+                self::STATUS_DELETED => '#ff5050',
+                self::STATUS_ACTIVE => '#04AA6D',
+                self::STATUS_INACTIVE => '#eea236',
+            ],];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
+    }
+
     public function behaviors()
     {
         return [
@@ -241,7 +273,7 @@ class Business extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'logo',
-                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
+                'scenarios' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -255,7 +287,7 @@ class Business extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'wallpaper',
-                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
+                'scenarios' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -269,7 +301,7 @@ class Business extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'mobile_wallpaper',
-                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
+                'scenarios' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
