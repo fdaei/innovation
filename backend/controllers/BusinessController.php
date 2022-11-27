@@ -5,6 +5,7 @@ namespace backend\controllers;
 
 use common\models\Business;
 use common\models\BusinessSearch;
+use common\models\BusinessTimeline;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -66,14 +67,14 @@ class BusinessController extends Controller
      */
     public function actionView($id)
     {
-        $model=$this->findModel($id);
+        $model = $this->findModel($id);
         return $this->render('view', [
             'model' => $model,
-            'gallery'=>$model->businessGalleries,
-            'members'=>$model->businessMembers,
-            'timeline'=>$model->businessTimelines,
-            'timelineitems'=> $model->businessTimeLineItems,
-            'stat'=>$model->businessStates,
+            'gallery' => $model->businessGalleries,
+            'members' => $model->businessMembers,
+            'timeline' => $model->getBusinessTimelines()->orderBy([BusinessTimeline::tableName() . '.year' => SORT_ASC])->all(),
+            'timelineitems' => $model->businessTimeLineItems,
+            'stat' => $model->businessStates,
         ]);
     }
 

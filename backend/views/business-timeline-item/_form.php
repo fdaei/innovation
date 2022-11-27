@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Business;
+use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -17,7 +18,7 @@ use yii\widgets\ActiveForm;
     <div class="row">
             <div class="col-md-3">
                 <?= $form->field($model, 'business_timeline_id')->dropDownList(
-                    ArrayHelper::map(Business::find()->all(), 'id', 'title'),
+                    ArrayHelper::map(BusinessTimeline::find()->all(), 'id', 'year'),
                     ['prompt' => 'Select city']
                 ) ?>
             </div>

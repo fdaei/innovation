@@ -27,7 +27,7 @@ class m221102_100710_create_table_business_timeline extends Migration
             ],
             $tableOptions
         );
-
+        $this->createIndex('year', '{{%business_timeline}}', ['year'], true);
         $this->createIndex('business_id', '{{%business_timeline}}', ['business_id']);
         $this->createIndex('created_by', '{{%business_timeline}}', ['created_by']);
         $this->createIndex('updated_by', '{{%business_timeline}}', ['updated_by']);

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\BusinessTimelineItem;
 use common\models\BusinessTimelineItemSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -113,9 +114,12 @@ class BusinessTimelineItemController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if ($this->findModel($id)->canDelete()) {
+            $this->findModel($id)->softdelete();
+            return $this->redirect(['index']);
+        } else {
+            $this->addError('قادر به حذف نیستیم ');
+        }
     }
 
     /**
