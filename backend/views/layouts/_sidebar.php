@@ -59,6 +59,24 @@ $menu_items = [
                 'icon' => 'fas fa-building',
                 'url' => ['/province/']
             ],
+            [
+                'group' => 'CareerApply',
+                'label' => 'CareerApply',
+                'icon' => 'fas fa-building',
+                'url' => ['/career-apply/']
+            ],
+            [
+                'group' => 'JobPosition',
+                'label' => 'JobPosition',
+                'icon' => 'fas fa-building',
+                'url' => ['/job-position/']
+            ],
+            [
+                'group' => 'OrgUnit',
+                'label' => 'OrgUnit',
+                'icon' => 'fas fa-building',
+                'url' => ['/org-unit/']
+            ],
         ],
     ]
 ];

@@ -37,5 +37,9 @@ return [
     "INACTIVE" => "غیرفعال",
     "Select Status" => "انتخاب وضعیت",
     "Business Timeline ID" => "ایدی تایم لاین",
-
+    "Email"=>"ایمیل",
+    "First Name"=>"نام",
+    "Last Name"=>"نام خانوادگی",
+    "Mobile"=>"موبایل",
+    "Job Position ID"=>"شناسه جایگاه کاری",
 ] ?>
