@@ -5,6 +5,7 @@ namespace backend\controllers;
 
 use common\models\BusinessGallery;
 use common\models\BusinessGallerySearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -131,14 +132,14 @@ class BusinessGalleryController extends Controller
      */
     public function actionDelete($id)
     {
-        if($this->findModel($id)->canDelete()){
-            $this->findModel($id)->softdelete();
-            return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        if($model->canDelete() && $model->softDelete()){
+            $this->flash('success', Yii::t('app', 'Image Deleted'));
         }
         else{
-            throw new NotFoundHttpException(Yii::t('app', 'امکان حذف وجود ندارد '));
+            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Image'));
         }
-
+        return $this->redirect(['index']);
     }
 
     /**
@@ -155,5 +156,9 @@ class BusinessGalleryController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function flash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

@@ -185,10 +185,10 @@ class BusinessTimelineController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->canDelete($model)) {
-            $this->findModel($id)->softdelete();
+        if ($model->canDelete() && $model->softDelete()) {
+            $this->flash('success', Yii::t('app', 'Item Deleted'));
         } else {
-            $this->flash('error', array_values($model->errors)[0][0] ?? Yii::t('app', 'Error In Save Info'));
+            $this->flash('error', array_values($model->errors)[0][0] ?? Yii::t('app', 'Error In Delete Info'));
         }
 
         return $this->redirect(['index']);

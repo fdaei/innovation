@@ -208,12 +208,13 @@ class Business extends \yii\db\ActiveRecord
     public function canDelete()
     {
         $stat = BusinessStat::find()->active()->andWhere(['business_id' => $this->id])->limit(1)->one();
-
-        if ($stat) {
+        $time = BusinessTimeline::find()->active()->andWhere(['business_id' => $this->id])->limit(1)->one();
+        $gallery = BusinessGallery::find()->active()->andWhere(['business_id' => $this->id])->limit(1)->one();
+        $member = BusinessMember::find()->active()->andWhere(['business_id' => $this->id])->limit(1)->one();
+        if ($stat && $time && $gallery && $member) {
             $this->addError('business_id', Yii::t('app', 'Business has an active stat'));
             return false;
         }
-
         return true;
     }
 

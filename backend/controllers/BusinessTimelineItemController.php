@@ -116,8 +116,10 @@ class BusinessTimelineItemController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->canDelete()) {
-            $model->softDelete();
+        if ($model->canDelete() && $model->softDelete()) {
+            $this->flash('success', Yii::t('app', 'Item Deleted'));
+        } else {
+            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Items'));
         }
 
         return $this->redirect(['index']);
@@ -137,5 +139,10 @@ class BusinessTimelineItemController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function flash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\HtmlPurifier;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -128,7 +129,19 @@ class JobPosition extends \yii\db\ActiveRecord
 
     public function canDelete()
     {
+        $job = CareerApply::find()->active()->andWhere(['job_position_id' => $this->id])->limit(1)->one();
+        if ($job) {
+            $this->addError('business_id', Yii::t('app', 'jobPosition has an active CareerApply'));
+            return false;
+        }
         return true;
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->description = HtmlPurifier::process($this->description);
+        $this->requirements = HtmlPurifier::process($this->requirements);
+        return parent::beforeSave($insert);
     }
 
     public static function itemAlias($type, $code = NULL)

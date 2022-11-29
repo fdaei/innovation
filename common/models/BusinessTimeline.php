@@ -121,10 +121,11 @@ class BusinessTimeline extends \yii\db\ActiveRecord
         return Yii::$app->formatter->asSpellout($this->year);
     }
 
-    public function canDelete($model)
+    public function canDelete()
     {
-        if ($model->timeLineIem) {
-            $this->addError('status', 'امکان حذف وجود ندارد ');
+        $item = BusinessTimelineItem::find()->active()->andWhere(['business_timeline_id ' => $this->id])->limit(1)->one();
+        if ($item) {
+            $this->addError('business_timeline_id', Yii::t('app', 'BusinessTimeline has an active Items'));
             return false;
         }
 

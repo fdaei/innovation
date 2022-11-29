@@ -112,7 +112,13 @@ class JobPositionController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model->canDelete() && $model->softDelete()) {
+            $this->flash('success', Yii::t('app', 'Item Deleted'));
+        } else {
+            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
+        }
 
         return $this->redirect(['index']);
     }
@@ -131,5 +137,10 @@ class JobPositionController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    private function flash(string $string, mixed $param)
+    {
+        Yii::$app->getSession()->setFlash($string == 'error' ? 'danger' : $string, $param);
     }
 }

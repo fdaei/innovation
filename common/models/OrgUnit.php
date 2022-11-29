@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\HtmlPurifier;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -114,6 +115,11 @@ class OrgUnit extends \yii\db\ActiveRecord
 
     public function canDelete()
     {
+        $job = JobPosition::find()->active()->andWhere(['org_unit_id' => $this->id])->limit(1)->one();
+        if ($job) {
+            $this->addError('business_id', Yii::t('app', 'OrgUnit has an active JobPosition'));
+            return false;
+        }
         return true;
     }
 
@@ -140,7 +146,12 @@ class OrgUnit extends \yii\db\ActiveRecord
         else
             return isset($_items[$type]) ? $_items[$type] : false;
     }
+    public function beforeSave($insert)
+    {
+        $this->description = HtmlPurifier::process($this->description);
 
+        return parent::beforeSave($insert);
+    }
     public function behaviors()
     {
         return [
