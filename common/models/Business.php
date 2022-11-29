@@ -37,7 +37,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
+ *
  * @mixin CdnUploadImageBehavior
+ * @mixin SoftDeleteBehavior
  */
 class Business extends \yii\db\ActiveRecord
 {
@@ -208,8 +210,10 @@ class Business extends \yii\db\ActiveRecord
         $stat = BusinessStat::find()->active()->andWhere(['business_id' => $this->id])->limit(1)->one();
 
         if ($stat) {
+            $this->addError('business_id', Yii::t('app', 'Business has an active stat'));
             return false;
         }
+
         return true;
     }
 

@@ -7,6 +7,7 @@ use common\models\CitySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * CityController implements the CRUD actions for City model.
@@ -119,7 +120,7 @@ class CityController extends Controller
     /**
      * Finds the City model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ایدی
+     * @param int $id
      * @return City the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

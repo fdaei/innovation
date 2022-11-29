@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -23,19 +22,21 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $deleted_at
  *
  * @property BusinessTimeline $businessTimeline
- * @property BusinessTimelineItem[] $businessTimelineItems
+ *
+ * @mixin SoftDeleteBehavior
  */
 class BusinessTimelineItem extends \yii\db\ActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return  '{{%business_timeline_item}}';
+        return '{{%business_timeline_item}}';
     }
 
     /**
@@ -44,7 +45,7 @@ class BusinessTimelineItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description','status'],'required'],
+            [['description', 'status'], 'required'],
             [['description'], 'string'],
             [['business_timeline_id'], 'exist', 'skipOnError' => true, 'targetClass' => BusinessTimeline::class, 'targetAttribute' => ['business_timeline_id' => 'id']],
         ];
@@ -71,33 +72,30 @@ class BusinessTimelineItem extends \yii\db\ActiveRecord
     /**
      * Gets query for [[BusinessTimeline]].
      *
-     * @return \yii\db\ActiveQuery|BusinessTimelineItemQuery
+     * @return \yii\db\ActiveQuery|BusinessTimelineQuery
      */
-    /**
-     * Gets query for [[BusinessTimelineItems]].
-     *
-     * @return \yii\db\ActiveQuery|BusinessTimelineItemQuery
-     */
-    public function getBusinessTimelineItems()
+    public function getBusinessTimeline()
     {
-       return $this->hasMany(BusinessTimelineItem::class, ['business_timeline_id' => 'id']);
-
+        return $this->hasOne(BusinessTimeline::class, ['id' => 'business_timeline_id']);
     }
+
     public function beforeSave($insert)
     {
         $this->description = HtmlPurifier::process($this->description);
 
         return parent::beforeSave($insert);
     }
+
     /**
      * {@inheritdoc}
      * @return BusinessTimelineItemQuery the active query used by this AR class.
      */
     public static function find()
     {
-        $query =  new BusinessTimelineItemQuery(get_called_class());
+        $query = new BusinessTimelineItemQuery(get_called_class());
         return $query->active();
     }
+
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
@@ -154,8 +152,8 @@ class BusinessTimelineItem extends \yii\db\ActiveRecord
     {
         return [
             'id',
-            'businessTimelineId'=>'business_timeline_id',
-            'Description'=>'description',
+            'businessTimelineId' => 'business_timeline_id',
+            'Description' => 'description',
         ];
     }
 

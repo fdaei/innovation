@@ -5,9 +5,10 @@ namespace backend\controllers;
 use common\models\BusinessTimelineItem;
 use common\models\BusinessTimelineItemSearch;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * BusinessTimelineItemController implements the CRUD actions for BusinessTimelineItem model.
@@ -23,7 +24,7 @@ class BusinessTimelineItemController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -73,8 +74,7 @@ class BusinessTimelineItemController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
-
+                return $this->redirect(['/business/view', 'id' => $model->businessTimeline->business_id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -97,7 +97,7 @@ class BusinessTimelineItemController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/business/view', 'id' => $model->businessTimeline->business_id]);
         }
 
         return $this->render('update', [
@@ -109,17 +109,18 @@ class BusinessTimelineItemController extends Controller
      * Deletes an existing BusinessTimelineItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        if ($this->findModel($id)->canDelete()) {
-            $this->findModel($id)->softdelete();
-            return $this->redirect(['index']);
-        } else {
-            $this->addError('قادر به حذف نیستیم ');
+        $model = $this->findModel($id);
+
+        if ($model->canDelete()) {
+            $model->softDelete();
         }
+
+        return $this->redirect(['index']);
     }
 
     /**
