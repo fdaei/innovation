@@ -4,9 +4,10 @@ namespace backend\controllers;
 
 use common\models\JobPosition;
 use common\models\JobPositionSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * JobPositionController implements the CRUD actions for JobPosition model.
