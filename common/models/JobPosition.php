@@ -8,46 +8,45 @@ use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
-* This is the model class for table "ince_job_position".
-*
-    * @property int $id
-    * @property string $title
-    * @property int $org_unit_id
-    * @property string $description
-    * @property string $requirements
-    * @property int $status
-    * @property int $created_at
-    * @property int $created_by
-    * @property int $updated_at
-    * @property int $updated_by
-    *
-            * @property CareerApply[] $careerApplies
-            * @property User $createdBy
-            * @property OrgUnit $orgUnit
-            * @property User $updatedBy
-    */
+ * This is the model class for table "ince_job_position".
+ *
+ * @property int $id
+ * @property string $title
+ * @property int $org_unit_id
+ * @property string $description
+ * @property string $requirements
+ * @property int $status
+ * @property int $created_at
+ * @property int $created_by
+ * @property int $updated_at
+ * @property int $updated_by
+ *
+ * @property CareerApply[] $careerApplies
+ * @property User $createdBy
+ * @property OrgUnit $orgUnit
+ * @property User $updatedBy
+ */
 class JobPosition extends \yii\db\ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
 
-/**
-* {@inheritdoc}
-*/
-const STATUS_ACTIVE = 1;
-const STATUS_DELETED = 0;
-const STATUS_INACTIVE = 2;
 
+    public static function tableName()
+    {
+        return 'ince_job_position';
+    }
 
-public static function tableName()
-{
-return 'ince_job_position';
-}
-
-/**
-* {@inheritdoc}
-*/
-public function rules()
-{
-return [
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
             [['title', 'org_unit_id', 'description', 'requirements'], 'required'],
             [['org_unit_id', 'status'], 'integer'],
             [['title'], 'string', 'max' => 128],
@@ -56,81 +55,82 @@ return [
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
-}
-
-/**
-* {@inheritdoc}
-*/
-public function attributeLabels()
-{
-return [
-    'id' => Yii::t('app', 'ID'),
-    'title' => Yii::t('app', 'Title'),
-    'org_unit_id' => Yii::t('app', 'Org Unit ID'),
-    'description' => Yii::t('app', 'Description'),
-    'requirements' => Yii::t('app', 'Requirements'),
-    'status' => Yii::t('app', 'Status'),
-    'created_at' => Yii::t('app', 'Created At'),
-    'created_by' => Yii::t('app', 'Created By'),
-    'updated_at' => Yii::t('app', 'Updated At'),
-    'updated_by' => Yii::t('app', 'Updated By'),
-];
-}
+    }
 
     /**
-    * Gets query for [[CareerApplies]].
-    *
-    * @return \yii\db\ActiveQuery|CareerApplyQuery
-    */
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'title' => Yii::t('app', 'Title'),
+            'org_unit_id' => Yii::t('app', 'Org Unit ID'),
+            'description' => Yii::t('app', 'Description'),
+            'requirements' => Yii::t('app', 'Requirements'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'created_by' => Yii::t('app', 'Created By'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'updated_by' => Yii::t('app', 'Updated By'),
+        ];
+    }
+
+    /**
+     * Gets query for [[CareerApplies]].
+     *
+     * @return \yii\db\ActiveQuery|CareerApplyQuery
+     */
     public function getCareerApplies()
     {
-    return $this->hasMany(CareerApply::class, ['job_position_id' => 'id']);
+        return $this->hasMany(CareerApply::class, ['job_position_id' => 'id']);
     }
 
     /**
-    * Gets query for [[CreatedBy]].
-    *
-    * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
-    */
+     * Gets query for [[CreatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     */
     public function getCreatedBy()
     {
-    return $this->hasOne(User::class, ['id' => 'created_by']);
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-    * Gets query for [[OrgUnit]].
-    *
-    * @return \yii\db\ActiveQuery|CareerApplyQuery
-    */
+     * Gets query for [[OrgUnit]].
+     *
+     * @return \yii\db\ActiveQuery|CareerApplyQuery
+     */
     public function getOrgUnit()
     {
-    return $this->hasOne(OrgUnit::class, ['id' => 'org_unit_id']);
+        return $this->hasOne(OrgUnit::class, ['id' => 'org_unit_id']);
     }
 
     /**
-    * Gets query for [[UpdatedBy]].
-    *
-    * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
-    */
+     * Gets query for [[UpdatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     */
     public function getUpdatedBy()
     {
-    return $this->hasOne(User::class, ['id' => 'updated_by']);
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
-    
+
     /**
-    * {@inheritdoc}
-    * @return JobPositionQuery the active query used by this AR class.
-    */
+     * {@inheritdoc}
+     * @return JobPositionQuery the active query used by this AR class.
+     */
     public static function find()
     {
-    $query = new JobPositionQuery(get_called_class());
-    return $query->active();
+        $query = new JobPositionQuery(get_called_class());
+        return $query->active();
     }
 
     public function canDelete()
     {
-    return true;
+        return true;
     }
+
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
@@ -157,44 +157,43 @@ return [
 
     public function behaviors()
     {
-    return [
-    'timestamp' => [
-    'class' => TimestampBehavior::class
-    ],
-    [
-    'class' => BlameableBehavior::class,
-    'createdByAttribute' => 'created_by',
-    'updatedByAttribute' => 'updated_by',
-    ],
-    'softDeleteBehavior' => [
-    'class' => SoftDeleteBehavior::class,
-    'softDeleteAttributeValues' => [
-    'deleted_at' => time(),
-    'status' => self::STATUS_DELETED
-    ],
-    'restoreAttributeValues' => [
-    'deleted_at' => 0,
-    'status' => self::STATUS_ACTIVE
-    ],
-    'replaceRegularDelete' => false, // mutate native `delete()` method
-    'invokeDeleteEvents' => false
-    ],
-    ];
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class
+            ],
+            [
+                'class' => BlameableBehavior::class,
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::class,
+                'softDeleteAttributeValues' => [
+                    'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED
+                ],
+                'restoreAttributeValues' => [
+                    'deleted_at' => 0,
+                    'status' => self::STATUS_ACTIVE
+                ],
+                'replaceRegularDelete' => false, // mutate native `delete()` method
+                'invokeDeleteEvents' => false
+            ],
+        ];
     }
 
     public function fields()
     {
-    return [
-            'id' ,
-            'title' ,
-            'org_unit_id' ,
-            'description' ,
-            'requirements' ,
+        return [
+            'id',
+            'title',
+            'description',
+            'requirements',
         ];
     }
 
     public function extraFields()
     {
-    return [];
+        return [];
     }
 }
