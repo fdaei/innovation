@@ -24,6 +24,7 @@ class m221128_154059_create_table_ince_job_position extends Migration
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
+                'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],
             $tableOptions
         );

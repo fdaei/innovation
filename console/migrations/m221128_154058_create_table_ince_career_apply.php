@@ -23,11 +23,12 @@ class m221128_154058_create_table_ince_career_apply extends Migration
                 'job_position_id' => $this->integer()->unsigned()->notNull(),
                 'cv_file' => $this->string(128)->notNull(),
                 'description' => $this->string(1024)->notNull(),
-                'status' => $this->tinyInteger()->notNull(),
+                'status' => $this->tinyInteger()->notNull()->defaultValue('1'),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
+                'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],
             $tableOptions
         );
