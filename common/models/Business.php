@@ -239,7 +239,8 @@ class Business extends \yii\db\ActiveRecord
                 self::STATUS_DELETED => '#ff5050',
                 self::STATUS_ACTIVE => '#04AA6D',
                 self::STATUS_INACTIVE => '#eea236',
-            ],];
+            ],
+        ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
         else
