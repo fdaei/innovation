@@ -8,7 +8,6 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
-
 /**
  * This is the model class for table "ince_career_apply".
  *
@@ -39,7 +38,6 @@ class CareerApply extends \yii\db\ActiveRecord
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
 
-
     public static function tableName()
     {
         return 'ince_career_apply';
@@ -51,11 +49,13 @@ class CareerApply extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'first_name', 'last_name', 'mobile', 'email', 'job_position_id', 'cv_file', 'description', 'status',], 'required'],
+            [['first_name', 'last_name', 'mobile', 'email', 'job_position_id', 'cv_file', 'description', 'status',], 'required'],
             [['user_id', 'job_position_id', 'status',], 'integer'],
             [['first_name', 'last_name'], 'string', 'max' => 128],
             ['cv_file', 'file', 'extensions' => 'pdf', 'maxSize' => 1024 * 1024 * 3, 'mimeTypes' => ['application/pdf']],
             [['mobile'], 'string', 'max' => 11],
+            [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
+            [['email'], 'email'],
             [['email'], 'string', 'max' => 256],
             [['description'], 'string', 'max' => 1024],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -163,7 +163,7 @@ class CareerApply extends \yii\db\ActiveRecord
             ],
             [
                 'class' => BlameableBehavior::class,
-                'createdByAttribute' => 'created_by',
+                'createdByAttribute' => 'user_id',
                 'updatedByAttribute' => 'updated_by',
             ],
             'softDeleteBehavior' => [
