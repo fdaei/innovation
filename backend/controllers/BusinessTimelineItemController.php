@@ -122,7 +122,7 @@ class BusinessTimelineItemController extends Controller
             $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Items'));
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/business/view', 'id' => $model->businessTimeline->business_id]);
     }
 
     /**

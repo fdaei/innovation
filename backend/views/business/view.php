@@ -170,19 +170,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                                 </div>
                                                 <div>
-                                                    <h2><?= $item->convert([$item->year]) ?></h2>
-                                                    <h6><?= $item->year ?></h6></div>
+                                                    <h3><?= $item->convert([$item->year]) ?></h3>
+                                                    <h3><?= $item->year ?></h3>
+                                                </div>
                                             </div>
                                             <?php foreach ($item->timeLineIem as $it): ?>
                                                 <p class="pt-3">
-                                                   <?= $it->description ?>
+                                                    <?= $it->description ?>
+                                                    <?= Html::a('<i class="fas fa-trash"></i>', ['/business-timeline-item/delete', 'id' => $it->id], ['class' => ' btn  btn btn-outline-secondary btn-sm float-right m-1', "data-method" => "post"]) ?>
+                                                    <?= Html::a('<i class="fas fa-pen"></i>', ['/business-timeline-item/update', 'id' => $it->id], ['class' => 'btn btn-outline-secondary btn-sm float-right m-1', "method" => "post"]) ?>
                                                 </p>
-                                                <?= Html::a('Delete', ['/business-timeline-item/delete', 'id' => $it->id], ['class'=>' btn btn-rounded btn btn-danger mt-3' , "data-method"=>"post"]) ?>
-                                                <?= Html::a('Update', ['/business-timeline-item/update', 'id' => $it->id], ['class'=>'btn btn-rounded btn-outline-info mt-3' , "method"=>"post"]) ?>
                                             <?php endforeach; ?>
                                             <p>
-                                                <?= Html::a('Delete', ['/business-timeline/delete', 'id' => $item->id], ['class'=>' btn btn-rounded btn btn-danger mt-3' , "data-method"=>"post"]) ?>
-                                                <?= Html::a('Update', ['/business-timeline/update', 'id' => $item->id], ['class'=>'btn btn-rounded btn-outline-info mt-3' , "method"=>"post"]) ?>
+                                                <?= Html::a('<i class="fas fa-trash"></i>', ['/business-timeline/delete', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "data-method" => "post"]) ?>
+                                                <?= Html::a('<i class="fas fa-pen"></i>', ['/business-timeline/update', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "method" => "post"]) ?>
                                             </p>
                                         </li>
                                     <?php endforeach; ?>

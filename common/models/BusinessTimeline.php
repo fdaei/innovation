@@ -123,7 +123,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
 
     public function canDelete()
     {
-        $item = BusinessTimelineItem::find()->active()->andWhere(['business_timeline_id ' => $this->id])->limit(1)->one();
+        $item = BusinessTimelineItem::find()->active()->andWhere(['business_timeline_id' => $this->id])->limit(1)->one();
         if ($item) {
             $this->addError('business_timeline_id', Yii::t('app', 'BusinessTimeline has an active Items'));
             return false;

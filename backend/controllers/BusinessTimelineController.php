@@ -158,7 +158,7 @@ class BusinessTimelineController extends Controller
                     }
                     if ($flag) {
                         $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
@@ -184,14 +184,13 @@ class BusinessTimelineController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-
         if ($model->canDelete() && $model->softDelete()) {
             $this->flash('success', Yii::t('app', 'Item Deleted'));
         } else {
             $this->flash('error', array_values($model->errors)[0][0] ?? Yii::t('app', 'Error In Delete Info'));
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
     }
 
     /**
