@@ -5,9 +5,9 @@ namespace backend\controllers;
 use common\models\BusinessMember;
 use common\models\BusinessMemberSearch;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * BusinessMemberController implements the CRUD actions for BusinessMember model.
@@ -71,7 +71,7 @@ class BusinessMemberController extends Controller
         $model = new BusinessMember(['scenario' => BusinessMember::SCENARIO_CREATE]);
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate() ) {
+            if ($model->load($this->request->post()) && $model->validate()) {
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -95,7 +95,7 @@ class BusinessMemberController extends Controller
     {
         $model = $this->findModel($id);
         $model->scenario = BusinessMember::SCENARIO_UPDATE;
-        if ($this->request->isPost && $model->load($this->request->post())  && $model->validate()) {
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
             $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         }

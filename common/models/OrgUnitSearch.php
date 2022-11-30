@@ -4,7 +4,6 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\OrgUnit;
 
 /**
  * OrgUnitSearch represents the model behind the search form of `common\models\OrgUnit`.
@@ -58,17 +57,17 @@ class OrgUnitSearch extends OrgUnit
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'deleted_at' => $this->deleted_at,
+            OrgUnit::tableName() . '.id' => $this->id,
+            OrgUnit::tableName() . '.status' => $this->status,
+            OrgUnit::tableName() . '.created_at' => $this->created_at,
+            OrgUnit::tableName() . '.created_by' => $this->created_by,
+            OrgUnit::tableName() . '.updated_at' => $this->updated_at,
+            OrgUnit::tableName() . '.updated_by' => $this->updated_by,
+            OrgUnit::tableName() . '.deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', OrgUnit::tableName() . '.title', $this->title])
+            ->andFilterWhere(['like', OrgUnit::tableName() . '.description', $this->description]);
 
         return $dataProvider;
     }

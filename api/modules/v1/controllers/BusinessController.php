@@ -6,20 +6,21 @@ use common\models\Business;
 use common\models\BusinessSearch;
 use Yii;
 use yii\filters\VerbFilter;
-use yii\rest\Controller;
+use yii\rest\ActiveController;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 /**
  * BusinessController implements the CRUD actions for Business model.
  */
-class BusinessController extends Controller
+class BusinessController extends ActiveController
 {
+    public $modelClass = "common\models\Business";
+
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
-
 
     public function behaviors()
     {
@@ -29,8 +30,9 @@ class BusinessController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
-                        'index' => ['GET'],
-                        'view' => ['GET'],
+                        'index' => ['GET', 'HEAD', 'OPTIONS'],
+                        'view' => ['GET', 'HEAD', 'OPTIONS'],
+                        'slug' => ['GET', 'HEAD', 'OPTIONS'],
                     ],
                 ],
             ]
@@ -43,7 +45,7 @@ class BusinessController extends Controller
     {
         $actions = parent::actions();
         // disable the "delete" and "create" actions
-        unset($actions['delete'], $actions['create'], $actions['update']);
+        unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
 
     }

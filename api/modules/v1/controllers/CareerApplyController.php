@@ -2,22 +2,18 @@
 
 namespace api\modules\v1\controllers;
 
-
-use common\models\BusinessSearch;
 use common\models\CareerApply;
-use common\models\JobPosition;
-use common\models\JobPositionSearch;
-use common\models\OrgUnit;
 use common\models\OrgUnitSearch;
 use yii\filters\VerbFilter;
-use yii\rest\Controller;
+use yii\rest\ActiveController;
 use yii\web\HttpException;
 
 /**
- * Site controller
+ * CareerApply controller
  */
-class PositionController extends Controller
+class CareerApplyController extends ActiveController
 {
+    public $modelClass = "common\models\CareerApply";
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -34,8 +30,8 @@ class PositionController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
-                        'create' => ['POST'],
-                        'view' => ['GET'],
+                        'create' => ['POST', 'OPTIONS'],
+                        'units' => ['GET', 'HEAD', 'OPTIONS'],
                     ],
                 ],
             ]
@@ -46,10 +42,11 @@ class PositionController extends Controller
     {
         $actions = parent::actions();
         // disable the "delete" and "create" actions
-        unset($actions['delete'], $actions['view'], $actions['update']);
+        unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
 
     }
+
     /**
      * @OA\Info(
      *   version="1.0.0",
@@ -60,11 +57,11 @@ class PositionController extends Controller
      */
     /**
      * @OA\Get(
-     *    path = "/jobposition",
-     *    tags = {"jobposition"},
-     *    operationId = "jobposition",
-     *    summary = "jobposition List",
-     *    description = "List of all jobposition",
+     *    path = "/career-apply/units",
+     *    tags = {"CareerApply"},
+     *    operationId = "unit",
+     *    summary = "Units List",
+     *    description = "List of all Organizations",
      *
      *	@OA\Parameter(
      *        in = "query",
@@ -76,7 +73,7 @@ class PositionController extends Controller
      *)
      * @throws HttpException
      */
-    public function actionIndex()
+    public function actionUnits()
     {
         $searchModel = new OrgUnitSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -89,16 +86,15 @@ class PositionController extends Controller
         $model = new CareerApply();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post(),'') && $model->validate()) {
+            if ($model->load($this->request->post(), '') && $model->validate()) {
                 $model->save(false);
             } else {
                 $model->validate();
             }
-            return $model;
         } else {
             $model->loadDefaultValues();
         }
+
         return $model;
     }
-
 }

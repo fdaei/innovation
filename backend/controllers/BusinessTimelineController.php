@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-
 use common\models\BaseModel;
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
@@ -10,9 +9,7 @@ use common\models\BusinessTimelineSearch;
 use Exception;
 use yii\web\Response;
 use Yii;
-use backend\models\Model;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -123,7 +120,7 @@ class BusinessTimelineController extends Controller
      * Updates an existing BusinessTimeline model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
@@ -173,12 +170,11 @@ class BusinessTimelineController extends Controller
         ]);
     }
 
-
     /**
      * Deletes an existing BusinessTimeline model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return BusinessTimeline|\yii\web\ResBusinessTimelinense
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)

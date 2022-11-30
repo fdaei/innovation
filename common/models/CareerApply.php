@@ -2,9 +2,7 @@
 
 namespace common\models;
 
-use common\behaviors\C;
 use common\behaviors\CdnUploadImageBehavior;
-use common\behaviors\UploadBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
