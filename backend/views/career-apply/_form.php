@@ -40,8 +40,8 @@ use yii\widgets\ActiveForm;
                 ['prompt' => 'Select user']
             ) ?>
         </div>
-        <div class='col-md-3'>
-            <?= $form->field($model, 'cv_file')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'cv_file')->fileInput() ?>
         </div>
         <div class='col-md-3'>
             <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>

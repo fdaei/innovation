@@ -2,10 +2,14 @@
 
 namespace common\models;
 
+use common\behaviors\C;
+use common\behaviors\CdnUploadImageBehavior;
+use common\behaviors\UploadBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
+
 
 /**
  * This is the model class for table "ince_career_apply".
@@ -176,6 +180,19 @@ class CareerApply extends \yii\db\ActiveRecord
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'cv_file',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Apply",
+                'basePath' => "@inceRoot/Apply",
+                'path' => "@inceRoot/Apply",
+                'url' => "@cdnWeb/Apply"
             ],
         ];
     }
