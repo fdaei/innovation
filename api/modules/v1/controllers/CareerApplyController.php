@@ -73,10 +73,9 @@ class CareerApplyController extends ActiveController
      */
     public function actionView($id)
     {
-        var_dump("ksks");
-        die();
         return $this->findModel($id);
     }
+
     /**
      * @OA\Info(
      *   version="1.0.0",
