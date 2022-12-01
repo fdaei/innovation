@@ -66,7 +66,7 @@ class CareerApplyController extends ActiveController
      *	@OA\Parameter(
      *        in = "query",
      *        name = "expand",
-     *        description = "",
+     *        description = "jobPositions is a expand",
      *        required = false
      *    ),
      *	@OA\Response(response = 200, description = "success")
@@ -80,6 +80,31 @@ class CareerApplyController extends ActiveController
 
         return $dataProvider;
     }
+
+    /**
+     * @OA\Info(
+     *   version="1.0.0",
+     *   title="My API",
+     *   @OA\License(name="MIT"),
+     *   @OA\Attachable()
+     * )
+     */
+    /**
+     * @OA\Post(path="/career-apply/create",
+     *     summary="Add a new career apply",
+     *     operationId="careerApplyCreate",
+     *     tags={"CareerApply"},
+     *
+     *	@OA\Parameter(
+     *        in = "query",
+     *        name = "expand",
+     *        description = "",
+     *        required = false
+     *    ),
+     *	@OA\Response(response = 200, description = "success")
+     *)
+     * @throws HttpException
+     */
 
     public function actionCreate()
     {
