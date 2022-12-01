@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -24,6 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property BusinessTimeline $businessTimeline
  *
  * @mixin SoftDeleteBehavior
+
  */
 class BusinessTimelineItem extends \yii\db\ActiveRecord
 {

@@ -25,6 +25,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $deleted_at
  *
  * @property Business $business
+ * @mixin CdnUploadImageBehavior
+ * @mixin SoftDeleteBehavior
  */
 class BusinessMember extends \yii\db\ActiveRecord
 {

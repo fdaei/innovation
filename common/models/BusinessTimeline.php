@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -23,6 +24,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property Business $business
  * @property User $createdBy
  * @property User $updatedBy
+ *
+ * @mixin SoftDeleteBehavior
  */
 class BusinessTimeline extends \yii\db\ActiveRecord
 {
@@ -46,7 +49,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
         return [
             [['business_id', 'year', 'status'], 'required'],
             [['business_id', 'status'], 'integer'],
-            [['year'], 'safe'],
+            [['year'], 'unique'],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],

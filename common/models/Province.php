@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;

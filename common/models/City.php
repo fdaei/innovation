@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -26,6 +27,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property Province $province
  * @property Province[] $provinces
  * @property User $updatedBy
+ *
+ * @mixin SoftDeleteBehavior
  */
 class City extends \yii\db\ActiveRecord
 {

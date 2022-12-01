@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -21,11 +22,13 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_by
  * @property int $updated_at
  * @property int $updated_by
+ * @property int $immediate
  *
  * @property CareerApply[] $careerApplies
  * @property User $createdBy
  * @property OrgUnit $orgUnit
  * @property User $updatedBy
+ * @mixin SoftDeleteBehavior
  */
 class JobPosition extends \yii\db\ActiveRecord
 {
@@ -49,7 +52,7 @@ class JobPosition extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'org_unit_id', 'description', 'requirements'], 'required'],
-            [['org_unit_id', 'status'], 'integer'],
+            [['org_unit_id', 'status','immediate'], 'integer'],
             [['title'], 'string', 'max' => 128],
             [['description', 'requirements'], 'string', 'max' => 1024],
             [['org_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrgUnit::class, 'targetAttribute' => ['org_unit_id' => 'id']],
@@ -68,6 +71,7 @@ class JobPosition extends \yii\db\ActiveRecord
             'title' => Yii::t('app', 'Title'),
             'org_unit_id' => Yii::t('app', 'Org Unit ID'),
             'description' => Yii::t('app', 'Description'),
+            'immediate' => Yii::t('app', 'Immediate'),
             'requirements' => Yii::t('app', 'Requirements'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -202,6 +206,7 @@ class JobPosition extends \yii\db\ActiveRecord
             'title',
             'description',
             'requirements',
+            'immediate',
         ];
     }
 

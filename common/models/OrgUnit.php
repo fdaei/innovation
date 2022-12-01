@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -24,6 +25,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property JobPosition[] $jobPositions
  * @property User $updatedBy
+ *
+ * @mixin SoftDeleteBehavior
  */
 class OrgUnit extends \yii\db\ActiveRecord
 {

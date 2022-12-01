@@ -28,6 +28,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property Business $business
  * @property User $createdBy
  * @property User $updatedBy
+ * @mixin CdnUploadImageBehavior
+ * @mixin SoftDeleteBehavior
  */
 class BusinessStat extends \yii\db\ActiveRecord
 {

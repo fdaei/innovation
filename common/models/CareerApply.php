@@ -28,6 +28,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property JobPosition $jobPosition
  * @property User $updatedBy
  * @property User $user
+ *
+ * @mixin CdnUploadImageBehavior
+ * @mixin SoftDeleteBehavior
  */
 class CareerApply extends \yii\db\ActiveRecord
 {
