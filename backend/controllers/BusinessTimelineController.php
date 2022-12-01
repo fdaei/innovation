@@ -102,7 +102,7 @@ class BusinessTimelineController extends Controller
 
                     if ($flag) {
                         $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
