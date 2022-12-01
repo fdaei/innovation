@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </p>
         </div>
         <div class="card-body">
+            <div><?= Html::a('Download Application', '../docs/CFCB-new-patient-form.pdf', ['target' => '_blank', 'class' => 'box_button fl download_link']) ?></div>
             <?= DetailView::widget([
             'model' => $model,
             'attributes' => [

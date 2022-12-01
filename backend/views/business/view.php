@@ -135,6 +135,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <div>
+                            <?= Html::a('create Item', ['/business-timeline-item/create'], ['class' => 'btn btn-outline-success btn-sm float-right m-1', "method" => "post"]) ?>
+                            <?= Html::a('create Time', ['/business-timeline/create'], ['class' => 'btn btn-outline-success btn-sm float-right m-1', "method" => "post"]) ?>
+                        </div>
                         <section class="cd-horizontal-timeline">
                             <div class="timeline">
                                 <div class="events-wrapper">
@@ -166,9 +170,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <li class="<?= $i === 0 ? 'selected' : '' ?>"
                                             data-date="01/01/<?= $item->year ?>">
                                             <div class="d-flex align-items-center">
-                                                <div>
-
-                                                </div>
                                                 <div>
                                                     <h3><?= $item->convert([$item->year]) ?></h3>
                                                     <h3><?= $item->year ?></h3>

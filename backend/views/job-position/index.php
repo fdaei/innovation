@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?php Pjax::begin(); ?>
     <div class="card-body">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?=  $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -36,11 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'org_unit_id',
             'description',
             'requirements',
-            //'status',
-            //'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, JobPosition $model, $key, $index, $column) {

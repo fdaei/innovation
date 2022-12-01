@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
         </div>
         <div class='col-md-3'>
-            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
 
         </div>
         <div class="col-md-3">

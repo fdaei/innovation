@@ -43,11 +43,11 @@ use yii\widgets\ActiveForm;
         <div class="col-md-3">
             <?= $form->field($model, 'cv_file')->fileInput() ?>
         </div>
-        <div class='col-md-3'>
-            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-        </div>
         <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList(CareerApply::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
+        </div>
+        <div class='col-md-3'>
+            <?= $form->field($model, 'description')->textarea(['rows'=> 4 ]) ?>
         </div>
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

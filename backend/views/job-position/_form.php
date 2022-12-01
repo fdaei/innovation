@@ -26,15 +26,18 @@ use yii\widgets\ActiveForm;
             ) ?>
         </div>
         <div class='col-md-3'>
-            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => '4']) ?>
 
         </div>
         <div class='col-md-3'>
-            <?= $form->field($model, 'requirements')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'requirements')->textarea(['rows' => '4']) ?>
 
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList(JobPosition::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'immediate')->checkbox() ?>
         </div>
     </div>
     <div class="form-group">
