@@ -51,30 +51,6 @@ class CareerApplyController extends ActiveController
         return $actions;
 
     }
-    /**
-     * @OA\Info(
-     *   version="1.0.0",
-     *   title="My API",
-     *   @OA\License(name="MIT"),
-     *   @OA\Attachable()
-     * )
-     */
-    /**
-     * @OA\Get(
-     *    path = "/career-apply/id",
-     *    tags = {"CareerApply"},
-     *    operationId = "career-apply View",
-     *    summary = "view of career-apply",
-     *    description = "GET /career-apply/123: return the details of the career-apply 123",
-     *
-     *	@OA\Response(response = 200, description = "success")
-     *)
-     * @throws HttpException
-     */
-    public function actionView($id)
-    {
-        return $this->findModel($id);
-    }
 
     /**
      * @OA\Info(
@@ -151,12 +127,4 @@ class CareerApplyController extends ActiveController
         return $model;
     }
 
-    private function findModel($id)
-    {
-        if (($model = JobPosition::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
 }
