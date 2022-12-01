@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="job-position-index card material-card">
     <div class="card-header d-flex justify-content-between">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?= Html::encode($this->title) ?></h2>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Job Position'), ['create'], ['class' => 'btn btn-success']) ?>

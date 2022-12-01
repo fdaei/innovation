@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card material-card">
     <div class="card-header d-flex justify-content-between">
 
-        <h3><?= Html::encode($this->title) ?></h3>
+        <h2><?= Html::encode($this->title) ?></h2>
         <?= Html::a(Yii::t('app', 'Create Business Gallery'), ['create'], ['class' => 'btn btn-success']) ?>
     </div>
     <?php Pjax::begin(); ?>

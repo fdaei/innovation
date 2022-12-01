@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="business-timeline-item-index card material-card">
     <div class="card-header d-flex justify-content-between">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?= Html::encode($this->title) ?></h2>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Business Timeline Item'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?php Pjax::begin(); ?>
     <div class="card-body">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?= $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
