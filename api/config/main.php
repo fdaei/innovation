@@ -67,14 +67,13 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/business',
+                    'controller' => ['v1/business','v1/careerApply'],
                     'pluralize' => false,
                     'extraPatterns' => [
 
                     ],
 
                 ],
-
                 'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
             ],
         ],
