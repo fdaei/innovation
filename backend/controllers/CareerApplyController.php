@@ -7,6 +7,7 @@ use common\models\CareerApplySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * CareerApplyController implements the CRUD actions for CareerApply model.
