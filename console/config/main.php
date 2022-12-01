@@ -24,6 +24,7 @@ return [
           ],
           'migration' => [
             'class' => 'bizley\migration\controllers\MigrationController',
+              //'fixHistory' => true
         ],
     ],
     'components' => [
