@@ -73,6 +73,8 @@ class CareerApplyController extends ActiveController
      */
     public function actionView($id)
     {
+        var_dump("ksks");
+        die();
         return $this->findModel($id);
     }
     /**
