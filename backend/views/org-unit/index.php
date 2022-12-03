@@ -31,10 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'title',
             'description',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+
+                    return OrgUnit::itemAlias('Status',$model->status);
+                },
+            ],
             'created_at',
             [
                 'class' => ActionColumn::className(),

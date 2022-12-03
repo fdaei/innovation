@@ -23,7 +23,6 @@ use yii\widgets\ActiveForm;
                 ArrayHelper::map(City::find()->all(), 'id', 'name'),
                 ['prompt' => 'Select city']
             ) ?>
-
         </div>
         <?= $form->field($model, 'status')->dropDownList(Province::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>

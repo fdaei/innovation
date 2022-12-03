@@ -30,12 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
 //        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'title',
-            'org_unit_id',
-            'description',
-            'requirements',
+            [
+                'attribute' => 'org_unit_id',
+                'value' => 'orgUnit.title',
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, JobPosition $model, $key, $index, $column) {

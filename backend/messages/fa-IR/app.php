@@ -47,7 +47,7 @@ return [
     "Immediate"=>"فوری",
     "Requirements"=>"شرایط",
     "Org Unit ID"=>"شناسه سازمان",
-    "Create Org Unit"=>"ایجاد اوحد سازمانی",
+    "Create Org Unit"=>"ایجاد واحد سازمانی",
     "Org Units"=>"واحد سازمانی",
     "Job Positions"=>"موقعیت شغلی",
     "Create Job Position"=>"ایجاد موقعیت شغلی",
@@ -56,7 +56,6 @@ return [
     "Create Province"=>"ایجاد استان",
     "Cities"=>"شهر",
     "Create City"=>"ایجاد شهر",
-    "Business Timeline Items"=>"موارد زمانی",
     "Create Business Timeline Item"=>"ایجاد موارد زمانی",
     "Business Members"=>"سرمایه گذاران",
     "Create Business Member"=>"ایجاد سرمایه گذاران",
@@ -66,6 +65,23 @@ return [
     "Create Business Stat"=>"ایجاد امار کسب و کار",
     "Business Galleries"=>"گالری کسب و کار ها",
     "Create Business Gallery"=>"ایجاد گالری کسب و کار ها ",
+    "create"=>"ایجاد",
+    "update"=>"ویرایش",
+    "delete"=>"حذف",
+    "create Item"=>"ایجاد مورد جدید",
+    "create Time"=>"ایجاد زمان جدید",
+    "User"=>"کاربر",
+    "City"=>"شهر",
+    "Search"=>"جستجو",
+    "Reset"=>"تنظیم مجدد",
+    "Business Timeline Items"=>" موارد خط زمانی",
+    "Update Business Timeline Item: {name}"=>"ویرایش موارد خط زمانی:{name}",
+    "Update Business Gallery: {name}"=>"ویرایش گالری تصاویر کسب و کار:{name}",
+    "Update Business Member: {name}"=>"ویرایش اعضای کسب و کار :{name}",
+    "Update Business Timeline: {name}"=>"ویرایش موارد زمانی {name}",
+    "Update Business Stat: {name}"=>"ویرایش امار  کسب و کار: {name}",
+
+
 
 
 

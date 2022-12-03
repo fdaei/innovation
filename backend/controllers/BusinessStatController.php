@@ -84,7 +84,7 @@ class BusinessStatController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['/business/view', 'id' => $model->business['id']]);
             }
         } else {
             $model->loadDefaultValues();
@@ -107,7 +107,7 @@ class BusinessStatController extends Controller
         $model = $this->findModel($id);
         $model->scenario = BusinessStat::SCENARIO_UPDATE;
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/business/view', 'id' => $model->business['id']]);
         }
 
         return $this->render('update', [
@@ -132,7 +132,7 @@ class BusinessStatController extends Controller
             $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
     }
 
     /**
@@ -149,5 +149,9 @@ class BusinessStatController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function flash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

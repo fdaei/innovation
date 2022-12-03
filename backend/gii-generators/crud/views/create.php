@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create card material-card">
     <div class="card-header">
-        <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
+        <h3><?= "<?= " ?>Html::encode($this->title) ?></h3>
     </div>
     <?php echo ' <div class="card-body">' ?>
     <?= "<?= " ?>$this->render('_form', [

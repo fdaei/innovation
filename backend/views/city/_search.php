@@ -1,5 +1,7 @@
 <?php
 
+use common\models\Province;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -19,23 +21,14 @@ use yii\widgets\ActiveForm;
     ]); ?>
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'id') ?>
-
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'province_id') ?>
+            <?= $form->field($model,'province_id')->dropDownList(
+                ArrayHelper::map(Province::find()->all(),'id','name'),
+                ['prompt'=>'Select province']
+            )?>
 
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'name') ?>
-
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'latitude') ?>
-
-        </div
-        <div class="col-md-3">
-            <?= $form->field($model, 'longitude') ?>
 
         </div>
     </div>

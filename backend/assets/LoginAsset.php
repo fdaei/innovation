@@ -18,6 +18,7 @@ class LoginAsset extends AssetBundle {
         'js/base.js',
         // sweetalert2 JavaScript -->
         'js/sweetalert2.all.min.js',
+        'js/owl.carousel.min.js'
     ];
 
     public $css = [
@@ -25,6 +26,7 @@ class LoginAsset extends AssetBundle {
         'css/fonts/font-awesome/css/all.min.css',
         'css/style.css',
         'css/sweetalert2.min.css',
+        'css/owl.carousel.min.css'
     ];
 
     public $depends = [

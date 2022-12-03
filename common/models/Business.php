@@ -97,8 +97,8 @@ class Business extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'city_id' => Yii::t('app', 'City ID'),
+            'user_id' => Yii::t('app', 'User'),
+            'city_id' => Yii::t('app', 'City'),
             'title' => Yii::t('app', 'Title'),
             'link' => Yii::t('app', 'Link'),
             'slug' => Yii::t('app', 'Slug'),

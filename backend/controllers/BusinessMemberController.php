@@ -73,7 +73,7 @@ class BusinessMemberController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['/business/view', 'id' => $model->business['id']]);
             }
         } else {
             $model->loadDefaultValues();
@@ -97,7 +97,7 @@ class BusinessMemberController extends Controller
         $model->scenario = BusinessMember::SCENARIO_UPDATE;
         if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
             $model->save(false);
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/business/view', 'id' => $model->business['id']]);
         }
 
         return $this->render('update', [
@@ -120,7 +120,7 @@ class BusinessMemberController extends Controller
         } else {
             $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Member'));
         }
-        return $this->redirect(['index']);
+        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
     }
 
     /**

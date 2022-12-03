@@ -17,27 +17,21 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
-    <div class="row"><div class="col-md-3">    <?= $form->field($model, 'id') ?>
-
-</div><div class="col-md-3">    <?= $form->field($model, 'title') ?>
-
-</div><div class="col-md-3">    <?= $form->field($model, 'org_unit_id') ?>
-
-</div><div class="col-md-3">    <?= $form->field($model, 'description') ?>
-
-</div><div class="col-md-3">    <?= $form->field($model, 'requirements') ?>
-
-</div><div class="col-md-3">    <?php // echo $form->field($model, 'status') ?>
-
-</div><div class="col-md-3">    <?php // echo $form->field($model, 'created_at') ?>
-
-</div><div class="col-md-3">    <?php // echo $form->field($model, 'created_by') ?>
-
-</div><div class="col-md-3">    <?php // echo $form->field($model, 'updated_at') ?>
-
-</div><div class="col-md-3">    <?php // echo $form->field($model, 'updated_by') ?>
-
-</div>    </div>    <div class="form-group">
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($model, 'title') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'org_unit_id') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'description') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'requirements') ?>
+        </div>
+    </div>
+    <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
     </div>

@@ -87,7 +87,7 @@ class BusinessGalleryController extends Controller
                 try {
                     if ($model->save(false)) {
                         $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
                     }
 
                 } catch (\Exception $e) {
@@ -115,7 +115,7 @@ class BusinessGalleryController extends Controller
         $model = $this->findModel($id);
         $model->scenario = BusinessGallery::SCENARIO_UPDATE;
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/business/view', 'id' => $model->business['id']]);
         }
 
         return $this->render('update', [
@@ -138,7 +138,7 @@ class BusinessGalleryController extends Controller
         } else {
             $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Image'));
         }
-        return $this->redirect(['index']);
+        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
     }
 
     /**

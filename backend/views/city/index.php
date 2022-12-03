@@ -34,6 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'latitude',
             'longitude',
             [
+                'attribute' => 'status',
+                'value' => function ($model) {
+
+                    return City::itemAlias('Status',$model->status);
+                },
+            ],
+            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, City $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

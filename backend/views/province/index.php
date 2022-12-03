@@ -27,13 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+
+                    return Province::itemAlias('Status',$model->status);
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Province $model, $key, $index, $column) {

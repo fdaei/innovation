@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
                 [
                     'attribute' => 'user_id',
                     'value' => 'user.username',
@@ -49,11 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'status',
                     'value' => function ($model) {
-                        if ($model->status == 2) {
-                            return "inactive";
-                        } elseif ($model->status == 1) {
-                            return "active";
-                        }
+
+                        return Business::itemAlias('Status',$model->status);
                     },
                 ],
                 [

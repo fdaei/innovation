@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 <div class="job-position-update">
     <div class="card material-card">
         <div class="card-header">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
         </div>
         <div class="card-body">
     <?= $this->render('_form', [
