@@ -41,7 +41,7 @@ class BusinessMember extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'ince_business_member';
+        return '{{%business_member}}';
     }
 
     /**
