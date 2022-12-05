@@ -43,7 +43,8 @@ class CareerApply extends \yii\db\ActiveRecord
 
     public static function tableName()
     {
-        return 'ince_career_apply';
+        return '{{%career_apply}}';
+
     }
 
     /**

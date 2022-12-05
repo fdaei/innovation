@@ -42,7 +42,7 @@ class JobPosition extends \yii\db\ActiveRecord
 
     public static function tableName()
     {
-        return 'ince_job_position';
+        return '{{%job_position}}';
     }
 
     /**

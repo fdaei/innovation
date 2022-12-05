@@ -40,7 +40,7 @@ class OrgUnit extends \yii\db\ActiveRecord
 
     public static function tableName()
     {
-        return 'ince_org_unit';
+        return '{{%org_unit}}';
     }
 
     /**
