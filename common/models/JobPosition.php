@@ -212,6 +212,8 @@ class JobPosition extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        return [];
+        return [
+            'OrgUnit'=>'orgUnit'
+        ];
     }
 }
