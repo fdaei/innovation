@@ -33,7 +33,7 @@ use yii\bootstrap4\ActiveForm;
     <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
-
+            <p>طول باید 96 و عرض باید 96 باشد </p>
     <?= $form->field($model, 'icon')->fileInput() ?>
         </div>
         <div class="col-md-3">

@@ -29,6 +29,7 @@ use yii\helpers\Html;
             <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
+            <p>طول باید 248 و عرض باید 268 باشد </p>
             <?= $form->field($model, 'image')->fileInput() ?>
         </div>
         <div class="col-md-3">

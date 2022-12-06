@@ -22,9 +22,11 @@ use yii\bootstrap4\ActiveForm;
         ) ?>
     </div>
         <div class="col-md-3">
+            <p>طول باید 348 و عرض باید 648 باشد </p>
             <?= $form->field($model, 'image')->fileInput() ?>
         </div>
         <div class="col-md-3">
+            <p>طول باید 224 و عرض باید 316 باشد </p>
             <?= $form->field($model, 'mobile_image')->fileInput() ?>
         </div>
         <div class="col-md-3">

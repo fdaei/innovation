@@ -46,9 +46,11 @@ use yii\web\View;
             <?= $form->field($model, 'logo')->fileInput() ?>
         </div>
         <div class="col-md-3">
+            <p>طول باید 1920 و عرض باید 348 باشد </p>
             <?= $form->field($model, 'wallpaper')->fileInput() ?>
         </div>
         <div class="col-md-3">
+            <p>طول باید 360 و عرض باید 348 باشد </p>
             <?= $form->field($model, 'mobile_wallpaper')->fileInput() ?>
         </div>
         <div class="col-md-6">
