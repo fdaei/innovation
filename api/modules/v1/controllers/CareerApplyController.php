@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use common\components\CaptchaHelper;
 use common\models\Business;
 use common\models\CareerApply;
 use common\models\JobPosition;
@@ -37,6 +38,7 @@ class CareerApplyController extends ActiveController
                         'create' => ['POST', 'OPTIONS'],
                         'units' => ['GET', 'HEAD', 'OPTIONS'],
                         'view' => ['GET', 'HEAD', 'OPTIONS'],
+                        'image' => ['GET', 'HEAD', 'OPTIONS'],
                     ],
                 ],
             ]
@@ -49,8 +51,9 @@ class CareerApplyController extends ActiveController
         // disable the "delete" and "create" actions
         unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
-
     }
+
+
 
     /**
      * @OA\Info(
@@ -86,30 +89,103 @@ class CareerApplyController extends ActiveController
         return $dataProvider;
     }
 
+    public function actionImage()
+    {
+        return (new CaptchaHelper())->generateImage();
+    }
     /**
-     * @OA\Info(
-     *   version="1.0.0",
-     *   title="My API",
-     *   @OA\License(name="MIT"),
-     *   @OA\Attachable()
+     * @OA\Post(
+     *   path="/v1/career-apply/create",
+     *   tags={"CareerApply"},
+     *   summary="new career-apply",
+     *   description="add a career-apply and generate capcha",
+     *   operationId="/career-apply/create",
+     *   @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *               type="object",
+     *               @OA\Property(
+     *                   property="CareerApply[first_name]",
+     *                   description="first_name of user",
+     *                   type="string",
+     *                   example="firoozeh"
+     *               ),
+     *               @OA\Property(
+     *                   property="CareerApply[last_name]",
+     *                   description="last_name of user",
+     *                   type="string",
+     *                   example="daeizadeh"
+     *               ),
+     *      @OA\Property(
+     *                   property="CareerApply[mobile]",
+     *                   description="mobile of user it should be 11 number and start with 09",
+     *                   type="string",
+     *                   example="09390315707"
+     *               ),
+     *       @OA\Property(
+     *                   property="CareerApply[email]",
+     *                   description="email of user it should validate email",
+     *                   type="string",
+     *                   example="firoozehdaei@gmail.com"
+     *               ),
+     *              @OA\Property(
+     *                   property="CareerApply[job_position_id]",
+     *                   description="id of jobPosition which user select and send carrer apply for it",
+     *                   type="integer",
+     *                   example="id='1'"
+     *               ),
+     *              @OA\Property(
+     *                   property="CareerApply[cv_file]",
+     *                   description="pdf file of career apply",
+     *                   type="file",
+     *                   example=""
+     *               ),
+     *              @OA\Property(
+     *                   property="CareerApply[description]",
+     *                   description="description about your career-apply",
+     *                   type="string",
+     *                   example="hi im working"
+     *               ),
+     *              @OA\Property(
+     *                   property="CareerApply[captchaKey]",
+     *                   description="a key for understand user",
+     *                   type="string",
+     *                   example="1670305326.413184"
+     *               ),
+     *              @OA\Property(
+     *                   property="CareerApply[captcha]",
+     *                   description="if user isnt sign in he/she should fill the capcha",
+     *                   type="string",
+     *                   example="wefyhg"
+     *               ),
+     *           )
+     *       )
+     *   ),
+     *  @OA\Response(
+     *         response="200",
+     *         description="ok",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer",
+     *                         description="id of carrer-apply"
+     *                     ),
+     *                     example={
+     *                         "id": "1",
+     *                     }
+     *                 )
+     *             )
+     *         }
+     *     ),
+     *   @OA\Response(response="401",description="Unauthorized"),
      * )
      */
-    /**
-     * @OA\Post(path="/career-apply/create",
-     *     summary="Add a new career apply",
-     *     operationId="careerApplyCreate",
-     *     tags={"CareerApply"},
-     *
-     *	@OA\Parameter(
-     *        in = "query",
-     *        name = "expand",
-     *        description = "",
-     *        required = false
-     *    ),
-     *	@OA\Response(response = 200, description = "success")
-     *)
-     * @throws HttpException
-     */
+
 
     public function actionCreate()
     {
@@ -126,5 +202,5 @@ class CareerApplyController extends ActiveController
 
         return $model;
     }
-
 }
+
