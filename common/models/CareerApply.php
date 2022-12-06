@@ -3,9 +3,11 @@
 namespace common\models;
 
 use common\behaviors\CdnUploadImageBehavior;
+use common\components\CaptchaHelper;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Url;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -40,6 +42,8 @@ class CareerApply extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+    public $captchaKey;
+    public $captcha;
 
     public static function tableName()
     {
@@ -53,7 +57,13 @@ class CareerApply extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'mobile', 'email', 'job_position_id', 'cv_file', 'description', 'status',], 'required'],
+            [['captchaKey', 'captcha'], 'required', 'when' => function ($model) {return Yii::$app->user->isGuest;}],
+            ['captcha', function ($attribute) {
+            if (!(new CaptchaHelper())->verify($this->$attribute, $this->captchaKey))
+            {
+                        $this->addError($attribute, Yii::t('yii', 'The verification code is incorrect.'));
+            }}],
+            [['first_name', 'last_name', 'mobile', 'email', 'job_position_id', 'cv_file', 'description'], 'required'],
             [['user_id', 'job_position_id', 'status',], 'integer'],
             [['first_name', 'last_name'], 'string', 'max' => 128],
             ['cv_file', 'file', 'extensions' => 'pdf', 'maxSize' => 1024 * 1024 * 3, 'mimeTypes' => ['application/pdf']],

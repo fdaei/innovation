@@ -28,8 +28,7 @@
     "filsh/yii2-oauth2-server": "*",
     "ext-pdo": "*",
     "aminbbb92/yii2-user": "@dev",
-    "aminbbb92/yii2-rbac": "@dev",
-    "bizley/migration": "^4.4",
+    "aminbbb92/yii2-rbac": "@dev",: "^4.4",
     "yii2tech/ar-softdelete": "^1.0",
     "yiisoft/yii2-httpclient": "^2.0",
     "aws/aws-sdk-php": "^3.241",
@@ -39,7 +38,8 @@
     "yiisoft/yii2-redis": "~2.0.0",
     "sadi01/yii2-swagger": "dev-master",
     "wbraganca/yii2-dynamicform": "*",
-    "notamedia/yii2-sentry": "^1.7"
+    "notamedia/yii2-sentry": "^1.7",
+    "lubosdz/yii2-captcha-extended": "^1.0"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

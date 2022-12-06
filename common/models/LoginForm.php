@@ -13,8 +13,7 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-    public $captcha;
-    public $recaptcha;
+    public $verifyCode;
 
     private $_user;
 
@@ -26,8 +25,8 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password', 'captcha'], 'required'],
-            ['captcha', 'captcha'],
+            [['username', 'password'], 'required'],
+            ['verifyCode', 'captcha'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
