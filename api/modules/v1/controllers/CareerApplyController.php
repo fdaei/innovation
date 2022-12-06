@@ -70,13 +70,6 @@ class CareerApplyController extends ActiveController
      *    operationId = "unit",
      *    summary = "Units List",
      *    description = "List of all Organizations",
-     *
-     *	@OA\Parameter(
-     *        in = "query",
-     *        name = "expand",
-     *        description = "jobPositions is a expand",
-     *        required = false
-     *    ),
      *	@OA\Response(response = 200, description = "success")
      *)
      * @throws HttpException
@@ -88,14 +81,51 @@ class CareerApplyController extends ActiveController
 
         return $dataProvider;
     }
+    /**
+     * @OA\Info(
+     *   version="1.0.0",
+     *   title="My API",
+     *   @OA\License(name="MIT"),
+     *   @OA\Attachable()
+     * )
+     */
+    /**
+     * @OA\Get(
+     *    path = "/career-apply/image",
+     *    tags = {"CareerApply"},
+     *    operationId = "image",
+     *    summary = "image for capcha",
+     *    description = "send url of capcha",
+     *    @OA\Parameter(
+     *          name="image",
+     *          in="query",
+     *          required=false,
+     *          description="The image of capcha",
+     *          @OA\Schema(
+     *              type="string"
+     *          ),
+     *     @OA\Parameter(
+     *          name="expireTime",
+     *          in="query",
+     *          required=false,
+     *          description="time of validate capcha",
+     *          @OA\Schema(
+     *              type="string"
+     *          ),
 
+     *     ),
+     *	@OA\Response(response = 200, description = "success")
+     *)
+     * @throws HttpException
+     */
     public function actionImage()
     {
         return (new CaptchaHelper())->generateImage();
     }
+
     /**
      * @OA\Post(
-     *   path="/v1/career-apply/create",
+     *   path="/career-apply/create",
      *   tags={"CareerApply"},
      *   summary="new career-apply",
      *   description="add a career-apply and generate capcha",
@@ -175,8 +205,28 @@ class CareerApplyController extends ActiveController
      *                         type="integer",
      *                         description="id of carrer-apply"
      *                     ),
+     *                     @OA\Property(
+     *                         property="first_name",
+     *                         type="string",
+     *                         description="first_name of user"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="last_name",
+     *                         type="string",
+     *                         description="last_name of user"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="description",
+     *                         type="string",
+     *                         description="description of user"
+     *                     ),
      *                     example={
      *                         "id": "1",
+     *                         "first-name":"firoozeh",
+     *                         "last_name":"last_name",
+     *                         "last_name":"daeizadeh",
+     *                         "description":"this is description",
+     *
      *                     }
      *                 )
      *             )
