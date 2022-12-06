@@ -96,24 +96,6 @@ class CareerApplyController extends ActiveController
      *    operationId = "image",
      *    summary = "image for capcha",
      *    description = "send url of capcha",
-     *    @OA\Parameter(
-     *          name="image",
-     *          in="query",
-     *          required=false,
-     *          description="The image of capcha",
-     *          @OA\Schema(
-     *              type="string"
-     *          ),
-     *     @OA\Parameter(
-     *          name="expireTime",
-     *          in="query",
-     *          required=false,
-     *          description="time of validate capcha",
-     *          @OA\Schema(
-     *              type="string"
-     *          ),
-
-     *     ),
      *	@OA\Response(response = 200, description = "success")
      *)
      * @throws HttpException
