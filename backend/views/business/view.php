@@ -157,18 +157,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php $this->beginBlock('Galleries'); ?>
 
-        <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel"
+        <div id="carouselExampleIndicators3" class="carousel slide pb-3" data-ride="carousel"
              style="border:1px solid lightgray ;">
-            <ol class="carousel-indicators">
-                <?php foreach ($gallery as $i => $item): ?>
-                    <li data-target="#carouselExampleIndicators3"
-                        data-slide-to=<?= $i ?> class="<?= $i == 0 ? 'active' : '' ?>"></li>
-                <?php endforeach; ?>
-            </ol>
             <div class="carousel-inner" role="listbox">
+                <div class="text-right">
+                    <?= Html::a(Yii::t('app', 'create').'<i class="fa fa-check"></i>', ['/business-gallery/create'], ['class' => 'btn btn-outline-success btn-sm mt-3 mr-5  rounded-3 ', "method" => "post"]) ?>
+                </div>
                 <?php foreach ($gallery as $i => $item): ?>
                     <div class="carousel-item <?= $i == 0 ? 'active' : '' ?>">
-                        <div class="row p-3" style="border-bottom:2px solid #8b8b8b80">
+                        <div class="row" style="border-bottom:2px solid #8b8b8b80">
                             <div class="col-4">
                                 <h5 class="alert alert-info rounded-3">
                                     <p>تصویر پس زمینه (موبایل)</p>
@@ -182,11 +179,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <p>تصویر پس زمینه </p>
                                         </h5>
                                     </div>
-                                    <div class="col-2">
-                                        <div class="btn-group mr-2" role="group" aria-label="First group">
-                                            <?= Html::a('<i class="fa fa-pen"></i>', ['/business-gallery/update', 'id' => $item->id], ['class' => 'btn btn-warning btn-sm rounded-3', "method" => "post"]) ?>
-                                            <?= Html::a('<i class="fa fa-check"></i>', ['/business-gallery/create'], ['class' => 'btn btn-success btn-sm rounded-3', "method" => "post"]) ?>
-                                            <?= Html::a('<i class="fa fa-trash"></i>', ['/business-gallery/delete', 'id' => $item->id], ['class' => 'btn btn-danger btn-sm rounded-3', "data-method" => "post"]) ?>
+                                    <div class="col-2 m-0">
+                                        <div class="btn-group  my-1" role="group" aria-label="First group">
+                                            <?= Html::a(Yii::t('app', 'update').'<i class="fa fa-pen"></i>', ['/business-gallery/update', 'id' => $item->id], ['class' => 'btn btn-outline-warning btn-sm rounded-3', "method" => "post"]) ?>
+                                        </div>
+                                        <div>
+                                            <?= Html::a(Yii::t('app', 'delete').'<i class="fa fa-trash"></i>', ['/business-gallery/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm rounded-3', "data-method" => "post"]) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -200,6 +198,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 <?php endforeach; ?>
             </div>
+            <ol class="carousel-indicators">
+                <?php foreach ($gallery as $i => $item): ?>
+                    <li data-target="#carouselExampleIndicators3"
+                        data-slide-to=<?= $i ?> class="<?= $i == 0 ? 'active' : '' ?>"></li>
+                <?php endforeach; ?>
+            </ol>
         </div>
 
         <?php $this->endBlock(); ?>
