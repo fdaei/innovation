@@ -81,29 +81,6 @@ class CareerApplyController extends ActiveController
 
         return $dataProvider;
     }
-    /**
-     * @OA\Info(
-     *   version="1.0.0",
-     *   title="My API",
-     *   @OA\License(name="MIT"),
-     *   @OA\Attachable()
-     * )
-     */
-    /**
-     * @OA\Get(
-     *    path = "/career-apply/image",
-     *    tags = {"CareerApply"},
-     *    operationId = "image",
-     *    summary = "image for capcha",
-     *    description = "send url of capcha",
-     *	@OA\Response(response = 200, description = "success")
-     *)
-     * @throws HttpException
-     */
-    public function actionImage()
-    {
-        return (new CaptchaHelper())->generateImage();
-    }
 
     /**
      * @OA\Post(
