@@ -30,7 +30,20 @@ use yii\widgets\ActiveForm;
 
         </div>
         <div class='col-md-3'>
-            <?= $form->field($model, 'requirements')->textarea(['rows' => '4']) ?>
+<!--            --><?php //= $form->field($model, 'requirements')->textarea(['rows' => '4']) ?>
+            <?php echo froala\froalaeditor\FroalaEditorWidget::widget([
+                'model' => $model,
+                'attribute' => 'requirements',
+                'options' => [
+                    // html attributes
+                    'id'=>'content',
+                ],
+                'clientOptions' => [
+                    'toolbarInline' => false,
+                    'theme' => 'royal', //optional: dark, red, gray, royal
+                    'language' => 'en_gb' // optional: ar, bs, cs, da, de, en_ca, en_gb, en_us ...
+                ]
+            ]); ?>
 
         </div>
         <div class="col-md-3">
