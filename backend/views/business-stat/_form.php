@@ -2,13 +2,14 @@
 
 use common\models\Business;
 use common\models\BusinessStat;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\web\View;
 
-/** @var yii\web\View $this */
-/** @var common\models\BusinessStat $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var View $this */
+/** @var BusinessStat $model */
+/** @var ActiveForm $form */
 ?>
 
 <div class="business-stat-form">
@@ -16,34 +17,33 @@ use yii\bootstrap4\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-md-3">
-    <?= $form->field($model,'business_id')->dropDownList(
-        ArrayHelper::map(Business::find()->all(),'id','title'),
-        ['prompt'=>'Select Bussines']
-    )?>
+            <?= $form->field($model, 'business_id')->dropDownList(
+                ArrayHelper::map(Business::find()->all(), 'id', 'title'),
+                ['prompt' => 'Select Bussines']
+            ) ?>
         </div>
         <div class="col-md-3">
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-3">
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
 
-    <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
-            <p>طول باید 96 و عرض باید 96 باشد </p>
-    <?= $form->field($model, 'icon')->fileInput() ?>
+
+            <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(BusinessStat::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
+            <?= $form->field($model, 'icon')->fileInput()->hint('طول باید 96 پیکسل و عرض باید 96 پیکسل باشد ') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'status')->dropDownList(BusinessStat::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
         </div>
 
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <div class="form-group">
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-</div>

@@ -14,9 +14,7 @@ use yii\web\View;
 ?>
 
 <div class="business-form">
-
     <?php $form = ActiveForm::begin(); ?>
-
     <div class="row">
         <div class="col-md-3">
             <?= $form->field($model, 'user_id')->dropDownList(
@@ -34,10 +32,10 @@ use yii\web\View;
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'link')->textInput(['maxlength' => true, 'class' => 'form-control dir-ltr']) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'class' => 'form-control dir-ltr']) ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList(Business::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
@@ -46,20 +44,18 @@ use yii\web\View;
             <?= $form->field($model, 'logo')->fileInput() ?>
         </div>
         <div class="col-md-3">
-            <p>طول باید 1920 و عرض باید 348 باشد </p>
-            <?= $form->field($model, 'wallpaper')->fileInput() ?>
+            <?= $form->field($model, 'wallpaper')->fileInput()->hint('طول باید 1920 و عرض باید 348 باشد') ?>
         </div>
-        <div class="col-md-3">
-            <p>طول باید 360 و عرض باید 348 باشد </p>
-            <?= $form->field($model, 'mobile_wallpaper')->fileInput() ?>
+        <div class="col-md-12">
+            <?= $form->field($model, 'mobile_wallpaper')->fileInput()->hint('طول باید 360 و عرض باید 348 باشد') ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'investor_description')->textarea(['rows' => 6]) ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'success_story')->textarea(['rows' => 6]) ?>
         </div>
 

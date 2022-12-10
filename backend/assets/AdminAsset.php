@@ -41,6 +41,7 @@ class AdminAsset extends AssetBundle
         //'css/table-responsive.css',
         'css/sweetalert2.min.css',
         "css/horizontal-timeline.css",
+        "css/custom.css",
     ];
 
     public $depends = [
