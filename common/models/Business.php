@@ -37,7 +37,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
- *
+ * @property array $metaTags
  * @mixin CdnUploadImageBehavior
  * @mixin SoftDeleteBehavior
  */
@@ -194,6 +194,36 @@ class Business extends \yii\db\ActiveRecord
     {
         return $this->hasOne(City::class, ['id' => 'city_id']);
     }
+    public function getMetaTags(): array
+    {
+        $metaTags=[];
+        $metaTags[] = [
+            "hid"=>"title",
+            "name"=>"title",
+            "content"=>$this->title
+        ];
+        $metaTags[] = [
+            "hid"=>"short_description",
+            "name"=>"short_description",
+            "content"=>$this->short_description
+        ];
+        $metaTags[] = [
+            "hid"=>"investor_description",
+            "name"=>"investor_description",
+            "content"=>$this->investor_description
+        ];
+        $metaTags[] = [
+            "hid"=>"success_story",
+            "name"=>"success_story",
+            "content"=>$this->success_story
+        ];
+        $metaTags[] = [
+            "hid"=>"success_story",
+            "name"=>"success_story",
+            "content"=>$this->success_story
+        ];
+       return $metaTags;
+    }
 
     /**
      * {@inheritdoc}
@@ -340,6 +370,7 @@ class Business extends \yii\db\ActiveRecord
             'investorDescription' => 'investor_description',
             'slug',
             'link',
+
         ];
     }
 
@@ -350,7 +381,8 @@ class Business extends \yii\db\ActiveRecord
             'galleries' => 'businessGalleries',
             'stats' => 'businessStates',
             'members' => 'businessMembers',
-            'city'
+            'city',
+            'metaTags',
         ];
     }
 }
