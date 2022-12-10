@@ -2,6 +2,7 @@
 
 use common\models\JobPosition;
 use common\models\OrgUnit;
+use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -33,11 +34,16 @@ use yii\widgets\ActiveForm;
                         </div>
                         <div class="form-group row">
                             <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
-                            <div class="col-sm-8">
-                                <?= $form->field($model, 'org_unit_id')->dropDownList(
-                                    ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
-                                    ['prompt' => 'Select org_unit']
-                                ) ?>
+                            <div class="col-sm-8 ">
+                                <?= $form->field($model, 'org_unit_id')->widget(Select2::classname(), [
+                                    'data' => ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
+                                    'size' => Select2::MEDIUM,
+                                    'options' => ['placeholder' => Yii::t('app', 'CHOOSE OrgUnit'),'class'=>'form-control'],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                    ],
+                                ]);
+                                ?>
                             </div>
                             <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
                         </div>

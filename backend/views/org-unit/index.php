@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'rowOptions' => function ($model) {
                 if ($model->status == 1) {
-                    return ['class' => 'info'];
+//                    return ['class' => 'text-info'];
                 }
             },
             'columns' => [
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'description',
                     'value'=> function ($model) {
 
-                        return substr($model->description,0,30);
+                        return substr($model->description,0,100);
                     },
                 ],
                 [

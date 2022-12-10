@@ -13,37 +13,37 @@ $menu_items = [
         'items' => [
             [
                 'group' => 'Business',
-                'label' => 'Business',
+                'label' => Yii::t('app', 'Business'),
                 'icon' => 'fas fa-building',
                 'url' => ['/business']
             ],
             [
                 'group' => 'City',
-                'label' => 'City',
+                'label' => Yii::t('app', 'City'),
                 'icon' => 'fas fa-building',
                 'url' => ['/city/']
             ],
             [
                 'group' => 'Province',
-                'label' => 'Province',
+                'label' => Yii::t('app', 'Province'),
                 'icon' => 'fas fa-building',
                 'url' => ['/province/']
             ],
             [
                 'group' => 'CareerApply',
-                'label' => 'CareerApply',
+                'label' => Yii::t('app', 'CareerApply'),
                 'icon' => 'fas fa-building',
                 'url' => ['/career-apply/']
             ],
             [
                 'group' => 'JobPosition',
-                'label' => 'JobPosition',
+                'label' => Yii::t('app', 'JobPosition'),
                 'icon' => 'fas fa-building',
                 'url' => ['/job-position/']
             ],
             [
                 'group' => 'OrgUnit',
-                'label' => 'OrgUnit',
+                'label' => Yii::t('app', 'OrgUnit'),
                 'icon' => 'fas fa-building',
                 'url' => ['/org-unit/']
             ],

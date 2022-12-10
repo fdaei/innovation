@@ -17,9 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-header d-flex justify-content-between">
     <h2><?= Html::encode($this->title) ?></h2>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Job Position'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        <button type="button" class="btn btn-info btn-rounded m-t-10 mb-2 float-right " data-toggle="modal"
+                data-target="#add-contact">
+        <?= Html::a(Yii::t('app', 'Create Job Position'), ['create'], ['class' => 'text-white']) ?>
+        </button>
     </div>
     <?php Pjax::begin(); ?>
     <div class="card-body">

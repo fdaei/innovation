@@ -1,5 +1,7 @@
 <?php
 
+use common\models\OrgUnit;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,18 +24,15 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'title') ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'org_unit_id') ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'description') ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'requirements') ?>
+            <?= $form->field($model, 'org_unit_id')->dropDownList(
+                ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
+                ['prompt' => 'Select org_unit']
+            ) ?>
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-info btn-rounded']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-info btn-rounded']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

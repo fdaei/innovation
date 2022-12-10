@@ -24,11 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h6 class="card-title border-bottom m-2 pb-3"><?=$model->title?></h6>
                     <label><?=Yii::t('app', 'description')?></label>
                     <p class="card-text"><?=$model->description?></p>
+
                     <div class="mt-4">
                     <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
-                        ['class' => 'btn btn-primary']) ?>
+                        ['class' => 'btn btn-outline-info btn-rounded']) ?>
                     <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                        'class' => 'btn btn-danger',
+                        'class' => 'btn btn-info btn-rounded',
                         'data' => [
                             'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                             'method' => 'post',

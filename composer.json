@@ -39,7 +39,7 @@
     "wbraganca/yii2-dynamicform": "*",
     "notamedia/yii2-sentry": "^1.7",
     "lubosdz/yii2-captcha-extended": "^1.0",
-    "kartik-v/yii2-widget-select2": "@dev",
+    "kartik-v/yii2-widget-select2": "dev-master",
     "froala/yii2-froala-editor": "^3.2.7"
   },
   "require-dev": {
@@ -54,7 +54,8 @@
     "codeception/module-filesystem": "^3.0 || ^1.1",
     "codeception/verify": "^2.2",
     "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
-    "bower-asset/clipboard": "dev-master"
+    "bower-asset/clipboard": "dev-master",
+    "bizley/migration": "^4.4"
   },
   "config": {
     "allow-plugins": {
