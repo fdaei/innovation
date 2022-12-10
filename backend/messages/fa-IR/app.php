@@ -80,9 +80,19 @@ return [
     "Update Business Member: {name}"=>"ویرایش اعضای کسب و کار :{name}",
     "Update Business Timeline: {name}"=>"ویرایش موارد زمانی {name}",
     "Update Business Stat: {name}"=>"ویرایش امار  کسب و کار: {name}",
-
-
-
-
+    "Save"=>"ثبت",
+    "Update"=>"ویرایش",
+    "Delete"=>"حذف",
+    "title"=>"عنوان",
+    "description"=>"توضیحات",
+    "org_unit"=>"سازمان",
+    "requirements"=>"شرایط",
+    ""=>"",
+    ""=>"",
+    ""=>"",
+    ""=>"",
+    ""=>"",
+    ""=>"",
+    ""=>"",
 
 ] ?>

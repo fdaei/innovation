@@ -15,48 +15,75 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-        <div class='col-md-3'>
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'org_unit_id')->dropDownList(
-                ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
-                ['prompt' => 'Select org_unit']
-            ) ?>
-        </div>
-        <div class='col-md-3'>
-            <?= $form->field($model, 'description')->textarea(['rows' => '4']) ?>
-
-        </div>
-        <div class='col-md-3'>
-<!--            --><?php //= $form->field($model, 'requirements')->textarea(['rows' => '4']) ?>
-            <?php echo froala\froalaeditor\FroalaEditorWidget::widget([
-                'model' => $model,
-                'attribute' => 'requirements',
-                'options' => [
-                    // html attributes
-                    'id'=>'content',
-                ],
-                'clientOptions' => [
-                    'toolbarInline' => false,
-                    'theme' => 'royal', //optional: dark, red, gray, royal
-                    'language' => 'en_gb' // optional: ar, bs, cs, da, de, en_ca, en_gb, en_us ...
-                ]
-            ]); ?>
-
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(JobPosition::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'immediate')->checkbox() ?>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"> </h4>
+                    <h6 class="card-subtitle"></h6>
+                </div>
+                <hr>
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                            <div class="col-sm-8">
+                                <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+                            </div>
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                            <div class="col-sm-8">
+                                <?= $form->field($model, 'org_unit_id')->dropDownList(
+                                    ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
+                                    ['prompt' => 'Select org_unit']
+                                ) ?>
+                            </div>
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                            <div class="col-sm-8">
+                                <?= $form->field($model, 'status')->dropDownList(JobPosition::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
+                            </div>
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                            <div class="col-sm-8">
+                                <?= $form->field($model, 'description')->textarea(['rows' => '4']) ?>
+                            </div>
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                            <div class="col-sm-8">
+                                <?= $form->field($model, 'requirements')->textarea(['rows' => '4']) ?>
+                            </div>
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                            <div class="col-sm-8">
+                                <?= $form->field($model, 'immediate')->checkbox() ?>
+                            </div>
+                            <label for="com12" class="col-sm-2 text-right control-label col-form-label"></label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <div class="form-group mb-0 text-right row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8">
+                                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-    </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

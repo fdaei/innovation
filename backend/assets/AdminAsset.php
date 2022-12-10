@@ -32,6 +32,10 @@ class AdminAsset extends AssetBundle
         // sweetalert2 JavaScript -->
         'js/sweetalert2.all.min.js',
         "js/horizontal-timeline.js",
+        "js/footable.js",
+        "js/select2.min.js",
+        "js/select2.full.min.js",
+        "js/select2.init.js"
     ];
 
     public $css = [
@@ -41,6 +45,8 @@ class AdminAsset extends AssetBundle
         //'css/table-responsive.css',
         'css/sweetalert2.min.css',
         "css/horizontal-timeline.css",
+        "css/footable.bootstrap.css",
+        "css/select2.min.css",
     ];
 
     public $depends = [
