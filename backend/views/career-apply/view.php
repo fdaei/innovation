@@ -1,15 +1,16 @@
 <?php
 
+use common\models\CareerApply;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var common\models\CareerApply $model */
+/** @var View $this */
+/** @var CareerApply $model */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Career Applies'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
 <div class="career-apply-view">
     <div class="card material-card">
@@ -18,35 +19,38 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <p>
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
-                ['class' => 'btn btn-primary']) ?>
+                    ['class' => 'btn btn-primary']) ?>
                 <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-                ],
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                        'method' => 'post',
+                    ],
                 ]) ?>
             </p>
         </div>
         <div class="card-body">
-            <div><?= Html::a('Download Application', '../docs/CFCB-new-patient-form.pdf', ['target' => '_blank', 'class' => 'box_button fl download_link']) ?></div>
             <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-                        'id',
-            'user_id',
-            'first_name',
-            'last_name',
-            'mobile',
-            'email:email',
-            'job_position_id',
-            'cv_file',
-            'description',
-            'status',
-            'created_at',
-            'updated_at',
-            'updated_by',
-            ],
+                'model' => $model,
+                'attributes' => [
+                    'first_name',
+                    'last_name',
+                    'mobile',
+                    'email:email',
+                    'job_position_id',
+                    [
+                        'attribute' => 'cv_file',
+                        'value' => function (CareerApply $model) {
+                            return Html::a(Html::tag('i', '', ['class' => 'fas fa-download']), $model->getUploadUrl('cv_file'), ['target' => '_blank', 'class' => '']);
+                        },
+                        'format' => 'raw'
+                    ],
+                    'description',
+                    'status',
+                    'created_at:datetime',
+                    'updated_at:datetime',
+                    'updated_by',
+                ],
             ]) ?>
         </div>
     </div>

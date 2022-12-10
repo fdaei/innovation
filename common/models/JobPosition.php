@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\behaviors\CdnUploadImageBehavior;
+use common\components\CustomHelper;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -144,7 +144,7 @@ class JobPosition extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $this->description = HtmlPurifier::process($this->description);
-        $this->requirements = HtmlPurifier::process($this->requirements);
+        $this->requirements = CustomHelper::purifiesFroalaContent($this->requirements);
         return parent::beforeSave($insert);
     }
 
