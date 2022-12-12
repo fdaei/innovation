@@ -27,12 +27,13 @@ return [
     'components' => [
         'i18n' => [
             'translations' => [
-                '*' => [
+                'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'fa-items',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en-US',
+                    // 'sourceLanguage' => 'fa-IR',
                     'fileMap' => [
-                        'common' => 'common.php',
-                        'common/error' => 'error.php',
+                        'app' => 'app.php'
                     ],
                 ],
             ],

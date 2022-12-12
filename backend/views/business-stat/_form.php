@@ -2,17 +2,17 @@
 
 use common\models\Business;
 use common\models\BusinessStat;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\web\View;
 
-/** @var yii\web\View $this */
-/** @var common\models\BusinessStat $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var View $this */
+/** @var BusinessStat $model */
+/** @var ActiveForm $form */
 ?>
 
 <div class="business-stat-form">
-
     <?php $form = ActiveForm::begin(); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -45,5 +45,4 @@ use yii\bootstrap4\ActiveForm;
         </div>
         <?php ActiveForm::end(); ?>
     </div>
-
 </div>

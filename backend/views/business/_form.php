@@ -15,7 +15,6 @@ use yii\web\View;
 ?>
 
 <div class="business-form">
-
     <?php $form = ActiveForm::begin([ 'enableClientValidation' => true,
         'options'                => [
             'id'      => 'dynamic-form'
@@ -24,7 +23,7 @@ use yii\web\View;
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <?=
-                $form->field($model, 'user_id')->widget(Select2::classname(), [
+                $form->field($model, 'user_id')->widget(Select2::class, [
                     'data' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
                     'options' => ['placeholder' => 'Select user'],
                     'pluginOptions' => [
@@ -35,7 +34,7 @@ use yii\web\View;
             </div>
             <div class="col-md-8">
                 <?=
-                $form->field($model, 'city_id')->widget(Select2::classname(), [
+                $form->field($model, 'city_id')->widget(Select2::class, [
                     'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
                     'options' => ['placeholder' => 'Select city'],
                     'pluginOptions' => [
