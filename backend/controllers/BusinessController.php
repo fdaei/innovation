@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 
 use common\models\Business;
+use common\models\BusinessGallery;
 use common\models\BusinessSearch;
 use common\models\BusinessTimeline;
 use Yii;
@@ -58,7 +59,16 @@ class BusinessController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionMyComment()
+    {
+        var_dump("hhy");
+        die();
+        $model = new BusinessGallery();
+        return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
 
+    }
     /**
      * Displays a single Business model.
      * @param int $id ID

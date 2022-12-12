@@ -5,6 +5,7 @@ namespace backend\controllers;
 
 use common\models\BusinessGallery;
 use common\models\BusinessGallerySearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -16,6 +17,7 @@ use yii\web\NotFoundHttpException;
  */
 class BusinessGalleryController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -87,7 +89,16 @@ class BusinessGalleryController extends Controller
                 try {
                     if ($model->save(false)) {
                         $transaction->commit();
-                        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+                        return $this->asJson([
+                            'success' => true,
+                            'msg' => Yii::t("app", 'Success')
+                        ]);
+                    }
+                    else{
+                        return $this->asJson([
+                            'success' => false,
+                            'msg' => Yii::t("app", 'Erorr in Save ')
+                        ]);
                     }
 
                 } catch (\Exception $e) {
@@ -98,7 +109,8 @@ class BusinessGalleryController extends Controller
         } else {
             $model->loadDefaultValues();
         }
-        return $this->render('create', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

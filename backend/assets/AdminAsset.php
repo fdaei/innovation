@@ -32,13 +32,13 @@ class AdminAsset extends AssetBundle
         // sweetalert2 JavaScript -->
         'js/sweetalert2.all.min.js',
         "js/horizontal-timeline.js",
+        "js/pjax-utility.js"
     ];
 
     public $css = [
         'css/fonts/iranSansNumber/css/style.css',
         'css/fonts/font-awesome/css/all.min.css',
         //'css/bootstrap-4/bootstrap-rtl.css',
-        //'css/table-responsive.css',
         'css/sweetalert2.min.css',
         "css/horizontal-timeline.css",
         "css/custom.css",
