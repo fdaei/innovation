@@ -179,13 +179,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="row">
                     <?php foreach ($gallery as $i => $item): ?>
-                        <div class="material-card  col-6">
+                        <div class="card material-card  col-6">
                             <div class="card-header">
                                 <div class="row">
                                     <p class="col-6">تصویر پس زمینه (موبایل)</p>
                                     <p class="col-6">تصویر پس زمینه</p>
-                                    <img class="card-img-top img-fluid col-6" src=<?= $item->getUploadUrl('mobile_image') ?>>
-                                    <img class="card-img-top img-fluid col-6"  src=<?= $item->getUploadUrl('image') ?> >
+                                    <img class="card-img-top img-fluid col-6" width="316px" height="224px" src=<?= $item->getUploadUrl('mobile_image') ?>>
+                                    <img class="card-img-top img-fluid col-6"  width="316px" height="224px" src=<?= $item->getUploadUrl('image') ?> >
                                 </div>
                             </div>
                             <div class="card-body ">
