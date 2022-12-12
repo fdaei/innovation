@@ -72,7 +72,7 @@ class City extends \yii\db\ActiveRecord
             'province_id' => Yii::t('app', 'Province ID'),
             'name' => Yii::t('app', 'Name'),
             'latitude' => Yii::t('app', 'Latitude'),
-            'longitude' => Yii::t('app', Yii::t('models', 'Longitude')),
+            'longitude' => Yii::t('app', 'Longitude'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
