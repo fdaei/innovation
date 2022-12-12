@@ -6,7 +6,6 @@ use common\models\BusinessMember;
 use common\models\BusinessStat;
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
-use yii\bootstrap4\Modal;
 use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -164,21 +163,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="carousel-inner" role="listbox">
                 <div class="text-right">
                     <?= Html::a(Yii::t('app', 'create').'<i class="fa fa-check"></i>', ['/business-gallery/create'], ['class' => 'btn btn-outline-success btn-sm mt-3 mr-5  rounded-3 ', "method" => "post"]) ?>
-                    <?php echo Html::a('<span class="glyphicon glyphicon-comment">ooooooooooooooooooooooooooooooo</span>',
-                        ['/business/my-comment'],
-                        [
-                                'value'=>'/business/my-comment',
-                            'title' => 'View Feed Comments',
-                            'data-toggle'=>'modal',
-                            'data-target'=>'#modalvote',
-                        ]
-                    );
-                    ?>
-                </div>
-                <div class="modal remote fade" id="modalvote">
-                    <div class="modal-dialog">
-                        <div class="modal-content loader-lg"></div>
-                    </div>
                 </div>
                 <?php foreach ($gallery as $i => $item): ?>
                     <div class="carousel-item <?= $i == 0 ? 'active' : '' ?>">
@@ -379,4 +363,3 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 </div>
-<!--e-->

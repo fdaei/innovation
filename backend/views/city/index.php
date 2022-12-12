@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2><?= Html::encode($this->title) ?></h2>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create City'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create City'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
     </p>
     </div>
     <?php Pjax::begin(); ?>
