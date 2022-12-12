@@ -88,7 +88,6 @@ return [
     "org_unit"=>"سازمان",
     "requirements"=>"شرایط",
     "Business"=>"کسب و کار",
-    "City"=>"شهر",
     "Province"=>"استان",
     "CareerApply"=>"رزومه",
     "JobPosition"=>"شغل",
