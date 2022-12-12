@@ -50,13 +50,7 @@ use yii\web\View;
                         'attribution' => 1,
                         'language' => 'fa',
                         'height' => 200,
-//                        'imageUploadParam' => 'file',
-//                        'imageUploadURL' => Url::to(['upload']),
-//                        'imageManagerLoadURL' => Url::to(['/file-manager/find-files', 'class_name' => 'job-position']),
-//                        'imageMaxSize' => 1024 * 1024 * 10,
-//                        'videoUploadParam' => 'file',
-//                        'videoUploadURL' => Url::to(['upload']),
-//                        'videoMaxSize' => 1024 * 1024 * 50
+
                     ],
                 ]);
                 ?>
@@ -68,7 +62,7 @@ use yii\web\View;
         <hr>
         <div class="form-group mb-0 card-footer d-flex justify-content-between">
             <div class="col-md-10 d-flex justify-content-end">
-                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
             </div>
         </div>
     </div>

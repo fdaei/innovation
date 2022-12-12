@@ -3,6 +3,7 @@
 use common\models\Business;
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
+use kartik\select2\Select2;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -17,24 +18,27 @@ use yii\helpers\Html;
 <div class="business-timeline-form">
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
-    <div class="row">
-        <div class="col-md-3">
-            <?= $form->field($model, 'business_id')->dropDownList(
-                ArrayHelper::map(Business::find()->all(), 'id', 'title'),
-                ['prompt' => 'Select Bussines']
-            ) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'year')->textInput() ?>
-        </div>
-        <div class="col-md-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <?= $form->field($model, 'status')->dropDownList(BusinessTimeline::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
+        </div>
+        <div class="col-md-8">
+            <?=
+            $form->field($model, 'business_id')->widget(Select2::class, [
+                'data' => ArrayHelper::map(Business::find()->all(), 'id', 'title'),
+                'options' => ['placeholder' => 'Select a state ...'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]);?>
+        </div>
+        <div class="col-md-8">
+            <?= $form->field($model, 'year')->textInput() ?>
         </div>
     </div>
 
     <div class="">
         <div class="card card-default">
-            <div class="card-heading"><h4><i class="glyphicon glyphicon-envelope"></i> items</h4></div>
             <div class="card-body ">
                 <?php DynamicFormWidget::begin([
                     'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -55,10 +59,10 @@ use yii\helpers\Html;
                 <div class="container-items"><!-- widgetContainer -->
                     <?php foreach ($TimelineItem as $i => $item): ?>
                         <div class="item card card-default"><!-- widgetBody -->
-                            <div class="card-heading">
-                                <div class="">
-                                    <button type="button" class="add-item btn btn-success btn-xs">+</button>
-                                    <button type="button" class="remove-item btn btn-danger btn-xs">-</button>
+                            <div class="row justify-content-center">
+                                <div class="col-sm-8">
+                                    <button type="button" class="add-item btn btn-info btn-xs btn-rounded"><?=Yii::t('app', 'add')?></button>
+                                    <button type="button" class="remove-item btn btn-outline-info btn-rounded btn-xs"><?=Yii::t('app', 'remove')?></button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -68,11 +72,11 @@ use yii\helpers\Html;
                                     echo Html::activeHiddenInput($item, "[{$i}]id");
                                 }
                                 ?>
-                                <div class="row">
-                                    <div class="col-sm-6">
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-4">
                                         <?= $form->field($item, "[{$i}]description")->textarea(['rows' => 6]) ?>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <?= $form->field($item, "[{$i}]status")->dropDownList(Business::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
                                     </div>
                                 </div>
@@ -82,8 +86,9 @@ use yii\helpers\Html;
                 </div>
                 <?php DynamicFormWidget::end(); ?>
             </div>
-            <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+            <div class="form-group mb-0 card-footer d-flex justify-content-between">
+                <div class="col-md-10 d-flex justify-content-end">
+                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

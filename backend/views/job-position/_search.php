@@ -1,6 +1,7 @@
 <?php
 
 use common\models\OrgUnit;
+use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -24,10 +25,15 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'title') ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'org_unit_id')->dropDownList(
-                ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
-                ['prompt' => 'Select org_unit']
-            ) ?>
+            <?=
+            $form->field($model, 'org_unit_id')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
+                'options' => ['placeholder' => 'Select city'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]);
+            ?>
         </div>
     </div>
     <div class="form-group">

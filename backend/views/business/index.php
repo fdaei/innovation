@@ -2,11 +2,11 @@
 
 use common\models\Business;
 use common\models\BusinessSearch;
-use yii\data\ActiveDataProvider;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
+use yii\data\ActiveDataProvider;
 use yii\web\View;
 use yii\widgets\Pjax;
 
@@ -20,7 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card material-card">
     <div class="card-header d-flex justify-content-between">
         <h2><?= Html::encode($this->title) ?></h2>
-        <?= Html::a(Yii::t('app', 'Create Business'), ['create'], ['class' => 'btn btn-success']) ?>
+        <button type="button" class="btn btn-info btn-rounded m-t-10 mb-2 float-right " data-toggle="modal" data-target="#add-contact">
+            <?= Html::a(Yii::t('app', 'Create Business'), ['create'], ['class' => 'text-white']) ?>
+        </button>
     </div>
 
     <?php Pjax::begin(); ?>

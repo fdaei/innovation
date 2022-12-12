@@ -1,6 +1,7 @@
 <?php
 
 use common\models\City;
+use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -23,16 +24,22 @@ use yii\widgets\ActiveForm;
         <div class="col-md-3">
             <?= $form->field($model, 'name') ?>
         </div>
+
         <div class="col-md-3">
-            <?= $form->field($model, 'center_id')->dropDownList(
-                ArrayHelper::map(City::find()->all(), 'id', 'name'),
-                ['prompt' => 'Select city']
-            ) ?>
+            <?=
+             $form->field($model, 'center_id')->widget(Select2::classname(), [
+                'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
+                'options' => ['placeholder' => 'Select city'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]);
+            ?>
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-info btn-rounded']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-info btn-rounded']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

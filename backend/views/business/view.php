@@ -6,8 +6,10 @@ use common\models\BusinessMember;
 use common\models\BusinessStat;
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
+use yii\bootstrap4\Modal;
 use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\DetailView;
 
@@ -79,8 +81,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="pl-2 m-2 shadow-sm border border- border-1">
                     <span class="btn waves-effect waves-light btn-sm btn-info">لوگو</span>
                     <div class="text-center">
-                        <div class="ml-auto">
-                            <img class=" p-2 img-fluid" src=<?= $model->getUploadUrl('logo') ?>>
+                        <div class="ml-auto"  >
+                            <img class=" p-2 img-fluid " src=<?= $model->getUploadUrl('logo') ?>>
                         </div>
                     </div>
                 </div>
@@ -162,6 +164,21 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="carousel-inner" role="listbox">
                 <div class="text-right">
                     <?= Html::a(Yii::t('app', 'create').'<i class="fa fa-check"></i>', ['/business-gallery/create'], ['class' => 'btn btn-outline-success btn-sm mt-3 mr-5  rounded-3 ', "method" => "post"]) ?>
+                    <?php echo Html::a('<span class="glyphicon glyphicon-comment">ooooooooooooooooooooooooooooooo</span>',
+                        ['/business/my-comment'],
+                        [
+                                'value'=>'/business/my-comment',
+                            'title' => 'View Feed Comments',
+                            'data-toggle'=>'modal',
+                            'data-target'=>'#modalvote',
+                        ]
+                    );
+                    ?>
+                </div>
+                <div class="modal remote fade" id="modalvote">
+                    <div class="modal-dialog">
+                        <div class="modal-content loader-lg"></div>
+                    </div>
                 </div>
                 <?php foreach ($gallery as $i => $item): ?>
                     <div class="carousel-item <?= $i == 0 ? 'active' : '' ?>">
@@ -362,3 +379,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 </div>
+<!--e-->
