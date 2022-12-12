@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use common\behaviors\CdnUploadImageBehavior;
-use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -177,8 +175,7 @@ class Province extends \yii\db\ActiveRecord
     {
         return [
             'id'=>'id',
-            'name'=>'name',
-            'center_id'=>'center_id',
+            'name'=>'name'
         ];
     }
 
