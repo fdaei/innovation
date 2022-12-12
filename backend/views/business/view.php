@@ -194,7 +194,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                             <div class="card-footer">
                                 <div class="btn-group  my-1" role="group" aria-label="First group">
-                                    <?= Html::a(Yii::t('app', 'update') . '<i class="fa fa-pen"></i>', ['/business-gallery/update', 'id' => $item->id], ['class' => 'btn btn-outline-warning btn-sm rounded-3', "method" => "post"]) ?>
+                                    <?= Html::a(Yii::t('app', 'update') . '<i class="fa fa-pen"></i>', ['/business-gallery/update', 'id' => $item->id], ['class' => 'btn btn-outline-primary mr-1 btn-sm rounded-3', "method" => "post"]) ?>
                                     <?= Html::a(Yii::t('app', 'delete') . '<i class="fa fa-trash"></i>', ['/business-gallery/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm rounded-3', "data-method" => "post"]) ?>
                                 </div>
                             </div>
