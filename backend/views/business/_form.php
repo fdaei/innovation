@@ -3,6 +3,7 @@
 use common\models\Business;
 use common\models\City;
 use common\models\User;
+use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -15,60 +16,73 @@ use yii\web\View;
 
 <div class="business-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([ 'enableClientValidation' => true,
+        'options'                => [
+            'id'      => 'dynamic-form'
+        ]]); ?>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <?=
+                $form->field($model, 'user_id')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
+                    'options' => ['placeholder' => 'Select user'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class="col-md-8">
+                <?=
+                $form->field($model, 'city_id')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
+                    'options' => ['placeholder' => 'Select city'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'status')->dropDownList(Business::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'logo')->fileInput() ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'wallpaper')->hint('طول باید  پیکسل 1920 و عرض باید 348 پیکسل باشد ')->fileInput() ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'mobile_wallpaper')->hint('طول باید 360 پیکسل و عرض باید 348 پیکسل باشد')->fileInput() ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'investor_description')->textarea(['rows' => 6]) ?>
+            </div>
+            <div class="col-md-8">
+                <?= $form->field($model, 'success_story')->textarea(['rows' => 6]) ?>
+            </div>
 
-    <div class="row">
-        <div class="col-md-3">
-            <?= $form->field($model, 'user_id')->dropDownList(
-                ArrayHelper::map(User::find()->all(), 'id', 'username'),
-                ['prompt' => 'Select user']
-            ) ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'city_id')->dropDownList(
-                ArrayHelper::map(City::find()->all(), 'id', 'name'),
-                ['prompt' => 'Select city']
-            ) ?>
+
+        <div class="form-group mb-0 card-footer d-flex justify-content-between">
+            <div class="col-md-10 d-flex justify-content-end">
+                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
+            </div>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(Business::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'logo')->fileInput() ?>
-        </div>
-        <div class="col-md-3">
-            <p>طول باید 1920 و عرض باید 348 باشد </p>
-            <?= $form->field($model, 'wallpaper')->fileInput() ?>
-        </div>
-        <div class="col-md-3">
-            <p>طول باید 360 و عرض باید 348 باشد </p>
-            <?= $form->field($model, 'mobile_wallpaper')->fileInput() ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'investor_description')->textarea(['rows' => 6]) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'success_story')->textarea(['rows' => 6]) ?>
-        </div>
+        <?php ActiveForm::end(); ?>
 
     </div>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

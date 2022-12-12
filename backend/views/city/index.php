@@ -1,15 +1,18 @@
 <?php
 
 use common\models\City;
+use common\models\CitySearch;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use yii\web\View;
 use yii\widgets\Pjax;
-/** @var yii\web\View $this */
-/** @var common\models\CitySearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
-/** @var common\models\City $model */
+/** @var View $this */
+/** @var CitySearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
+/** @var City $model */
 
 $this->title = Yii::t('app', 'Cities');
 $this->params['breadcrumbs'][] = $this->title;
@@ -41,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, City $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

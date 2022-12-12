@@ -94,5 +94,6 @@ return [
     "JobPosition"=>"شغل",
     "OrgUnit"=>"سازمان",
     "CHOOSE OrgUnit"=>"انتخاب سازمان",
-
+    "Update Province: {name}"=>"بروزرسانی استان :  {name}",
+    "Update City: {name}"=>"بروزرسانی شهر :  {name}",
 ] ?>

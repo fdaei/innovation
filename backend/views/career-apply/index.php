@@ -1,15 +1,17 @@
 <?php
 
-use common\models\CareerApply;
-use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use common\models\CareerApplySearch;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use common\widgets\grid\GridView;
+use common\widgets\grid\ActionColumn;
+use yii\web\View;
 use yii\widgets\Pjax;
 
-/** @var yii\web\View $this */
-/** @var common\models\CareerApplySearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var View $this */
+/** @var CareerApplySearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'Career Applies');
 $this->params['breadcrumbs'][] = $this->title;
@@ -26,10 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                [
-                    'attribute' => 'user_id',
-                    'value' => 'user.username',
-                ],
                 'first_name',
                 'last_name',
                 'mobile',
@@ -46,5 +44,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
     <?php Pjax::end(); ?>
-
 </div>

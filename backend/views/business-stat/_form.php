@@ -14,36 +14,36 @@ use yii\bootstrap4\ActiveForm;
 <div class="business-stat-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
-        <div class="col-md-3">
-    <?= $form->field($model,'business_id')->dropDownList(
-        ArrayHelper::map(Business::find()->all(),'id','title'),
-        ['prompt'=>'Select Bussines']
-    )?>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <?= $form->field($model, 'business_id')->dropDownList(
+                ArrayHelper::map(Business::find()->all(), 'id', 'title'),
+                ['prompt' => 'Select Bussines']
+            ) ?>
         </div>
-        <div class="col-md-3">
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-8">
+            <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-8">
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-8">
 
-    <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
-            <p>طول باید 96 و عرض باید 96 باشد </p>
-    <?= $form->field($model, 'icon')->fileInput() ?>
+        <div class="col-md-8">
+            <?= $form->field($model, 'icon')->hint('طول باید 96 و عرض باید 96 باشد')->fileInput() ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(BusinessStat::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
+        <div class="col-md-8">
+            <?= $form->field($model, 'status')->dropDownList(BusinessStat::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
         </div>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
+    <div class="form-group mb-0 card-footer d-flex justify-content-between">
+        <div class="col-md-10 d-flex justify-content-end">
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+    </div>
 
 </div>

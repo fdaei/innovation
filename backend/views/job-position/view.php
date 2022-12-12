@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="mt-4">
                         <p>
                             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
-                                ['class' => 'btn btn-primary']) ?>
+                                ['class' => 'btn btn-info btn-rounded']) ?>
                             <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                                'class' => 'btn btn-danger',
+                                'class' => 'btn btn-outline-info btn-rounded',
                                 'data' => [
                                     'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                                     'method' => 'post',
