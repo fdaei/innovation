@@ -11,6 +11,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\DetailView;
+use yii\widgets\Pjax;
 
 /** @var View $this */
 /** @var Business $model */
@@ -80,8 +81,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="pl-2 m-2 shadow-sm border border- border-1">
                     <span class="btn waves-effect waves-light btn-sm btn-info">لوگو</span>
                     <div class="text-center">
-                        <div class="ml-auto"  >
-                            <img class=" p-2 img-fluid " src=<?= $model->getUploadUrl('logo') ?>>
+                        <div class="ml-auto">
+                            <img class=" p-2 img-fluid " style="width: 62px;height: 65px;border-radius: 28%;"
+                                 src=<?= $model->getUploadUrl('logo') ?>>
                         </div>
                     </div>
                 </div>
@@ -155,66 +157,60 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <?php $this->endBlock(); ?>
-
         <?php $this->beginBlock('Galleries'); ?>
-
-        <div id="carouselExampleIndicators3" class="carousel slide pb-3" data-ride="carousel"
-             style="border:1px solid lightgray ;">
-            <div class="carousel-inner" role="listbox">
+        <?php Pjax::begin(['id' => 'p-jax-business-gallery', 'enablePushState' => false]); ?>
+        <div class="d-flex">
+            <div class="">
                 <div class="text-right">
-                    <?= Html::a(Yii::t('app', 'create').'<i class="fa fa-check"></i>', ['/business-gallery/create'], ['class' => 'btn btn-outline-success btn-sm mt-3 mr-5  rounded-3 ', "method" => "post"]) ?>
+                    <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-success m-3",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/business-gallery/create']),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-business-gallery',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
                 </div>
-                <?php foreach ($gallery as $i => $item): ?>
-                    <div class="carousel-item <?= $i == 0 ? 'active' : '' ?>">
-                        <div class="row" style="border-bottom:2px solid #8b8b8b80">
-                            <div class="col-4">
-                                <h5 class="alert alert-info rounded-3">
-                                    <p>تصویر پس زمینه (موبایل)</p>
-                                </h5>
-                                <img class="img-fluid" src=<?= $item->getUploadUrl('mobile_image') ?> alt="First slide">
-                            </div>
-                            <div class="col-8">
+                <div class="row">
+                    <?php foreach ($gallery as $i => $item): ?>
+                        <div class="material-card  col-6">
+                            <div class="card-header">
                                 <div class="row">
-                                    <div class="col-10">
-                                        <h5 class="alert alert-info rounded-3">
-                                            <p>تصویر پس زمینه </p>
-                                        </h5>
-                                    </div>
-                                    <div class="col-2 m-0">
-                                        <div class="btn-group  my-1" role="group" aria-label="First group">
-                                            <?= Html::a(Yii::t('app', 'update').'<i class="fa fa-pen"></i>', ['/business-gallery/update', 'id' => $item->id], ['class' => 'btn btn-outline-warning btn-sm rounded-3', "method" => "post"]) ?>
-                                        </div>
-                                        <div>
-                                            <?= Html::a(Yii::t('app', 'delete').'<i class="fa fa-trash"></i>', ['/business-gallery/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm rounded-3', "data-method" => "post"]) ?>
-                                        </div>
-                                    </div>
+                                    <p class="col-6">تصویر پس زمینه (موبایل)</p>
+                                    <p class="col-6">تصویر پس زمینه</p>
+                                    <img class="card-img-top img-fluid col-6" src=<?= $item->getUploadUrl('mobile_image') ?>>
+                                    <img class="card-img-top img-fluid col-6"  src=<?= $item->getUploadUrl('image') ?> >
                                 </div>
-                                <img class="img-fluid" src=<?= $item->getUploadUrl('image') ?> alt="First slide">
+                            </div>
+                            <div class="card-body ">
+                                <p class="card-title"><?= $item->title ?></p>
+                                <p class="card-text"><?= $item->description ?></p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="btn-group  my-1" role="group" aria-label="First group">
+                                    <?= Html::a(Yii::t('app', 'update') . '<i class="fa fa-pen"></i>', ['/business-gallery/update', 'id' => $item->id], ['class' => 'btn btn-outline-warning btn-sm rounded-3', "method" => "post"]) ?>
+                                    <?= Html::a(Yii::t('app', 'delete') . '<i class="fa fa-trash"></i>', ['/business-gallery/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm rounded-3', "data-method" => "post"]) ?>
+                                </div>
                             </div>
                         </div>
-                        <div class="row d-none d-md-block p-4 alert alert-info">
-                            <h2 class="pb-2"><?= $item->title ?></h2>
-                            <p><?= $item->description ?></p>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
-            <ol class="carousel-indicators">
-                <?php foreach ($gallery as $i => $item): ?>
-                    <li data-target="#carouselExampleIndicators3"
-                        data-slide-to=<?= $i ?> class="<?= $i == 0 ? 'active' : '' ?>"></li>
-                <?php endforeach; ?>
-            </ol>
         </div>
-
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
-
         <?php $this->beginBlock('Members'); ?>
         <div class="row">
             <div class="col-12  mt-3">
                 <p class="float-left alert alert-info">اعضا و سرمایه گذاران</p>
                 <div class="btn-group mr-2 float-right" role="group" aria-label="First group">
-                    <?= Html::a(Yii::t('app', 'create').'<i class="fa fa-check"></i>', ['/business-member/create'], ['class' => 'btn btn-outline-success btn-sm rounded-3', "method" => "post"]) ?>
+                    <?= Html::a(Yii::t('app', 'create') . '<i class="fa fa-check"></i>', ['/business-member/create'], ['class' => 'btn btn-outline-success btn-sm rounded-3', "method" => "post"]) ?>
                 </div>
             </div>
             <?php foreach ($members as $i => $item): ?>
@@ -224,8 +220,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4 class="card-title"><span><?= $item->first_name ?></span><span><?= $item->last_name ?></span>
                         </h4>
                         <p class="text-muted"><?= $item->position ?></p>
-                        <?= Html::a(Yii::t('app', 'delete').'<i class="fa fa-trash"></i>', ['/business-member/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm ', "data-method" => "post"]) ?>
-                        <?= Html::a(Yii::t('app', 'update').'<i class="fa fa-pen"></i>', ['/business-member/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-sm ', "method" => "post"]) ?>
+                        <?= Html::a(Yii::t('app', 'delete') . '<i class="fa fa-trash"></i>', ['/business-member/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm ', "data-method" => "post"]) ?>
+                        <?= Html::a(Yii::t('app', 'update') . '<i class="fa fa-pen"></i>', ['/business-member/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-sm ', "method" => "post"]) ?>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -237,15 +233,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-12  mt-3">
                 <p class="float-left alert alert-info">آمار و احتمالات</p>
                 <div class="btn-group mr-2 float-right" role="group" aria-label="First group">
-                    <?= Html::a(Yii::t('app', 'create').'<i class="fa fa-check"></i>', ['/business-stat/create'], ['class' => 'btn btn-outline-success btn-sm rounded-3', "method" => "post"]) ?>
+                    <?= Html::a(Yii::t('app', 'create') . '<i class="fa fa-check"></i>', ['/business-stat/create'], ['class' => 'btn btn-outline-success btn-sm rounded-3', "method" => "post"]) ?>
 
                 </div>
             </div>
             <?php foreach ($stat as $i => $item): ?>
-                <div class="col-4 card d-inline" >
+                <div class="col-4 card d-inline">
                     <div class="row mx-1 border border- border-1 shadow-sm">
                         <div class="col-md-4">
-                            <img src="<?= $item->getUploadUrl('icon') ?>" class="card-img pt-3" >
+                            <img src="<?= $item->getUploadUrl('icon') ?>" class="card-img pt-3">
                         </div>
                         <div class="col-md-8">
                             <div class="p-2">
@@ -253,8 +249,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <p class="card-text"><?= $item->subtitle ?></p>
                                 <p class="card-text"><?= $item->type ?></p>
                                 <div class="text-right">
-                                    <?= Html::a(Yii::t('app', 'delete').'<i class="fa fa-trash"></i>', ['/business-stat/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm ', "data-method" => "post"]) ?>
-                                    <?= Html::a(Yii::t('app', 'update').'<i class="fa fa-pen"></i>', ['/business-stat/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-sm ', "method" => "post"]) ?>
+                                    <?= Html::a(Yii::t('app', 'delete') . '<i class="fa fa-trash"></i>', ['/business-stat/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm ', "data-method" => "post"]) ?>
+                                    <?= Html::a(Yii::t('app', 'update') . '<i class="fa fa-pen"></i>', ['/business-stat/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-sm ', "method" => "post"]) ?>
                                 </div>
                             </div>
                         </div>
@@ -301,28 +297,29 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="events-content">
                                 <ol>
                                     <?php foreach ($timeline as $i => $item): ?>
-                                        <li class="<?= $i === 0 ? 'selected' : '' ?> " data-date="01/01/<?= $item->year ?>">
+                                        <li class="<?= $i === 0 ? 'selected' : '' ?> "
+                                            data-date="01/01/<?= $item->year ?>">
                                             <div class="shadow-sm shadow border border- border-1 p-3">
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h2 class="my-2">
-                                                        <span><?= $item->year ?></span>
-                                                        <span><?= $item->convert([$item->year]) ?></span>
-                                                    </h2>
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <h2 class="my-2">
+                                                            <span><?= $item->year ?></span>
+                                                            <span><?= $item->convert([$item->year]) ?></span>
+                                                        </h2>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <?php foreach ($item->timeLineIem as $it): ?>
-                                                <p class="pt-3">
-                                                    <i class="fa fa-check"></i>
-                                                    <?= $it->description ?>
-                                                    <?= Html::a('<i class="fas fa-trash"></i>', ['/business-timeline-item/delete', 'id' => $it->id], ['class' => ' btn  btn btn-outline-secondary btn-sm float-right m-1', "data-method" => "post"]) ?>
-                                                    <?= Html::a('<i class="fas fa-pen"></i>', ['/business-timeline-item/update', 'id' => $it->id], ['class' => 'btn btn-outline-secondary btn-sm float-right m-1', "method" => "post"]) ?>
-                                                </p>
-                                            <?php endforeach; ?>
+                                                <?php foreach ($item->timeLineIem as $it): ?>
+                                                    <p class="pt-3">
+                                                        <i class="fa fa-check"></i>
+                                                        <?= $it->description ?>
+                                                        <?= Html::a('<i class="fas fa-trash"></i>', ['/business-timeline-item/delete', 'id' => $it->id], ['class' => ' btn  btn btn-outline-secondary btn-sm float-right m-1', "data-method" => "post"]) ?>
+                                                        <?= Html::a('<i class="fas fa-pen"></i>', ['/business-timeline-item/update', 'id' => $it->id], ['class' => 'btn btn-outline-secondary btn-sm float-right m-1', "method" => "post"]) ?>
+                                                    </p>
+                                                <?php endforeach; ?>
                                             </div>
                                             <p class="b--gray">
-                                                <?= Html::a(Yii::t('app', 'delete').'<i class="fas fa-trash"></i>', ['/business-timeline/delete', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "data-method" => "post"]) ?>
-                                                <?= Html::a(Yii::t('app', 'update').'<i class="fas fa-pen"></i>', ['/business-timeline/update', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "method" => "post"]) ?>
+                                                <?= Html::a(Yii::t('app', 'delete') . '<i class="fas fa-trash"></i>', ['/business-timeline/delete', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "data-method" => "post"]) ?>
+                                                <?= Html::a(Yii::t('app', 'update') . '<i class="fas fa-pen"></i>', ['/business-timeline/update', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "method" => "post"]) ?>
                                             </p>
                                         </li>
                                     <?php endforeach; ?>

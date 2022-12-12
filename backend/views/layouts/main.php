@@ -30,7 +30,6 @@ AdminAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
-
 <?php $this->beginBody(); ?>
 <div class="preloader">
     <div class="lds-ripple">
@@ -173,6 +172,43 @@ AdminAsset::register($this);
             </div>
         </div>
     </div>
+
+    <?php
+    Modal::begin([
+        'headerOptions' => ['id' => 'modalPjaxOverHeader'],
+        'id' => 'modal-pjax-over',
+        'bodyOptions' => [
+            'id' => 'modalPjaxOverContent',
+            'class' => 'p-3 text-left',
+            'data' => ['show-preloader' => 0]
+        ],
+        'options' => ['tabindex' => false, 'style' => 'z-index:1051;']
+    ]); ?>
+    <div class="text-center">
+        <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <?php Modal::end(); ?>
+
+    <?php
+    Modal::begin([
+        'headerOptions' => ['id' => 'modalPjaxHeader'],
+        'id' => 'modal-pjax',
+        'bodyOptions' => [
+            'id' => 'modalPjaxContent',
+            'class' => 'p-3',
+            'data' => ['show-preloader' => 0]
+        ],
+        'options' => ['tabindex' => false]
+    ]); ?>
+    <div class="text-center">
+        <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <?php Modal::end(); ?>
+
     <?= $this->render('_customizer') ?>
     <?= $this->render('_footer') ?>
 </div>

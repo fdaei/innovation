@@ -14,22 +14,25 @@ use yii\bootstrap4\ActiveForm;
 
 <div class="business-gallery-form">
 
-    <?php $form = ActiveForm::begin([ 'enableClientValidation' => true,
-        'options'                => [
-        ]]); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'business-gallery-form',
+        'options' => [
+
+        ]
+    ]); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-8">
             <?=
-             $form->field($model, 'business_id')->widget(Select2::class, [
+            $form->field($model, 'business_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Business::find()->all(), 'id', 'title'),
                 'options' => ['placeholder' => 'Select a state ...'],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
-            ]);?>
+            ]); ?>
         </div>
         <div class="col-md-8">
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
