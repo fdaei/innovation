@@ -78,7 +78,7 @@ return [
     'Link' => 'لینک',
     'Logo' => 'لوگو',
     'Logout' => '',
-    'Longitude' => '@@طول جغرافیایی@@',
+    'Longitude' => 'طول جغرافیایی',
     'Member Deleted' => '',
     'Mobile' => 'موبایل',
     'MobileImage' => 'تصویر موبایل',
