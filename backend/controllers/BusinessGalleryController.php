@@ -19,6 +19,7 @@ use yii\web\NotFoundHttpException;
 class BusinessGalleryController extends Controller
 {
     use AjaxValidationTrait;
+
     /**
      * @inheritDoc
      */
@@ -95,8 +96,7 @@ class BusinessGalleryController extends Controller
                             'success' => true,
                             'msg' => Yii::t("app", 'Success')
                         ]);
-                    }
-                    else{
+                    } else {
                         return $this->asJson([
                             'success' => false,
                             'msg' => Yii::t("app", 'Erorr in Save ')
@@ -129,12 +129,12 @@ class BusinessGalleryController extends Controller
         $model = $this->findModel($id);
         $model->scenario = BusinessGallery::SCENARIO_UPDATE;
         if ($this->request->isPost && $model->load($this->request->post())) {
-            if($model->save()){
+            if ($model->save()) {
                 return $this->asJson([
                     'success' => true,
                     'msg' => Yii::t("app", 'Success')
                 ]);
-            }else{
+            } else {
                 return $this->asJson([
                     'success' => false,
                     'msg' => Yii::t("app", 'Erorr in Save ')
@@ -158,14 +158,16 @@ class BusinessGalleryController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->canDelete() && $model->softDelete()) {
-            $this->flash('success', Yii::t('app', 'Image Deleted'));
+            return $this->asJson([
+                'status' => true,
+                'message' => Yii::t("app", "Item Deleted")
+            ]);
         } else {
-            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Image'));
+            return $this->asJson([
+                'status' => false,
+                'message' => Yii::t("app", "Error In Save Info")
+            ]);
         }
-        return $this->asJson([
-            'success' => true,
-            'msg' => Yii::t("app", 'Success')
-        ]);
     }
 
     /**
