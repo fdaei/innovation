@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\BusinessTimelineItem;
 use common\models\BusinessTimelineItemSearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -15,6 +16,7 @@ use yii\web\Response;
  */
 class BusinessTimelineItemController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -73,14 +75,24 @@ class BusinessTimelineItemController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
-                $model->save();
-                return $this->redirect(['/business/view', 'id' => $model->businessTimeline->business_id]);
+                if($model->save()){
+                    return $this->asJson([
+                        'success' => true,
+                        'msg' => Yii::t("app", 'Success')
+                    ]);
+                }else{
+                    return $this->asJson([
+                        'success' => false,
+                        'msg' => Yii::t("app", 'Erorr in Save ')
+                    ]);
+                }
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

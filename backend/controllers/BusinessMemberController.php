@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\BusinessMember;
 use common\models\BusinessMemberSearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -14,6 +15,7 @@ use yii\web\NotFoundHttpException;
  */
 class BusinessMemberController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -73,13 +75,22 @@ class BusinessMemberController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 $model->save(false);
-                return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            }
+            else{
+                return $this->asJson([
+                    'success' => false,
+                    'msg' => Yii::t("app", 'Erorr in Save ')
+                ]);
             }
         } else {
             $model->loadDefaultValues();
         }
-
-        return $this->render('create', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

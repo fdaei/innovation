@@ -15,7 +15,9 @@ use yii\helpers\Html;
 
 <div class="business-member-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+            ['id' => 'business-member-form',]
+    ); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>

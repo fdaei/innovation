@@ -7,6 +7,7 @@ use common\models\BusinessGallery;
 use common\models\BusinessGallerySearch;
 use common\traits\AjaxValidationTrait;
 use Yii;
+use Yii\base\ExitException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -78,6 +79,7 @@ class BusinessGalleryController extends Controller
      * Creates a new BusinessGallery model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
+     * @throws ExitException
      */
     public function actionCreate()
     {
@@ -126,11 +128,21 @@ class BusinessGalleryController extends Controller
     {
         $model = $this->findModel($id);
         $model->scenario = BusinessGallery::SCENARIO_UPDATE;
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if($model->save()){
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            }else{
+                return $this->asJson([
+                    'success' => false,
+                    'msg' => Yii::t("app", 'Erorr in Save ')
+                ]);
+            }
         }
-
-        return $this->render('update', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -150,7 +162,10 @@ class BusinessGalleryController extends Controller
         } else {
             $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Image'));
         }
-        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+        return $this->asJson([
+            'success' => true,
+            'msg' => Yii::t("app", 'Success')
+        ]);
     }
 
     /**

@@ -13,7 +13,7 @@ use yii\web\View;
 ?>
 
 <div class="business-stat-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin( ['id' => 'business-stat-form']); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <?= $form->field($model, 'business_id')->dropDownList(

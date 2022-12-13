@@ -17,7 +17,7 @@ use yii\helpers\Html;
 
 <div class="business-timeline-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'business-timeline-form']); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <?= $form->field($model, 'status')->dropDownList(BusinessTimeline::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>

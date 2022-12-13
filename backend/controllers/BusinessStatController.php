@@ -5,7 +5,9 @@ namespace backend\controllers;
 
 use common\models\BusinessStat;
 use common\models\BusinessStatSearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
+use Yii\base\ExitException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -16,6 +18,7 @@ use yii\web\NotFoundHttpException;
  */
 class BusinessStatController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -76,6 +79,7 @@ class BusinessStatController extends Controller
      * Creates a new BusinessStat model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
+     * @throws ExitException
      */
     public function actionCreate()
     {
@@ -83,14 +87,24 @@ class BusinessStatController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
-                $model->save(false);
-                return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+                if ($model->save(false)) {
+                    return $this->asJson([
+                        'success' => true,
+                        'msg' => Yii::t("app", 'Success')
+                    ]);
+                }
+                else{
+                    return $this->asJson([
+                        'success' => false,
+                        'msg' => Yii::t("app", 'Erorr in Save ')
+                    ]);
+                }
             }
         } else {
             $model->loadDefaultValues();
         }
-
-        return $this->render('create', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

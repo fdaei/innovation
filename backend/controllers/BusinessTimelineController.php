@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use aminbbb92\user\traits\AjaxValidationTrait;
 use common\models\BaseModel;
 use common\models\BusinessTimeline;
 use common\models\BusinessTimelineItem;
@@ -19,6 +20,7 @@ use yii\web\NotFoundHttpException;
  */
 class BusinessTimelineController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -102,7 +104,15 @@ class BusinessTimelineController extends Controller
 
                     if ($flag) {
                         $transaction->commit();
-                        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+                        return $this->asJson([
+                            'success' => true,
+                            'msg' => Yii::t("app", 'Success')
+                        ]);
+                    }else{
+                        return $this->asJson([
+                            'success' => false,
+                            'msg' => Yii::t("app", 'Erorr in Save ')
+                        ]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
@@ -110,7 +120,8 @@ class BusinessTimelineController extends Controller
                 }
             }
         }
-        return $this->render('create', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('create', [
             'model' => $model,
             'TimelineItem' => (empty($TimelineItems)) ? [new BusinessTimelineItem] : $TimelineItems
         ]);
