@@ -25,7 +25,6 @@ class AdminAsset extends AssetBundle
         'js/app-style-switcher.js',
         'js/waves.js',
         'js/sidebar-menu.js',
-        'js/ajax-modal-popup.js',
         'js/toast.js',
         'js/jquery.double-keypress.js',
         'js/jquery.tags-input.js',
