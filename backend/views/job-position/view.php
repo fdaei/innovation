@@ -25,9 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label><?=Yii::t('app', 'org_unit')?></label>
                     <h6 class="card-title border-bottom m-2 pb-3"><?=$model->orgUnit->title?></h6>
                     <label><?=Yii::t('app', 'description')?></label>
-                    <p class="card-text border-bottom m-2 pb-3"><?=$model->description?></p>
+                    <h6 class="card-title border-bottom m-2 pb-3"><?=$model->description?></h6>
                     <label><?=Yii::t('app', 'requirements')?></label>
-                    <p class="card-text border-bottom m-2 pb-3"><?=$model->requirements?></p>
+                    <h6 class="card-title border-bottom m-2 pb-3">
+                        <?=$model->requirements?>
+                    </h6>
                     <div class="mt-4">
                         <p>
                             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
