@@ -16,12 +16,6 @@ use yii\web\View;
     <?php $form = ActiveForm::begin( ['id' => 'business-stat-form']); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <?= $form->field($model, 'business_id')->dropDownList(
-                ArrayHelper::map(Business::find()->all(), 'id', 'title'),
-                ['prompt' => 'Select Bussines']
-            ) ?>
-        </div>
-        <div class="col-md-8">
             <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-8">

@@ -25,16 +25,6 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-8">
-            <?=
-            $form->field($model, 'business_id')->widget(Select2::class, [
-                'data' => ArrayHelper::map(Business::find()->all(), 'id', 'title'),
-                'options' => ['placeholder' => 'Select a state ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ]); ?>
-        </div>
-        <div class="col-md-8">
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
         </div>
         <div class="col-md-8">

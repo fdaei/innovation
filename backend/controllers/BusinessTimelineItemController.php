@@ -108,11 +108,21 @@ class BusinessTimelineItemController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['/business/view', 'id' => $model->businessTimeline->business_id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if($model->save()){
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            }else{
+                return $this->asJson([
+                    'success' => false,
+                    'msg' => Yii::t("app", 'Erorr in Save ')
+                ]);
+            }
         }
-
-        return $this->render('update', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
@@ -129,12 +139,16 @@ class BusinessTimelineItemController extends Controller
         $model = $this->findModel($id);
 
         if ($model->canDelete() && $model->softDelete()) {
-            $this->flash('success', Yii::t('app', 'Item Deleted'));
+            return $this->asJson([
+                'status' => true,
+                'message' => Yii::t("app", "Item Deleted")
+            ]);
         } else {
-            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Items'));
+            return $this->asJson([
+                'status' => false,
+                'message' => Yii::t("app", "Error In Save Info")
+            ]);
         }
-
-        return $this->redirect(['/business/view', 'id' => $model->businessTimeline->business_id]);
     }
 
     /**

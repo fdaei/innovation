@@ -29,7 +29,7 @@ use yii\web\View;
             <?=
              $form->field($model, 'user_id')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
-                'options' => ['placeholder' => 'Select user'],
+                'options' => ['placeholder' => Yii::t('app', 'Select user')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
@@ -40,7 +40,7 @@ use yii\web\View;
             <?=
             $form->field($model, 'city_id')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
-                'options' => ['placeholder' => 'Select city'],
+                'options' => ['placeholder' => Yii::t('app', 'Select city')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],

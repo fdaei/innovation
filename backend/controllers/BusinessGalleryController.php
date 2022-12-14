@@ -82,9 +82,10 @@ class BusinessGalleryController extends Controller
      * @return string|\yii\web\Response
      * @throws ExitException
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new BusinessGallery(['scenario' => BusinessGallery::SCENARIO_CREATE]);
+        $model->business_id = $id;
 
         $transaction = \Yii::$app->db->beginTransaction();
         if ($this->request->isPost) {

@@ -170,7 +170,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/business-gallery/create']),
+                            'data-url' => Url::to(['/business-gallery/create','id'=>$model->id]),
                             'data-handle-form-submit' => 1,
                             'data-show-loading' => 0,
                             'data-reload-pjax-container' => 'p-jax-business-gallery',
@@ -197,7 +197,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                                         [
                                             'data-pjax' => '0',
-                                            'class' => "btn btn-outline-primary m-3",
+                                            'class' => "btn btn-outline-primary",
                                             'data-size' => 'modal-xl',
                                             'data-title' => Yii::t('app', 'update',),
                                             'data-toggle' => 'modal',
@@ -208,7 +208,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'data-reload-pjax-container' => 'p-jax-business-gallery',
                                             'data-reload-pjax-container-on-show' => 0
                                         ]) ?>
-                                    <?= Html::a(Html::tag('span', 'delete', ['class' => "btn btn-outline-danger btn-sm rounded-3"]), 'javascript:void(0)',
+                                    <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
                                         [
                                             'title' => Yii::t('yii', 'delete'),
                                             'aria-label' => Yii::t('yii', 'delete'),
@@ -242,7 +242,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/business-member/create']),
+                            'data-url' => Url::to(['/business-member/create','id'=>$model->id]),
                             'data-handle-form-submit' => 1,
                             'data-show-loading' => 0,
                             'data-reload-pjax-container' => 'p-jax-business-member',
@@ -261,8 +261,32 @@ $this->params['breadcrumbs'][] = $this->title;
                         </h4>
                         <p class="text-muted"><?= $item->position ?></p>
                         <div class="card-footer">
-                            <?= Html::a(Yii::t('app', 'delete') . '<i class="fa fa-trash"></i>', ['/business-member/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm ', "data-method" => "post"]) ?>
-                            <?= Html::a(Yii::t('app', 'update') . '<i class="fa fa-pen"></i>', ['/business-member/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-sm ', "method" => "post"]) ?>
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-primary",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'update',),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/business-member/update','id' => $item->id]),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-member',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                            <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
+                                [
+                                    'title' => Yii::t('yii', 'delete'),
+                                    'aria-label' => Yii::t('yii', 'delete'),
+                                    'data-reload-pjax-container' => 'p-jax-business-member',
+                                    'data-pjax' => '0',
+                                    'data-url' => Url::to(['/business-member/delete','id' => $item->id]),
+                                    'class' => " p-jax-btn",
+                                    'data-title' => Yii::t('yii', 'delete'),
+                                    'data-toggle' => 'tooltip',
+                                    'data-method' => ''
+                                ]);?>
                         </div>
                     </div>
                 </div>
@@ -285,13 +309,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/business-stat/create']),
+                            'data-url' => Url::to(['/business-stat/create','id'=>$model->id]),
                             'data-handle-form-submit' => 1,
                             'data-show-loading' => 0,
                             'data-reload-pjax-container' => 'p-jax-business-stat',
                             'data-reload-pjax-container-on-show' => 0
                         ]) ?>
-
                 </div>
             </div>
             <?php foreach ($stat as $i => $item): ?>
@@ -306,8 +329,32 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <p class="card-text"><?= $item->subtitle ?></p>
                                 <p class="card-text"><?= $item->type ?></p>
                                 <div class="text-right">
-                                    <?= Html::a(Yii::t('app', 'delete') . '<i class="fa fa-trash"></i>', ['/business-stat/delete', 'id' => $item->id], ['class' => 'btn btn-outline-danger btn-sm ', "data-method" => "post"]) ?>
-                                    <?= Html::a(Yii::t('app', 'update') . '<i class="fa fa-pen"></i>', ['/business-stat/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-sm ', "method" => "post"]) ?>
+                                    <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                        [
+                                            'data-pjax' => '0',
+                                            'class' => "btn btn-outline-primary",
+                                            'data-size' => 'modal-xl',
+                                            'data-title' => Yii::t('app', 'update',),
+                                            'data-toggle' => 'modal',
+                                            'data-target' => '#modal-pjax',
+                                            'data-url' => Url::to(['/business-stat/update','id' => $item->id]),
+                                            'data-handle-form-submit' => 1,
+                                            'data-show-loading' => 0,
+                                            'data-reload-pjax-container' => 'p-jax-business-stat',
+                                            'data-reload-pjax-container-on-show' => 0
+                                        ]) ?>
+                                    <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
+                                        [
+                                            'title' => Yii::t('yii', 'delete'),
+                                            'aria-label' => Yii::t('yii', 'delete'),
+                                            'data-reload-pjax-container' => 'p-jax-business-stat',
+                                            'data-pjax' => '0',
+                                            'data-url' => Url::to(['/business-stat/delete','id' => $item->id]),
+                                            'class' => " p-jax-btn",
+                                            'data-title' => Yii::t('yii', 'delete'),
+                                            'data-toggle' => 'tooltip',
+                                            'data-method' => ''
+                                        ]);?>
                                 </div>
                             </div>
                         </div>
@@ -333,7 +380,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-title' => Yii::t('app', 'create Time'),
                                     'data-toggle' => 'modal',
                                     'data-target' => '#modal-pjax',
-                                    'data-url' => Url::to(['/business-timeline/create']),
+                                    'data-url' => Url::to(['/business-timeline/create','id'=>$model->id]),
                                     'data-handle-form-submit' => 1,
                                     'data-show-loading' => 0,
                                     'data-reload-pjax-container' => 'p-jax-business-timeline',
@@ -397,14 +444,62 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <p class="pt-3">
                                                         <i class="fa fa-check"></i>
                                                         <?= $it->description ?>
-                                                        <?= Html::a('<i class="fas fa-trash"></i>', ['/business-timeline-item/delete', 'id' => $it->id], ['class' => ' btn  btn btn-outline-secondary btn-sm float-right m-1', "data-method" => "post"]) ?>
-                                                        <?= Html::a('<i class="fas fa-pen"></i>', ['/business-timeline-item/update', 'id' => $it->id], ['class' => 'btn btn-outline-secondary btn-sm float-right m-1', "method" => "post"]) ?>
+                                                        <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
+                                                            [
+                                                                'title' => Yii::t('yii', 'delete'),
+                                                                'aria-label' => Yii::t('yii', 'delete'),
+                                                                'data-reload-pjax-container' => 'p-jax-business-timeline',
+                                                                'data-pjax' => '0',
+                                                                'data-url' => Url::to(['/business-timeline-item/delete','id' => $it->id]),
+                                                                'class' => " p-jax-btn",
+                                                                'data-title' => Yii::t('yii', 'delete'),
+                                                                'data-toggle' => 'tooltip',
+                                                                'data-method' => ''
+                                                            ]);?>
+                                                        <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                                            [
+                                                                'data-pjax' => '0',
+                                                                'class' => "btn btn-outline-primary m-3",
+                                                                'data-size' => 'modal-xl',
+                                                                'data-title' => Yii::t('app', 'create Item'),
+                                                                'data-toggle' => 'modal',
+                                                                'data-target' => '#modal-pjax',
+                                                                'data-url' => Url::to(['/business-timeline-item/update', 'id' => $it->id]),
+                                                                'data-handle-form-submit' => 1,
+                                                                'data-show-loading' => 0,
+                                                                'data-reload-pjax-container' => 'p-jax-business-timeline',
+                                                                'data-reload-pjax-container-on-show' => 0
+                                                            ]) ?>
                                                     </p>
                                                 <?php endforeach; ?>
                                             </div>
                                             <p class="b--gray">
-                                                <?= Html::a(Yii::t('app', 'delete') . '<i class="fas fa-trash"></i>', ['/business-timeline/delete', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "data-method" => "post"]) ?>
-                                                <?= Html::a(Yii::t('app', 'update') . '<i class="fas fa-pen"></i>', ['/business-timeline/update', 'id' => $item->id], ['class' => 'btn  btn btn-outline-info btn-sm  mt-5', "method" => "post"]) ?>
+                                                <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
+                                                    [
+                                                        'title' => Yii::t('yii', 'delete'),
+                                                        'aria-label' => Yii::t('yii', 'delete'),
+                                                        'data-reload-pjax-container' => 'p-jax-business-timeline',
+                                                        'data-pjax' => '0',
+                                                        'data-url' => Url::to(['/business-timeline/delete','id' => $item->id]),
+                                                        'class' => " p-jax-btn",
+                                                        'data-title' => Yii::t('yii', 'delete'),
+                                                        'data-toggle' => 'tooltip',
+                                                        'data-method' => ''
+                                                    ]);?>
+                                                <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                                    [
+                                                        'data-pjax' => '0',
+                                                        'class' => "btn btn-outline-primary m-3",
+                                                        'data-size' => 'modal-xl',
+                                                        'data-title' => Yii::t('app', 'create Item'),
+                                                        'data-toggle' => 'modal',
+                                                        'data-target' => '#modal-pjax',
+                                                        'data-url' => Url::to(['/business-timeline/update', 'id' => $item->id]),
+                                                        'data-handle-form-submit' => 1,
+                                                        'data-show-loading' => 0,
+                                                        'data-reload-pjax-container' => 'p-jax-business-timeline',
+                                                        'data-reload-pjax-container-on-show' => 0
+                                                    ]) ?>
                                             </p>
                                         </li>
                                     <?php endforeach; ?>
@@ -422,24 +517,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo Tabs::Widget([
             'items' => [
                 [
-                    'label' => 'Business',
+                    'label' => Yii::t('app','Business'),
                     'content' => $this->blocks['Business'],
                     'active' => true,
                 ],
                 [
-                    'label' => 'Galleries',
+                    'label' => Yii::t('app','Galleries'),
                     'content' => $this->blocks['Galleries'],
                 ],
                 [
-                    'label' => 'Members',
+                    'label' => Yii::t('app','Members'),
                     'content' => $this->blocks['Members'],
                 ],
                 [
-                    'label' => 'Timeline',
+                    'label' => Yii::t('app','Timeline'),
                     'content' => $this->blocks['Timeline'],
                 ],
                 [
-                    'label' => 'Stat',
+                    'label' =>Yii::t('app','Stat'),
                     'content' => $this->blocks['Stat'],
                 ],
             ]

@@ -26,16 +26,6 @@ use yii\helpers\Html;
             <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-8">
-            <?=
-            $form->field($model, 'business_id')->widget(Select2::class, [
-                'data' => ArrayHelper::map(Business::find()->all(), 'id', 'title'),
-                'options' => ['placeholder' => 'Select a state ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ]);?>
-        </div>
-        <div class="col-md-8">
             <?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-8">

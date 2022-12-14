@@ -68,9 +68,10 @@ class BusinessMemberController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new BusinessMember(['scenario' => BusinessMember::SCENARIO_CREATE]);
+        $model->business_id = $id;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
@@ -107,11 +108,20 @@ class BusinessMemberController extends Controller
         $model = $this->findModel($id);
         $model->scenario = BusinessMember::SCENARIO_UPDATE;
         if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
-            $model->save(false);
-            return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+            if($model->save(false)){
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            }else{
+                return $this->asJson([
+                    'success' => false,
+                    'msg' => Yii::t("app", 'Erorr in Save ')
+                ]);
+            }
         }
-
-        return $this->render('update', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
@@ -127,11 +137,16 @@ class BusinessMemberController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->canDelete() && $model->softDelete()) {
-            $this->flash('success', Yii::t('app', 'Member Deleted'));
+            return $this->asJson([
+                'status' => true,
+                'message' => Yii::t("app", "Item Deleted")
+            ]);
         } else {
-            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Member'));
+            return $this->asJson([
+                'status' => false,
+                'message' => Yii::t("app", "Error In delete Info")
+            ]);
         }
-        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
     }
 
     /**

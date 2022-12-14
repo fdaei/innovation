@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
             <?=
             $form->field($model,'province_id')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(Province::find()->all(), 'id', 'name'),
-                'options' => ['placeholder' => 'Select city'],
+                'options' => ['placeholder' =>  Yii::t('app', 'Select city')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],

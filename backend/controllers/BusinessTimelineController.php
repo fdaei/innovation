@@ -76,9 +76,10 @@ class BusinessTimelineController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new BusinessTimeline;
+        $model->business_id=$id;
         $TimelineItems = [new BusinessTimelineItem];
         if ($model->load(Yii::$app->request->post())) {
             $TimelineItems = BaseModel::createMultiple(BusinessTimelineItem::class);
@@ -166,7 +167,15 @@ class BusinessTimelineController extends Controller
                     }
                     if ($flag) {
                         $transaction->commit();
-                        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
+                        return $this->asJson([
+                            'success' => true,
+                            'msg' => Yii::t("app", 'Success')
+                        ]);
+                    }else{
+                        return $this->asJson([
+                            'success' => false,
+                            'msg' => Yii::t("app", 'Erorr in Save ')
+                        ]);
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
@@ -174,8 +183,8 @@ class BusinessTimelineController extends Controller
                 }
             }
         }
-
-        return $this->render('update', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('update', [
             'model' => $model,
             'TimelineItem' => (empty($modelItems)) ? [new BusinessTimelineItem] : $modelItems
         ]);
@@ -192,12 +201,16 @@ class BusinessTimelineController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->canDelete() && $model->softDelete()) {
-            $this->flash('success', Yii::t('app', 'Item Deleted'));
+            return $this->asJson([
+                'status' => true,
+                'message' => Yii::t("app", "Item Deleted")
+            ]);
         } else {
-            $this->flash('error', array_values($model->errors)[0][0] ?? Yii::t('app', 'Error In Delete Info'));
+            return $this->asJson([
+                'status' => false,
+                'message' => Yii::t("app", "Error In Save Info")
+            ]);
         }
-
-        return $this->redirect(['/business/view', 'id' => $model->business['id']]);
     }
 
     /**

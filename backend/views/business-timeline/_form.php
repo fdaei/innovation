@@ -20,17 +20,8 @@ use yii\helpers\Html;
     <?php $form = ActiveForm::begin(['id' => 'business-timeline-form']); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <?= $form->field($model, 'status')->dropDownList(BusinessTimeline::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
-        </div>
-        <div class="col-md-8">
-            <?=
-            $form->field($model, 'business_id')->widget(Select2::class, [
-                'data' => ArrayHelper::map(Business::find()->all(), 'id', 'title'),
-                'options' => ['placeholder' => 'Select a state ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ]);?>
+            <?= $form->field($model, 'status')->dropDownList(
+                    BusinessTimeline::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
         <div class="col-md-8">
             <?= $form->field($model, 'year')->textInput() ?>

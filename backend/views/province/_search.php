@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
             <?=
              $form->field($model, 'center_id')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
-                'options' => ['placeholder' => 'Select city'],
+                'options' => ['placeholder' => Yii::t('app', 'Select city')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],

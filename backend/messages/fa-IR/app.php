@@ -95,4 +95,10 @@ return [
     "CHOOSE OrgUnit"=>"انتخاب سازمان",
     "Update Province: {name}"=>"بروزرسانی استان :  {name}",
     "Update City: {name}"=>"بروزرسانی شهر :  {name}",
+    "Number of business"=>"تعداد کسب و کارها",
+    "list of business"=>"لیست کسب و کارها",
+    "Number of CareerApply"=>"تعداد رزومه ها",
+    "list of CareerApply"=>"لیست رزمه ها",
+    "Number of JobPosition"=>"تعداد شغل ها",
+    "list of JobPosition"=>"لیست شغل ها",
 ] ?>

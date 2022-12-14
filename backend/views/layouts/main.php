@@ -51,7 +51,7 @@ AdminAsset::register($this);
                                 'options' => ['class' => 'breadcrumb mb-0 justify-content-start  p-0 bg-white'],
                                 'homeLink' => [
                                     'label' => '<span class="fal fa-home"></span>',
-                                    'url' => Url::to(['default/index']),
+                                    'url' => Url::to(['site/index']),
                                     'encode' => false// Requested feature
                                 ],
                                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
