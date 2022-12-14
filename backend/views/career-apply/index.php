@@ -1,11 +1,10 @@
 <?php
 
-use yii\helpers\Url;
 use common\models\CareerApplySearch;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
-use common\widgets\grid\GridView;
-use common\widgets\grid\ActionColumn;
 use yii\web\View;
 use yii\widgets\Pjax;
 
@@ -32,12 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'last_name',
                 'mobile',
                 [
-                    'class' => 'yii\grid\ActionColumn',
+                    'class' => ActionColumn::class,
                     'template' => '{view} {delete}',
                     // display conditional buttons
                     'visibleButtons' => [
                         'update' => false,
-                        'create'=>false
+                        'create' => false
                     ],
                 ],
             ],

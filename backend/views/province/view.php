@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label><?= Yii::t('app', 'Provinces') ?></label>
                     <p class="card-title border-bottom m-2 pb-3"><?= $model->name ?></p>
                     <label><?= Yii::t('app', 'Center ID') ?></label>
-                    <p class="card-title border-bottom m-2 pb-3"><?= $model->cities->name ?></p>
+                    <p class="card-title border-bottom m-2 pb-3"><?= $model->center->name ?></p>
                     <div class="mt-4">
                         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
                             ['class' => 'btn btn-outline-info btn-rounded']) ?>

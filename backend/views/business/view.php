@@ -299,7 +299,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php Pjax::begin(['id' => 'p-jax-business-stat', 'enablePushState' => false]); ?>
         <div class="row">
             <div class="col-12  mt-3">
-                <p class="float-left alert alert-info">آمار و احتمالات</p>
                 <div class="btn-group mr-2 float-right" role="group" aria-label="First group">
                     <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
                         [

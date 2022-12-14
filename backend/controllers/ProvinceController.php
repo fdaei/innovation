@@ -7,6 +7,7 @@ use common\models\ProvinceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * ProvinceController implements the CRUD actions for Province model.

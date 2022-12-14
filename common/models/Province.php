@@ -21,6 +21,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $deleted_at
  *
  * @property City[] $cities
+ * @property City $center
  * @property User $createdBy
  * @property User $updatedBy
  * @mixin SoftDeleteBehavior
@@ -47,7 +48,7 @@ class Province extends \yii\db\ActiveRecord
         return [
             [['center_id', 'status'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['name', 'deleted_at'], 'unique'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -79,6 +80,16 @@ class Province extends \yii\db\ActiveRecord
     public function getCities()
     {
         return $this->hasMany(City::class, ['province_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[center]].
+     *
+     * @return \yii\db\ActiveQuery|CityQuery
+     */
+    public function getCenter()
+    {
+        return $this->hasOne(City::class, ['id' => 'center_id']);
     }
 
     /**

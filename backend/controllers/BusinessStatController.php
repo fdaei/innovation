@@ -83,8 +83,12 @@ class BusinessStatController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new BusinessStat(['scenario' => BusinessStat::SCENARIO_CREATE]);
-        $model->business_id =$id;
+        $model = new BusinessStat([
+            'scenario' => BusinessStat::SCENARIO_CREATE,
+            'business_id' => $id
+        ]);
+        $model->loadDefaultValues();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 if ($model->save(false)) {
@@ -100,9 +104,8 @@ class BusinessStatController extends Controller
                     ]);
                 }
             }
-        } else {
-            $model->loadDefaultValues();
         }
+
         $this->performAjaxValidation($model);
         return $this->renderAjax('create', [
             'model' => $model,

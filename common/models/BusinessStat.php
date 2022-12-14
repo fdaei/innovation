@@ -55,8 +55,8 @@ class BusinessStat extends \yii\db\ActiveRecord
         return [
             [['business_id', 'type', 'title', 'subtitle', 'status','icon'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['business_id', 'type', 'title', 'subtitle', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
-            [['business_id', 'status'], 'integer'],
-            [['type', 'title', 'subtitle'], 'string', 'max' => 255],
+            [['business_id', 'status', 'type'], 'integer'],
+            [['title', 'subtitle'], 'string', 'max' => 255],
             ['icon', 'image', 'minWidth' => 96, 'maxWidth' => 96, 'minHeight' => 96, 'maxHeight' => 96, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
         ];
     }

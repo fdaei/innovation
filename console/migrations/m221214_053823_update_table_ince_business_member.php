@@ -6,7 +6,7 @@ class m221214_053823_update_table_ince_business_member extends Migration
 {
     public function safeUp()
     {
-        $this->alterColumn('{{%business_member}}', 'status', $this->integer()->defaultValue('1'));
+        $this->alterColumn('{{%business_member}}', 'status', $this->tinyInteger()->unsigned()->notNull()->defaultValue('1'));
     }
 
     public function safeDown()
