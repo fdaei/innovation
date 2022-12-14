@@ -7,7 +7,7 @@ $params = array_merge(
 return [
     'id' => 'app-api',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','oauth2'],
     'controllerNamespace' => 'api\controllers',
     'modules' => [
         'oauth2' => [
@@ -65,6 +65,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/business'],
