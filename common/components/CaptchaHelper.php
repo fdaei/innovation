@@ -2,13 +2,17 @@
 
 namespace common\components;
 
-use Exception;
 use lubosdz\captchaExtended\CaptchaExtendedAction;
-use stdClass;
+use yii\base\Exception;
 use Yii;
 
+/**
+ * @author SADi <sadshafiei.01@gmail.com>
+ */
 class CaptchaHelper extends CaptchaExtendedAction
 {
+    const CODE_VALID_TIME = 240; // 4 Minutes
+
     private $code;
 
     /**
@@ -25,15 +29,15 @@ class CaptchaHelper extends CaptchaExtendedAction
      * @return array
      * @throws \yii\base\InvalidConfigException
      */
-    public function generateImage()
+    public function generateImage(): array
     {
+        $generatedCode = $this->generateCode();
         $cacheKey = microtime(true);
-        $base64 = "data:image/png;base64," . base64_encode($this->renderImage($this->generateCode()['code']));
-        Yii::$app->cache->set($this->generateSessionKey($this->generateCode()['result'], $cacheKey), $this->generateCode()['result'], 60);
-
+        $base64 = "data:image/png;base64," . base64_encode($this->renderImage($generatedCode['code']));
+        Yii::$app->redis->setex($this->generateSessionKey($generatedCode['result'], $cacheKey), self::CODE_VALID_TIME, $generatedCode['result']);
         return [
             'image' => $base64,
-            'expireTime' => time() + 60,
+            'expireTime' => time() + self::CODE_VALID_TIME,
             'key' => $cacheKey
         ];
     }
@@ -52,27 +56,34 @@ class CaptchaHelper extends CaptchaExtendedAction
 
     /**
      * @param string $code
+     * @param float $cacheKey
      * @return bool
      * @throws Exception
      */
     public function verify($code, $cacheKey): bool
     {
-        $verify = Yii::$app->cache->get($this->generateSessionKey($code, (float)$cacheKey));
+        $verify = Yii::$app->redis->get($this->generateSessionKey($code, (float)$cacheKey)) === $code;
+        $this->invalidate($code, $cacheKey);
 
-        Yii::$app->cache->delete($this->generateSessionKey($code, (float)$cacheKey));
+        return $verify;
+    }
 
-        if ($verify === $code) {
-            return true;
-        }
-
-        return false;
+    /**
+     * @param string $code
+     * @param float $cacheKey
+     * @return bool
+     * @throws Exception
+     */
+    public function invalidate($code, $cacheKey): bool
+    {
+        return Yii::$app->redis->del($this->generateSessionKey($code, (float)$cacheKey));
     }
 
     /**
      * @return string
      */
-    private function generateSessionKey(string $code): string
+    private function generateSessionKey($code, $cacheKey): string
     {
-        return base64_encode(Yii::$app->request->getRemoteIP() . Yii::$app->request->getUserAgent() . $code);
+        return base64_encode(Yii::$app->request->getRemoteIP() . Yii::$app->request->getUserAgent() . $cacheKey . $code);
     }
 }
