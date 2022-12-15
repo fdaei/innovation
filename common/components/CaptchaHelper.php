@@ -11,7 +11,6 @@ class CaptchaHelper extends CaptchaExtendedAction
 {
     private $code;
 
-
     /**
      * CaptchaHelper constructor.
      * @throws \yii\base\InvalidConfigException
@@ -20,18 +19,18 @@ class CaptchaHelper extends CaptchaExtendedAction
     {
         $this->init();
         $this->mode = self::MODE_MATH;
-
     }
 
     /**
-     * @return string
+     * @return array
      * @throws \yii\base\InvalidConfigException
      */
     public function generateImage()
     {
         $cacheKey = microtime(true);
-        $base64 = "data:image/png;base64," . base64_encode($this->renderImage($this->generateCode()));
-        Yii::$app->cache->set($this->generateSessionKey($this->generateCode(), $cacheKey), $this->generateCode(), 60);
+        $base64 = "data:image/png;base64," . base64_encode($this->renderImage($this->generateCode()['code']));
+        Yii::$app->cache->set($this->generateSessionKey($this->generateCode()['result'], $cacheKey), $this->generateCode()['result'], 60);
+
         return [
             'image' => $base64,
             'expireTime' => time() + 60,
@@ -40,15 +39,15 @@ class CaptchaHelper extends CaptchaExtendedAction
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function generateCode(): string
+    public function generateCode(): array
     {
         if ($this->code) {
             return $this->code;
         }
 
-        return $this->code = $this->generateVerifyCode()['code'];
+        return $this->code = $this->generateVerifyCode();
     }
 
     /**
