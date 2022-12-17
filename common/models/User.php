@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -9,7 +10,7 @@ use yii\db\ActiveRecord;
 use yii\filters\RateLimitInterface;
 use yii\web\IdentityInterface;
 
-/**
+/*
  * User model
  *
  * @property integer $id
@@ -24,7 +25,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements UserCredentialsInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
@@ -228,5 +229,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function checkUserCredentials($username, $password)
+    {
+        // TODO: Implement checkUserCredentials() method.
+    }
+
+    public function getUserDetails($username)
+    {
+        // TODO: Implement getUserDetails() method.
     }
 }

@@ -9,6 +9,7 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
+use yii\web\HttpException;
 
 
 /**
@@ -50,6 +51,25 @@ class UserController extends ActiveController
 
     }
 
+    /**
+     * @OA\Info(
+     *   version="1.0.0",
+     *   title="My API",
+     *   @OA\License(name="MIT"),
+     *   @OA\Attachable()
+     * )
+     */
+    /**
+     * @OA\Get(
+     *    path = "/user/authorize",
+     *    tags = {"authorize"},
+     *    operationId = "authorize",
+     *    summary = "http://api.ince.local/v1/site/authorize",
+     *    description = "Shttp://api.ince.local/v1/site/authorize",
+     *	@OA\Response(response = 200, description = "success")
+     *)
+     * @throws HttpException
+     */
     public function actionAuthorize()
     {
         if (Yii::$app->getUser()->getIsGuest())
