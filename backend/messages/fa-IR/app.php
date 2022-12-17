@@ -101,4 +101,5 @@ return [
     "list of CareerApply"=>"لیست رزمه ها",
     "Number of JobPosition"=>"تعداد شغل ها",
     "list of JobPosition"=>"لیست شغل ها",
+    "NotImmediate"=>"عادی",
 ] ?>

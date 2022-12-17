@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
         <div class="col-md-3">
             <?=
-             $form->field($model, 'center_id')->widget(Select2::classname(), [
+             $form->field($model, 'center_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
                 'options' => ['placeholder' => Yii::t('app', 'Select city')],
                 'pluginOptions' => [

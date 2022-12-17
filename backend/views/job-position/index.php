@@ -35,6 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
                 'title',
                 [
+                    'attribute' => 'immediate',
+                    'value' => function ($model) {
+
+                        return JobPosition::itemAlias('Immediate',$model->immediate);
+                    },
+                ],
+                [
                     'attribute' => 'org_unit_id',
                     'value' => 'orgUnit.title',
                 ],

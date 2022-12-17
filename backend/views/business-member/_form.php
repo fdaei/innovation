@@ -2,6 +2,7 @@
 
 use common\models\Business;
 use common\models\BusinessMember;
+use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -32,7 +33,10 @@ use yii\helpers\Html;
             <?= $form->field($model, 'status')->dropDownList(BusinessMember::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
         </div>
         <div class="col-md-8">
-            <?= $form->field($model, 'image')->hint(' طول باید 248 و عرض باید 268 باشد')->fileInput() ?>
+            <?= $form->field($model, 'image')->widget(FileInput::class, [
+                'name' => 'attachment_3',
+                'options' => ['accept' => 'image/*'],
+            ])->hint(' طول باید 248 و عرض باید 268 باشد'); ?>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">

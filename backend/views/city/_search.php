@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-md-3">
             <?=
-            $form->field($model,'province_id')->widget(Select2::classname(), [
+            $form->field($model,'province_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Province::find()->all(), 'id', 'name'),
                 'options' => ['placeholder' =>  Yii::t('app', 'Select city')],
                 'pluginOptions' => [

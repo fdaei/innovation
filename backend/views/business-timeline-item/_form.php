@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(['id' => 'business-timeline-item-form']); ?>
     <div class="row justify-content-center">
             <div class="col-md-8">
-                <?=  $form->field($model, 'business_timeline_id')->widget(Select2::classname(), [
+                <?=  $form->field($model, 'business_timeline_id')->widget(Select2::class, [
                     'data' => ArrayHelper::map(BusinessTimeline::find()->all(), 'id', 'year'),
                     'options' => ['placeholder' => 'Select a state ...'],
                     'pluginOptions' => [

@@ -3,6 +3,7 @@
 use common\models\Business;
 use common\models\City;
 use common\models\User;
+use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -15,9 +16,9 @@ use yii\web\View;
 ?>
 
 <div class="business-form">
-    <?php $form = ActiveForm::begin([ 'enableClientValidation' => true,
-        'options'                => [
-            'id'      => 'dynamic-form'
+    <?php $form = ActiveForm::begin(['enableClientValidation' => true,
+        'options' => [
+            'id' => 'dynamic-form'
         ]]); ?>
     <div class="card-body">
         <div class="row justify-content-center">
@@ -56,13 +57,22 @@ use yii\web\View;
                 <?= $form->field($model, 'status')->dropDownList(Business::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
             </div>
             <div class="col-md-8">
-                <?= $form->field($model, 'logo')->fileInput() ?>
+                <?= $form->field($model, 'logo')->widget(FileInput::class, [
+                    'name' => 'attachment_3',
+                    'options' => ['accept' => 'image/*'],
+                ]); ?>
             </div>
             <div class="col-md-8">
-                <?= $form->field($model, 'wallpaper')->hint('طول باید  پیکسل 1920 و عرض باید 348 پیکسل باشد ')->fileInput() ?>
+                <?= $form->field($model, 'wallpaper')->widget(FileInput::class, [
+                    'name' => 'attachment_3',
+                    'options' => ['accept' => 'image/*'],
+                ])->hint('طول باید  پیکسل 1920 و عرض باید 348 پیکسل باشد '); ?>
             </div>
             <div class="col-md-8">
-                <?= $form->field($model, 'mobile_wallpaper')->hint('طول باید 360 پیکسل و عرض باید 348 پیکسل باشد')->fileInput() ?>
+                <?= $form->field($model, 'mobile_wallpaper')->widget(FileInput::class, [
+                    'name' => 'attachment_3',
+                    'options' => ['accept' => 'image/*'],
+                ])->hint('طول باید 360 پیکسل و عرض باید 348 پیکسل باشد'); ?>
             </div>
             <div class="col-md-8">
                 <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\BusinessStat;
+use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\web\View;
@@ -20,7 +21,10 @@ use yii\web\View;
             <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-8">
-            <?= $form->field($model, 'icon')->hint('طول باید 96 و عرض باید 96 باشد')->fileInput() ?>
+            <?= $form->field($model, 'icon')->widget(FileInput::class, [
+                'name' => 'attachment_3',
+                'options' => ['accept' => 'image/*'],
+            ])->hint('طول باید 96 و عرض باید 96 باشد'); ?>
         </div>
         <div class="col-md-8">
             <?= $form->field($model, 'status')->dropDownList(BusinessStat::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>

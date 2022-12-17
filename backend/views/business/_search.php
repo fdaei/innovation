@@ -27,7 +27,7 @@ use yii\web\View;
     <div class="row">
         <div class="col-md-3">
             <?=
-             $form->field($model, 'user_id')->widget(Select2::classname(), [
+             $form->field($model, 'user_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
                 'options' => ['placeholder' => Yii::t('app', 'Select user')],
                 'pluginOptions' => [
@@ -38,7 +38,7 @@ use yii\web\View;
         </div>
         <div class="col-md-3">
             <?=
-            $form->field($model, 'city_id')->widget(Select2::classname(), [
+            $form->field($model, 'city_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
                 'options' => ['placeholder' => Yii::t('app', 'Select city')],
                 'pluginOptions' => [

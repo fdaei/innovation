@@ -30,7 +30,6 @@ class AdminAsset extends AssetBundle
         'js/jquery.tags-input.js',
         // sweetalert2 JavaScript -->
         'js/sweetalert2.all.min.js',
-        "js/horizontal-timeline.js",
         "js/pjax-utility.js"
     ];
 

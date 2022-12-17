@@ -38,8 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <p class="card-text border-bottom m-2 pb-3"><?= $model->description?></p>
                     <div class="mt-4">
                         <p>
-                            <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
-                                ['class' => 'btn btn-info btn-rounded']) ?>
                             <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-outline-info btn-rounded',
                                 'data' => [

@@ -1,5 +1,6 @@
 <?php
 
+use backend\assets\TimelineAsset;
 use common\models\Business;
 use common\models\BusinessGallery;
 use common\models\BusinessMember;
@@ -366,6 +367,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php $this->beginBlock('Timeline'); ?>
         <?php Pjax::begin(['id' => 'p-jax-business-timeline', 'enablePushState' => false]); ?>
+        <?php \backend\assets\TimelineAsset::register($this);?>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -510,6 +512,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
+
         <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
 
@@ -540,3 +543,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 </div>
+
