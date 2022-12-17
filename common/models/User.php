@@ -6,6 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\filters\RateLimitInterface;
 use yii\web\IdentityInterface;
 
 /**
@@ -28,7 +29,23 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+    public $rateLimit = 1;
+    public $allowance;
+    public $allowance_updated_at;
 
+    public function getRateLimit($request, $action) {
+        return [$this->rateLimit,1];
+    }
+    public function loadAllowance($request, $action)
+    {
+        return [$this->allowance, $this->allowance_updated_at];
+    }
+    public function saveAllowance($request, $action, $allowance, $timestamp)
+    {
+        $this->allowance = $allowance;
+        $this->allowance_updated_at = $timestamp;
+        $this->save();
+    }
     /**
      * {@inheritdoc}
      */
@@ -111,7 +128,8 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
             'verification_token' => $token,
             'status' => self::STATUS_INACTIVE
@@ -130,7 +148,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }

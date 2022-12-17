@@ -2,7 +2,10 @@
 
 namespace api\modules\v1\controllers;
 
+use Aws\Retry\RateLimiter;
 use common\components\CaptchaHelper;
+
+
 use yii\filters\VerbFilter;
 use yii\rest\Controller;
 use yii\web\HttpException;
@@ -22,18 +25,16 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'index' => ['GET', 'HEAD', 'OPTIONS'],
-                        'captcha' => ['GET', 'HEAD', 'OPTIONS'],
-                    ],
-                ],
-            ]
-        );
+        $behaviors = parent::behaviors();
+        $behaviors['rateLimiter']['enableRateLimitHeaders'] = false;
+        $behaviors['verbs'] = ['class' => VerbFilter::class,
+            'actions' => [
+                'index' => ['GET', 'HEAD', 'OPTIONS'],
+                'captcha' => ['GET', 'HEAD', 'OPTIONS'],
+            ],
+        ];
+        return $behaviors;
+
     }
 
     protected function verbs()
