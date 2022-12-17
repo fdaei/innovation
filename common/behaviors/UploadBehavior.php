@@ -28,7 +28,7 @@ use yii\web\UploadedFile;
  * {
  *     return [
  *         [
- *             'class' => UploadBehavior::className(),
+ *             'class' => UploadBehavior::class,
  *             'attribute' => 'file',
  *             'scenarios' => ['insert', 'update'],
  *             'path' => '@webroot/upload/{id}',

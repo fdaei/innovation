@@ -154,4 +154,5 @@ return [
     'requirements' => 'شرایط',
     'title' => 'عنوان',
     'update' => 'ویرایش',
+    "NotImmediate"=>'عادی',
 ];

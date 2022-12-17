@@ -38,7 +38,8 @@ class JobPosition extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
-
+    const Immediate = 1;
+    const NotImmediate = 0;
 
     public static function tableName()
     {
@@ -165,7 +166,11 @@ class JobPosition extends \yii\db\ActiveRecord
                 self::STATUS_DELETED => '#ff5050',
                 self::STATUS_ACTIVE => '#04AA6D',
                 self::STATUS_INACTIVE => '#eea236',
-            ],];
+            ],
+            'Immediate' =>[
+                self::Immediate => Yii::t('app', 'Immediate'),
+                self::NotImmediate => Yii::t('app', 'NotImmediate'),
+            ]];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
         else
