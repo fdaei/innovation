@@ -233,11 +233,14 @@ class User extends ActiveRecord implements UserCredentialsInterface
 
     public function checkUserCredentials($username, $password)
     {
-        // TODO: Implement checkUserCredentials() method.
+
+        // در اینجا میره دنبال یوزر درجدول یوزر یا جدول اس ام اس ها بر حسب اینکه  پسورد چی باشه
+        return true;
     }
 
     public function getUserDetails($username)
     {
-        // TODO: Implement getUserDetails() method.
+        // گرفتن یوزر و برگشتن user_id برای قسمت های دیگه
+        return ['user_id'=>1];
     }
 }

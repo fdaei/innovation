@@ -83,4 +83,26 @@ class UserController extends ActiveController
         Yii::$app->getResponse()->format = \yii\web\Response::FORMAT_JSON;
         return $response->getParameters();
     }
+
+    public function actionTest($username,$password,$client_id){
+//        $model = OauthClients::find()->where(['client_id'=>$client_id])->one();
+////        $response=['Type'=>'password','value'=>$password];
+////        $response.json_encode();
+//        $data=[
+//            'client_id'=>$client_id,
+//            'username'=>$username,
+//            'password'=>$password,
+//            'client_secret'=>$model['client_secret'],
+//            'grant_type'=>'password',
+//        ];
+//        $client = new Client();
+//        $response = $client->createRequest()
+//            ->setMethod('POST')
+//            ->setUrl('oauth2/rest/token')
+//            ->setData($data)
+//            ->send();
+//        return $response;
+        var_dump("dkdkdk");
+        die();
+    }
 }

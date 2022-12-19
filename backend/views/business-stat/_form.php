@@ -24,7 +24,7 @@ use yii\web\View;
             <?= $form->field($model, 'icon')->widget(FileInput::class, [
                 'name' => 'attachment_3',
                 'options' => ['accept' => 'image/*'],
-            ])->hint('طول باید 96 و عرض باید 96 باشد'); ?>
+            ])->hint('height:96px width:96px'); ?>
         </div>
         <div class="col-md-8">
             <?= $form->field($model, 'status')->dropDownList(BusinessStat::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>

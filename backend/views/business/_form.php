@@ -66,13 +66,13 @@ use yii\web\View;
                 <?= $form->field($model, 'wallpaper')->widget(FileInput::class, [
                     'name' => 'attachment_3',
                     'options' => ['accept' => 'image/*'],
-                ])->hint('طول باید  پیکسل 1920 و عرض باید 348 پیکسل باشد '); ?>
+                ])->hint(' width:1920 height:348 '); ?>
             </div>
             <div class="col-md-8">
                 <?= $form->field($model, 'mobile_wallpaper')->widget(FileInput::class, [
                     'name' => 'attachment_3',
                     'options' => ['accept' => 'image/*'],
-                ])->hint('طول باید 360 پیکسل و عرض باید 348 پیکسل باشد'); ?>
+                ])->hint(' width:360px height:348px'); ?>
             </div>
             <div class="col-md-8">
                 <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>

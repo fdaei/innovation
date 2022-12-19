@@ -200,15 +200,13 @@ class CareerApplyController extends ActiveController
     {
         $model = new CareerApply();
         $model->loadDefaultValues();
-
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                $model->save(false);
+            if ($model->load($this->request->post())) {
+                $model->save();
             } else {
                 $model->validate();
             }
         }
-
         return $model;
     }
 }

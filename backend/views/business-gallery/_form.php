@@ -35,13 +35,13 @@ use yii\bootstrap4\ActiveForm;
             <?= $form->field($model, 'image')->widget(FileInput::class, [
                 'name' => 'attachment_3',
                 'options' => ['accept' => 'image/*'],
-            ])->hint('طول باید 348 و عرض باید 648 باشد'); ?>
+            ])->hint('height:648 width:348'); ?>
         </div>
         <div class="col-md-8">
             <?= $form->field($model, 'mobile_image')->widget(FileInput::class, [
                 'name' => 'attachment_3',
                 'options' => ['accept' => 'image/*'],
-            ])->hint('طول باید 224 و عرض باید 316 باشد'); ?>
+            ])->hint('height:316px width:224px'); ?>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">

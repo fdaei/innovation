@@ -36,7 +36,7 @@ use yii\helpers\Html;
             <?= $form->field($model, 'image')->widget(FileInput::class, [
                 'name' => 'attachment_3',
                 'options' => ['accept' => 'image/*'],
-            ])->hint(' طول باید 248 و عرض باید 268 باشد'); ?>
+            ])->hint('height:268px width:248px'); ?>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">
