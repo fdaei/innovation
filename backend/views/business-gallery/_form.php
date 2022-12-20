@@ -1,16 +1,14 @@
 <?php
 
-use common\models\Business;
 use common\models\BusinessGallery;
 use kartik\file\FileInput;
-use kartik\select2\Select2;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+use yii\web\View;
 
-/** @var yii\web\View $this */
-/** @var common\models\BusinessGallery $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var View $this */
+/** @var BusinessGallery $model */
+/** @var ActiveForm $form */
 ?>
 
 <div class="business-gallery-form">
@@ -50,6 +48,4 @@ use yii\bootstrap4\ActiveForm;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-
-</div>
 </div>

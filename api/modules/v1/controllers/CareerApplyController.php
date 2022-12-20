@@ -2,16 +2,11 @@
 
 namespace api\modules\v1\controllers;
 
-use common\components\CaptchaHelper;
-use common\models\Business;
 use common\models\CareerApply;
-use common\models\JobPosition;
 use common\models\OrgUnitSearch;
-use Yii;
 use yii\filters\VerbFilter;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
-use yii\web\NotFoundHttpException;
 
 /**
  * CareerApply controller
@@ -52,8 +47,6 @@ class CareerApplyController extends ActiveController
         unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
     }
-
-
 
     /**
      * @OA\Info(
@@ -194,8 +187,6 @@ class CareerApplyController extends ActiveController
      *   @OA\Response(response="401",description="Unauthorized"),
      * )
      */
-
-
     public function actionCreate()
     {
         $model = new CareerApply();
@@ -210,4 +201,3 @@ class CareerApplyController extends ActiveController
         return $model;
     }
 }
-

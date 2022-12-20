@@ -1,22 +1,24 @@
 <?php
 
 namespace api\modules\v1\controllers;
+
+use common\models\LoginForm;
+use filsh\yii2\oauth2server\controllers\RestController;
 use filsh\yii2\oauth2server\models\OauthClients;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\httpclient\Client;
-use yii\rest\ActiveController;
-use yii\rest\Controller;
 
 /**
  * Site controller
  */
-class LoginController extends ActiveController
+class LoginController extends RestController
 {
-    public $modelClass = "common\models\User";
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
+
     /**
      * {@inheritdoc}
      */
@@ -34,6 +36,7 @@ class LoginController extends ActiveController
             ]
         );
     }
+
     public function actions()
     {
         $actions = parent::actions();
@@ -41,40 +44,41 @@ class LoginController extends ActiveController
         unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
     }
-    public function actionLogin($username,$password,$client_id){
-        $model = OauthClients::find()->where(['client_id'=>$client_id])->one();
-        $response=['Type'=>'password','value'=>$password];
-        $response.json_encode();
-        $data=[
-            'client_id'=>$client_id,
-            'username'=>$username,
-            'password'=>$response,
-            'client_secret'=>$model['client_secret'],
-            'grant_type'=>'password',
-        ];
-        $client = new Client();
-        $response = $client->createRequest()
-            ->setMethod('POST')
-            ->setUrl('http://api.ince.local/oauth2/rest/token')
-            ->setData($data)
-            ->send();
+
+    public function actionLogin($login_by_code = true)
+    {
+        $model = new LoginForm();
+
+        $model->load(Yii::$app->request->post());
+
+        if ($model->validate()) {
+            if ($login_by_code) {
+                $model->sendCode();
+            }
+        }
+
+        return $model;
     }
-    public function actionLoginByNumber($number,$VerifyCode,$client_id){
-        $model = OauthClients::find()->where(['client_id'=>$client_id])->one();
-        $response=['Type'=>'number','value'=>$number];
-        $response.json_encode();
-        $data=[
-            'client_id'=>$client_id,
-            'username'=>$response,
-            'password'=>$response,
-            'client_secret'=>$model['client_secret'],
-            'grant_type'=>'password',
-        ];
-        $client = new Client();
-        $response = $client->createRequest()
-            ->setMethod('POST')
-            ->setUrl('http://api.ince.local/oauth2/rest/token')
-            ->setData($data)
-            ->send();
+
+    public function actionValidateCode()
+    {
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
+
+        $model->load(Yii::$app->request->post());
+
+        if ($model->validate()) {
+
+        }
+    }
+
+    public function actionValidateCodePassword()
+    {
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_PASSWORD_API]);
+
+        $model->load(Yii::$app->request->post());
+
+        if ($model->validate()) {
+
+        }
     }
 }

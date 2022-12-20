@@ -7,7 +7,6 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\filters\RateLimitInterface;
 use yii\web\IdentityInterface;
 
 /*
@@ -25,28 +24,34 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements UserCredentialsInterface,IdentityInterface
+
+class User extends ActiveRecord implements UserCredentialsInterface, IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
     public $rateLimit = 1;
     public $allowance;
     public $allowance_updated_at;
 
-    public function getRateLimit($request, $action) {
-        return [$this->rateLimit,1];
+    public function getRateLimit($request, $action)
+    {
+        return [$this->rateLimit, 1];
     }
+
     public function loadAllowance($request, $action)
     {
         return [$this->allowance, $this->allowance_updated_at];
     }
+
     public function saveAllowance($request, $action, $allowance, $timestamp)
     {
         $this->allowance = $allowance;
         $this->allowance_updated_at = $timestamp;
         $this->save();
     }
+
     /**
      * {@inheritdoc}
      */
@@ -231,21 +236,57 @@ class User extends ActiveRecord implements UserCredentialsInterface,IdentityInte
         $this->password_reset_token = null;
     }
 
+    /**
+     * Validates verify code
+     *
+     * @param string $verifyCode verify code to validate
+     * @return bool if verify code provided is valid for current user
+     */
+    public function validateVerifyCode($verifyCode)
+    {
+        $valid = false;
+        $mobileToken = UserVerify::find()
+            ->andWhere([
+                'phone' => $this->username,
+                'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
+            ])->one();
+
+        if ($mobileToken instanceof UserVerify) {
+            $valid = (!$mobileToken->isExpired && Yii::$app->security->validatePassword($verifyCode, $mobileToken->code));
+            $mobileToken->delete();
+        }
+
+        return $valid;
+    }
+
+    /**
+     * Implemented for Oauth2 Interface
+     */
     public function checkUserCredentials($username, $password)
     {
-//        $pass=$password.json_decode();
-        if($password[0]=='password'){
-            $user= User::find()->where(['username' => $username])->one();
-            return Yii::$app->getSecurity()->validatePassword($password, $password['value']);
+        $user = static::findByUsername($username);
+        if (empty($user)) {
+            return false;
         }
-        elseif ($password[1]=="verifycode"){
-//            return payamak::find()->where(['username' => $username ,'password'=>$password])->one();
+
+        if (($password = json_decode($password, true))) {
+            $type = $password['type'] ?? null;
+            $value = $password['value'] ?? 'null';
+            if ($type == 'verifyCode') {
+                return $user->validateVerifyCode($value);
+            } elseif ($type == 'authKey') {
+                return $user->validateAuthKey($value);
+            } else {
+                return $user->validatePassword($value);
+            }
         }
+
+        return false;
     }
 
     public function getUserDetails($username)
     {
-        $user= User::find()->where(['username' => $username ])->one();
-        return ['user_id'=>$user->id];
+        $user = User::find()->where(['username' => $username])->one();
+        return ['user_id' => $user->id];
     }
 }
