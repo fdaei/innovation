@@ -5,11 +5,12 @@ use common\models\Province;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\Province $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var View $this */
+/** @var Province $model */
+/** @var ActiveForm $form */
 ?>
 
 <div class="card">

@@ -20,7 +20,6 @@ class UserController extends ActiveController
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
-
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
@@ -43,5 +42,6 @@ class UserController extends ActiveController
         // disable the "delete" and "create" actions
         unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
+
     }
 }

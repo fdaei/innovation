@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m221214_121551_update_table_ince_province extends Migration
+class m221214_122321_update_table_ince_province extends Migration
 {
     public function safeUp()
     {

@@ -2,11 +2,12 @@
 
 use common\models\OrgUnit;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\OrgUnit $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var View $this */
+/** @var OrgUnit $model */
+/** @var ActiveForm $form */
 ?>
 <?php $form = ActiveForm::begin(); ?>
 <div class="row">

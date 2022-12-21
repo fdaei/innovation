@@ -8,10 +8,11 @@ use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\web\View;
 
-/** @var yii\web\View $this */
+/** @var View $this */
 /** @var BusinessTimeline $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var ActiveForm $form */
 /** @var BusinessTimelineItem $TimelineItem */
 ?>
 

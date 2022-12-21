@@ -86,7 +86,6 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
      */
     public static function findIdentity($id)
     {
-//        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
         return static::findOne(['id' => $id]);
     }
 
@@ -106,7 +105,6 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
      */
     public static function findByUsername($username)
     {
-        //return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
         return static::findOne(['username' => $username]);
     }
 
@@ -264,11 +262,10 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
      */
     public function checkUserCredentials($username, $password)
     {
-        $user = static::findByUsername($username);
+        $user = self::findByUsername($username);
         if (empty($user)) {
             return false;
         }
-
         if (($password = json_decode($password, true))) {
             $type = $password['type'] ?? null;
             $value = $password['value'] ?? 'null';
@@ -284,9 +281,15 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
         return false;
     }
 
-    public function getUserDetails($username)
+    public function actionFindByUsername($username)
     {
         $user = User::find()->where(['username' => $username])->one();
-        return ['user_id' => $user->id];
+        return $user;
+    }
+
+    public function getUserDetails($username)
+    {
+        $user = self::findByUsername($username);
+       return ['user_id' => $user->id];
     }
 }
