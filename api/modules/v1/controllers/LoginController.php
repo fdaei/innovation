@@ -46,13 +46,19 @@ class LoginController extends ActiveController
 
     public function actionLoginForm($login_by_code = true)
     {
-        $model = new LoginForm();
-        $model->load(Yii::$app->request->post());
-        if ($model->validate()) {
-            if ($login_by_code) {
+        if ($login_by_code) {
+            $model = new LoginForm(['scenario' => LoginForm::SCENARIO_LOGIN_CODE_API]);
+            $model->load(Yii::$app->request->post());
+            if ($model->validate()) {
                 $model->sendCode();
             }
+        }else{
+            $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
+            $model->load(Yii::$app->request->post());
+            $model->validate();
         }
+
+
         return $model;
     }
 

@@ -49,6 +49,17 @@ class LoginForm extends Model
         $scenarios[self::SCENARIO_VALIDATE_CODE_API] = ['number', 'code'];
         return $scenarios;
     }
+    public function validatePassword($attribute, $params)
+    {
+        if ($this->user != null) {
+            if ((!$this->user->password ) || ($this->user->password && (!$this->password || !$this->user->validatePassword($this->password)))) {
+                $this->addError($attribute, "کلمه عبور درست نیست.");
+            }
+        } else {
+            $this->addError('number', "کاربری با شماره {$this->number} ثبت نشده است.");
+            $this->addError('existUser', $this->existUser);
+        }
+    }
 
 
     public function attributeLabels()
@@ -108,7 +119,6 @@ class LoginForm extends Model
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
-            var_dump($this->number);
             $numberValidator = new RegularExpressionValidator(['pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/']);
             $intValidator = new NumberValidator(['integerOnly' => true, 'skipOnEmpty' => true]);
             if (!$numberValidator->validate($this->number)) {
