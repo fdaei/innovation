@@ -27,6 +27,7 @@ class LoginForm extends Model
     const  SCENARIO_BY_PASSWORD_API = 'by-password-api';                          // Login by password
     const  SCENARIO_LOGIN_CODE_API = 'login-code-api';                            // ارسال کد تائید
     const  SCENARIO_VALIDATE_CODE_API = 'login-validate-api';                     // بررسی کد تائید
+    const  SCENARIO_VALIDATE_CODE_PASSWORD_API = 'login-validate-code-password-api';                     // بررسی کد
 
     public function rules()
     {
@@ -49,6 +50,17 @@ class LoginForm extends Model
         $scenarios[self::SCENARIO_VALIDATE_CODE_API] = ['number', 'code'];
         return $scenarios;
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'number' => Yii::t('app', 'Mobile Number'),
+            'code' => Yii::t('app',  'Verify Code'),
+            'rememberMe' => Yii::t('app', 'RememberMe'),
+            'password' => Yii::t('app', 'Password'),
+        ];
+    }
+
     public function validatePassword($attribute, $params)
     {
         if ($this->user != null) {
@@ -61,17 +73,6 @@ class LoginForm extends Model
         }
     }
 
-
-    public function attributeLabels()
-    {
-        return [
-            'number' => Yii::t('app', 'Mobile Number'),
-            'code' => Yii::t('app',  'Verify Code'),
-            'rememberMe' => Yii::t('app', 'RememberMe'),
-            'password' => Yii::t('app', 'Password'),
-        ];
-    }
-
     public function validateUser($attribute, $params)
     {
         if (ArrayHelper::isIn($this->scenario, [ self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API]) && $this->user == null) {
@@ -79,9 +80,10 @@ class LoginForm extends Model
             $this->addError('existUser', $this->existUser);
         }
     }
+
     public function validateCode($attribute, $params)
     {
-        $this->code = Yii::$app->helper->toEn($this->code);
+        $this->code = Yii::$app->customHelper->toEn($this->code);
         if (!$this->hasErrors()) {
             $model = UserVerify::find()
                 ->andWhere([
@@ -105,7 +107,6 @@ class LoginForm extends Model
         }
     }
 
-
     /**
      * ارسال کد تائید
      * و ذخیره در دیتا بیس
@@ -120,7 +121,6 @@ class LoginForm extends Model
     {
         if (parent::beforeValidate()) {
             $numberValidator = new RegularExpressionValidator(['pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/']);
-            $intValidator = new NumberValidator(['integerOnly' => true, 'skipOnEmpty' => true]);
             if (!$numberValidator->validate($this->number)) {
                 $this->addError('number', Yii::t('app', 'Invalid Mobile Number'));
                 return false;
@@ -175,7 +175,6 @@ class LoginForm extends Model
         }
     }
 
-
     /**
      * @param $platform
      * @return bool
@@ -190,5 +189,4 @@ class LoginForm extends Model
         $user->setPassword($this->password);
 
     }
-
 }
