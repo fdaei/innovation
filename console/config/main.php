@@ -24,6 +24,9 @@ return [
           ],
           'migration' => [
             'class' => 'bizley\migration\controllers\MigrationController',
+              'skipMigrations' => [
+                'm140501_075311_add_oauth2_server'
+              ],
               //'fixHistory' => true
         ],
     ],
