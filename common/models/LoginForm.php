@@ -17,6 +17,10 @@ use common\components\Helper;
  */
 class LoginForm extends Model
 {
+    const NUMBEROFFAIL = 5;
+    const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
+    const VALIDTIME = 120;
+
     public $number;
     public $code;
     public $password;
@@ -28,6 +32,8 @@ class LoginForm extends Model
     const  SCENARIO_LOGIN_CODE_API = 'login-code-api';                            // ارسال کد تائید
     const  SCENARIO_VALIDATE_CODE_API = 'login-validate-api';                     // بررسی کد تائید
     const  SCENARIO_VALIDATE_CODE_PASSWORD_API = 'login-validate-code-password-api';                     // بررسی کد
+    public $time_send_code;
+    public $remind_valid_time;
 
     public function rules()
     {
@@ -61,6 +67,14 @@ class LoginForm extends Model
         ];
     }
 
+    public function validateUser($attribute, $params)
+    {
+        if (ArrayHelper::isIn($this->scenario, [ self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API]) && $this->user == null) {
+            $this->addError($attribute, "کاربری با شماره {$this->number} ثبت نشده است.");
+            $this->addError('existUser', $this->existUser);
+        }
+    }
+
     public function validatePassword($attribute, $params)
     {
         if ($this->user != null) {
@@ -72,15 +86,33 @@ class LoginForm extends Model
             $this->addError('existUser', $this->existUser);
         }
     }
-
-    public function validateUser($attribute, $params)
+    public function validateFail($attribute, $params)
     {
-        if (ArrayHelper::isIn($this->scenario, [ self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API]) && $this->user == null) {
-            $this->addError($attribute, "کاربری با شماره {$this->number} ثبت نشده است.");
-            $this->addError('existUser', $this->existUser);
+        if (!$this->hasErrors()) {
+            if (Yii::$app->session->get('user.attempts-login', 0) > self::NUMBEROFFAIL && Yii::$app->session->get('user.attempts-login-time') > strtotime('-60 minutes')) {
+                $this->addError($attribute, "تعداد دفعات ثبت اشتباه کلمه عبور بیش از حد مجاز است.لطفا بعدا سعی نمایید.");
+            }
         }
     }
+    public function checkLimit($attribute, $params)
+    {
+        $session = Yii::$app->session;
 
+        if ($session->has("count_send")) {
+            if ($session->get('count_send') >= 1 && $session->get('count_send') < 10) {
+                if ($this->getTimeExpireCode() >= time() && Yii::$app->session->get("number") == $this->number) {
+                    $this->addError($attribute, Yii::t('app', 'Wait {waitSeconds} seconds To send verify code!', ['waitSeconds' => ($this->getTimeExpireCode() - time())]));
+                }
+            }
+            if ($session->get('count_send') > 10) {
+                if ($session->get("first_time_send_code") + self::TIME_SEND_AGAIN_AFTER_FAIL >= time()) {
+                    $session->remove("first_time_send_code"); // از مدت زمان تائین شده برای ارسال مجدد کد گذشته است.
+                } else {
+                    $this->addError($attribute, "تعداد دفعات ارسال کد بیش از حد مجاز است.لطفا بعدا سعی نمایید.");
+                }
+            }
+        }
+    }
     public function validateCode($attribute, $params)
     {
         $this->code = Yii::$app->customHelper->toEn($this->code);
@@ -113,7 +145,21 @@ class LoginForm extends Model
      */
     public function sendCode()
     {
-        return true;
+        $verify = new UserVerify([
+            'type' => UserVerify::TYPE_MOBILE_CONFIRMATION,
+            'unhashedCode' => 1234,
+            'phone' => $this->number,
+            'fail' => 0,
+            'expireTime' => $this->validTime
+        ]);
+        if (($result = $verify->save()) === true){
+            $this->time_send_code = $verify->created;
+            $this->remind_valid_time = $verify->getRemindValidTime();
+            return true;
+        }else{
+            return false
+        }
+
     }
 
     /** @inheritdoc */
@@ -188,5 +234,13 @@ class LoginForm extends Model
         $user->generateAuthKey();
         $user->setPassword($this->password);
 
+    }
+    public function getValidTime()
+    {
+        return ArrayHelper::isIn(Yii::$app->id, ['app-pay']) ? 300 : self::VALIDTIME;
+    }
+    private function getTimeExpireCode()
+    {
+        return Yii::$app->session->get('time_send_code') + $this->validTime; //زمان اعتبار کد ارسال شده
     }
 }

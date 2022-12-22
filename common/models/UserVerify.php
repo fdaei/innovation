@@ -78,7 +78,7 @@ class UserVerify extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['username' => 'phone']);
+        return $this->hasOne(User::class, ['username' => 'phone']);
     }
 
     /**
