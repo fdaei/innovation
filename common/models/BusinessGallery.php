@@ -61,6 +61,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
             [['image', 'mobile_image'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
             ['image', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             ['mobile_image', 'image', 'minWidth' => 316, 'maxWidth' => 316, 'minHeight' => 224, 'maxHeight' => 224, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['tablet_image', 'image', 'minWidth' => 1023, 'maxWidth' => 1023, 'minHeight' => 990, 'maxHeight' => 990, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
             [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
@@ -71,7 +72,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description','status','image','mobile_image'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description','status','image','mobile_image','tablet_image'];
         $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description'];
 
         return $scenarios;
@@ -87,6 +88,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
             'business_id' => Yii::t('app', 'Business ID'),
             'image' => Yii::t('app', 'Image'),
             'mobile_image' => Yii::t('app', 'MobileImage'),
+            'tablet_image' => Yii::t('app', 'TabletImage'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'status' => Yii::t('app', 'Status'),
@@ -219,6 +221,20 @@ class BusinessGallery extends \yii\db\ActiveRecord
                 'path' => "@inceRoot/Business",
                 'url' => "@cdnWeb/Business"
             ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'tablet_image',
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Business",
+                'basePath' => "@inceRoot/Business",
+                'path' => "@inceRoot/Business",
+                'url' => "@cdnWeb/Business"
+            ],
         ];
     }
 
@@ -234,6 +250,9 @@ class BusinessGallery extends \yii\db\ActiveRecord
             },
             'mobile_image' => function (self $model) {
                 return $model->getUploadUrl('mobile_image');
+            },
+            'tabletImage' => function (self $model) {
+                return $model->getUploadUrl('tablet_image');
             },
         ];
     }

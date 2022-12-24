@@ -14,6 +14,7 @@ use common\components\Helper;
  * Class LoginForm
  *
  * @property User $user
+ * @property int $validTime
  */
 class LoginForm extends Model
 {
@@ -26,25 +27,27 @@ class LoginForm extends Model
     public $password;
     public $user;
     public $existUser = false;
-    public $isSetPassword = false;
     public $authenticator;
     const  SCENARIO_BY_PASSWORD_API = 'by-password-api';                          // Login by password
     const  SCENARIO_LOGIN_CODE_API = 'login-code-api';                            // ارسال کد تائید
     const  SCENARIO_VALIDATE_CODE_API = 'login-validate-api';                     // بررسی کد تائید
-    const  SCENARIO_VALIDATE_CODE_PASSWORD_API = 'login-validate-code-password-api';                     // بررسی کد
+    const  SCENARIO_VALIDATE_CODE_PASSWORD_API = 'login-validate-code-password-api';                   // بررسی پسورد
     public $time_send_code;
     public $remind_valid_time;
 
     public function rules()
     {
         return [
-            [['number'], 'required', 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API,self::SCENARIO_VALIDATE_CODE_API,]],
+            [['number'], 'required', 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API,self::SCENARIO_VALIDATE_CODE_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]],
             [['code'], 'required', 'on' => [ self::SCENARIO_VALIDATE_CODE_API]],
-            [['password'], 'required', 'on' => [ self::SCENARIO_BY_PASSWORD_API,]],
+            [['password'], 'required', 'on' => [ self::SCENARIO_VALIDATE_CODE_PASSWORD_API,]],
             ['rememberMe', 'boolean'],
             [['number'], 'match', 'pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/'],
             [['number'], 'validateUser', 'skipOnEmpty' => false, 'on' => [ self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_LOGIN_CODE_API,]],
-            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,]],
+            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_VALIDATE_CODE_PASSWORD_API,]],
+            [['code'], 'validateCode', 'skipOnEmpty' => false,
+                'on' => [self::SCENARIO_LOGIN_CODE_API,]
+            ],
         ];
     }
 
@@ -52,6 +55,7 @@ class LoginForm extends Model
     {
         $scenarios = parent::scenarios();
         $scenarios[self::SCENARIO_BY_PASSWORD_API] = ['number', 'password'];
+        $scenarios[self::SCENARIO_LOGIN_CODE_API] = ['number'];
         $scenarios[self::SCENARIO_LOGIN_CODE_API] = ['number'];
         $scenarios[self::SCENARIO_VALIDATE_CODE_API] = ['number', 'code'];
         return $scenarios;
@@ -147,17 +151,18 @@ class LoginForm extends Model
     {
         $verify = new UserVerify([
             'type' => UserVerify::TYPE_MOBILE_CONFIRMATION,
-            'unhashedCode' => 1234,
+            'unhashedCode' => substr($this->number, -7),
             'phone' => $this->number,
             'fail' => 0,
             'expireTime' => $this->validTime
         ]);
+        die();
         if (($result = $verify->save()) === true){
             $this->time_send_code = $verify->created;
             $this->remind_valid_time = $verify->getRemindValidTime();
             return true;
         }else{
-            return false
+            return false;
         }
 
     }
@@ -175,12 +180,6 @@ class LoginForm extends Model
                 ->andWhere(['username' => $this->number])
                 ->andWhere(['<>', 'status', User::STATUS_DELETED])
                 ->one();
-            if ($this->user instanceof User && ArrayHelper::isIn($this->scenario, [self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API])) {
-                $this->existUser = true;
-                if ($this->user->password) {
-                    $this->isSetPassword = true;
-                }
-            }
             return true;
         } else {
             return false;
@@ -207,7 +206,6 @@ class LoginForm extends Model
             $verifyNumber->save(true, ['fail']);
         }
     }
-
     public function setSessionFailed()
     {
         $verifyNumber = UserVerify::find()
@@ -220,7 +218,23 @@ class LoginForm extends Model
             $verifyNumber->save(true, ['fail']);
         }
     }
-
+    public function beforeLogin()
+    {
+        return false;
+    }
+    public function afterLogin()
+    {
+        $login = Yii::$app->user->login($this->user, $this->rememberMe ? 3600 * 24 * 30 : 0);
+        return $login;
+    }
+    public function getValidTime()
+    {
+        return  self::VALIDTIME;
+    }
+    public function getTimeExpireCode()
+    {
+        return Yii::$app->session->get('time_send_code') + $this->validTime; //زمان اعتبار کد ارسال شده
+    }
     /**
      * @param $platform
      * @return bool
@@ -235,12 +249,16 @@ class LoginForm extends Model
         $user->setPassword($this->password);
 
     }
-    public function getValidTime()
+    public function fields()
     {
-        return ArrayHelper::isIn(Yii::$app->id, ['app-pay']) ? 300 : self::VALIDTIME;
+        $fields = parent::fields();
+
+        unset($fields['invitor'], $fields['user'], $fields['verifyCode'],
+            $fields['rememberMe'], $fields['code'], $fields['password'],
+            $fields['password_repeat'], $fields['sendAgain'], $fields['captcha'],
+            $fields['show_captcha']);
+
+        return $fields;
     }
-    private function getTimeExpireCode()
-    {
-        return Yii::$app->session->get('time_send_code') + $this->validTime; //زمان اعتبار کد ارسال شده
-    }
+
 }

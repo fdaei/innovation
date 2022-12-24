@@ -37,7 +37,7 @@ use yii\web\View;
             <?= $form->field($model, 'image')->widget(FileInput::class, [
                 'name' => 'attachment_3',
                 'options' => ['accept' => 'image/*'],
-            ])->hint('height:268px width:248px'); ?>
+            ])->hint('width:268px height:248px'); ?>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">

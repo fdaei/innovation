@@ -75,6 +75,12 @@ use yii\web\View;
                 ])->hint(' width:360px height:348px'); ?>
             </div>
             <div class="col-md-8">
+                <?= $form->field($model, 'tablet_wallpaper')->widget(FileInput::class, [
+                    'name' => 'attachment_3',
+                    'options' => ['accept' => 'image/*'],
+                ])->hint(' width:1023px height:990px'); ?>
+            </div>
+            <div class="col-md-8">
                 <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
             </div>
             <div class="col-md-8">
@@ -91,7 +97,6 @@ use yii\web\View;
                 <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
             </div>
         </div>
-        <?php ActiveForm::end(); ?>
-
+        <?php ActiveForm::end();?>
     </div>
 </div>

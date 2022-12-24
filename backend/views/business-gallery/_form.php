@@ -38,13 +38,19 @@ use yii\web\View;
             <?= $form->field($model, 'image')->widget(FileInput::class, [
                 'name' => 'attachment_3',
                 'options' => ['accept' => 'image/*'],
-            ])->hint('height:648 width:348'); ?>
+            ])->hint('width:648 height:348'); ?>
         </div>
         <div class="col-md-8">
             <?= $form->field($model, 'mobile_image')->widget(FileInput::class, [
                 'name' => 'attachment_3',
                 'options' => ['accept' => 'image/*'],
-            ])->hint('height:316px width:224px'); ?>
+            ])->hint('width:316px height:224px'); ?>
+        </div>
+        <div class="col-md-8">
+            <?= $form->field($model, 'tablet_image')->widget(FileInput::class, [
+                'name' => 'attachment_3',
+                'options' => ['accept' => 'image/*'],
+            ])->hint('width:1023px height:990px'); ?>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">

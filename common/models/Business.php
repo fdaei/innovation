@@ -21,6 +21,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $logo
  * @property string $wallpaper
  * @property string $mobile_wallpaper
+ * @property string $tablet_wallpaper
  * @property string $short_description
  * @property string $investor_description
  * @property string $success_story
@@ -64,7 +65,7 @@ class Business extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper','tablet_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id',], 'integer'],
             [['short_description', 'success_story', 'investor_description'], 'string'],
@@ -73,6 +74,7 @@ class Business extends \yii\db\ActiveRecord
             [['slug'], 'unique'],
             ['wallpaper', 'image', 'minWidth' => 1920, 'maxWidth' => 1920, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             ['mobile_wallpaper', 'image', 'minWidth' => 360, 'maxWidth' => 360, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['tablet_wallpaper', 'image', 'minWidth' => 1023, 'maxWidth' => 1023, 'minHeight' => 990, 'maxHeight' => 990, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             ['logo', 'file', 'extensions' => 'svg', 'enableClientValidation' => false],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -84,7 +86,7 @@ class Business extends \yii\db\ActiveRecord
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['city_id', 'user_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'link', 'investor_description', 'logo', 'wallpaper', 'mobile_wallpaper'];
+        $scenarios[self::SCENARIO_CREATE] = ['city_id', 'user_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'link', 'investor_description', 'logo', 'wallpaper', 'mobile_wallpaper','tablet_wallpaper'];
         $scenarios[self::SCENARIO_UPDATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'investor_description'];
 
         return $scenarios;
@@ -105,6 +107,7 @@ class Business extends \yii\db\ActiveRecord
             'logo' => Yii::t('app', 'Logo'),
             'wallpaper' => Yii::t('app', 'Wallpaper'),
             'mobile_wallpaper' => Yii::t('app', 'MobileWallpaper'),
+            'tablet_wallpaper' => Yii::t('app', 'TabletWallpaper'),
             'short_description' => Yii::t('app', 'Short Description'),
             'investor_description' => Yii::t('app', 'Investor Description'),
             'success_story' => Yii::t('app', 'Success Story'),
@@ -348,6 +351,19 @@ class Business extends \yii\db\ActiveRecord
                 'path' => "@inceRoot/Business",
                 'url' => "@cdnWeb/Business"
             ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'tablet_wallpaper',
+                'scenarios' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE],
+                'instanceByName' => false,
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/Business",
+                'basePath' => "@inceRoot/Business",
+                'path' => "@inceRoot/Business",
+                'url' => "@cdnWeb/Business"
+            ],
         ];
     }
 
@@ -364,6 +380,9 @@ class Business extends \yii\db\ActiveRecord
             },
             'mobileWallpaper' => function (self $model) {
                 return $model->getUploadUrl('mobile_wallpaper');
+            },
+            'tabletWallpaper' => function (self $model) {
+                return $model->getUploadUrl('tablet_wallpaper');
             },
             'shortDescription' => 'short_description',
             'successStory' => 'success_story',
