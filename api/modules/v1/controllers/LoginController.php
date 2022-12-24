@@ -2,13 +2,14 @@
 
 namespace api\modules\v1\controllers;
 
+use common\components\Env;
 use common\models\LoginForm;
 use common\models\UserVerify;
 use filsh\yii2\oauth2server\models\OauthClients;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\httpclient\Client;
 use yii\filters\VerbFilter;
+use yii\httpclient\Client;
 use yii\httpclient\Exception;
 use yii\rest\ActiveController;
 
@@ -67,13 +68,12 @@ class LoginController extends ActiveController
     }
 
 
-
     public function actionValidateCode()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_LOGIN_CODE_API]);
         $model->load(Yii::$app->request->post());
         $password = ['type' => 'code', 'password' => UserVerify::find()->andWhere(['phone' => $model->number, 'type' => UserVerify::TYPE_MOBILE_CONFIRMATION])->one()['code']];
-        return $this->extracted($model,$password);
+        return $this->extracted($model, $password);
     }
 
     /**
@@ -84,37 +84,38 @@ class LoginController extends ActiveController
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
         $password = ['type' => 'password', 'password' => $model->password];
-        return $this->extracted($model,$password);
+        return $this->extracted($model, $password);
     }
 
     /**
      * @param LoginForm $model
-     * @return void|\yii\httpclient\Response
+     * @return array
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\httpclient\Exception
      */
-    public function extracted(LoginForm $model,$password)
+    public function extracted(LoginForm $model, $password)
     {
         $client_id = Yii::$app->request->headers['client-id'];
         $oauth = OauthClients::find()->Where(['client_id' => $client_id])->one();
 
-        $json_password = json_encode($password);
-        if ($model->validate()) {
-            $data = [
-                'client_id' => Yii::$app->request->headers['client-id'],
-                'username' => $model->number,
-                'password' => $json_password,
-                'client_secret' => $oauth->client_secret,
-                'grant_type' => $oauth->grant_types,
-            ];
-            $client = new Client();
-            $response = $client->createRequest()
-                ->setMethod('POST')
-                ->setUrl('http://api.ince.local/oauth2/rest/token')
-                ->setData($data)
-                ->send();
+        $data = [
+            'grant_type' => 'password',
+            'client_id' => Yii::$app->request->headers['client-id'],
+            'client_secret' => $oauth->client_secret,
+            'username' => $model->number,
+            'password' => json_encode($password),
+        ];
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('POST')
+            ->setUrl(Env::get('API_BASE_URL') . '/oauth2/rest/token')
+            ->setData($data)
+            ->send();
 
-            return $response;
-        }
+        $responseContent = json_decode($response->content);
+        return [
+            'success' => $response->isOk,
+            'body' => $responseContent
+        ];
     }
 }
