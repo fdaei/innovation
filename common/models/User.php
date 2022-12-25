@@ -34,6 +34,9 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     public $rateLimit = 1;
     public $allowance;
     public $allowance_updated_at;
+    /**
+     * @var mixed|null
+     */
 
     public function getRateLimit($request, $action)
     {
@@ -240,20 +243,18 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
      * @param string $verifyCode verify code to validate
      * @return bool if verify code provided is valid for current user
      */
-    public function validateVerifyCode($verifyCode)
+    public function validateVerifyCode($verifyCode,$username)
     {
         $valid = false;
         $mobileToken = UserVerify::find()
-            ->andWhere([
-                'phone' => $this->username,
-                'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
+            ->Where([
+                'phone' => $username,
             ])->one();
 
         if ($mobileToken instanceof UserVerify) {
-            $valid = (!$mobileToken->isExpired && Yii::$app->security->validatePassword($verifyCode, $mobileToken->code));
+            $valid = ( !$mobileToken->isExpired &&  Yii::$app->security->validatePassword($verifyCode, $mobileToken->code));
             $mobileToken->delete();
         }
-
         return $valid;
     }
 
@@ -270,15 +271,13 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
             $type = $password['type'] ?? null;
             $value = $password['value'] ?? 'null';
             if ($type == 'verifyCode') {
-                return $user->validateVerifyCode($value);
+                return $user->validateVerifyCode($value,$username);
             } elseif ($type == 'authKey') {
                 return $user->validateAuthKey($value);
             } else {
                 return $user->validatePassword($value);
             }
         }
-
-        return false;
     }
 
     public function actionFindByUsername($username)

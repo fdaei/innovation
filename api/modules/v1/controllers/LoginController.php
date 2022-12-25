@@ -55,6 +55,7 @@ class LoginController extends ActiveController
         if ($login_by_code) {
             $model = new LoginForm(['scenario' => LoginForm::SCENARIO_LOGIN_CODE_API]);
             $model->load(Yii::$app->request->post());
+
             if ($model->validate()) {
                 $model->sendCode();
             }
@@ -63,17 +64,22 @@ class LoginController extends ActiveController
             $model->load(Yii::$app->request->post());
             $model->validate();
         }
-
         return $model;
     }
 
 
+    /**
+     * @throws Exception
+     * @throws InvalidConfigException
+     */
     public function actionValidateCode()
     {
-        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_LOGIN_CODE_API]);
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post());
-        $password = ['type' => 'code', 'password' => UserVerify::find()->andWhere(['phone' => $model->number, 'type' => UserVerify::TYPE_MOBILE_CONFIRMATION])->one()['code']];
-        return $this->extracted($model, $password);
+        if($model->validate()){
+            $password = ['type' => 'verifyCode','value' => $model->code];
+            return $model->sendrequest($model,$password);
+        }
     }
 
     /**
@@ -83,39 +89,10 @@ class LoginController extends ActiveController
     public function actionValidateCodePassword()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
-        $password = ['type' => 'password', 'password' => $model->password];
-        return $this->extracted($model, $password);
-    }
-
-    /**
-     * @param LoginForm $model
-     * @return array
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\httpclient\Exception
-     */
-    public function extracted(LoginForm $model, $password)
-    {
-        $client_id = Yii::$app->request->headers['client-id'];
-        $oauth = OauthClients::find()->Where(['client_id' => $client_id])->one();
-
-        $data = [
-            'grant_type' => 'password',
-            'client_id' => Yii::$app->request->headers['client-id'],
-            'client_secret' => $oauth->client_secret,
-            'username' => $model->number,
-            'password' => json_encode($password),
-        ];
-        $client = new Client();
-        $response = $client->createRequest()
-            ->setMethod('POST')
-            ->setUrl(Env::get('API_BASE_URL') . '/oauth2/rest/token')
-            ->setData($data)
-            ->send();
-
-        $responseContent = json_decode($response->content);
-        return [
-            'success' => $response->isOk,
-            'body' => $responseContent
-        ];
+        $model->load(Yii::$app->request->post());
+        if($model->validate()){
+            $password = ['type' => 'pass', 'value' => $model->password];
+            return $model->sendrequest($model, $password);
+        }
     }
 }

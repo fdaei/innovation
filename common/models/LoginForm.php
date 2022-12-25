@@ -3,9 +3,13 @@
 namespace common\models;
 
 use common\components\Env;
+use filsh\yii2\oauth2server\models\OauthClients;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\httpclient\Client;
+use yii\httpclient\Exception;
 use yii\validators\NumberValidator;
 use yii\validators\RegularExpressionValidator;
 use common\components\Helper;
@@ -39,14 +43,14 @@ class LoginForm extends Model
     {
         return [
             [['number'], 'required', 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API,self::SCENARIO_VALIDATE_CODE_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]],
-            [['code'], 'required', 'on' => [ self::SCENARIO_VALIDATE_CODE_API]],
+            [['code'], 'required', 'on' => [ self::SCENARIO_LOGIN_CODE_API]],
             [['password'], 'required', 'on' => [ self::SCENARIO_VALIDATE_CODE_PASSWORD_API,]],
             ['rememberMe', 'boolean'],
             [['number'], 'match', 'pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/'],
             [['number'], 'validateUser', 'skipOnEmpty' => false, 'on' => [ self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_LOGIN_CODE_API,]],
             [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_VALIDATE_CODE_PASSWORD_API,]],
             [['code'], 'validateCode', 'skipOnEmpty' => false,
-                'on' => [self::SCENARIO_LOGIN_CODE_API,]
+                'on' => [self::SCENARIO_LOGIN_CODE_API]
             ],
         ];
     }
@@ -54,8 +58,8 @@ class LoginForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_BY_PASSWORD_API] = ['number', 'password'];
-        $scenarios[self::SCENARIO_LOGIN_CODE_API] = ['number'];
+        $scenarios[self::SCENARIO_VALIDATE_CODE_PASSWORD_API] = ['number', 'password'];
+        $scenarios[self::SCENARIO_BY_PASSWORD_API] = ['number'];
         $scenarios[self::SCENARIO_LOGIN_CODE_API] = ['number'];
         $scenarios[self::SCENARIO_VALIDATE_CODE_API] = ['number', 'code'];
         return $scenarios;
@@ -151,12 +155,11 @@ class LoginForm extends Model
     {
         $verify = new UserVerify([
             'type' => UserVerify::TYPE_MOBILE_CONFIRMATION,
-            'unhashedCode' => substr($this->number, -7),
+            'unhashedCode' => substr($this->number,-4),
             'phone' => $this->number,
             'fail' => 0,
-            'expireTime' => $this->validTime
+            'expireTime' => $this->validTime,
         ]);
-        die();
         if (($result = $verify->save()) === true){
             $this->time_send_code = $verify->created;
             $this->remind_valid_time = $verify->getRemindValidTime();
@@ -260,5 +263,38 @@ class LoginForm extends Model
 
         return $fields;
     }
+
+    /**
+     * @throws Exception
+     * @throws InvalidConfigException
+     */
+    public function sendrequest(LoginForm $model, $password)
+    {
+//        try {
+            $client_id = Yii::$app->request->headers['client-id'];
+            $oauth = OauthClients::find()->Where(['client_id' => $client_id])->one();
+            $data = [
+                'grant_type' => 'password',
+                'client_id' => Yii::$app->request->headers['client-id'],
+                'client_secret' => $oauth->client_secret,
+                'username' => $model->number,
+                'password' => json_encode($password,true),
+            ];
+            $client = new Client();
+            $response = $client->createRequest()
+                ->setMethod('POST')
+                ->setUrl('http://api.ince.local/oauth2/rest/token')
+                ->setData($data)
+                ->send();
+            $responseContent = json_decode($response->content);
+            return [
+                'success' => $response->isOk,
+                'body' => $responseContent
+            ];
+//        } catch (\Exception $e) {
+//            return  $e;
+//        }
+    }
+
 
 }

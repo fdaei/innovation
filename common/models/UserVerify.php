@@ -52,7 +52,7 @@ class UserVerify extends \yii\db\ActiveRecord
     {
         return [
             [['phone', 'code', 'type'], 'required'],
-            [['code', 'created', 'is_verify', 'type'], 'integer'],
+            [['created', 'is_verify', 'type'], 'integer'],
             ['type', 'in', 'range' => array_keys(self::itemAlias('Type'))],
             [['phone'], 'string', 'max' => 12],
             [['ip'], 'string', 'max' => 64],
