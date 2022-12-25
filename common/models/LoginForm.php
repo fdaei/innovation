@@ -8,11 +8,12 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\httpclient\Client;
 use yii\httpclient\Exception;
 use yii\validators\NumberValidator;
 use yii\validators\RegularExpressionValidator;
-use common\components\Helper;
+
 
 /**
  * Class LoginForm
@@ -22,9 +23,12 @@ use common\components\Helper;
  */
 class LoginForm extends Model
 {
-    const NUMBEROFFAIL = 5;
-    const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
     const VALIDTIME = 120;
+    const NUMBEROFFAIL = 5;
+    const NUMBER_OF_SHOW_CAPTCHA = 3;
+    const CODELENGHT = 6;
+    const CODE_LENGTH_API = 4;
+    const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
 
     public $number;
     public $code;
@@ -32,61 +36,162 @@ class LoginForm extends Model
     public $user;
     public $existUser = false;
     public $authenticator;
+    public $time_send_code;
+    public $remind_valid_time;
+    public $code_length;
+    public $password_repeat;
+    public $token;
+    public $verifyCode;
+    public $rememberMe = false;
+    public $captcha;
+    public $show_captcha = false;
+    public $sendAgain = false;
+    public $identity = null;
+    public $isSetPassword = false;
+    public $organizational_number = null;
     const  SCENARIO_BY_PASSWORD_API = 'by-password-api';                          // Login by password
+    const  SCENARIO_SET_PASSWORD = 'set-password';                                // Set new password
     const  SCENARIO_LOGIN_CODE_API = 'login-code-api';                            // ارسال کد تائید
     const  SCENARIO_VALIDATE_CODE_API = 'login-validate-api';                     // بررسی کد تائید
     const  SCENARIO_VALIDATE_CODE_PASSWORD_API = 'login-validate-code-password-api';                   // بررسی پسورد
-    public $time_send_code;
-    public $remind_valid_time;
+    const  SCENARIO_FORGOT_PASSWORD_API_STEP_1 = 'forgot-password-api-1';         // Forgot password (send verify code)
+    const  SCENARIO_FORGOT_PASSWORD_API_STEP_2 = 'forgot-password-api-2';         // Forgot password (Verification & change password)
+    const  SCENARIO_LOGIN_OR_REGISTER_API_STEP_1 = 'login-or-register-api-step-1';// ارسال کد تائید
+
 
     public function rules()
     {
         return [
-            [['number'], 'required', 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API,self::SCENARIO_VALIDATE_CODE_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]],
-            [['code'], 'required', 'on' => [ self::SCENARIO_LOGIN_CODE_API]],
-            [['password'], 'required', 'on' => [ self::SCENARIO_VALIDATE_CODE_PASSWORD_API,]],
-            ['rememberMe', 'boolean'],
-            [['number'], 'match', 'pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/'],
-            [['number'], 'validateUser', 'skipOnEmpty' => false, 'on' => [ self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_LOGIN_CODE_API,]],
-            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_VALIDATE_CODE_PASSWORD_API,]],
-            [['code'], 'validateCode', 'skipOnEmpty' => false,
-                'on' => [self::SCENARIO_LOGIN_CODE_API]
+            [['number'], 'required',
+                'on' => [
+                    self::SCENARIO_BY_PASSWORD_API,
+                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1, self::SCENARIO_VALIDATE_CODE_API,
+                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,self::SCENARIO_VALIDATE_CODE_PASSWORD_API
+                ]
             ],
+            [['code'], 'required', 'on' => [
+                self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
+            ]
+            ],
+            [['password'], 'required', 'on' => [self::SCENARIO_SET_PASSWORD,
+                self::SCENARIO_BY_PASSWORD_API,
+                self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
+                self::SCENARIO_VALIDATE_CODE_PASSWORD_API
+            ]
+            ],
+            [['number', 'code'], 'filter', 'filter' => [$this, 'normalizeNumber']],
+            ['rememberMe', 'boolean'],
+            [['number'], 'filter', 'filter' => function ($number) {
+               return Yii::$app->customHelper->toEn($number);
+            }],
+            [['number'], 'match', 'pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/'],
+            [['number'], 'serviceUnavailable', 'when' => function (self $model) {
+                return Env::get('SERVICE_UNAVAILABLE');
+            }],
+            [['number'], 'validateUser', 'skipOnEmpty' => false,
+                'on' => [
+                    self::SCENARIO_BY_PASSWORD_API,
+                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
+                ]
+            ],
+            [['number'], 'checkLimit', 'skipOnEmpty' => false,
+                'on' => [
+                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
+                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1
+                ]
+            ],
+            [['password'], 'validateFail', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]
+            ],
+            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]],
+
+            [['password'], 'match', 'pattern' => '/^[A-Za-z\d@$!%*#?^&~]{6,}$/', 'on' => [self::SCENARIO_SET_PASSWORD,
+
+                self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
+                self::SCENARIO_VALIDATE_CODE_PASSWORD_API], 'message' => "کلمه عبور باید حداقل ۶ حرف و از الفبای انگلیسی و اعداد تشکیل شده باشد."
+            ],
+            [['password'], 'string', 'min' => 6, 'max' => 72, 'skipOnEmpty' => false, 'on' => [
+                self::SCENARIO_SET_PASSWORD,
+                self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
+                self::SCENARIO_VALIDATE_CODE_PASSWORD_API
+            ]],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "کلمه عبور و تکرار کلمه عبور باید برابر باشند"],
+            [['code'], 'validateCode', 'skipOnEmpty' => false,
+                'on' => [
+                    self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
+                ]
+            ],
+            ['captcha', 'required', 'when' => function ($model) {
+                return Yii::$app->session->get('user.attempts-login') > self::NUMBER_OF_SHOW_CAPTCHA;
+            },
+                'except' => [
+                    self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API,
+                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
+                    self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
+                ]
+            ],
+            ['captcha', 'lubosdz\captchaExtended\CaptchaExtendedValidator',
+                'captchaAction' => Url::to('/site/captcha'),
+                'when' => function (self $model) {
+                    return Yii::$app->session->get('user.attempts-login') > self::NUMBER_OF_SHOW_CAPTCHA;
+                },
+                'except' => [
+                    self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API,
+                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
+                    self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1
+                ]
+            ],
+
         ];
     }
 
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_VALIDATE_CODE_PASSWORD_API] = ['number', 'password'];
-        $scenarios[self::SCENARIO_BY_PASSWORD_API] = ['number'];
+        $scenarios[self::SCENARIO_SET_PASSWORD] = ['password'];
+        $scenarios[self::SCENARIO_BY_PASSWORD_API] = ['number', 'password'];
         $scenarios[self::SCENARIO_LOGIN_CODE_API] = ['number'];
+        $scenarios[self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1] = ['number'];
         $scenarios[self::SCENARIO_VALIDATE_CODE_API] = ['number', 'code'];
+        $scenarios[self::SCENARIO_FORGOT_PASSWORD_API_STEP_1] = ['number'];
+        $scenarios[self::SCENARIO_FORGOT_PASSWORD_API_STEP_2] = ['!number', 'code', 'password'];
+
         return $scenarios;
     }
+
 
     public function attributeLabels()
     {
         return [
             'number' => Yii::t('app', 'Mobile Number'),
-            'code' => Yii::t('app',  'Verify Code'),
+            'code' => Yii::t('app', 'Verify Code'),
             'rememberMe' => Yii::t('app', 'RememberMe'),
+            'captcha' => Yii::t('front', 'Captcha'),
             'password' => Yii::t('app', 'Password'),
+            'password_repeat' => Yii::t('app', 'Password Repeat')
         ];
+    }
+
+    public function serviceUnavailable($attribute, $params)
+    {
+        $this->addError($attribute, "Service Unavailable");
     }
 
     public function validateUser($attribute, $params)
     {
-        if (ArrayHelper::isIn($this->scenario, [ self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API]) && $this->user == null) {
+        if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API]) && $this->user == null) {
             $this->addError($attribute, "کاربری با شماره {$this->number} ثبت نشده است.");
             $this->addError('existUser', $this->existUser);
         }
+    }
+    public function normalizeNumber($value)
+    {
+        return Yii::$app->customHelper->toEn($value);
     }
 
     public function validatePassword($attribute, $params)
     {
         if ($this->user != null) {
-            if ((!$this->user->password ) || ($this->user->password && (!$this->password || !$this->user->validatePassword($this->password)))) {
+            if ((!$this->user->password_hash ) || ($this->user->password_hash && (!$this->password || !$this->user->validatePassword($this->password)))) {
                 $this->addError($attribute, "کلمه عبور درست نیست.");
             }
         } else {
@@ -94,6 +199,8 @@ class LoginForm extends Model
             $this->addError('existUser', $this->existUser);
         }
     }
+
+
     public function validateFail($attribute, $params)
     {
         if (!$this->hasErrors()) {
@@ -102,6 +209,7 @@ class LoginForm extends Model
             }
         }
     }
+
     public function checkLimit($attribute, $params)
     {
         $session = Yii::$app->session;
@@ -121,6 +229,7 @@ class LoginForm extends Model
             }
         }
     }
+
     public function validateCode($attribute, $params)
     {
         $this->code = Yii::$app->customHelper->toEn($this->code);
@@ -134,6 +243,7 @@ class LoginForm extends Model
                 $this->addError($attribute, 'کد وارد شده اشتباه است.');
             } else {
                 $model->expireTime = $this->validTime;
+
                 if (!$model->isExpired) {
                     if (!ArrayHelper::isIn($this->getScenario(), [self::SCENARIO_VALIDATE_CODE_API])) {
                         $model->delete();
@@ -155,44 +265,115 @@ class LoginForm extends Model
     {
         $verify = new UserVerify([
             'type' => UserVerify::TYPE_MOBILE_CONFIRMATION,
-            'unhashedCode' => substr($this->number,-4),
+            'unhashedCode' => substr($this->number, -4),
             'phone' => $this->number,
             'fail' => 0,
             'expireTime' => $this->validTime,
         ]);
-        if (($result = $verify->save()) === true){
+        if (($result = $verify->save()) === true) {
             $this->time_send_code = $verify->created;
             $this->remind_valid_time = $verify->getRemindValidTime();
             return true;
-        }else{
+        } else {
             return false;
         }
 
     }
 
-    /** @inheritdoc */
+    public function setSessions()
+    {
+        $session = Yii::$app->session;
+        $session->set('time_send_code', $this->time_send_code); // زمان برای تایمر
+
+        if (!$session->has("first_time_send_code")) {
+            $session->set('first_time_send_code', $this->time_send_code); // زمان ارسال اولین sms
+        }
+
+        if ($session->has("count_send")) {
+            $session->set("count_send", $session->get("count_send") + 1);
+        } else {
+            $session->set('count_send', 1);
+        }
+    }
+
+    public function sendAgain($api = false)
+    {
+        $session = Yii::$app->session;
+        $this->number = $api ? $this->number : $session->get("number");
+        $this->user = User::findByUsername($this->number);
+        if ($session->has('hashCode') && ($model = UserVerify::find()
+                ->andWhere([
+                    'phone' => $this->number,
+                    'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
+                ])->one()) !== null) {
+            try {
+                $this->time_send_code = time();
+                $model->created = $this->time_send_code;
+                $model->unhashedCode = $session->get('hashCode');
+                $model->expireTime = $this->validTime;
+                $model->save();
+                $this->remind_valid_time = $model->getRemindValidTime();
+                $this->sendAgain = true;
+                $session->remove('hashCode');
+                $session->set('time_send_code', $this->time_send_code); // زمان برای تایمر
+                return true;
+            } catch (\Exception $e) {
+                Yii::error($e->getMessage(), 'LoginFormSendAgain-Exception');
+                $this->addError('number', 'خطا در ارسال کد تائید.لطفا بعدا مجددا سعی نمایید.');
+            }
+        } else {
+            $this->addError('number', 'خطا در ارسال مجدد کد تائید.');
+        }
+
+        return false;
+    }
+
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
+            $number = $this->normalizeNumber($this->number);
             $numberValidator = new RegularExpressionValidator(['pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/']);
-            if (!$numberValidator->validate($this->number)) {
+            $intValidator = new NumberValidator(['integerOnly' => true, 'skipOnEmpty' => true]);
+
+            if (!$numberValidator->validate($number)) {
                 $this->addError('number', Yii::t('app', 'Invalid Mobile Number'));
                 return false;
             }
+
             $this->user = User::find()
-                ->andWhere(['username' => $this->number])
+                ->andWhere(['username' => $number])
                 ->andWhere(['<>', 'status', User::STATUS_DELETED])
                 ->one();
+
+
+            if ($this->user instanceof User && ArrayHelper::isIn($this->scenario, [self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API])) {
+                $this->existUser = true;
+                if ($this->user->password_hash) {
+                    $this->isSetPassword = true;
+                }
+            }
+
+            if (Yii::$app->session->get('user.attempts-login') > self::NUMBER_OF_SHOW_CAPTCHA) { //make the captcha required if the unsuccessful attemps are more of thee
+                $this->show_captcha = true;                                                      //useful only for view
+            }
+
+
             return true;
         } else {
             return false;
         }
     }
 
+    /** @inheritdoc */
     public function afterValidate()
     {
         if ($this->hasErrors()) {
             Yii::$app->session->set('user.attempts-login', Yii::$app->session->get('user.attempts-login', 0) + 1);
+
+            if (Yii::$app->session->get('user.attempts-login', 0) > self::NUMBER_OF_SHOW_CAPTCHA) {
+                $this->show_captcha = true; //useful only for view
+                Yii::$app->session->set('user.attempts-login-time', time());
+            }
         }
         parent::afterValidate();
     }
@@ -209,6 +390,7 @@ class LoginForm extends Model
             $verifyNumber->save(true, ['fail']);
         }
     }
+
     public function setSessionFailed()
     {
         $verifyNumber = UserVerify::find()
@@ -221,37 +403,116 @@ class LoginForm extends Model
             $verifyNumber->save(true, ['fail']);
         }
     }
+
+    /**
+     * @param int $platform
+     * @param null $invitor
+     * @return bool
+     * @throws \Exception
+     */
     public function beforeLogin()
     {
+        if ($this->user !== null) {
+            $this->user->last_login = time();
+
+            return $this->user->save(false);
+        } else if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_VALIDATE_CODE_API])) {
+            return $this->save();
+        }
+
         return false;
     }
+
     public function afterLogin()
     {
         $login = Yii::$app->user->login($this->user, $this->rememberMe ? 3600 * 24 * 30 : 0);
+        Yii::$app->user->returnUrl = Yii::$app->session->get('user.returnUrl');
+        Yii::$app->session->remove('count_send');
+        Yii::$app->session->remove('user.attempts-login');
+        Yii::$app->session->remove('user.attempts-login-time');
+
         return $login;
     }
+
+    public function afterLoginApi()
+    {
+
+        Yii::$app->session->remove('count_send');
+        Yii::$app->session->remove('user.attempts-login');
+        Yii::$app->session->remove('user.attempts-login-time');
+    }
+
     public function getValidTime()
     {
-        return  self::VALIDTIME;
+
+        return ArrayHelper::isIn(Yii::$app->id, ['app-pay']) ? 300 : self::VALIDTIME;
     }
+
     public function getTimeExpireCode()
     {
         return Yii::$app->session->get('time_send_code') + $this->validTime; //زمان اعتبار کد ارسال شده
     }
+
     /**
      * @param $platform
+     * @param $invitor
      * @return bool
      * @throws \Exception
      */
-    public function save($platform)
+    public function save($platform, $invitor)
     {
+        $flag = true;
         $user = new User();
         $user->username = $this->number;
         $user->status = User::STATUS_ACTIVE;
         $user->generateAuthKey();
-        $user->setPassword($this->password);
+        $user->platform = $platform;
+        $user->last_login = time();
+        $user->last_login_point = $platform;
+        $user->password = $this->password;
+        if ($invitor instanceof User) {
+            $user->setMoaref($invitor->id);
+        }
 
+        if ($flag = $flag && $user->save()) {
+            $this->user = $user;
+            $auth = Yii::$app->authManager;
+            $authorRole = $auth->getRole('user');
+            $auth->assign($authorRole, $user->getId());
+        }
+
+        return $flag;
     }
+
+    public function setPassword()
+    {
+        $user = $this->user ?: Yii::$app->user->identity;
+        if ($user instanceof User) {
+            $user->setPassword($this->password);
+            return $user->save(false);
+        }
+
+        return false;
+    }
+    public function getPassword(): bool
+    {
+        return true;
+    }
+
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+
+        ];
+
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
+    }
+
+
     public function fields()
     {
         $fields = parent::fields();
@@ -268,9 +529,10 @@ class LoginForm extends Model
      * @throws Exception
      * @throws InvalidConfigException
      */
-    public function sendrequest(LoginForm $model, $password)
+    public
+    function sendrequest(LoginForm $model, $password)
     {
-//        try {
+        try {
             $client_id = Yii::$app->request->headers['client-id'];
             $oauth = OauthClients::find()->Where(['client_id' => $client_id])->one();
             $data = [
@@ -278,7 +540,7 @@ class LoginForm extends Model
                 'client_id' => Yii::$app->request->headers['client-id'],
                 'client_secret' => $oauth->client_secret,
                 'username' => $model->number,
-                'password' => json_encode($password,true),
+                'password' => json_encode($password, true),
             ];
             $client = new Client();
             $response = $client->createRequest()
@@ -291,10 +553,8 @@ class LoginForm extends Model
                 'success' => $response->isOk,
                 'body' => $responseContent
             ];
-//        } catch (\Exception $e) {
-//            return  $e;
-//        }
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
-
-
 }

@@ -31,9 +31,14 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+
     public $rateLimit = 1;
     public $allowance;
     public $allowance_updated_at;
+    /**
+     * @var mixed|null
+     */
+
     /**
      * @var mixed|null
      */
@@ -204,7 +209,10 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
-
+    public function getPassword(): string
+    {
+        return '';
+    }
     /**
      * Generates "remember me" authentication key
      */
