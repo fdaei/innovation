@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use common\components\Env;
 use common\models\LoginForm;
+use common\models\User;
 use common\models\UserVerify;
 use filsh\yii2\oauth2server\models\OauthClients;
 use Yii;
@@ -77,6 +78,8 @@ class LoginController extends ActiveController
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post());
         if($model->validate()){
+            $identity = User::findOne(['username' => $model->number]);
+            Yii::$app->user->login($identity);
             $password = ['type' => 'verifyCode','value' => $model->code];
             return $model->sendrequest($model,$password);
         }
@@ -92,6 +95,8 @@ class LoginController extends ActiveController
         $model->load(Yii::$app->request->post());
         if($model->validate()){
             $password = ['type' => 'pass', 'value' => $model->password];
+            $identity = User::findOne(['username' => $model->number]);
+            Yii::$app->user->login($identity);
             return $model->sendrequest($model, $password);
         }
     }

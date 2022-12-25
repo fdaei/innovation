@@ -26,10 +26,7 @@ class LoginForm extends Model
     const VALIDTIME = 120;
     const NUMBEROFFAIL = 5;
     const NUMBER_OF_SHOW_CAPTCHA = 3;
-    const CODELENGHT = 6;
-    const CODE_LENGTH_API = 4;
     const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
-
     public $number;
     public $code;
     public $password;
@@ -38,17 +35,14 @@ class LoginForm extends Model
     public $authenticator;
     public $time_send_code;
     public $remind_valid_time;
-    public $code_length;
-    public $password_repeat;
     public $token;
-    public $verifyCode;
     public $rememberMe = false;
     public $captcha;
     public $show_captcha = false;
     public $sendAgain = false;
     public $identity = null;
     public $isSetPassword = false;
-    public $organizational_number = null;
+
     const  SCENARIO_BY_PASSWORD_API = 'by-password-api';                          // Login by password
     const  SCENARIO_SET_PASSWORD = 'set-password';                                // Set new password
     const  SCENARIO_LOGIN_CODE_API = 'login-code-api';                            // ارسال کد تائید
@@ -517,7 +511,7 @@ class LoginForm extends Model
     {
         $fields = parent::fields();
 
-        unset($fields['invitor'], $fields['user'], $fields['verifyCode'],
+        unset( $fields['user'], $fields['verifyCode'],
             $fields['rememberMe'], $fields['code'], $fields['password'],
             $fields['password_repeat'], $fields['sendAgain'], $fields['captcha'],
             $fields['show_captcha']);
