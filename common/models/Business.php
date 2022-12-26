@@ -6,6 +6,7 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\filters\RateLimitInterface;
 use yii\helpers\HtmlPurifier;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
@@ -42,7 +43,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @mixin CdnUploadImageBehavior
  * @mixin SoftDeleteBehavior
  */
-class Business extends \yii\db\ActiveRecord
+class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
 {
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
@@ -50,10 +51,9 @@ class Business extends \yii\db\ActiveRecord
 
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_CREATE = 'create';
-
-    /**
-     * {@inheritdoc}
-     */
+    public $rateLimit = 1;
+    public $allowance;
+    public $allowance_updated_at;
     public static function tableName()
     {
         return '{{%business}}';
@@ -403,5 +403,21 @@ class Business extends \yii\db\ActiveRecord
             'city',
             'metaTags',
         ];
+    }
+
+    public function getRateLimit($request, $action) {
+        return [$this->rateLimit,1];
+    }
+
+    public function loadAllowance($request, $action)
+    {
+        return [$this->allowance, $this->allowance_updated_at];
+    }
+
+    public function saveAllowance($request, $action, $allowance, $timestamp)
+    {
+        $this->allowance = $allowance;
+        $this->allowance_updated_at = $timestamp;
+        $this->save();
     }
 }

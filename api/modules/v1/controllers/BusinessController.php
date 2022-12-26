@@ -21,22 +21,13 @@ class BusinessController extends ActiveController
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
-
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'index' => ['GET', 'HEAD', 'OPTIONS'],
-                        'view' => ['GET', 'HEAD', 'OPTIONS'],
-                        'slug' => ['GET', 'HEAD', 'OPTIONS'],
-                    ],
-                ],
-            ]
-        );
+        $behaviors = parent::behaviors();
+        $behaviors['verbs']=['class' => VerbFilter::class, 'actions' => ['index' => ['GET', 'HEAD', 'OPTIONS'], 'view' => ['GET', 'HEAD', 'OPTIONS'], 'slug' => ['GET', 'HEAD', 'OPTIONS'],],
+        ];
+        $behaviors['rateLimiter']['enableRateLimitHeaders'] = false;
+        return $behaviors;
     }
 
     // TODO unset Create, Update, Delete actions

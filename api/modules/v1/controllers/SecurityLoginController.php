@@ -10,6 +10,7 @@ use filsh\yii2\oauth2server\models\OauthClients;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\httpclient\Client;
 use yii\httpclient\Exception;
 use yii\rest\ActiveController;
@@ -18,40 +19,44 @@ use yii\rest\ActiveController;
 /**
  * Site controller
  */
-class LoginController extends ActiveController
+class SecurityLoginController extends ActiveController
 {
-    public $modelClass = "common\models\User";
+    public $modelClass = 'common\models\User';
     public $serializer = [
-        'class' => 'yii\rest\Serializer',
+        'class'              => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'login' => 'GET', 'HEAD', 'OPTIONS',
-                    ],
-                ],
-            ]
-        );
+        return ArrayHelper::merge(parent::behaviors(), []);
     }
 
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
+        unset($actions['delete']);
+        unset($actions['create']);
+        unset($actions['update']);
+        unset($actions['index']);
+        unset($actions['view']);
+        unset($actions['options']);
         return $actions;
     }
 
-    public function actionSecurityLogin($login_by_code = true)
+    protected function verbs()
+    {
+        return [
+            'Login' => ['POST', 'OPTIONS'],
+            'ValidateCodeRegisterLogin' => ['POST', 'OPTIONS'],
+            'ValidateCodePassword' => ['POST', 'OPTIONS'],
+            'ValidateCodeRegister' => ['POST', 'OPTIONS'],
+            'Register' => ['POST', 'OPTIONS'],
+        ];
+    }
+
+
+    public function actionLogin($login_by_code = true)
     {
         if ($login_by_code) {
             $model = new LoginForm(['scenario' => LoginForm::SCENARIO_LOGIN_CODE_API]);
@@ -73,7 +78,7 @@ class LoginController extends ActiveController
      * @throws Exception
      * @throws InvalidConfigException
      */
-    public function actionValidateCode()
+    public function actionValidateCodeRegisterLogin()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post());
@@ -99,5 +104,28 @@ class LoginController extends ActiveController
             Yii::$app->user->login($identity);
             return $model->sendrequest($model, $password);
         }
+    }
+
+    public function actionValidateCodeRegister()
+    {
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
+        $model->load(Yii::$app->request->post(), '');
+        if ($model->validate()) {   //اگر کد فعال سازی درست بود.
+            $model->save();
+            $password = ['type' => 'verifyCode','value' => $model->code];
+            return $model->sendrequest($model,$password);
+        } else {
+            $model->setFailed();
+        }
+        return $model;
+    }
+    public function actionRegister()
+    {
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_REGISTER_API_STEP_1]);
+        $model->load(Yii::$app->request->post(), '');
+        if ($model->validate()) {
+            $model->sendCode(LoginForm::CODE_LENGTH_API);
+        }
+        return $model;
     }
 }

@@ -2,14 +2,17 @@
 
 namespace api\modules\v1\controllers;
 
+use aminbbb92\user\models\User;
 use Aws\Retry\RateLimiter;
 use common\components\CaptchaHelper;
 
 
+use filsh\yii2\oauth2server\models\OauthAccessTokens;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\HttpBearerAuth;
 use yii\filters\VerbFilter;
 use yii\rest\Controller;
 use yii\web\HttpException;
-
 /**
  * Site controller
  */
@@ -19,14 +22,18 @@ class SiteController extends Controller
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
-
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['rateLimiter']['enableRateLimitHeaders'] = false;
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'authMethods' => [
+                HttpBearerAuth::class,
+            ],
+        ];
         $behaviors['verbs'] = ['class' => VerbFilter::class,
             'actions' => [
                 'index' => ['GET', 'HEAD', 'OPTIONS'],
@@ -34,14 +41,12 @@ class SiteController extends Controller
             ],
         ];
         return $behaviors;
-
     }
 
     protected function verbs()
     {
         return parent::verbs();
     }
-
     public function actionIndex()
     {
         return [];

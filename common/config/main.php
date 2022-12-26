@@ -36,7 +36,7 @@ return [
                 ],
                 'refresh_token' => [
                     'class' => 'OAuth2\GrantType\RefreshToken',
-                    'always_issue_new_refresh_token' => true
+
                 ]
             ]
         ]
@@ -44,7 +44,7 @@ return [
     'components' => [
         'i18n' => [
             'translations' => [
-                'app*' => [
+                '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages',
                     'sourceLanguage' => 'en-US',

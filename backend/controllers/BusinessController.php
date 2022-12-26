@@ -61,8 +61,6 @@ class BusinessController extends Controller
     }
     public function actionMyComment()
     {
-        var_dump("hhy");
-        die();
         $model = new BusinessGallery();
         return $this->renderAjax('create', [
             'model' => $model,

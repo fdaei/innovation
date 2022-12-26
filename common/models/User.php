@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
 use yii\base\NotSupportedException;
@@ -102,7 +103,7 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['access_token' => $token]);
     }
 
     /**

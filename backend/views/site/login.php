@@ -14,11 +14,10 @@ $this->title = 'Login';
 <div class="card mb-0">
     <div class="">
         <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
-
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'number')->textInput(['autofocus' => true]) ?>
             </div>
             <div class="col-md-12">
                 <?= $form->field($model, 'password')->passwordInput() ?>
