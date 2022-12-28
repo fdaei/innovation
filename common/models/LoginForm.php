@@ -55,6 +55,8 @@ class LoginForm extends Model
     const  SCENARIO_LOGIN_OR_REGISTER_API_STEP_1 = 'login-or-register-api-step-1';// ارسال کد تائید
     const  SCENARIO_REGISTER_API_STEP_1 = 'register-api-step-1';                  // Send verify code
     const  SCENARIO_REGISTER_API_STEP_2 = 'register-api-step-2';                  // Verification & Register new user
+    const  SCENARIO_back_STEP_1 = 'back-step1';                                   // Send verify code
+    const  SCENARIO_back_STEP_2 = 'back-step2';                                   // Validate code and password
 
     public function rules()
     {
@@ -62,12 +64,12 @@ class LoginForm extends Model
             [['number'], 'required',
                 'on' => [
                     self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_REGISTER_API_STEP_2,
-                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1, self::SCENARIO_VALIDATE_CODE_API,self::SCENARIO_REGISTER_API_STEP_1,
-                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,self::SCENARIO_VALIDATE_CODE_PASSWORD_API
+                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1, self::SCENARIO_VALIDATE_CODE_API,self::SCENARIO_REGISTER_API_STEP_1,self::SCENARIO_back_STEP_2,
+                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,self::SCENARIO_VALIDATE_CODE_PASSWORD_API,self::SCENARIO_back_STEP_1
                 ]
             ],
             [['code'], 'required', 'on' => [
-                self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,self::SCENARIO_REGISTER_API_STEP_2,
+                self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,self::SCENARIO_REGISTER_API_STEP_2,self::SCENARIO_back_STEP_2
             ]
             ],
             [['password'], 'required', 'on' => [self::SCENARIO_SET_PASSWORD,
@@ -95,12 +97,12 @@ class LoginForm extends Model
             [['number'], 'checkLimit', 'skipOnEmpty' => false,
                 'on' => [
                     self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
-                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1,self::SCENARIO_REGISTER_API_STEP_1,
+                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1,self::SCENARIO_REGISTER_API_STEP_1,self::SCENARIO_back_STEP_1
                 ]
             ],
             [['password'], 'validateFail', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]
             ],
-            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]],
+            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API,self::SCENARIO_back_STEP_2]],
 
             [['password'], 'match', 'pattern' => '/^[A-Za-z\d@$!%*#?^&~]{6,}$/', 'on' => [self::SCENARIO_SET_PASSWORD,
                 self::SCENARIO_REGISTER_API_STEP_2,
@@ -115,7 +117,7 @@ class LoginForm extends Model
             ]],
             [['code'], 'validateCode', 'skipOnEmpty' => false,
                 'on' => [
-                    self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2, self::SCENARIO_REGISTER_API_STEP_2,
+                    self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2, self::SCENARIO_REGISTER_API_STEP_2,self::SCENARIO_back_STEP_2
                 ]
             ],
             ['captcha', 'required', 'when' => function ($model) {
@@ -154,6 +156,8 @@ class LoginForm extends Model
         $scenarios[self::SCENARIO_FORGOT_PASSWORD_API_STEP_2] = ['!number', 'code', 'password'];
         $scenarios[self::SCENARIO_REGISTER_API_STEP_1] = ['number', 'password'];
         $scenarios[self::SCENARIO_REGISTER_API_STEP_2] = ['number', 'code', 'password'];
+        $scenarios[self::SCENARIO_back_STEP_1] = ['number'];
+        $scenarios[self::SCENARIO_back_STEP_2] = ['!number', 'code', '!rememberMe', 'password'];
 
         return $scenarios;
     }
@@ -197,7 +201,7 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if ($this->user != null) {
-            if ((!$this->user->password_hash ) || ($this->user->password_hash && (!$this->password || !$this->user->validatePassword($this->password)))) {
+            if ((!$this->user->password && $this->scenario != self::SCENARIO_back_STEP_2) || ($this->user->password && (!$this->password || !$this->user->validatePassword($this->password)))) {
                 $this->addError($attribute, "کلمه عبور درست نیست.");
             }
         } else {
