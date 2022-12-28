@@ -23,11 +23,6 @@ use yii\validators\RegularExpressionValidator;
  */
 class LoginForm extends Model
 {
-    const VALIDTIME = 120;
-    const NUMBEROFFAIL = 5;
-    const NUMBER_OF_SHOW_CAPTCHA = 3;
-    const CODE_LENGTH_API = 4;
-    const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
     public $number;
     public $code;
     public $password;
@@ -44,6 +39,12 @@ class LoginForm extends Model
     public $identity = null;
     public $isSetPassword = false;
 
+    const VALIDTIME = 120;
+    const NUMBEROFFAIL = 5;
+    const NUMBER_OF_SHOW_CAPTCHA = 3;
+    const CODE_LENGTH_API = 4;
+    const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
+
     const  SCENARIO_BY_PASSWORD_API = 'by-password-api';                          // Login by password
     const  SCENARIO_SET_PASSWORD = 'set-password';                                // Set new password
     const  SCENARIO_LOGIN_CODE_API = 'login-code-api';                            // ارسال کد تائید
@@ -54,7 +55,6 @@ class LoginForm extends Model
     const  SCENARIO_LOGIN_OR_REGISTER_API_STEP_1 = 'login-or-register-api-step-1';// ارسال کد تائید
     const  SCENARIO_REGISTER_API_STEP_1 = 'register-api-step-1';                  // Send verify code
     const  SCENARIO_REGISTER_API_STEP_2 = 'register-api-step-2';                  // Verification & Register new user
-
 
     public function rules()
     {
@@ -339,7 +339,6 @@ class LoginForm extends Model
         if (parent::beforeValidate()) {
             $number = $this->normalizeNumber($this->number);
             $numberValidator = new RegularExpressionValidator(['pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/']);
-            $intValidator = new NumberValidator(['integerOnly' => true, 'skipOnEmpty' => true]);
             if (!$numberValidator->validate($number)) {
                 $this->addError('number', Yii::t('app', 'Invalid Mobile Number'));
                 return false;
@@ -554,18 +553,8 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->user, $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
     }
-
-    protected function getUser()
-    {
-        if ($this->user === null) {
-            $this->user = User::findByUsername($this->username);
-        }
-
-        return $this->user;;
-    }
-
 }
