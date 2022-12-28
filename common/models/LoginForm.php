@@ -77,6 +77,7 @@ class LoginForm extends Model
                 self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
                 self::SCENARIO_VALIDATE_CODE_PASSWORD_API,
                 self::SCENARIO_REGISTER_API_STEP_2,
+                self::SCENARIO_back_STEP_1,
             ]
             ],
             [['number', 'code'], 'filter', 'filter' => [$this, 'normalizeNumber']],
@@ -100,14 +101,15 @@ class LoginForm extends Model
                     self::SCENARIO_FORGOT_PASSWORD_API_STEP_1,self::SCENARIO_REGISTER_API_STEP_1,self::SCENARIO_back_STEP_1
                 ]
             ],
-            [['password'], 'validateFail', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API]
+            [['password'], 'validateFail', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API, self::SCENARIO_back_STEP_1,]
             ],
-            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API,self::SCENARIO_back_STEP_2]],
+            [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API,self::SCENARIO_VALIDATE_CODE_PASSWORD_API,self::SCENARIO_back_STEP_1]],
 
             [['password'], 'match', 'pattern' => '/^[A-Za-z\d@$!%*#?^&~]{6,}$/', 'on' => [self::SCENARIO_SET_PASSWORD,
                 self::SCENARIO_REGISTER_API_STEP_2,
                 self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
-                self::SCENARIO_VALIDATE_CODE_PASSWORD_API], 'message' => "کلمه عبور باید حداقل ۶ حرف و از الفبای انگلیسی و اعداد تشکیل شده باشد."
+                self::SCENARIO_VALIDATE_CODE_PASSWORD_API,
+            ], 'message' => "کلمه عبور باید حداقل ۶ حرف و از الفبای انگلیسی و اعداد تشکیل شده باشد."
             ],
             [['password'], 'string', 'min' => 6, 'max' => 72, 'skipOnEmpty' => false, 'on' => [
                 self::SCENARIO_SET_PASSWORD,
@@ -156,7 +158,7 @@ class LoginForm extends Model
         $scenarios[self::SCENARIO_FORGOT_PASSWORD_API_STEP_2] = ['!number', 'code', 'password'];
         $scenarios[self::SCENARIO_REGISTER_API_STEP_1] = ['number', 'password'];
         $scenarios[self::SCENARIO_REGISTER_API_STEP_2] = ['number', 'code', 'password'];
-        $scenarios[self::SCENARIO_back_STEP_1] = ['number'];
+        $scenarios[self::SCENARIO_back_STEP_1] = ['number','password','!rememberMe',];
         $scenarios[self::SCENARIO_back_STEP_2] = ['!number', 'code', '!rememberMe', 'password'];
 
         return $scenarios;
@@ -201,7 +203,7 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if ($this->user != null) {
-            if ((!$this->user->password && $this->scenario != self::SCENARIO_back_STEP_2) || ($this->user->password && (!$this->password || !$this->user->validatePassword($this->password)))) {
+            if ((!$this->user->password_hash && $this->scenario != self::SCENARIO_back_STEP_1) || ($this->user->password_hash && (!$this->password || !$this->user->validatePassword($this->password)))) {
                 $this->addError($attribute, "کلمه عبور درست نیست.");
             }
         } else {
@@ -354,7 +356,7 @@ class LoginForm extends Model
                 ->one();
 
 
-            if ($this->user instanceof User && ArrayHelper::isIn($this->scenario, [self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API])) {
+            if ($this->user instanceof User && ArrayHelper::isIn($this->scenario, [self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API,self::SCENARIO_back_STEP_1])) {
                 $this->existUser = true;
                 if ($this->user->password_hash) {
                     $this->isSetPassword = true;

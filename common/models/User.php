@@ -39,6 +39,10 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     /**
      * @var mixed|null
      */
+    public  $password;
+    /**
+     * @var mixed|null
+     */
 
     /**
      * @var mixed|null
