@@ -113,7 +113,6 @@ class LoginForm extends Model
                 self::SCENARIO_VALIDATE_CODE_PASSWORD_API,
                 self::SCENARIO_REGISTER_API_STEP_2,
             ]],
-            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "کلمه عبور و تکرار کلمه عبور باید برابر باشند"],
             [['code'], 'validateCode', 'skipOnEmpty' => false,
                 'on' => [
                     self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2, self::SCENARIO_REGISTER_API_STEP_2,
@@ -416,29 +415,29 @@ class LoginForm extends Model
      * @return bool
      * @throws \Exception
      */
-//    public function beforeLogin()
-//    {
-//        if ($this->user !== null) {
-//            $this->user->last_login = time();
-//
-//            return $this->user->save(false);
-//        } else if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_VALIDATE_CODE_API])) {
-//            return $this->save();
-//        }
-//
-//        return false;
-//    }
-//
-//    public function afterLogin()
-//    {
-//        $login = Yii::$app->user->login($this->user, $this->rememberMe ? 3600 * 24 * 30 : 0);
-//        Yii::$app->user->returnUrl = Yii::$app->session->get('user.returnUrl');
-//        Yii::$app->session->remove('count_send');
-//        Yii::$app->session->remove('user.attempts-login');
-//        Yii::$app->session->remove('user.attempts-login-time');
-//
-//        return $login;
-//    }
+    public function beforeLogin()
+    {
+        if ($this->user !== null) {
+            $this->user->last_login = time();
+
+            return $this->user->save(false);
+        } else if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_VALIDATE_CODE_API])) {
+            return $this->save();
+        }
+
+        return false;
+    }
+
+    public function afterLogin()
+    {
+        $login = Yii::$app->user->login($this->user, $this->rememberMe ? 3600 * 24 * 30 : 0);
+        Yii::$app->user->returnUrl = Yii::$app->session->get('user.returnUrl');
+        Yii::$app->session->remove('count_send');
+        Yii::$app->session->remove('user.attempts-login');
+        Yii::$app->session->remove('user.attempts-login-time');
+
+        return $login;
+    }
 
     public function afterLoginApi()
     {
@@ -550,6 +549,23 @@ class LoginForm extends Model
         } catch (\Exception $e) {
             return $e;
         }
+    }
+
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        }
+        return false;
+    }
+
+    protected function getUser()
+    {
+        if ($this->user === null) {
+            $this->user = User::findByUsername($this->username);
+        }
+
+        return $this->user;;
     }
 
 }
