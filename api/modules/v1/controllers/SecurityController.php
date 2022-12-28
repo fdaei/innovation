@@ -60,7 +60,7 @@ class SecurityController extends ActiveController
     {
         if ($login_by_code) {
             $model = new LoginForm(['scenario' => LoginForm::SCENARIO_LOGIN_CODE_API]);
-            $model->load(Yii::$app->request->post());
+            $model->load(Yii::$app->request->post(), '');
 
             if ($model->validate()) {
                 $model->sendCode();
@@ -80,7 +80,7 @@ class SecurityController extends ActiveController
     public function actionValidateLogin()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
-        $model->load(Yii::$app->request->post());
+        $model->load(Yii::$app->request->post(), '');
         $model->validate();
         if($model->validate()){
             $identity = User::findOne(['username' => $model->number]);
