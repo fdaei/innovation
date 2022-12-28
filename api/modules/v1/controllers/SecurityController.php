@@ -73,7 +73,6 @@ class SecurityController extends ActiveController
         return $model;
     }
 
-
     /**
      * @throws Exception
      * @throws InvalidConfigException
@@ -101,14 +100,14 @@ class SecurityController extends ActiveController
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
         $model->load(Yii::$app->request->post());
         $model->validate();
-        var_dump($model->getErrors());
-        die();
+
         if($model->validate()){
             $password = ['type' => 'pass', 'value' => $model->password];
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
             return $model->sendrequest($model, $password);
         }
+        return $model;
     }
 
     public function actionValidateRegister()
