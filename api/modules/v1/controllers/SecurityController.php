@@ -99,6 +99,9 @@ class SecurityController extends ActiveController
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
         $model->load(Yii::$app->request->post());
+        $model->validate();
+        var_dump($model->getErrors());
+        die();
         if($model->validate()){
             $password = ['type' => 'pass', 'value' => $model->password];
             $identity = User::findOne(['username' => $model->number]);
