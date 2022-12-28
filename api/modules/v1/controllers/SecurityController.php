@@ -89,6 +89,7 @@ class SecurityController extends ActiveController
             $password = ['type' => 'verifyCode','value' => $model->code];
             return $model->sendrequest($model,$password);
         }
+        return $model;
     }
 
     /**
