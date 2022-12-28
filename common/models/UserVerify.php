@@ -133,7 +133,6 @@ class UserVerify extends \yii\db\ActiveRecord
     {
         return ($this->created + $this->expirationTime) < time();
     }
-
     /**
      * @return integer Token remind valid time.
      */

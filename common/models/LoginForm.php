@@ -254,7 +254,6 @@ class LoginForm extends Model
                 $this->addError($attribute, 'کد وارد شده اشتباه است.');
             } else {
                 $model->expireTime = $this->validTime;
-
                 if (!$model->isExpired) {
                     if (!ArrayHelper::isIn($this->getScenario(), [self::SCENARIO_VALIDATE_CODE_API])) {
                         $model->delete();

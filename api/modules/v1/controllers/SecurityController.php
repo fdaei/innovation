@@ -19,7 +19,7 @@ use yii\rest\ActiveController;
 /**
  * Site controller
  */
-class SecurityLoginController extends ActiveController
+class SecurityController extends ActiveController
 {
     public $modelClass = 'common\models\User';
     public $serializer = [
@@ -78,10 +78,11 @@ class SecurityLoginController extends ActiveController
      * @throws Exception
      * @throws InvalidConfigException
      */
-    public function actionValidateCodeRegisterLogin()
+    public function actionValidateLogin()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post());
+        $model->validate();
         if($model->validate()){
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
@@ -106,7 +107,7 @@ class SecurityLoginController extends ActiveController
         }
     }
 
-    public function actionValidateCodeRegister()
+    public function actionValidateRegister()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
