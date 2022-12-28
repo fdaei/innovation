@@ -40,7 +40,7 @@ class LoginForm extends Model
     public $isSetPassword = false;
 
     const VALIDTIME = 120;
-    const NUMBEROFFAIL = 5;
+    const NUMBEROFFAIL = 2;
     const NUMBER_OF_SHOW_CAPTCHA = 3;
     const CODE_LENGTH_API = 4;
     const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
@@ -418,7 +418,6 @@ class LoginForm extends Model
     public function beforeLogin()
     {
         if ($this->user !== null) {
-            $this->user->last_login = time();
             return $this->user->save(false);
         } else if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_VALIDATE_CODE_API])) {
             return $this->save();
@@ -548,10 +547,16 @@ class LoginForm extends Model
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function login()
     {
+        $this->beforeLogin();
         if ($this->validate()) {
-            return Yii::$app->user->login($this->user, $this->rememberMe ? 3600 * 24 * 30 : 0);
+            $flag= Yii::$app->user->login($this->user, $this->rememberMe ? 3600 * 24 * 30 : 0);
+            $this->afterLogin();
+            return $flag;
         }
         return false;
     }

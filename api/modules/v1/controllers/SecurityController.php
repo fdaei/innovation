@@ -94,17 +94,15 @@ class SecurityController extends ActiveController
     /**
      * @throws Exception
      * @throws InvalidConfigException
+     * @throws \Exception
      */
     public function actionValidateCodePassword()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
         $model->load(Yii::$app->request->post(),'');
-        $model->validate();
-
         if($model->validate()){
             $password = ['type' => 'pass', 'value' => $model->password];
-            $identity = User::findOne(['username' => $model->number]);
-            Yii::$app->user->login($identity);
+            $model->login();
             return $model->sendrequest($model, $password);
         }
         return $model;
