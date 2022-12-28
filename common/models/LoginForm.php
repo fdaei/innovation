@@ -91,7 +91,7 @@ class LoginForm extends Model
             [['number'], 'validateUser', 'skipOnEmpty' => false,
                 'on' => [
                     self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_REGISTER_API_STEP_1,
-                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
+                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,self::SCENARIO_back_STEP_1
                 ]
             ],
             [['number'], 'checkLimit', 'skipOnEmpty' => false,
@@ -182,7 +182,7 @@ class LoginForm extends Model
 
     public function validateUser($attribute, $params)
     {
-        if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API]) && $this->user == null) {
+        if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API,self::SCENARIO_back_STEP_1]) && $this->user == null) {
             $this->addError($attribute, "کاربری با شماره {$this->number} ثبت نشده است.");
             $this->addError('existUser', $this->existUser);
         }
@@ -422,7 +422,6 @@ class LoginForm extends Model
     {
         if ($this->user !== null) {
             $this->user->last_login = time();
-
             return $this->user->save(false);
         } else if (ArrayHelper::isIn($this->scenario, [self::SCENARIO_VALIDATE_CODE_API])) {
             return $this->save();
