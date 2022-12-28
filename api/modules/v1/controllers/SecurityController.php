@@ -2,28 +2,23 @@
 
 namespace api\modules\v1\controllers;
 
-use common\components\Env;
 use common\models\LoginForm;
 use common\models\User;
-use common\models\UserVerify;
-use filsh\yii2\oauth2server\models\OauthClients;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use yii\httpclient\Client;
 use yii\httpclient\Exception;
 use yii\rest\ActiveController;
 
 
 /**
- * Site controller
+ * Security controller
  */
-class SecurityLoginController extends ActiveController
+class SecurityController extends ActiveController
 {
     public $modelClass = 'common\models\User';
     public $serializer = [
-        'class'              => 'yii\rest\Serializer',
+        'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
 
@@ -55,7 +50,6 @@ class SecurityLoginController extends ActiveController
         ];
     }
 
-
     public function actionLogin($login_by_code = true)
     {
         if ($login_by_code) {
@@ -73,7 +67,6 @@ class SecurityLoginController extends ActiveController
         return $model;
     }
 
-
     /**
      * @throws Exception
      * @throws InvalidConfigException
@@ -82,12 +75,14 @@ class SecurityLoginController extends ActiveController
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post());
-        if($model->validate()){
+        if ($model->validate()) {
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
-            $password = ['type' => 'verifyCode','value' => $model->code];
-            return $model->sendrequest($model,$password);
+            $password = ['type' => 'verifyCode', 'value' => $model->code];
+            return $model->sendrequest($model, $password);
         }
+
+        return $model;
     }
 
     /**
@@ -98,12 +93,24 @@ class SecurityLoginController extends ActiveController
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
         $model->load(Yii::$app->request->post());
-        if($model->validate()){
+        if ($model->validate()) {
             $password = ['type' => 'pass', 'value' => $model->password];
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
             return $model->sendrequest($model, $password);
         }
+
+        return $model;
+    }
+
+    public function actionRegister()
+    {
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_REGISTER_API_STEP_1]);
+        $model->load(Yii::$app->request->post(), '');
+        if ($model->validate()) {
+            $model->sendCode(LoginForm::CODE_LENGTH_API);
+        }
+        return $model;
     }
 
     public function actionValidateCodeRegister()
@@ -112,19 +119,10 @@ class SecurityLoginController extends ActiveController
         $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {   //اگر کد فعال سازی درست بود.
             $model->save();
-            $password = ['type' => 'verifyCode','value' => $model->code];
-            return $model->sendrequest($model,$password);
+            $password = ['type' => 'verifyCode', 'value' => $model->code];
+            return $model->sendrequest($model, $password);
         } else {
             $model->setFailed();
-        }
-        return $model;
-    }
-    public function actionRegister()
-    {
-        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_REGISTER_API_STEP_1]);
-        $model->load(Yii::$app->request->post(), '');
-        if ($model->validate()) {
-            $model->sendCode(LoginForm::CODE_LENGTH_API);
         }
         return $model;
     }
