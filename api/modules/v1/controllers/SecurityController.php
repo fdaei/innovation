@@ -2,16 +2,11 @@
 
 namespace api\modules\v1\controllers;
 
-use common\components\Env;
 use common\models\LoginForm;
 use common\models\User;
-use common\models\UserVerify;
-use filsh\yii2\oauth2server\models\OauthClients;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use yii\httpclient\Client;
 use yii\httpclient\Exception;
 use yii\rest\ActiveController;
 
@@ -23,7 +18,7 @@ class SecurityController extends ActiveController
 {
     public $modelClass = 'common\models\User';
     public $serializer = [
-        'class'              => 'yii\rest\Serializer',
+        'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
 
@@ -55,7 +50,6 @@ class SecurityController extends ActiveController
         ];
     }
 
-
     public function actionLogin($login_by_code = true)
     {
         if ($login_by_code) {
@@ -82,11 +76,11 @@ class SecurityController extends ActiveController
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
         $model->validate();
-        if($model->validate()){
+        if ($model->validate()) {
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
-            $password = ['type' => 'verifyCode','value' => $model->code];
-            return $model->sendrequest($model,$password);
+            $password = ['type' => 'verifyCode', 'value' => $model->code];
+            return $model->sendrequest($model, $password);
         }
         return $model;
     }
@@ -99,11 +93,21 @@ class SecurityController extends ActiveController
     public function actionValidateCodePassword()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
-        $model->load(Yii::$app->request->post(),'');
-        if($model->validate()){
+        $model->load(Yii::$app->request->post(), '');
+        if ($model->validate()) {
             $password = ['type' => 'pass', 'value' => $model->password];
             $model->login();
             return $model->sendrequest($model, $password);
+        }
+        return $model;
+    }
+
+    public function actionRegister()
+    {
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_REGISTER_API_STEP_1]);
+        $model->load(Yii::$app->request->post(), '');
+        if ($model->validate()) {
+            $model->sendCode(LoginForm::CODE_LENGTH_API);
         }
         return $model;
     }
@@ -112,22 +116,28 @@ class SecurityController extends ActiveController
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
-        if ($model->validate()) {   //اگر کد فعال سازی درست بود.
-            $model->save();
-            $password = ['type' => 'verifyCode','value' => $model->code];
-            return $model->sendrequest($model,$password);
+        if ($model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $flag = $model->save();
+
+                if ($flag) {
+                    $transaction->commit();
+                    $password = ['type' => 'verifyCode', 'value' => $model->code];
+                    $response = $model->sendrequest($model, $password);
+
+                    return $response['body'] ?? null;
+                }else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
         } else {
             $model->setFailed();
         }
-        return $model;
-    }
-    public function actionRegister()
-    {
-        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_REGISTER_API_STEP_1]);
-        $model->load(Yii::$app->request->post(), '');
-        if ($model->validate()) {
-            $model->sendCode(LoginForm::CODE_LENGTH_API);
-        }
+
         return $model;
     }
 }
