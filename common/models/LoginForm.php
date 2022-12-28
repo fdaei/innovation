@@ -212,7 +212,6 @@ class LoginForm extends Model
         }
     }
 
-
     public function validateFail($attribute, $params)
     {
         if (!$this->hasErrors()) {
@@ -289,7 +288,6 @@ class LoginForm extends Model
         } else {
             return false;
         }
-
     }
 
     public function setSessions()
@@ -366,8 +364,6 @@ class LoginForm extends Model
             if (Yii::$app->session->get('user.attempts-login') > self::NUMBER_OF_SHOW_CAPTCHA) { //make the captcha required if the unsuccessful attemps are more of thee
                 $this->show_captcha = true;                                                      //useful only for view
             }
-
-
             return true;
         } else {
             return false;
@@ -496,7 +492,6 @@ class LoginForm extends Model
         return true;
     }
 
-
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
@@ -508,7 +503,6 @@ class LoginForm extends Model
         else
             return isset($_items[$type]) ? $_items[$type] : false;
     }
-
 
     public function fields()
     {
