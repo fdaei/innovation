@@ -98,7 +98,7 @@ class SecurityController extends ActiveController
     public function actionValidateCodePassword()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
-        $model->load(Yii::$app->request->post());
+        $model->load(Yii::$app->request->post(),'');
         $model->validate();
 
         if($model->validate()){
