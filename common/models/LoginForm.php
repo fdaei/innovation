@@ -39,10 +39,10 @@ class LoginForm extends Model
     public $isSetPassword = false;
 
     const VALIDTIME = 120;
-    const NUMBEROFFAIL = 2;
+    const NUMBEROFFAIL = 5;
     const NUMBER_OF_SHOW_CAPTCHA = 3;
     const CODE_LENGTH_API = 4;
-    const TIME_SEND_AGAIN_AFTER_FAIL = 600; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
+    const TIME_SEND_AGAIN_AFTER_FAIL = 1; // مدت زمان برای ارسال مجدد کد در صورت ارسال بیش از حد
 
     const  SCENARIO_BY_PASSWORD_API = 'by-password-api';                          // Login by password
     const  SCENARIO_SET_PASSWORD = 'set-password';                                // Set new password
@@ -224,7 +224,6 @@ class LoginForm extends Model
     public function checkLimit($attribute, $params)
     {
         $session = Yii::$app->session;
-
         if ($session->has("count_send")) {
             if ($session->get('count_send') >= 1 && $session->get('count_send') < 10) {
                 if ($this->getTimeExpireCode() >= time() && Yii::$app->session->get("number") == $this->number) {
@@ -273,6 +272,7 @@ class LoginForm extends Model
      */
     public function sendCode()
     {
+        $this->setSessions();
         $verify = new UserVerify([
             'type' => UserVerify::TYPE_MOBILE_CONFIRMATION,
             'unhashedCode' => substr($this->number, -4),
@@ -293,11 +293,6 @@ class LoginForm extends Model
     {
         $session = Yii::$app->session;
         $session->set('time_send_code', $this->time_send_code); // زمان برای تایمر
-
-        if (!$session->has("first_time_send_code")) {
-            $session->set('first_time_send_code', $this->time_send_code); // زمان ارسال اولین sms
-        }
-
         if ($session->has("count_send")) {
             $session->set("count_send", $session->get("count_send") + 1);
         } else {
@@ -439,7 +434,6 @@ class LoginForm extends Model
 
     public function afterLoginApi()
     {
-
         Yii::$app->session->remove('count_send');
         Yii::$app->session->remove('user.attempts-login');
         Yii::$app->session->remove('user.attempts-login-time');

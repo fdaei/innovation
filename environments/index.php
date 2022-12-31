@@ -44,7 +44,7 @@ return [
         ],
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
-            'common/config/codeception-local.php',
+            'common/config/codeception-local',
             'frontend/config/main-local.php',
         ],
     ],
