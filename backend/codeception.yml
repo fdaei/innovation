@@ -8,8 +8,9 @@ paths:
 bootstrap: _bootstrap.php
 settings:
     colors: true
+    shuffle: true
     memory_limit: 1024M
 modules:
     config:
         Yii2:
-            configFile: 'config/test.php'
+            configFile: 'config/codeception.php'

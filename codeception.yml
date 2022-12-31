@@ -1,12 +1,8 @@
-namespace: Tests
-support_namespace: Support
+# global codeception file to run tests from all apps
+include:
+
+    - backend
 paths:
-    tests: tests
-    output: tests/_output
-    data: tests/Support/Data
-    support: tests/Support
-    envs: tests/_envs
-actor_suffix: Tester
-extensions:
-    enabled:
-        - Codeception\Extension\RunFailed
+    log: console/runtime/logs
+settings:
+    colors: true

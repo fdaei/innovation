@@ -1,12 +1,10 @@
 <?php
 
 
-namespace backend\tests\Unit;
+namespace backend\tests\unit;
 
 use backend\tests\UnitTester;
-use common\models\User;
 use common\models\UserVerify;
-use common\models\UserVerifyQuery;
 
 class ExampleTest extends \Codeception\Test\Unit
 {
@@ -22,6 +20,7 @@ class ExampleTest extends \Codeception\Test\Unit
     {
 
     }
+
     public function testValidation()
     {
         $user = new UserVerify();

@@ -10,7 +10,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
-        'rbac' => 'aminbbb92\rbac\RbacConsoleModule',
+
     ],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [

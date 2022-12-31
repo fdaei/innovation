@@ -4,8 +4,4 @@ modules:
   enabled:
     - Yii2:
         part: [orm, fixtures] # allow to use AR methods
-    - Db:
-        dsn: 'mysql:host=127.0.0.1;dbname=innovation'
-        user: 'root'
-        password: 'Root@12root'
-        dump: 'tests/_data/dump.sql'
+    - Asserts

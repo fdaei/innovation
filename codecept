@@ -1,1 +1,7 @@
-/home/fdeai/.composer/vendor/bin/codecept
+#!/usr/bin/env php
+<?php
+/**
+ * Codeception CLI
+ */
+
+require __DIR__ . '/vendor/codeception/codeception/app.php';
