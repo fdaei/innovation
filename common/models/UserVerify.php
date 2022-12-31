@@ -180,4 +180,9 @@ class UserVerify extends \yii\db\ActiveRecord
         else
             return isset($_items[$type]) ? $_items[$type] : false;
     }
+
+    public function setName(string $string)
+    {
+        $this->phone=$string;
+    }
 }

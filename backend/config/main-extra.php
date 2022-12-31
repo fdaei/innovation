@@ -33,12 +33,6 @@ if (!YII_ENV_PROD) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'panels' => [
-            'db' => [
-                'class' => 'yii\\db\\mysql\\',
-                'db' => '',
-            ],
-        ],
         'allowedIPs' => ['127.0.0.1', '::1', '192.168.*.*', '10.61.195.143'] // adjust this to your needs
     ];
 

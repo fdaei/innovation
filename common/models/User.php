@@ -304,9 +304,5 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
        return ['user_id' => $user->id];
     }
 
-    public function setName($name)
-    {
-        $this->username = $name;
-    }
 
 }
