@@ -1,6 +1,5 @@
 <?php
-
-namespace backend\tests;
+namespace api\tests;
 
 /**
  * Inherited Methods
@@ -13,14 +12,15 @@ namespace backend\tests;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
- */
-class UnitTester extends \Codeception\Actor
+*/
+class ApiTester extends \Codeception\Actor
 {
-    use _generated\UnitTesterActions;
-   /**
-    * Define custom actions here
-    */
+    use _generated\ApiTesterActions;
+
+    /**
+     * Define custom actions here
+     */
 }

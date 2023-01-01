@@ -54,7 +54,7 @@ class SecurityController extends ActiveController
     {
         if ($login_by_code) {
             $model = new LoginForm(['scenario' => LoginForm::SCENARIO_LOGIN_CODE_API]);
-            $model->load(Yii::$app->request->post());
+            $model->load(Yii::$app->request->post(), '');
 
             if ($model->validate()) {
                 $model->sendCode();
@@ -71,35 +71,34 @@ class SecurityController extends ActiveController
      * @throws Exception
      * @throws InvalidConfigException
      */
-    public function actionValidateCodeRegisterLogin()
+    public function actionValidateLogin()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
-        $model->load(Yii::$app->request->post());
+        $model->load(Yii::$app->request->post(), '');
+        $model->validate();
         if ($model->validate()) {
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
             $password = ['type' => 'verifyCode', 'value' => $model->code];
             return $model->sendrequest($model, $password);
         }
-
         return $model;
     }
 
     /**
      * @throws Exception
      * @throws InvalidConfigException
+     * @throws \Exception
      */
     public function actionValidateCodePassword()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_BY_PASSWORD_API]);
-        $model->load(Yii::$app->request->post());
+        $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {
             $password = ['type' => 'pass', 'value' => $model->password];
-            $identity = User::findOne(['username' => $model->number]);
-            Yii::$app->user->login($identity);
+            $model->login();
             return $model->sendrequest($model, $password);
         }
-
         return $model;
     }
 
@@ -113,17 +112,32 @@ class SecurityController extends ActiveController
         return $model;
     }
 
-    public function actionValidateCodeRegister()
+    public function actionValidateRegister()
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
-        if ($model->validate()) {   //اگر کد فعال سازی درست بود.
-            $model->save();
-            $password = ['type' => 'verifyCode', 'value' => $model->code];
-            return $model->sendrequest($model, $password);
+        if ($model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $flag = $model->save();
+
+                if ($flag) {
+                    $transaction->commit();
+                    $password = ['type' => 'verifyCode', 'value' => $model->code];
+                    $response = $model->sendrequest($model, $password);
+
+                    return $response['body'] ?? null;
+                }else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
         } else {
             $model->setFailed();
         }
+
         return $model;
     }
 }

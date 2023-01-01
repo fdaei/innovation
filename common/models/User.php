@@ -93,7 +93,6 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
-
     /**
      * {@inheritdoc}
      */
@@ -304,4 +303,6 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
         $user = self::findByUsername($username);
        return ['user_id' => $user->id];
     }
+
+
 }

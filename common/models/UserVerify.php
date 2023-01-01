@@ -133,7 +133,6 @@ class UserVerify extends \yii\db\ActiveRecord
     {
         return ($this->created + $this->expirationTime) < time();
     }
-
     /**
      * @return integer Token remind valid time.
      */
@@ -180,5 +179,10 @@ class UserVerify extends \yii\db\ActiveRecord
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
         else
             return isset($_items[$type]) ? $_items[$type] : false;
+    }
+
+    public function setName(string $string)
+    {
+        $this->phone=$string;
     }
 }
