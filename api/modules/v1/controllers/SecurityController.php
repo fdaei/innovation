@@ -9,6 +9,7 @@ use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use yii\httpclient\Exception;
 use yii\rest\ActiveController;
+use yii\web\NotFoundHttpException;
 
 
 /**
@@ -75,7 +76,6 @@ class SecurityController extends ActiveController
     {
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
-        $model->validate();
         if ($model->validate()) {
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
@@ -125,8 +125,12 @@ class SecurityController extends ActiveController
                     $transaction->commit();
                     $password = ['type' => 'verifyCode', 'value' => $model->code];
                     $response = $model->sendrequest($model, $password);
+                    if ($response['success'] === true) {
+                        return $response['body'] ?? null;
+                    } else {
+                        throw new NotFoundHttpException(Yii::t('app', 'The requested was fail .'));
+                    }
 
-                    return $response['body'] ?? null;
                 }else {
                     $transaction->rollBack();
                 }

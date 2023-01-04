@@ -33,6 +33,7 @@ class SiteController extends Controller
             'authMethods' => [
                 HttpBearerAuth::class,
             ],
+            'optional' => ['captcha']
         ];
         $behaviors['verbs'] = ['class' => VerbFilter::class,
             'actions' => [

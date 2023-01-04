@@ -100,8 +100,6 @@ class LoginForm extends Model
                     self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_1, self::SCENARIO_back_STEP_1
                 ]
             ],
-            [['password'], 'validateFail', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_VALIDATE_CODE_PASSWORD_API, self::SCENARIO_back_STEP_1,]
-            ],
             [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_VALIDATE_CODE_PASSWORD_API, self::SCENARIO_back_STEP_1]],
 
             [['password'], 'match', 'pattern' => '/^[A-Za-z\d@$!%*#?^&~]{6,}$/', 'on' => [self::SCENARIO_SET_PASSWORD,
@@ -121,27 +119,6 @@ class LoginForm extends Model
                     self::SCENARIO_VALIDATE_CODE_API, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2, self::SCENARIO_REGISTER_API_STEP_2, self::SCENARIO_back_STEP_2
                 ]
             ],
-            ['captcha', 'required', 'when' => function ($model) {
-                return Yii::$app->session->get('user.attempts-login') > self::NUMBER_OF_SHOW_CAPTCHA;
-            },
-                'except' => [
-                    self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API,
-                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
-                    self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_2,
-                ]
-            ],
-            ['captcha', 'lubosdz\captchaExtended\CaptchaExtendedValidator',
-                'captchaAction' => Url::to('/site/captcha'),
-                'when' => function (self $model) {
-                    return Yii::$app->session->get('user.attempts-login') > self::NUMBER_OF_SHOW_CAPTCHA;
-                },
-                'except' => [
-                    self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_VALIDATE_CODE_API,
-                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_FORGOT_PASSWORD_API_STEP_2,
-                    self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_2,
-                ]
-            ],
-
         ];
     }
 
@@ -200,6 +177,7 @@ class LoginForm extends Model
         return Yii::$app->customHelper->toEn($value);
     }
 
+
     public function validatePassword($attribute, $params)
     {
         if ($this->user != null) {
@@ -212,14 +190,6 @@ class LoginForm extends Model
         }
     }
 
-    public function validateFail($attribute, $params)
-    {
-        if (!$this->hasErrors()) {
-            if (Yii::$app->session->get('user.attempts-login', 0) > self::NUMBEROFFAIL && Yii::$app->session->get('user.attempts-login-time') > strtotime('-60 minutes')) {
-                $this->addError($attribute, "تعداد دفعات ثبت اشتباه کلمه عبور بیش از حد مجاز است.لطفا بعدا سعی نمایید.");
-            }
-        }
-    }
 
     public function checkLimit($attribute, $params)
     {
@@ -248,7 +218,7 @@ class LoginForm extends Model
                 ->andWhere([
                     'phone' => $this->number,
                     'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
-                ])->one();
+                ])->orderBy(['id'=>SORT_DESC])->one();
             if ($model === null || !Yii::$app->security->validatePassword($this->code, $model->code)) {
                 $this->addError($attribute, 'کد وارد شده اشتباه است.');
             } else {
@@ -293,6 +263,11 @@ class LoginForm extends Model
     {
         $session = Yii::$app->session;
         $session->set('time_send_code', $this->time_send_code); // زمان برای تایمر
+
+        if (!$session->has("first_time_send_code")) {
+            $session->set('first_time_send_code', $this->time_send_code); // زمان ارسال اولین sms
+        }
+
         if ($session->has("count_send")) {
             $session->set("count_send", $session->get("count_send") + 1);
         } else {
@@ -355,9 +330,6 @@ class LoginForm extends Model
                 }
             }
 
-            if (Yii::$app->session->get('user.attempts-login') > self::NUMBER_OF_SHOW_CAPTCHA) { //make the captcha required if the unsuccessful attemps are more of thee
-                $this->show_captcha = true;                                                      //useful only for view
-            }
             return true;
         } else {
             return false;
@@ -369,11 +341,6 @@ class LoginForm extends Model
     {
         if ($this->hasErrors()) {
             Yii::$app->session->set('user.attempts-login', Yii::$app->session->get('user.attempts-login', 0) + 1);
-
-            if (Yii::$app->session->get('user.attempts-login', 0) > self::NUMBER_OF_SHOW_CAPTCHA) {
-                $this->show_captcha = true; //useful only for view
-                Yii::$app->session->set('user.attempts-login-time', time());
-            }
         }
         parent::afterValidate();
     }
@@ -534,7 +501,11 @@ class LoginForm extends Model
                 'body' => $responseContent
             ];
         } catch (\Exception $e) {
-            return $e;
+            Yii::error($e->getMessage() . PHP_EOL . $e->getTraceAsString(), 'Exception/LoginForm-SendRequest');
+            return [
+                'success' => false,
+                'body' => $e->getMessage()
+            ];
         }
     }
 

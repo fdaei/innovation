@@ -37,7 +37,7 @@ class CustomHelper extends Component
         //$arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
         $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
 
-        $num = range(0, 9);
+        $num =['0','1','2','3','4','5','6','7','8','9'];
         $convertedPersianNums = str_replace($persian, $num, $string);
         $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
 
