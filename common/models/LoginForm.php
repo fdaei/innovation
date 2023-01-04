@@ -94,12 +94,12 @@ class LoginForm extends Model
                     self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1, self::SCENARIO_back_STEP_1
                 ]
             ],
-            [['number'], 'checkLimit', 'skipOnEmpty' => false,
-                'on' => [
-                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
-                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_1, self::SCENARIO_back_STEP_1
-                ]
-            ],
+//            [['number'], 'checkLimit', 'skipOnEmpty' => false,
+//                'on' => [
+//                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
+//                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_1, self::SCENARIO_back_STEP_1
+//                ]
+//            ],
             [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_VALIDATE_CODE_PASSWORD_API, self::SCENARIO_back_STEP_1]],
 
             [['password'], 'match', 'pattern' => '/^[A-Za-z\d@$!%*#?^&~]{6,}$/', 'on' => [self::SCENARIO_SET_PASSWORD,
@@ -492,7 +492,7 @@ class LoginForm extends Model
             $client = new Client();
             $response = $client->createRequest()
                 ->setMethod('POST')
-                ->setUrl('http://api.ince.local/oauth2/rest/token')
+                ->setUrl(Env::get('API_BASE_URL') . '/oauth2/rest/token')
                 ->setData($data)
                 ->send();
             $responseContent = json_decode($response->content);
