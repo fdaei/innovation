@@ -67,7 +67,9 @@ class SecurityController extends ActiveController
         }
         return $model;
     }
-
+    public function actionIdentityUser(){
+        return  Yii::$app->user->identity;
+    }
     /**
      * @throws Exception
      * @throws InvalidConfigException
@@ -80,10 +82,11 @@ class SecurityController extends ActiveController
         if ($model->validate()) {
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
+            $model->afterLogin();
             $password = ['type' => 'verifyCode', 'value' => $model->code];
             $token= $model->sendrequest($model, $password);
             return [
-                $token,
+                'token'=>$token,
                 'IdentityUser'=>[
                     $identity
                 ]
@@ -104,6 +107,7 @@ class SecurityController extends ActiveController
         if ($model->validate()) {
             $password = ['type' => 'pass', 'value' => $model->password];
             $model->login();
+            $model->afterLogin();
             return $model->sendrequest($model, $password);
         }
         return $model;
