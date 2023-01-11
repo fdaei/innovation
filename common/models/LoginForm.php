@@ -480,7 +480,7 @@ class LoginForm extends Model
     public function sendrequest(LoginForm $model, $password)
     {
         try {
-            $client_id = Yii::$app->request->headers['client_id'];
+            $client_id = Yii::$app->request->headers['client-id'];
             $oauth = OauthClients::find()->Where(['client_id' => $client_id])->one();
             $data = [
                 'grant_type' => 'password',
