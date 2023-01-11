@@ -74,13 +74,20 @@ class SecurityController extends ActiveController
      */
     public function actionValidateLogin()
     {
+
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {
             $identity = User::findOne(['username' => $model->number]);
             Yii::$app->user->login($identity);
             $password = ['type' => 'verifyCode', 'value' => $model->code];
-            return $model->sendrequest($model, $password);
+            $token= $model->sendrequest($model, $password);
+            return [
+                $token,
+                'IdentityUser'=>[
+                    $identity
+                ]
+            ];
         }
         return $model;
     }

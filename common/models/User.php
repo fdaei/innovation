@@ -303,6 +303,9 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
         $user = self::findByUsername($username);
        return ['user_id' => $user->id];
     }
-
+    public function fields()
+    {
+        return['username'];
+    }
 
 }
