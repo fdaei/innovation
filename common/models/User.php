@@ -106,7 +106,12 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::findOne(['access_token' => $token]);
+        /** @var \filsh\yii2\oauth2server\Module $module */
+        $module = Yii::$app->getModule('oauth2');
+        $token = $module->getServer()->getResourceController()->getToken();
+        return !empty($token['user_id'])
+            ? static::findIdentity($token['user_id'])
+            : null;
     }
 
     /**
