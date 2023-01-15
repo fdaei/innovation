@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
+use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
@@ -43,5 +44,10 @@ class UserController extends ActiveController
         unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
 
+    }
+
+    public function actionView()
+    {
+        return Yii::$app->user->identity;
     }
 }

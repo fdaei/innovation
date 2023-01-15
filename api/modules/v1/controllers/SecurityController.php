@@ -67,9 +67,7 @@ class SecurityController extends ActiveController
         }
         return $model;
     }
-    public function actionIdentityUser(){
-        return  Yii::$app->user->identity;
-    }
+
     /**
      * @throws Exception
      * @throws InvalidConfigException
@@ -80,16 +78,12 @@ class SecurityController extends ActiveController
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {
-            $identity = User::findOne(['username' => $model->number]);
-            Yii::$app->user->login($identity);
             $model->afterLogin();
             $password = ['type' => 'verifyCode', 'value' => $model->code];
-            $token= $model->sendrequest($model, $password);
+            $token = $model->sendrequest($model, $password);
             return [
-                'token'=>$token,
-                'IdentityUser'=>[
-                    $identity
-                ]
+                'token' => $token,
+                'identity' => $model->user
             ];
         }
         return $model;
@@ -106,9 +100,12 @@ class SecurityController extends ActiveController
         $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {
             $password = ['type' => 'pass', 'value' => $model->password];
-            $model->login();
             $model->afterLogin();
-            return $model->sendrequest($model, $password);
+            $token = $model->sendrequest($model, $password);
+            return [
+                'token' => $token,
+                'identity' => $model->user
+            ];
         }
         return $model;
     }
@@ -142,7 +139,7 @@ class SecurityController extends ActiveController
                         throw new NotFoundHttpException(Yii::t('app', 'The requested was fail .'));
                     }
 
-                }else {
+                } else {
                     $transaction->rollBack();
                 }
             } catch (\Exception $e) {
