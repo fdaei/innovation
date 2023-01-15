@@ -74,13 +74,17 @@ class SecurityController extends ActiveController
      */
     public function actionValidateLogin()
     {
+
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {
-            $identity = User::findOne(['username' => $model->number]);
-            Yii::$app->user->login($identity);
+            $model->afterLogin();
             $password = ['type' => 'verifyCode', 'value' => $model->code];
-            return $model->sendrequest($model, $password);
+            $token = $model->sendrequest($model, $password);
+            return [
+                'token' => $token,
+                'identity' => $model->user
+            ];
         }
         return $model;
     }
@@ -96,8 +100,12 @@ class SecurityController extends ActiveController
         $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {
             $password = ['type' => 'pass', 'value' => $model->password];
-            $model->login();
-            return $model->sendrequest($model, $password);
+            $model->afterLogin();
+            $token = $model->sendrequest($model, $password);
+            return [
+                'token' => $token,
+                'identity' => $model->user
+            ];
         }
         return $model;
     }
@@ -131,7 +139,7 @@ class SecurityController extends ActiveController
                         throw new NotFoundHttpException(Yii::t('app', 'The requested was fail .'));
                     }
 
-                }else {
+                } else {
                     $transaction->rollBack();
                 }
             } catch (\Exception $e) {
