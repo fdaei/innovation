@@ -127,14 +127,16 @@ class SecurityController extends ActiveController
         if ($model->validate()) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $flag = $model->save();
-
-                if ($flag) {
+                $user = $model->save();
+                if ($user) {
                     $transaction->commit();
                     $password = ['type' => 'verifyCode', 'value' => $model->code];
                     $response = $model->sendrequest($model, $password);
                     if ($response['success'] === true) {
-                        return $response['body'] ?? null;
+                        return [
+                            'token' => $response['body'] ,
+                            'identity' => $user
+                        ] ?? null;
                     } else {
                         throw new NotFoundHttpException(Yii::t('app', 'The requested was fail .'));
                     }

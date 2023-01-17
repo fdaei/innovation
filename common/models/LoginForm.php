@@ -429,8 +429,8 @@ class LoginForm extends Model
         $user->username = $this->number;
         $user->status = User::STATUS_ACTIVE;
         $user->generateAuthKey();
-
-        return $user->save();
+        $user->save();
+        return $user;
     }
 
     public function setPassword()
