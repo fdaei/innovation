@@ -50,4 +50,9 @@ class UserController extends ActiveController
     {
         return Yii::$app->user->identity;
     }
+    public function actionLogout()
+    {
+        return  Yii::$app->user->logout();
+    }
+
 }
