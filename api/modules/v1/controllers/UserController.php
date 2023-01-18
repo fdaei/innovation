@@ -52,7 +52,13 @@ class UserController extends ActiveController
     }
     public function actionLogout()
     {
-        return  Yii::$app->user->logout();
+        /**
+         * @var OauthAccessTokens $currentAccessToken
+         */
+        $currentAccessToken = OauthAccessTokens::getCurrentAccessToken();
+        $currentAccessToken->terminate();
+        return Yii::$app->user->logout();
+
     }
 
 }
