@@ -54,7 +54,8 @@ class UserVerify extends \yii\db\ActiveRecord
             [['phone', 'code', 'type'], 'required'],
             [['created', 'is_verify', 'type'], 'integer'],
             ['type', 'in', 'range' => array_keys(self::itemAlias('Type'))],
-            [['phone'], 'string', 'max' => 12],
+            [['phone'], 'string', 'max' => 12, 'min' => 11],
+            [['phone'], 'match', 'pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/'],
             [['ip'], 'string', 'max' => 64],
             [['phone', 'code'], 'unique', 'targetAttribute' => ['phone', 'code']],
         ];
@@ -133,6 +134,7 @@ class UserVerify extends \yii\db\ActiveRecord
     {
         return ($this->created + $this->expirationTime) < time();
     }
+
     /**
      * @return integer Token remind valid time.
      */
@@ -183,6 +185,11 @@ class UserVerify extends \yii\db\ActiveRecord
 
     public function setName(string $string)
     {
-        $this->phone=$string;
+        $this->phone = $string;
+    }
+
+    public function getName()
+    {
+        return $this->phone;
     }
 }
