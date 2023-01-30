@@ -46,7 +46,8 @@
         "kartik-v/yii2-widget-fileinput": "dev-master",
         "guzzlehttp/guzzle": "^7.5",
         "ext-http": "*",
-        "bower-asset/clipboard": "dev-master"
+        "bower-asset/clipboard": "dev-master",
+        "codeception/module-phpbrowser": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -43,4 +43,15 @@ class CustomHelper extends Component
 
         return $englishNumbersOnly;
     }
+    public function toFa($string)
+    {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        //$arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+        $num =['0','1','2','3','4','5','6','7','8','9'];
+        $converteEnglishNumber = str_replace($num,$persian,$string);
+
+        return $converteEnglishNumber;
+    }
 }

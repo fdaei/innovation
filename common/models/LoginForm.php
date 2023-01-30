@@ -8,7 +8,6 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 use yii\httpclient\Client;
 use yii\httpclient\Exception;
 use yii\validators\RegularExpressionValidator;
@@ -94,12 +93,12 @@ class LoginForm extends Model
                     self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1, self::SCENARIO_back_STEP_1
                 ]
             ],
-//            [['number'], 'checkLimit', 'skipOnEmpty' => false,
-//                'on' => [
-//                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
-//                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_1, self::SCENARIO_back_STEP_1
-//                ]
-//            ],
+            [['number'], 'checkLimit', 'skipOnEmpty' => false,
+                'on' => [
+                    self::SCENARIO_LOGIN_CODE_API, self::SCENARIO_LOGIN_OR_REGISTER_API_STEP_1,
+                    self::SCENARIO_FORGOT_PASSWORD_API_STEP_1, self::SCENARIO_REGISTER_API_STEP_1, self::SCENARIO_back_STEP_1
+                ]
+            ],
             [['password'], 'validatePassword', 'skipOnEmpty' => false, 'on' => [self::SCENARIO_BY_PASSWORD_API, self::SCENARIO_VALIDATE_CODE_PASSWORD_API, self::SCENARIO_back_STEP_1]],
 
             [['password'], 'match', 'pattern' => '/^[A-Za-z\d@$!%*#?^&~]{6,}$/', 'on' => [self::SCENARIO_SET_PASSWORD,
@@ -521,5 +520,15 @@ class LoginForm extends Model
             return $flag;
         }
         return false;
+    }
+
+    public function setNumber(string $string)
+    {
+        $this->number=$string;
+    }
+
+    public function setCode(string $string)
+    {
+        $this->code=$string;
     }
 }

@@ -74,6 +74,9 @@ return [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'XhjABGx6oj8u-eDMNP8dU_7BG1LzSjoP',
         ],
+        'customHelper' => [
+            'class' => 'common\components\CustomHelper'
+        ],
     ],
 
     'modules' => [
