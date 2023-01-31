@@ -47,6 +47,12 @@ $menu_items = [
                 'icon' => 'fas fa-building',
                 'url' => ['/org-unit/']
             ],
+            [
+                'group' => 'Activity',
+                'label' => Yii::t('app', 'Activity'),
+                'icon' => 'fas fa-building',
+                'url' => ['/activity/']
+            ],
         ],
     ]
 ];
