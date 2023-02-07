@@ -49,7 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <?php foreach ($gallery as $i => $item): ?>
                     <div class="p-2">
+                        <div class="row my-1">
+                            <div class="col-4"><span>تصویر دسکتاپ</span></div>
+                            <div class="col-4"><span>تصویر موبایل </span></div>
+                            <div class="col-4"><span>تصویر تبلت</span></div>
+                        </div>
                         <div class="row">
+
                             <img class="col-4  img-fluid " src=<?= $item->getUploadUrl('image') ?>></p>
                             <img class="col-4   img-fluid " src=<?= $item->getUploadUrl('mobile_image') ?>></p>
                             <img class="col-4   img-fluid " src=<?= $item->getUploadUrl('tablet_image') ?>></p>
@@ -63,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </h3>
                 <div>
                     <h3 class="alert alert-light border border-1 p-3"><?= Yii::t('app', 'Facilities') ?>
-                        <?= Html::a(Yii::t('app', ' Create Facilities'), ['/branches-specification/create', 'id' => $model->id], ['class' => 'btn btn-info btn-rounded float-right']) ?>
+                        <?= Html::a(Yii::t('app', 'Create Facilities'), ['/branches-specification/create', 'id' => $model->id], ['class' => 'btn btn-info btn-rounded float-right']) ?>
                     </h3>
                     <?php foreach ($facilities as $i => $item): ?>
                         <div class="p-2">
