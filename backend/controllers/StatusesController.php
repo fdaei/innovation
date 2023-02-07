@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Statuses;
 use common\models\StatusesSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -111,7 +112,13 @@ class StatusesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model->canDelete() && $model->softDelete()) {
+            $this->flash('success', Yii::t('app', 'Item Deleted'));
+        } else {
+            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
+        }
 
         return $this->redirect(['index']);
     }
@@ -130,5 +137,9 @@ class StatusesController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function flash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }
