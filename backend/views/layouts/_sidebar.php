@@ -20,47 +20,56 @@ $menu_items = [
             [
                 'group' => 'City',
                 'label' => Yii::t('app', 'City'),
-                'icon' => 'fas fa-building',
+                'icon' => 'fas fa-map-marker-alt',
                 'url' => ['/city/']
             ],
             [
                 'group' => 'Province',
                 'label' => Yii::t('app', 'Province'),
-                'icon' => 'fas fa-building',
+                'icon' => 'fas fa-map-marked-alt',
                 'url' => ['/province/']
             ],
             [
                 'group' => 'CareerApply',
                 'label' => Yii::t('app', 'CareerApply'),
-                'icon' => 'fas fa-building',
+                'icon' => 'fas fa-address-card',
                 'url' => ['/career-apply/']
             ],
             [
                 'group' => 'JobPosition',
                 'label' => Yii::t('app', 'JobPosition'),
-                'icon' => 'fas fa-building',
+                'icon' => 'fas fa-clipboard',
                 'url' => ['/job-position/']
             ],
             [
                 'group' => 'OrgUnit',
                 'label' => Yii::t('app', 'OrgUnit'),
-                'icon' => 'fas fa-building',
+                'icon' => 'fas fa-folder-open',
                 'url' => ['/org-unit/']
             ],
             [
                 'group' => 'Activity',
                 'label' => Yii::t('app', 'Activity'),
-                'icon' => 'fas fa-building',
+                'icon' => 'fas fa-grip-lines',
                 'url' => ['/activity/']
+            ],
+            [
+                'group' => 'Status',
+                'label' => Yii::t('app', 'Status'),
+                'icon' => 'fas fa-server',
+                'url' => ['/statuses/']
+            ],
+            [
+                'group' => 'Branches',
+                'label' => Yii::t('app', 'Branches'),
+                'icon' => 'fas fa-city',
+                'url' => ['/branches/']
             ],
         ],
     ]
 ];
 ?>
     <aside class="left-sidebar">
-        <div class="mb-2">
-            <input class="form-control rounded-0" type='text' id='search' placeholder='جستجو...'>
-        </div>
         <!-- Sidebar scroll-->
         <div class="scroll-sidebar">
             <!-- Sidebar navigation-->
