@@ -83,7 +83,7 @@ class ActivityUserAssignment extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new ActivityUserAssignmentQuery(get_called_class());
-        return $query->active();
+        return $query;
     }
 
     public function canDelete()

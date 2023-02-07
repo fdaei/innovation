@@ -29,8 +29,4 @@ class ActivityUserAssignmentQuery extends \yii\db\ActiveQuery
         return parent::one($db);
     }
 
-    public function active(): ActivityQuery
-    {
-        return $this->where(['deleted_at'=>0]);
-    }
 }
