@@ -113,11 +113,7 @@ class Activity extends \yii\db\ActiveRecord
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
-            'Status' => [
-                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
-                self::STATUS_ACTIVE => Yii::t('app', 'Done'),
-                self::STATUS_INACTIVE => Yii::t('app', 'to do'),
-            ],
+            'Status' => Statuses::find()->all(),
             ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
@@ -148,7 +144,9 @@ class Activity extends \yii\db\ActiveRecord
             ],
         ];
     }
-
+    public function status(){
+        Statuses::find()->all();
+    }
     public function fields()
     {
         return [

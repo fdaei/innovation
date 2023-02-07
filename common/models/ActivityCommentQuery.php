@@ -28,4 +28,8 @@ class ActivityCommentQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+    public function active()
+    {
+        return $this->where(['deleted_at'=>0]);
+    }
 }

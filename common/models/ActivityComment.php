@@ -101,7 +101,7 @@ class ActivityComment extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new ActivityCommentQuery(get_called_class());
-        return $query;
+        return $query->active();
     }
 
     public function canDelete()

@@ -9,10 +9,6 @@ namespace common\models;
  */
 class ActivityQuery extends \yii\db\ActiveQuery
 {
-    public function active()
-    {
-        return $this->onCondition(['<>', 'status',  Activity::STATUS_DELETED]);
-    }
 
     /**
      * {@inheritdoc}
@@ -30,5 +26,10 @@ class ActivityQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+    public function active(): ActivityQuery
+    {
+        return $this->where(['deleted_at'=>0]);
     }
 }

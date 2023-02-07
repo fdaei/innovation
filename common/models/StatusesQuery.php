@@ -11,7 +11,7 @@ class StatusesQuery extends \yii\db\ActiveQuery
 {
     public function active()
     {
-        return $this->onCondition(['<>', 'status',  Statuses::STATUS_DELETED]);
+        return $this->where(['deleted_at'=> 0]);
     }
 
     /**

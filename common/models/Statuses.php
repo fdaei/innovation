@@ -67,7 +67,7 @@ return [
     public static function find()
     {
     $query = new StatusesQuery(get_called_class());
-    return $query;
+    return $query->active();
     }
     public function getModels(){
         return ['activity'=>'activity','test1'=>'test1','test2'=>'test2'];
