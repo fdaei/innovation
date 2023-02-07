@@ -65,6 +65,12 @@ $menu_items = [
                 'icon' => 'fas fa-city',
                 'url' => ['/branches/']
             ],
+            [
+                'group' => 'Notification',
+                'label' => Yii::t('app', 'Notification'),
+                'icon' => 'fas fa-city',
+                'url' => ['/notification/']
+            ],
         ],
     ]
 ];
