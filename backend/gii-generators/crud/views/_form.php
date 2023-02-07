@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
@@ -27,17 +28,18 @@ use yii\widgets\ActiveForm;
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
 
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
-    <?php echo '<div class="row">' ?>
+    <?php echo '<div class="row justify-content-center">' ?>
 <?php foreach ($generator->getColumnNames() as $attribute) {
     if (in_array($attribute, $safeAttributes)) {
-        echo "<div class='col-md-3'> <?= " . $generator->generateActiveField($attribute) . " ?>\n\n  </div>";
+        echo "<div class='col-md-8'> <?= " . $generator->generateActiveField($attribute) . " ?>\n\n  </div>";
     }
 } ?>
     <?php echo '</div>' ?>
-    <div class="form-group">
-        <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Save') ?>, ['class' => 'btn btn-success']) ?>
+    <div class="form-group mb-0 card-footer d-flex justify-content-between">
+        <div class="col-md-10 d-flex justify-content-end">
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
+        </div>
     </div>
-
     <?= "<?php " ?>ActiveForm::end(); ?>
 
 </div>

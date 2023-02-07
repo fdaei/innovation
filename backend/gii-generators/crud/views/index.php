@@ -2,6 +2,7 @@
 
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
+use kartik\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\gii\generators\crud\Generator $generator */
@@ -30,7 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
 
     <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success']) ?>
+        <?= "<?= " ?>Html::a(<?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
+
     </p>
     </div>
 <?= $generator->enablePjax ? "    <?php Pjax::begin(); ?>\n" : '' ?>

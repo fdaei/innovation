@@ -10,32 +10,6 @@ use yii\web\View;
 ?>
     <div class="row">
         <div class="col-md-12">
-            <?= Select2::widget([
-                'name' => 'shortcutBusiness',
-                'id' => 'shortcutBusiness',
-                'options' => [
-                    'placeholder' => 'کسب و کار...',
-                    'dir' => 'rtl',
-                    'data-base-url' => $base_url
-                ],
-//               'value'=>['228'],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'minimumInputLength' => 3,
-                    'language' => [
-                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
-                    ],
-                    'ajax' => [
-                        'url' => Url::to(['/business/list']),
-                        'dataType' => 'json',
-                        'data' => new JsExpression('function(params) { return {q:params.term}; }'),
-                    ],
-                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                    'templateResult' => new JsExpression('function(data) { return data.html; }'),
-                    'templateSelection' => new JsExpression('function (data) { return data.text; }'),
-                ],
-            ]);
-            ?>
         </div>
     </div>
 
