@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-body">
                     <label class="text-muted"><?= Yii::t('app', 'Status') ?></label>
                     <?= Html::a( Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['class' => 'btn btn-danger float-right','data-method'=>'post']) ?>
-                    <h6  class="border-bottom  text-<?= Activity::itemAlias('StatusClass', $model->status); ?>"> <?= Activity::itemAlias('Status', $model->status); ?></h6>
+                    <h6  class="border-bottom"> <?= $model->status ?></h6>
                     <label><?= Yii::t('app', 'title') ?></label>
                     <h6 class="card-title border-bottom m-2 pb-3"><?= $model->title ?></h6>
                     <label><?= Yii::t('app', 'Created By') ?></label>

@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            'options'=>['class'=>'grid-view','id'=>'grid_id_1'],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'title',
@@ -45,4 +46,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
     <?php Pjax::end(); ?>
+
 </div>

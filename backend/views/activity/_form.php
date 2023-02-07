@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Activity;
+use common\models\Statuses;
 use common\models\User;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -35,7 +36,15 @@ use yii\widgets\ActiveForm;
                 ?>
             </div>
             <div class="col-md-8">
-                <?= $form->field($model, 'status')->dropDownList(Activity::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+                <?=
+                $form->field($model, 'status')->widget(Select2::class, [
+                    'data' => ArrayHelper::map(Statuses::find()->onCondition(['type'=>'activity'])->all(), 'id', 'title_fa'),
+                    'options' => ['placeholder' => Yii::t('app', 'Select Status')],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
             </div>
             <div class="col-md-8">
                 <?= $form->field($model, 'send_sms')->checkbox() ?>
