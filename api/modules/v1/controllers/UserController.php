@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use common\models\OauthAccessTokens;
 use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
 use Yii;
@@ -50,6 +51,7 @@ class UserController extends ActiveController
     {
         return Yii::$app->user->identity;
     }
+
     public function actionLogout()
     {
         /**
@@ -58,7 +60,6 @@ class UserController extends ActiveController
         $currentAccessToken = OauthAccessTokens::getCurrentAccessToken();
         $currentAccessToken->terminate();
         return Yii::$app->user->logout();
-
     }
 
 }

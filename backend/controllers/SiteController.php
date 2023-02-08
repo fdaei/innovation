@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\User;
+use frontend\models\SignupForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -28,7 +30,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','profile'],
+                        'actions' => ['logout', 'index', 'profile', 'update-profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -99,8 +101,33 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    public function actionProfile(){
-        $model=Yii::$app->user->identity;
-        return $this->render('profile',['model'=>$model]);
+    public function actionProfile()
+    {
+        $model = Yii::$app->user->identity;
+        return $this->render('profile', ['model' => $model]);
+    }
+
+    public function actionUpdateProfile($id)
+    {
+        $model = new SignupForm();
+        $old = User::findOne($id);
+        $model->username = $old->username;
+        $model->email = $old->email;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $old->username=$model->username;
+            $old->email=$model->email;
+            if ($model->password) {
+                $old->password=$model->password;
+            }
+            $old->save();
+            return $this->render('profile', [
+                'model' => $model,
+            ]);
+        }
+
+        return $this->render('update_profile', [
+            'model' => $model,
+        ]);
+        $oldmodel = SignupForm::findModel($id);
     }
 }

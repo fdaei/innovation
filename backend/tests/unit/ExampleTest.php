@@ -4,20 +4,15 @@
 namespace backend\tests\unit;
 
 use backend\tests\UnitTester;
+use common\models\City;
 use common\models\LoginForm;
+use common\models\Province;
+use common\models\User;
 use common\models\UserVerify;
 
 class ExampleTest extends \Codeception\Test\Unit
 {
     protected UnitTester $tester;
-    protected function _before()
-    {
-    }
-    // tests
-    public function testSomeFeature()
-    {
-
-    }
     public function testValidationUserVerify()
     {
         $user = new UserVerify();
@@ -73,5 +68,18 @@ class ExampleTest extends \Codeception\Test\Unit
         $user->setName('09370315709');
         $user->save();
         $this->assertEquals('09370315709', $user->getName());
+    }
+    function testSavingProvince()
+    {
+        $user= new Province();
+        $user->setName("kerman");
+        $user->setStatus(1);
+        $user->setCreated_at(time());
+        $user->setUpdated_at(time());
+        $user->setDeleted_at (0);
+        $user->setCreated_by(1);
+        $user->setUpdated_by(1);
+        $user->save();
+        $this->tester->seeInDatabase('users', ['name' => 'Miles', 'surname' => 'Davis']);
     }
 }

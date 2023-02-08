@@ -1,6 +1,9 @@
 <?php
 
 /** @var common\models\User $model */
+
+use yii\helpers\Html;
+
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Profile')];
 ?>
 <div class="container emp-profile bg-white">
@@ -16,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Profile')];
                 </div>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-outline-info my-4" >Edite Profile</button>
+                <?= Html::a(Yii::t('app', 'Edite Profile'), ['/site/update-profile', 'id' => $model->id], ['class' => "btn btn-outline-info my-4" ]) ?>
             </div>
         </div>
         <div class="row">

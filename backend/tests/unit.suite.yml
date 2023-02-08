@@ -5,3 +5,7 @@ modules:
     - Yii2:
         part: [orm, fixtures] # allow to use AR methods
     - Asserts
+    - Db:
+        dsn: 'mysql:host=localhost;dbname=innovation'
+        user: 'root'
+        password: 'Root@12root'

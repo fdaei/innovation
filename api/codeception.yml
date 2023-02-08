@@ -20,3 +20,5 @@ modules:
             configFile: 'config/codeception.php'
             transaction: false # don't wrap test in transaction
             cleanup: false # don't clean up the fixtures
+coverage:
+    enabled: true
