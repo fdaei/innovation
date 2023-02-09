@@ -121,10 +121,9 @@ class SiteController extends Controller
             }
             $old->save();
             return $this->render('profile', [
-                'model' => $model,
+                'model' => $old,
             ]);
         }
-
         return $this->render('update_profile', [
             'model' => $model,
         ]);
