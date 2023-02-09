@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'email') ?>
 
-            <?= $form->field($model, 'password')->passwordInput()->hint(' اگر میخواهید پسورد خود را بروز رسانی کنید  کادر را پر کنید');  ?>
+            <?= $form->field($model, 'password')->passwordInput()->hint(' اگر نمیخواهید پسورد خود را بروز رسانی کنید  پسورد قبلی خود را وارد کنید');  ?>
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-info']) ?>
             </div>
