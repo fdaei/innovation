@@ -9,10 +9,10 @@ namespace common\models;
  */
 class MentorsQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function active()
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->where(['deleted_at'=> 0]);
+    }
 
     /**
      * {@inheritdoc}
