@@ -47,7 +47,9 @@
         "guzzlehttp/guzzle": "^7.5",
         "ext-http": "*",
         "bower-asset/clipboard": "dev-master",
-        "codeception/module-phpbrowser": "*"
+        "codeception/module-phpbrowser": "*",
+        "voime/yii2-google-maps": "*"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
