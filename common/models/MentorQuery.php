@@ -3,11 +3,11 @@
 namespace common\models;
 
 /**
- * This is the ActiveQuery class for [[Mentors]].
+ * This is the ActiveQuery class for [[Mentor]].
  *
- * @see Mentors
+ * @see Mentor
  */
-class MentorsQuery extends \yii\db\ActiveQuery
+class MentorQuery extends \yii\db\ActiveQuery
 {
     public function active()
     {
@@ -16,7 +16,7 @@ class MentorsQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Mentors[]|array
+     * @return Mentor[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class MentorsQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Mentors|array|null
+     * @return Mentor|array|null
      */
     public function one($db = null)
     {

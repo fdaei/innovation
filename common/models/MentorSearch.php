@@ -4,12 +4,12 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Mentors;
+use common\models\Mentor;
 
 /**
- * MentorsSearch represents the model behind the search form of `common\models\Mentors`.
+ * MentorSearch represents the model behind the search form of `common\models\Mentor`.
  */
-class MentorsSearch extends Mentors
+class MentorSearch extends Mentor
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class MentorsSearch extends Mentors
     public function rules()
     {
         return [
-            [['user_id', 'consultation_face_to_face', 'consultation_online', 'status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
-            [['name', 'telegram', 'instagram', 'whatsapp', 'activity_field', 'profile_pic', 'activity_description', 'services', 'records'], 'safe'],
+            [['id', 'status', 'user_id', 'consultation_face_to_face', 'consultation_online', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
+            [['name', 'mobile', 'picture', 'resume', 'video', 'instagram', 'linkedin', 'twitter', 'documents', 'description', 'job_records', 'education_records', 'whatsapp', 'telegram', 'activity_field', 'activity_description', 'services', 'records'], 'safe'],
             [['consulting_fee'], 'number'],
         ];
     }
@@ -41,7 +41,7 @@ class MentorsSearch extends Mentors
      */
     public function search($params)
     {
-        $query = Mentors::find();
+        $query = Mentor::find();
 
         // add conditions that should always apply here
 
@@ -59,24 +59,34 @@ class MentorsSearch extends Mentors
 
         // grid filtering conditions
         $query->andFilterWhere([
+            'id' => $this->id,
+            'status' => $this->status,
             'user_id' => $this->user_id,
             'consulting_fee' => $this->consulting_fee,
             'consultation_face_to_face' => $this->consultation_face_to_face,
             'consultation_online' => $this->consultation_online,
-            'status' => $this->status,
-            'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
-            'created_by' => $this->created_by,
             'created_at' => $this->created_at,
+            'created_by' => $this->created_by,
+            'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'telegram', $this->telegram])
+            ->andFilterWhere(['like', 'mobile', $this->mobile])
+            ->andFilterWhere(['like', 'picture', $this->picture])
+            ->andFilterWhere(['like', 'resume', $this->resume])
+            ->andFilterWhere(['like', 'video', $this->video])
             ->andFilterWhere(['like', 'instagram', $this->instagram])
+            ->andFilterWhere(['like', 'linkedin', $this->linkedin])
+            ->andFilterWhere(['like', 'twitter', $this->twitter])
+            ->andFilterWhere(['like', 'documents', $this->documents])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'job_records', $this->job_records])
+            ->andFilterWhere(['like', 'education_records', $this->education_records])
             ->andFilterWhere(['like', 'whatsapp', $this->whatsapp])
+            ->andFilterWhere(['like', 'telegram', $this->telegram])
             ->andFilterWhere(['like', 'activity_field', $this->activity_field])
-            ->andFilterWhere(['like', 'profile_pic', $this->profile_pic])
             ->andFilterWhere(['like', 'activity_description', $this->activity_description])
             ->andFilterWhere(['like', 'services', $this->services])
             ->andFilterWhere(['like', 'records', $this->records]);
