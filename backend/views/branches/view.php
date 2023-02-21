@@ -12,7 +12,6 @@ use yii\widgets\DetailView;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Branches'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
 <div class="card material-card">
     <div class="card-header d-flex justify-content-between row">
@@ -28,9 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <label><?= Yii::t('app', 'admin') ?></label>
                 <p class="card-title border-bottom m-2 pb-3"><?= $model->branchesAdmins[0]->admin->username ?></p>
                 <label><?= Yii::t('app', 'longitude') ?></label>
-                <p class="card-title border-bottom m-2 pb-3"><?= $model->longitude ?></p>
-                <label><?= Yii::t('app', 'latitude') ?></label>
-                <p class="card-title border-bottom m-2 pb-3"><?= $model->latitude ?></p>
+                <input id="map-latitude" value="<?= $model->latitude ?>" style=" display: none;">
+
+                <input id="map-longitude" value="<?= $model->longitude ?>" style=" display: none;"
+                <p class="card-title border-bottom m-2 pb-3">
+                <div id="map" style="width: 100%;height: 400px;"></div>
+                </p>
                 <label><?= Yii::t('app', 'mobile') ?></label>
                 <p class="card-title border-bottom m-2 pb-3"><?= $model->mobile ?></p>
                 <label><?= Yii::t('app', 'phone') ?></label>
@@ -99,3 +101,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<script>
+    window.addEventListener('load', (event) => {
+        viewMap();
+    });
+</script>
