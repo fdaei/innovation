@@ -28,6 +28,8 @@ AdminAsset::register($this);
     <link rel="shortcut icon" href="<?= Yii::getAlias('@web') . '/img/favicon-back.png'; ?>"/>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 </head>
 <body>
 <?php $this->beginBody(); ?>
@@ -76,7 +78,6 @@ AdminAsset::register($this);
                 <?= Alert::widget() ?>
             </div>
             <?= $content ?>
-
             <?php
             Modal::begin([
                 'headerOptions' => ['id' => 'modalPjaxHeader'],
@@ -94,7 +95,6 @@ AdminAsset::register($this);
                 </div>
             </div>
             <?php Modal::end(); ?>
-
             <?php
             Modal::begin([
                 'headerOptions' => ['id' => 'modalPjaxOverHeader'],
@@ -112,7 +112,6 @@ AdminAsset::register($this);
                 </div>
             </div>
             <?php Modal::end(); ?>
-
             <div class="modal fade top-modal-with-space" id="quickAccessModal" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-md">
@@ -217,3 +216,4 @@ AdminAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
+

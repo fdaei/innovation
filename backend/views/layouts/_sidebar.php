@@ -18,34 +18,51 @@ $menu_items = [
                 'url' => ['/business']
             ],
             [
-                'group' => 'City',
-                'label' => Yii::t('app', 'City'),
-                'icon' => 'fas fa-map-marker-alt',
-                'url' => ['/city/']
-            ],
-            [
-                'group' => 'Province',
-                'label' => Yii::t('app', 'Province'),
-                'icon' => 'fas fa-map-marked-alt',
-                'url' => ['/province/']
+                'group' => 'location',
+                'label' => 'موقعیت مکانی',
+                'icon' => 'fas fa-map',
+                'level' => "first-level",
+                'encode' => false,
+                'items' => [
+                [
+                    'group' => 'City',
+                    'label' => Yii::t('app', 'City'),
+                    'icon' => 'fas fa-map-marker-alt',
+                    'url' => ['/city/']
+                ],
+                [
+                        'group' => 'Province',
+                        'label' => Yii::t('app', 'Province'),
+                        'icon' => 'fas fa-map-marked-alt',
+                        'url' => ['/province/']],
+                ]
             ],
             [
                 'group' => 'CareerApply',
-                'label' => Yii::t('app', 'CareerApply'),
-                'icon' => 'fas fa-address-card',
-                'url' => ['/career-apply/']
-            ],
-            [
-                'group' => 'JobPosition',
-                'label' => Yii::t('app', 'JobPosition'),
-                'icon' => 'fas fa-clipboard',
-                'url' => ['/job-position/']
-            ],
-            [
-                'group' => 'OrgUnit',
-                'label' => Yii::t('app', 'OrgUnit'),
-                'icon' => 'fas fa-folder-open',
-                'url' => ['/org-unit/']
+                'label' => 'موقعیت شغلی',
+                'icon' => 'fas fa-star',
+                'level' => "first-level",
+                'encode' => false,
+                'items' => [
+                    [
+                        'group' => 'CareerApply',
+                        'label' => Yii::t('app', 'CareerApply'),
+                        'icon' => 'fas fa-address-card',
+                        'url' => ['/career-apply/']
+                    ],
+                    [
+                        'group' => 'JobPosition',
+                        'label' => Yii::t('app', 'JobPosition'),
+                        'icon' => 'fas fa-clipboard',
+                        'url' => ['/job-position/']
+                    ],
+                    [
+                        'group' => 'OrgUnit',
+                        'label' => Yii::t('app', 'OrgUnit'),
+                        'icon' => 'fas fa-folder-open',
+                        'url' => ['/org-unit/']
+                    ],
+                ]
             ],
             [
                 'group' => 'Activity',
@@ -68,14 +85,27 @@ $menu_items = [
             [
                 'group' => 'Notification',
                 'label' => Yii::t('app', 'Notification'),
-                'icon' => 'fas fa-city',
+                'icon' => 'fas fa-check-square',
                 'url' => ['/notification/']
+            ],
+            [
+                'group' => 'Mentor',
+                'label' => Yii::t('app', 'MentorApplying'),
+                'icon' => 'fas fa-user',
+                'url' => ['/mentor/']
+            ],
+            [
+                'group' => 'Events',
+                'label' => Yii::t('app', 'Events'),
+                'icon' => 'fas fa-user',
+                'url' => ['/event/']
             ],
         ],
     ]
 ];
 ?>
     <aside class="left-sidebar">
+
         <!-- Sidebar scroll-->
         <div class="scroll-sidebar">
             <!-- Sidebar navigation-->
