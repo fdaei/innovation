@@ -65,6 +65,29 @@ $menu_items = [
                 ]
             ],
             [
+                'group' => 'Mentor',
+                'label' => 'مشاوره',
+                'icon' => 'fas fa-star',
+                'level' => "first-level",
+                'encode' => false,
+                'items' => [
+                    [
+                        'group' => 'Mentor',
+                        'label' => Yii::t('app', 'MentorApplying'),
+                        'icon' => 'fas fa-user',
+                        'url' => ['/mentor/']
+                    ],
+                    [
+                        'group' => 'Mentor',
+                        'label' => Yii::t('app', 'mentors-advice-request'),
+                        'icon' => 'fas fa-user',
+                        'url' => ['/mentors-advice-request/']
+                    ],
+
+                ]
+            ],
+
+            [
                 'group' => 'Activity',
                 'label' => Yii::t('app', 'Activity'),
                 'icon' => 'fas fa-grip-lines',
@@ -87,12 +110,6 @@ $menu_items = [
                 'label' => Yii::t('app', 'Notification'),
                 'icon' => 'fas fa-check-square',
                 'url' => ['/notification/']
-            ],
-            [
-                'group' => 'Mentor',
-                'label' => Yii::t('app', 'MentorApplying'),
-                'icon' => 'fas fa-user',
-                'url' => ['/mentor/']
             ],
             [
                 'group' => 'Events',

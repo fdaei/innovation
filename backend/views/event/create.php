@@ -21,6 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <script>
     window.addEventListener('load', (event) => {
-        createMap();
+        createMap("event");
     });
 </script>

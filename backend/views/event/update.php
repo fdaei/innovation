@@ -15,11 +15,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 <div class="event-update">
     <div class="card material-card">
         <div class="card-header kohl">
-    <h3><?= Html::encode($this->title) ?></h3>
+            <h3><?= Html::encode($this->title) ?></h3>
         </div>
         <div class="card-body">
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
         </div>
+    </div>
 </div>
+<script>
+    window.addEventListener('load', (event) => {
+        createMap("event",<?=$model->latitude?>,<?=$model->longitude?>);
+    });
+</script>

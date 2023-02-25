@@ -1,10 +1,10 @@
 <?php
 
 use common\models\Event;
+use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var common\models\EventSearch $searchModel */
@@ -33,8 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'price',
             'price_before_discount',
-            'headlines',
-            'event_times',
             'address:ntext',
             'sponsors',
             [

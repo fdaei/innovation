@@ -19,14 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-body row">
                     <div class="col-4">
                         <label class="kohl"><?= Yii::t('app', 'title') ?></label>
-                        <h6 class="card-title border-bottom m-2 pb-3 "> <?=  $model->title ?></h6>
+                        <h6 class="card-title border-bottom m-2 pb-3 "> <?= $model->title ?></h6>
                     </div>
                     <div class="col-4">
-                        <label class="kohl"><?= Yii::t('app', 'City') ?></label>
+                        <label class="kohl"><?= Yii::t('app', 'price') ?></label>
                         <p class="card-title border-bottom m-2 pb-3"><?= $model->price ?></p>
                     </div>
                     <div class="col-4">
-                        <label class="kohl"><?= Yii::t('app', 'Provinces') ?></label>
+                        <label class="kohl"><?= Yii::t('app', 'price_before_discount') ?></label>
                         <p class="card-title border-bottom m-2 pb-3"><?= $model->price_before_discount ?></p>
                     </div>
 
@@ -35,8 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p class="card-title border-bottom m-2 pb-3"><?= $model->description ?></p>
                     </div>
                     <div class="col-4">
-                        <label class="kohl"><?= Yii::t('app', 'headlines') ?></label>
-                        <p class="card-title border-bottom m-2 pb-3"><?= $model->headlines ?></p>
+                        <?php foreach ($model->headlines as $value): ?>
+                            <label>سرفصل</label>
+                            <p class="card-title  m-2 pb-3 "><?= $value["'title'"] ?></p>
+                            <label>محتوای هر سر فصل</label>
+                            <p class="card-title  m-2 pb-3 "><?= $value["'description'"] ?></p>
+                        <?php endforeach; ?>
                     </div>
                     <div class="col-4">
                         <label class="kohl"><?= Yii::t('app', 'sponsors') ?></label>
@@ -44,7 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="col-4">
                         <label class="kohl"><?= Yii::t('app', 'event_times') ?></label>
-                        <p class="card-title border-bottom m-2 pb-3"><?= $model->event_times ?></p>
+                        <?php foreach ($model->event_times as $value): ?>
+                            <p class="card-title border-bottom m-2 pb-3"><?= $value ?></p>
+                        <?php endforeach; ?>
                     </div>
                     <div class="col-4">
                         <label class="kohl"><?= Yii::t('app', 'address') ?></label>

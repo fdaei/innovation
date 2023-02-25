@@ -61,13 +61,14 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'mobile', 'picture', 'resume', 'documents', 'description', 'job_records', 'education_records', 'user_id', 'activity_field', 'activity_description', 'consulting_fee', 'consultation_face_to_face', 'consultation_online', 'services', 'records'], 'required'],
+            [['name', 'mobile', 'documents', 'description', 'job_records', 'education_records', 'user_id', 'activity_field', 'activity_description', 'consulting_fee', 'consultation_face_to_face', 'consultation_online', 'services', 'records'], 'required'],
             [['documents', 'description', 'activity_description'], 'string'],
             [['job_records', 'education_records', 'services', 'records'], 'safe'],
             [['status', 'user_id', 'consultation_face_to_face', 'consultation_online', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
             [['consulting_fee'], 'number'],
             [['name','instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
             [['mobile'], 'string', 'max' => 12],
+
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],

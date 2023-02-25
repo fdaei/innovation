@@ -44,7 +44,7 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'price', 'price_before_discount', 'description', 'headlines', 'event_times', 'address', 'longitude', 'latitude', 'sponsors'], 'required'],
+            [['title', 'price', 'price_before_discount', 'description', 'headlines', 'address', 'longitude', 'latitude', 'sponsors'], 'required'],
             [['description', 'address'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
