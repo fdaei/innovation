@@ -57,7 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p class="card-title border-bottom m-2 pb-3"><?= $model->address ?></p>
                     </div>
                     <input id="map-latitude" value="<?= $model->latitude ?>" style=" display: none;">
-
                     <input id="map-longitude" value="<?= $model->longitude ?>" style=" display: none;"
                     <p class="card-title border-bottom m-2 pb-3">
                     <div id="map" style="width: 100%;height: 400px;"></div>

@@ -86,7 +86,40 @@ $menu_items = [
 
                 ]
             ],
+            [
+                'group' => 'Events',
+                'label' => 'رویداد',
+                'icon' => 'fas fa-star',
+                'level' => "first-level",
+                'encode' => false,
+                'items' => [
+                    [
+                        'group' => 'Events',
+                        'label' => Yii::t('app', 'Events'),
+                        'icon' => 'fas fa-user',
+                        'url' => ['/event/']
+                    ],
+                    [
+                        'group' => 'EventHall',
+                        'label' => Yii::t('app', 'EventHall'),
+                        'icon' => 'fas fa-user',
+                        'url' => ['/event-hall/']
+                    ],
+                    [
+                        'group' => 'EventHallPriceList',
+                        'label' => Yii::t('app', 'EventHallPriceList'),
+                        'icon' => 'fas fa-user',
+                        'url' => ['/event-hall-price-list/']
+                    ],
+                    [
+                        'group' => 'EventHallReserved',
+                        'label' => Yii::t('app', 'EventHallReserved'),
+                        'icon' => 'fas fa-user',
+                        'url' => ['/event-hall-reserved/']
+                    ],
 
+                ]
+            ],
             [
                 'group' => 'Activity',
                 'label' => Yii::t('app', 'Activity'),
@@ -110,12 +143,6 @@ $menu_items = [
                 'label' => Yii::t('app', 'Notification'),
                 'icon' => 'fas fa-check-square',
                 'url' => ['/notification/']
-            ],
-            [
-                'group' => 'Events',
-                'label' => Yii::t('app', 'Events'),
-                'icon' => 'fas fa-user',
-                'url' => ['/event/']
             ],
         ],
     ]

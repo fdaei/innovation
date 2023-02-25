@@ -9,6 +9,7 @@ namespace common\models;
  */
 class ActivityUserAssignmentQuery extends \yii\db\ActiveQuery
 {
+    private $all;
 
 
     /**
@@ -17,7 +18,8 @@ class ActivityUserAssignmentQuery extends \yii\db\ActiveQuery
      */
     public function all($db = null)
     {
-        return parent::all($db);
+        $this->all = parent::all($db);
+        return $this->all;
     }
 
     /**
