@@ -34,7 +34,7 @@ $identity = Yii::$app->user->identity;
                     </div>
                 </div>
 
-                <a href="<?= Url::to(['/profile/index']) ?>" class="dropdown-item">
+                <a href="<?= Url::to(['/site/profile']) ?>" class="dropdown-item">
                     <i class="fal fa-user icon-size"></i>
                     <?= Yii::t('app', 'Profile') ?>
                 </a>

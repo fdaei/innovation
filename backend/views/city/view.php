@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <!-- Card -->
             <div class="card text-left mx-auto col-12">
                 <div class="card-body">
-                    <label class="text-muted"><?= Yii::t('app', 'Status') ?></label>
+                    <label class="text-muted "><?= Yii::t('app', 'Status') ?></label>
                     <h6 class="card-title border-bottom m-2 pb-3 text-muted"> <?= City::itemAlias('Status', $model->status); ?></h6>
                     <label><?= Yii::t('app', 'City') ?></label>
                     <p class="card-title border-bottom m-2 pb-3"><?= $model->name ?></p>

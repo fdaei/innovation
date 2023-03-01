@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Activity;
+use common\models\Statuses;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -31,7 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'title',
+                [
+                    'attribute' => 'status',
+                    'format' => 'raw',
+                    'value' => function ($model) {
 
+                  return true;
+                    },
+                ],
                 [
                     'class' => ActionColumn::class,
                     'template' => '{view}',
@@ -44,6 +52,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
+        <select id="dropdown">
+            <?php foreach (Statuses::find()->where(['type'=>'activity'])->all() as $i => $item): ?>
+            <option value=<?= $item['title_fa'] ?>  <?php $item['id']==8?"selected":""?>><?= $item['title_fa'] ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
     <?php Pjax::end(); ?>
 

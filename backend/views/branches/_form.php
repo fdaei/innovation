@@ -39,11 +39,12 @@ use yii\widgets\ActiveForm;
             <div class='col-md-6'>
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
             </div>
-            <span class='col-md-6'>
-                <?= $form->field($model, 'longitude')->textInput() ?>
-            </span>
-            <span class='col-md-6'>
-                <?= $form->field($model, 'latitude')->textInput() ?>
+            <span class='col-md-12'>
+                 <p  class="card-title border-bottom m-2 pb-3">
+                <div id="map" style="width: 100%;height: 400px;"></div>
+                </p>
+                <?= $form->field($model, 'longitude')->textInput(['style'=>'display: none'])->label(false) ?>
+                <?= $form->field($model, 'latitude')->textInput(['style'=>'display: none'])->label(false) ?>
             </span>
             <span class='col-md-6'>
                <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>

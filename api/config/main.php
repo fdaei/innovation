@@ -90,6 +90,14 @@ return [
 
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/event'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+
+                    ],
+                ],
                 'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
             ],
         ],

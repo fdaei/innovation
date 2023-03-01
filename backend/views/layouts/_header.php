@@ -16,7 +16,8 @@ use yii\web\View;
                 <!-- Logo icon -->
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <?= Html::img('@web/img/logo2.png', ['style' => 'width:220px;height:60px;']) ?>
+                    <?= Html::img('@web/img/state2.png', ['style' => 'width:55px;height:60px;display:none;','href'=>'javascript:void(0)','id'=>'logo-close']) ?>
+                    <?= Html::img('@web/img/logo2.svg', ['style' => 'width:200px;height:60px;display:block;','href'=>'javascript:void(0)','id'=>'logo-expand']) ?>
                 </b>
                 <!--End Logo icon -->
             </a>
@@ -38,14 +39,17 @@ use yii\web\View;
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
             <ul class="navbar-nav float-left mr-auto">
+
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light"
-                                                          href="javascript:void(0)" data-sidebartype="mini-sidebar"><i
-                                class="fal fa-bars font-18"></i></a>
+                <li class="nav-item d-none d-md-block" id="button-collapse">
+                    <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar">
+                        <i class="fal fa-bars font-18"></i>
+                    </a>
                 </li>
             </ul>
+
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
             <!-- ============================================================== -->

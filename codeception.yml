@@ -1,7 +1,10 @@
 # global codeception file to run tests from all apps
 include:
+    - api
     - backend
 paths:
     log: console/runtime/logs
 settings:
     colors: true
+coverage:
+    enabled: true

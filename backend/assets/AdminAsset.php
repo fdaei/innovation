@@ -30,7 +30,10 @@ class AdminAsset extends AssetBundle
         'js/jquery.tags-input.js',
         // sweetalert2 JavaScript -->
         'js/sweetalert2.all.min.js',
-        "js/pjax-utility.js"
+        "js/pjax-utility.js",
+        "js/add.js",
+        "js/leaflet.js",
+        "js/jalalidatepicker.js"
     ];
 
     public $css = [
@@ -40,6 +43,9 @@ class AdminAsset extends AssetBundle
         'css/sweetalert2.min.css',
         "css/horizontal-timeline.css",
         "css/custom.css",
+        "css/leaflet.css",
+        "jalalidatepicker.css",
+        "https://unpkg.com/leaflet@1.9.3/dist/leaflet.css",
     ];
 
     public $depends = [

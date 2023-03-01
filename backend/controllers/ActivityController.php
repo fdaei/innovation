@@ -134,6 +134,16 @@ class ActivityController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionChange()
+    {
+        $data=Yii::$app->request->post();
+        $i=(int)$data['id'];
+        $model = Activity::findOne(['id' => 16]);
+        return $model;
+//        $model->status=1;
+//        return $model->save();
+    }
+
     /**
      * Finds the Task model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -154,4 +164,5 @@ class ActivityController extends Controller
     {
         Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
+
 }

@@ -51,6 +51,7 @@ class Branches extends \yii\db\ActiveRecord
             [['title', 'address', 'longitude', 'latitude', 'mobile', 'phone', 'desk_count', 'status','description'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['address'], 'string'],
             [['description'], 'string'],
+            [['mobile'], 'match', 'pattern' => '/^([0]{1}[9]{1}[0-9]{9})$/'],
             ['image','image','extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
             [['longitude', 'latitude'], 'number'],
             [['desk_count', 'status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
@@ -163,10 +164,10 @@ class Branches extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'cdnPath' => "@cdnRoot/Branches",
+                'basePath' => "@inceRoot/Branches",
+                'path' => "@inceRoot/Branches",
+                'url' => "@cdnWeb/Branches"
             ],
         ];
     }
