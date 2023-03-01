@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             'price_before_discount',
             'address:ntext',
-            'sponsors',
+//            'sponsors',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Event $model, $key, $index, $column) {

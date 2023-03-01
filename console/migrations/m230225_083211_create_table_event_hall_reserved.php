@@ -16,8 +16,8 @@ class m230225_083211_create_table_event_hall_reserved extends Migration
             [
                 'id' => $this->primaryKey(),
                 'event_hall_id' => $this->integer()->unsigned()->notNull(),
-                'timestamp_start' => $this->timestamp()->notNull(),
-                'timestamp_end' => $this->timestamp()->notNull(),
+                'timestamp_start' => $this->integer()->notNull(),
+                'timestamp_end' => $this->integer()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),

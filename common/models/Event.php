@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -16,6 +17,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property float $price_before_discount
  * @property string $description
  * @property string $headlines
+ * @property string $evand_link
  * @property string $event_times
  * @property string $address
  * @property float $longitude
@@ -44,8 +46,8 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'price', 'price_before_discount', 'description', 'headlines', 'address', 'longitude', 'latitude', 'sponsors'], 'required'],
-            [['description', 'address'], 'string'],
+            [['title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'sponsors','evand_link'], 'required'],
+            [['description', 'address','evand_link'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['price','longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
@@ -140,6 +142,20 @@ class Event extends \yii\db\ActiveRecord
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'picture',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/event",
+                'basePath' => "@inceRoot/event",
+                'path' => "@inceRoot/event",
+                'url' => "@cdnWeb/event"
             ],
         ];
     }

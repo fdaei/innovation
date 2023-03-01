@@ -9,6 +9,9 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Model;
+use backend\models\EventTimes;
+use backend\models\EventHeadlines;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -70,10 +73,46 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event();
+        $eventHeadlines = [new EventHeadlines()];
+        $eventTimes = [new EventTimes];
+
         if ($this->request->isPost) {
+            $model->sponsors = [
+                'test' => 'test'
+            ];
             if ($model->load($this->request->post()) && $model->validate()) {
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+                $eventHeadlines = Model::createMultiple(EventHeadlines::classname());
+                Model::loadMultiple($eventHeadlines, Yii::$app->request->post());
+
+                if (Model::validateMultiple($eventHeadlines)) {
+                    $headlinesJson = [];
+                    foreach ($eventHeadlines as $eventHeadline) {
+                        $headlinesJson[] = [
+                            'title' => $eventHeadline->title,
+                            'description' => $eventHeadline->description,
+                        ];
+                    }
+                    $model->headlines = $headlinesJson;
+                }
+
+
+                $eventTimes = Model::createMultiple(EventTimes::classname());
+                Model::loadMultiple($eventTimes, Yii::$app->request->post());
+                if (Model::validateMultiple($eventTimes)) {
+                    $headlinesJson = [];
+                    foreach ($eventTimes as $eventTime) {
+                        $headlinesJson[] = [
+                            'start' => $eventTime->start,
+                            'end' => $eventTime->end,
+                        ];
+                    }
+                    $model->event_times = $headlinesJson;
+                }
+
+
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -81,6 +120,8 @@ class EventController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'eventHeadlines' => $eventHeadlines,
+            'eventTimes' => $eventTimes,
         ]);
     }
 

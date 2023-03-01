@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use wbraganca\dynamicform\DynamicFormWidget;
+use kartik\file\FileInput;
 
 
 /** @var yii\web\View $this */
@@ -11,9 +13,19 @@ use yii\widgets\ActiveForm;
 
 
 <div class="event-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'event_form']); ?>
     <div class="row justify-content-center">
-        <div class='col-md-8 kohl'> <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        <div class='col-md-8 kohl'>
+            <?= $form->field($model, 'picture')->widget(FileInput::class, [
+                'options' => ['accept' => 'image/*'],
+            ]) ?>
+        </div>
+
+        <div class='col-md-8 kohl'>
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-8 kohl'>
+            <?= $form->field($model, 'evand_link')->textInput(['maxlength' => true]) ?>
         </div>
         <div class='col-md-8 row justify-content-center'>
             <div class='col-md-6 p-0'>
@@ -23,69 +35,112 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'price_before_discount')->textInput() ?>
             </div>
         </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'sponsors')->textInput() ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?php if ($model->headlines) { ?>
-                <div id="number-headlines">
-                    <?php foreach ($model->headlines as $value => $i): ?>
-                        <div class="AddHeadlines">
-                            <label>سرفصل </label>
-                            <input type="text" id="event-headlines" class="form-control"
-                                   name="Event[headlines][<?= $value ?>]['title']" maxlength="255" aria-required="true"
-                                   aria-invalid="true" value="<?= $i["'title'"] ?>">
-                            <label>محتوای هر سر فصل </label>
-                            <input type="text" id="event-headlines" class="form-control"
-                                   name="Event[headlines][<?= $value ?>]['description']" maxlength="255"
-                                   aria-required="true"
-                                   aria-invalid="true" value="<?= $i["'description'"] ?>">
+<!--        <div class='col-md-8 kohl'>-->
+<!--            --><?php //echo $form->field($model, 'sponsors')->textInput() ?>
+<!--        </div>-->
+        <div class='col-md-8 kohl' style="margin-top:60px">
+            <div class="panel-body ">
+                <?php DynamicFormWidget::begin([
+                    'widgetContainer' => 'dynamicform_wrapper1', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                    'widgetBody' => '.container-items-headline', // required: css class selector
+                    'widgetItem' => '.item-headline', // required: css class
+                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                    'min' => 1, // 0 or 1 (default 1)
+                    'insertButton' => '.add-item', // css class
+                    'deleteButton' => '.remove-item', // css class
+                    'model' => $eventHeadlines[0],
+                    'formId' => 'event_form',
+                    'formFields' => [
+                        'title',
+                        'description'
+                    ],
+                ]); ?>
+                <div class="container-items-headline"><!-- widgetContainer -->
+                    <?php foreach ($eventHeadlines as $i => $modelAddress): ?>
+                        <div class="item-headline panel panel-default col-md-8" style="padding-right: 0px"><!-- widgetBody -->
+                            <div class="panel-heading">
+                                <div class="pull-right">
+                                    <button type="button" class="remove-item btn btn-danger btn-xs">حذف</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <?php
+                                // necessary for update action.
+                                if (! $modelAddress->isNewRecord) {
+                                    echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                                }
+                                ?>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <?= $form->field($modelAddress, "[{$i}]description")->textInput(['maxlength' => true]) ?>
+                                    </div>
+                                </div><!-- .row -->
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <a id="AddHeadlines" class=" btn btn-success btn-sm">+</a>
-                <a id="RemoveHeadlines" class=" btn btn-danger btn-sm">-</a>
-            <?php } else { ?>
-                <div id="number-headlines">
-                    <div class="AddHeadlines">
-                        <label>سرفصل </label>
-                        <input type="text" id="event-headlines" class="form-control" name="Event[headlines][0]['title']"
-                               maxlength="255" aria-required="true" aria-invalid="true">
-                        <label>محتوای هر سر فصل </label>
-                        <input type="text" id="event-headlines" class="form-control"
-                               name="Event[headlines][0]['description']" maxlength="255" aria-required="true"
-                               aria-invalid="true">
-                    </div>
-                </div>
-                <a id="AddHeadlines" class=" btn btn-success btn-sm">+</a>
-                <a id="RemoveHeadlines" class=" btn btn-danger btn-sm">-</a>
-            <?php } ?>
-        </div>
-
-        <div class='col-md-8 kohl'>
-            <div>
-                <label>زمان های رویداد</label>
-                <?php if ($model->event_times) { ?>
-                    <div id="number-datepicker">
-                        <?php foreach ($model->event_times as $value => $i): ?>
-                            <input type="text" id="event-event_times" class="someInput form-control my-2"
-                                   name="Event[event_times][<?= $value ?>]" maxlength="255" aria-required="true"
-                                   aria-invalid="true" data-jdp value="<?= $i ?>">
-                        <?php endforeach; ?>
-                    </div>
-                    <a id="AddDatepicker" class=" btn btn-success btn-sm">+</a>
-                    <a id="RemoveDatepicker" class=" btn btn-danger btn-sm">-</a>
-
-                <?php } else { ?>
-                    <div id="number-datepicker">
-                        <input type="text" id="event-event_times" class="form-control" name="Event[event_times][0]"
-                               maxlength="255" aria-required="true" aria-invalid="true" data-jdp>
-                    </div>
-                    <a id="AddDatepicker" class=" btn btn-success btn-sm">+</a>
-                    <a id="RemoveDatepicker" class=" btn btn-danger btn-sm">-</a>
-                <?php } ?>
+                <button type="button" class="add-item btn btn-success btn-xs">سرفصل جدید</button>
+                <?php DynamicFormWidget::end(); ?>
             </div>
         </div>
+
+        <div class='col-md-8 kohl' style="margin-top:60px">
+            <div class="panel-body ">
+                <?php DynamicFormWidget::begin([
+                    'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                    'widgetBody' => '.container-items-time', // required: css class selector
+                    'widgetItem' => '.item-time', // required: css class
+                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                    'min' => 1, // 0 or 1 (default 1)
+                    'insertButton' => '.add-item_time', // css class
+                    'deleteButton' => '.remove-item_time', // css class
+                    'model' => $eventTimes[0],
+                    'formId' => 'event_form',
+                    'formFields' => [
+                        'start',
+                        'end'
+                    ],
+                ]); ?>
+                <div class="container-items-time"><!-- widgetContainer -->
+                    <?php foreach ($eventTimes as $i => $modelAddress): ?>
+                        <div class="item-time panel panel-default col-md-8" style="padding-right: 0px"><!-- widgetBody -->
+                            <div class="panel-heading">
+                                <div class="pull-right">
+                                    <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <?php
+                                // necessary for update action.
+                                if (! $modelAddress->isNewRecord) {
+                                    echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                                }
+                                ?>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <?= $form->field($modelAddress, "[{$i}]start")->textInput(['maxlength' => true,'data-jdp'=>true]) ?>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <?= $form->field($modelAddress, "[{$i}]end")->textInput(['maxlength' => true,'data-jdp'=>true]) ?>
+                                    </div>
+                                </div><!-- .row -->
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button type="button" class="add-item_time btn btn-success btn-xs">زمان جدید</button>
+                <?php DynamicFormWidget::end(); ?>
+            </div>
+        </div>
+
+
+
+
         <div class='col-md-6 kohl'>
             <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
         </div>
@@ -114,6 +169,7 @@ use yii\widgets\ActiveForm;
 <script>
     jalaliDatepicker.startWatch({
         time: true,
+        hasSecond: false,
     })
 </script>
 

@@ -28,7 +28,7 @@ class m230130_074956_create_table_ince_activity_comment extends Migration
 
         $this->createIndex('business_stat_ibfk_1', '{{%activity_comment}}', ['created_by']);
         $this->createIndex('business_stat_ibfk_3', '{{%activity_comment}}', ['updated_by']);
-        $this->createIndex('task_comment_ibfk_2', '{{%activity_comment}}', ['activity']);
+//        $this->createIndex('task_comment_ibfk_2', '{{%activity_comment}}', ['activity']);
     }
 
     public function safeDown()

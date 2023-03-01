@@ -18,6 +18,8 @@ class m230214_101621_create_table_event extends Migration
                 'title' => $this->string()->notNull(),
                 'price' => $this->float()->notNull(),
                 'price_before_discount' => $this->float()->notNull(),
+                'picture' => $this->string()->notNull(),
+                'evand_link' => $this->string()->notNull(),
                 'description' => $this->text()->notNull(),
                 'headlines' => $this->json()->notNull(),
                 'event_times' => $this->json()->notNull(),
