@@ -17,9 +17,8 @@ class MentorSearch extends Mentor
     public function rules()
     {
         return [
-            [['id', 'status', 'user_id', 'consultation_face_to_face', 'consultation_online', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
-            [['name', 'mobile', 'picture', 'resume', 'video', 'instagram', 'linkedin', 'twitter', 'documents', 'description', 'job_records', 'education_records', 'whatsapp', 'telegram', 'activity_field', 'activity_description', 'services', 'records'], 'safe'],
-            [['consulting_fee'], 'number'],
+            [['id', 'status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
+            [['name', 'mobile', 'picture', 'video', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field', 'activity_description', 'services', 'records'], 'safe'],
         ];
     }
 
@@ -62,9 +61,6 @@ class MentorSearch extends Mentor
             'id' => $this->id,
             'status' => $this->status,
             'user_id' => $this->user_id,
-            'consulting_fee' => $this->consulting_fee,
-            'consultation_face_to_face' => $this->consultation_face_to_face,
-            'consultation_online' => $this->consultation_online,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -72,24 +68,15 @@ class MentorSearch extends Mentor
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'mobile', $this->mobile])
-            ->andFilterWhere(['like', 'picture', $this->picture])
-            ->andFilterWhere(['like', 'resume', $this->resume])
+        $query->andFilterWhere(['like', 'picture', $this->picture])
             ->andFilterWhere(['like', 'video', $this->video])
             ->andFilterWhere(['like', 'instagram', $this->instagram])
             ->andFilterWhere(['like', 'linkedin', $this->linkedin])
             ->andFilterWhere(['like', 'twitter', $this->twitter])
-            ->andFilterWhere(['like', 'documents', $this->documents])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'job_records', $this->job_records])
-            ->andFilterWhere(['like', 'education_records', $this->education_records])
             ->andFilterWhere(['like', 'whatsapp', $this->whatsapp])
             ->andFilterWhere(['like', 'telegram', $this->telegram])
             ->andFilterWhere(['like', 'activity_field', $this->activity_field])
-            ->andFilterWhere(['like', 'activity_description', $this->activity_description])
-            ->andFilterWhere(['like', 'services', $this->services])
-            ->andFilterWhere(['like', 'records', $this->records]);
+            ->andFilterWhere(['like', 'activity_description', $this->activity_description]);
 
         return $dataProvider;
     }

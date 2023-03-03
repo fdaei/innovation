@@ -34,9 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'mobile',
             'activity_field',
             'activity_description:ntext',
-            'consulting_fee',
-            'consultation_face_to_face',
-            'consultation_online',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Mentor $model, $key, $index, $column) {

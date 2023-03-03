@@ -2,8 +2,12 @@
 
 namespace backend\controllers;
 
+use backend\models\EventHeadlines;
+use backend\models\MentorRecords;
+use backend\models\MentorServices;
 use common\models\Mentor;
 use common\models\MentorSearch;
+use common\models\Model;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -79,17 +83,52 @@ class MentorController extends Controller
     public function actionCreate()
     {
         $model = new Mentor();
+        $mentorRecords = [new MentorRecords()];
+        $mentorServices = [new MentorServices()];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+
+                $mentorRecords = Model::createMultiple(MentorRecords::classname());
+                Model::loadMultiple($mentorRecords, Yii::$app->request->post());
+                if (Model::validateMultiple($mentorRecords)) {
+                    $recordsJson = [];
+                    foreach ($mentorRecords as $mentorRecord) {
+                        $recordsJson[] = [
+                            'year' => $mentorRecord->year,
+                            'title' => $mentorRecord->title,
+                            'description' => $mentorRecord->description,
+                        ];
+                    }
+                    $model->records = $recordsJson;
+                }
+
+                $mentorServices = Model::createMultiple(MentorServices::classname());
+                Model::loadMultiple($mentorServices, Yii::$app->request->post());
+
+                if (Model::validateMultiple($mentorServices)) {
+                    $servicesJson = [];
+                    foreach ($mentorServices as $mentorService) {
+                        $servicesJson[] = [
+                            'title' => $mentorService->title,
+                            'description' => $mentorService->description,
+                        ];
+                    }
+                    $model->services = $servicesJson;
+                }
+
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+            print_r($model->errors); die;
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'mentorServices' => $mentorServices,
+            'mentorRecords'  => $mentorRecords
         ]);
     }
 

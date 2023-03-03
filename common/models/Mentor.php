@@ -13,26 +13,17 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property int $id
  * @property string $name
- * @property string $mobile
  * @property string $picture
- * @property string $resume
  * @property string|null $video
  * @property string|null $instagram
  * @property string|null $linkedin
  * @property string|null $twitter
- * @property string $documents
- * @property string $description
- * @property string $job_records
- * @property string $education_records
  * @property int $status
  * @property int $user_id
  * @property string|null $whatsapp
  * @property string|null $telegram
  * @property string $activity_field
  * @property string $activity_description
- * @property float $consulting_fee
- * @property int $consultation_face_to_face
- * @property int $consultation_online
  * @property string $services
  * @property string $records
  * @property int $updated_by
@@ -61,13 +52,11 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'mobile', 'documents', 'description', 'job_records', 'education_records', 'user_id', 'activity_field', 'activity_description', 'consulting_fee', 'consultation_face_to_face', 'consultation_online', 'services', 'records'], 'required'],
-            [['documents', 'description', 'activity_description'], 'string'],
-            [['job_records', 'education_records', 'services', 'records'], 'safe'],
-            [['status', 'user_id', 'consultation_face_to_face', 'consultation_online', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
-            [['consulting_fee'], 'number'],
-            [['name','instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
-            [['mobile'], 'string', 'max' => 12],
+            [[ 'user_id', 'activity_field', 'activity_description','picture_mentor','picture'], 'required'],
+            [['activity_description'], 'string'],
+            [[ 'services', 'records'], 'safe'],
+            [['status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
+            [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
 
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -82,27 +71,17 @@ class Mentor extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'mobile' => Yii::t('app', 'Mobile'),
             'picture' => Yii::t('app', 'Picture'),
-            'resume' => Yii::t('app', 'Resume'),
             'video' => Yii::t('app', 'Video'),
             'instagram' => Yii::t('app', 'Instagram'),
             'linkedin' => Yii::t('app', 'Linkedin'),
             'twitter' => Yii::t('app', 'Twitter'),
-            'documents' => Yii::t('app', 'Documents'),
-            'description' => Yii::t('app', 'Description'),
-            'job_records' => Yii::t('app', 'Job Records'),
-            'education_records' => Yii::t('app', 'Education Records'),
             'status' => Yii::t('app', 'Status'),
             'user_id' => Yii::t('app', 'User ID'),
             'whatsapp' => Yii::t('app', 'Whatsapp'),
             'telegram' => Yii::t('app', 'Telegram'),
             'activity_field' => Yii::t('app', 'Activity Field'),
             'activity_description' => Yii::t('app', 'Activity Description'),
-            'consulting_fee' => Yii::t('app', 'Consulting Fee'),
-            'consultation_face_to_face' => Yii::t('app', 'Consultation Face To Face'),
-            'consultation_online' => Yii::t('app', 'Consultation Online'),
             'services' => Yii::t('app', 'Services'),
             'records' => Yii::t('app', 'Records'),
             'updated_by' => Yii::t('app', 'Updated By'),
@@ -182,7 +161,7 @@ class Mentor extends \yii\db\ActiveRecord
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'resume',
+                'attribute' => 'picture',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
@@ -196,7 +175,7 @@ class Mentor extends \yii\db\ActiveRecord
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'picture',
+                'attribute' => 'picture_mentor',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
@@ -225,35 +204,6 @@ class Mentor extends \yii\db\ActiveRecord
         ];
     }
 
-    public function fields()
-    {
-        return [
-            'id',
-            'name',
-            'mobile',
-            'picture',
-            'resume',
-            'video',
-            'instagram',
-            'linkedin',
-            'twitter',
-            'documents',
-            'description',
-            'job_records',
-            'education_records',
-            'status',
-            'user_id',
-            'whatsapp',
-            'telegram',
-            'activity_field',
-            'activity_description',
-            'consulting_fee',
-            'consultation_face_to_face',
-            'consultation_online',
-            'services',
-            'records',
-        ];
-    }
 
     public function extraFields()
     {
