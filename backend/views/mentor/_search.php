@@ -54,15 +54,6 @@ use yii\widgets\ActiveForm;
 <!--        <div class="col-md-3">-->
 <!--            --><?php //= $form->field($model, 'activity_description') ?>
 <!--        </div>-->
-<!--        <div class="col-md-3">-->
-<!--            --><?php //= $form->field($model, 'consulting_fee') ?>
-<!--        </div>-->
-<!--        <div class="col-md-3">-->
-<!--            --><?php //= $form->field($model, 'consultation_face_to_face') ?>
-<!--        </div>-->
-<!--        <div class="col-md-3">-->
-<!--            --><?php //= $form->field($model, 'consultation_online') ?>
-<!--        </div>-->
     </div>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-info btn-rounded']) ?>
