@@ -44,7 +44,7 @@ class Businesses extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'businesses';
+        return '{{%businesses}}';
     }
 
     /**
