@@ -14,19 +14,29 @@ class Event extends \common\models\Event
     {
         return [
             'id',
-            'title' => 'title',
+            'title',
+            'title_brief',
             'picture' => function (self $model) {
                 return $model->getUploadUrl('picture');
             },
             'price',
             'price_before_discount',
+            'organizer_picture' => function (self $model) {
+                return $model->getUploadUrl('organizer_picture');
+            },
+            'organizer_name',
+            'organizer_title_brief',
+            'organizer_instagram',
+            'organizer_telegram',
+            'organizer_linkedin',
             'evand_link',
             'description',
-            'headlines',
+            'headline',
             'event_times',
+            'sponsor',
             'address',
             'longitude',
-            'longitude',
+            'latitude',
         ];
     }
 }

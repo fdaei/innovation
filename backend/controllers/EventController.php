@@ -3,15 +3,18 @@
 namespace backend\controllers;
 
 use backend\assets\Datapicker;
+use backend\models\EventSponsors;
 use common\models\Event;
 use common\models\EventSearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\Model;
 use backend\models\EventTimes;
 use backend\models\EventHeadlines;
+use yii\web\UploadedFile;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -26,6 +29,15 @@ class EventController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
@@ -35,6 +47,7 @@ class EventController extends Controller
             ]
         );
     }
+
 
     /**
      * Lists all Event models.
@@ -75,40 +88,13 @@ class EventController extends Controller
         $model = new Event();
         $eventHeadlines = [new EventHeadlines()];
         $eventTimes = [new EventTimes];
+        $eventSponsors = [new EventSponsors];
 
         if ($this->request->isPost) {
-            $model->sponsors = [
-                'test' => 'test'
-            ];
             if ($model->load($this->request->post()) && $model->validate()) {
-                $eventHeadlines = Model::createMultiple(EventHeadlines::classname());
-                Model::loadMultiple($eventHeadlines, Yii::$app->request->post());
-
-                if (Model::validateMultiple($eventHeadlines)) {
-                    $headlinesJson = [];
-                    foreach ($eventHeadlines as $eventHeadline) {
-                        $headlinesJson[] = [
-                            'title' => $eventHeadline->title,
-                            'description' => $eventHeadline->description,
-                        ];
-                    }
-                    $model->headlines = $headlinesJson;
-                }
-
-
-                $eventTimes = Model::createMultiple(EventTimes::classname());
-                Model::loadMultiple($eventTimes, Yii::$app->request->post());
-                if (Model::validateMultiple($eventTimes)) {
-                    $headlinesJson = [];
-                    foreach ($eventTimes as $eventTime) {
-                        $headlinesJson[] = [
-                            'start' => $eventTime->start,
-                            'end' => $eventTime->end,
-                        ];
-                    }
-                    $model->event_times = $headlinesJson;
-                }
-
+                $model->headlines   =  EventHeadlines::headLineHandler();
+                $model->event_times =  EventTimes::eventTimesHandler();
+                $model->sponsors =  EventSponsors::headSpnser();
 
                 if($model->save()){
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -122,6 +108,7 @@ class EventController extends Controller
             'model' => $model,
             'eventHeadlines' => $eventHeadlines,
             'eventTimes' => $eventTimes,
+            'eventSponsors' => $eventSponsors,
         ]);
     }
 
@@ -136,12 +123,18 @@ class EventController extends Controller
     {
         $model = $this->findModel($id);
 
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $model->headlines =  EventHeadlines::headLineHandler($model->headlines);
+            $model->event_times =  EventTimes::eventTimesHandler();
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'eventHeadlines' => EventHeadlines::loadDefaultValue($model->headlines),
+            'eventTimes' => EventTimes::loadDefaultValue($model->event_times),
         ]);
     }
 
