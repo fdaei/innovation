@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'eventHeadlines' => $eventHeadlines,
             'eventTimes' => $eventTimes,
+            'eventSponsors' => $eventSponsors,
         ]) ?>
     </div>
 </div>
