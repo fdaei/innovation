@@ -162,9 +162,6 @@ use kartik\file\FileInput;
                                 }
                                 ?>
                                 <div class="row">
-                                    <div class='col-sm-4'>
-                                        <?= $form->field($modelAddress, "[{$i}]imageFileHeadlines")->fileInput() ?>
-                                    </div>
                                     <div class="col-sm-4">
                                         <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                     </div>
@@ -259,10 +256,16 @@ use kartik\file\FileInput;
     <?php ActiveForm::end(); ?>
 
 </div>
-<script>
-    jalaliDatepicker.startWatch({
-        time: true,
-        hasSecond: false,
-    })
-</script>
 
+<?php
+$script = <<< JS
+    
+        jalaliDatepicker.startWatch({
+            time: true,
+            hasSecond: false,
+        })
+    
+JS;
+
+$this->registerJs($script, \yii\web\View::POS_END)
+?>

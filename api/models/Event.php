@@ -31,7 +31,7 @@ class Event extends \common\models\Event
             'organizer_linkedin',
             'evand_link',
             'description',
-            'headline',
+            'headlines',
             'event_times',
             'sponsor',
             'address',

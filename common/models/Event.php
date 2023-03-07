@@ -183,15 +183,6 @@ class Event extends \yii\db\ActiveRecord
     {
         return [];
     }
-    public function getHeadLine()
-    {
-        return array_map(function ($model){
-            if(!empty($model['pic'])){
-                $model['pic'] = Yii::getAlias('@cdnWeb/event/' . $model['pic']);
-            }
-            return $model;
-        },$this->headlines);
-    }
     public function getSponsor()
     {
         return array_map(function ($model){
