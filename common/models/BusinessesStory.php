@@ -32,7 +32,7 @@ class BusinessesStory extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'businesses_story';
+        return '{{%businesses_story}}';
     }
 
     /**
