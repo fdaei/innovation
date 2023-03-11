@@ -36,6 +36,7 @@ class Businesses extends \common\models\Businesses
             'statistics',
             'services',
             'investors',
+            'business_story' => 'businessStory',
         ];
     }
 }
