@@ -55,9 +55,9 @@ class Businesses extends \yii\db\ActiveRecord
         return [
             [['description'], 'string'],
             [['statistics', 'services', 'investors'], 'safe'],
-            [['status', 'updated_at', 'updated_by', 'created_by', 'created_at'], 'required'],
+            [['status'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
-            [['picture_desktop', 'picture_mobile', 'name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp', 'pic_main_desktop', 'pic_main_mobile', 'pic_small1_desktop', 'pic_small1_mobile', 'pic_small2_desktop', 'pic_small2_mobile'], 'string', 'max' => 255],
+            [['name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp'], 'string', 'max' => 255],
         ];
     }
 
@@ -127,18 +127,127 @@ class Businesses extends \yii\db\ActiveRecord
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'picture',
+                'attribute' => 'picture_desktop',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/event",
-                'basePath' => "@inceRoot/event",
-                'path' => "@inceRoot/event",
-                'url' => "@cdnWeb/event"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'picture_mobile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'pic_main_desktop',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'pic_main_mobile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'picture_mobile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'pic_small1_desktop',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'pic_small1_mobile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'pic_small2_desktop',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'pic_small2_mobile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
         ];
+    }
+    public function getBusinessStory()
+    {
+        return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id'])->select(['id','year','title','texts']);
     }
 }
