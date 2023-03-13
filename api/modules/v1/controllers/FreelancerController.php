@@ -50,7 +50,7 @@ class FreelancerController extends ActiveController
     {
         $actions = parent::actions();
         // disable the "delete" and "create" actions
-        unset($actions['index'],$actions['view'], $actions['delete'], $actions['update']);
+        unset($actions['delete'], $actions['update']);
         return $actions;
     }
 }

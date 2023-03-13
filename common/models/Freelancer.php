@@ -55,7 +55,7 @@ class Freelancer extends \yii\db\ActiveRecord
         return [
             [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'experience_period', 'skills',], 'required'],
             [['sex', 'city', 'province', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
-            [['skills', 'record_job', 'record_educational', 'portfolio'], 'safe'],
+            [['record_job', 'record_educational', 'portfolio'], 'safe'],
             [['description_user'], 'string'],
             [['name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period'], 'string', 'max' => 255],
         ];
