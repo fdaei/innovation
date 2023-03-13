@@ -21,6 +21,10 @@ class m230311_091420_create_table_freelancer extends Migration
             '{{%freelancer}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
+                'header_picture_desktop' => $this->string(),
+                'header_picture_mobile' => $this->string(),
+                'freelancer_picture' => $this->string(),
+                'freelancer_description' => $this->text(),
                 'name' => $this->string()->notNull(),
                 'sex' => $this->boolean(),
                 'email' => $this->string()->notNull(),
