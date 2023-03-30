@@ -46,11 +46,19 @@ RUN docker-php-ext-configure gd \
             pdo_mysql \
             sysvsem
 
+RUN pecl install mongodb
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions http
+
 RUN mkdir -p /usr/src/php/ext/imagick; \
         curl -fsSL https://github.com/Imagick/imagick/archive/06116aa24b76edaf6b1693198f79e6c295eda8a9.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1; \
         docker-php-ext-install imagick; \
         docker-php-ext-enable \
-        imagick
+        imagick \
+        mongodb
 
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     PHP_USER_ID=33 \
