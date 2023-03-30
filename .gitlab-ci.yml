@@ -1,0 +1,62 @@
+default:
+  image: docker.iranrepo.ir/docker
+stages:
+  - build_base
+  - build
+  - build_nginx
+  - deploy
+
+variables:
+  IMAGE_TAG_BASE: registry.ops.mobit.ir/avinox-dev/backendbase:latest
+  IMAGE_TAG_DEV: registry.ops.mobit.ir/avinox-dev/backend:latest
+  NGINX_IMAGE_TAG_DEV: registry.ops.mobit.ir/avinox-dev/nginx:latest
+
+build_base_image:
+  stage: build_base
+  before_script:
+    - echo "$DOCKER_REGISTRY_PASS" | docker login http://registry.ops.mobit.ir/ --username root --password-stdin
+  script:
+    - docker build -f Dockerfile.base . -t $IMAGE_TAG_BASE
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz composer-install/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ || $CI_PIPELINE_SOURCE=="web"'
+      when: always
+    - when: never
+
+build-dev:
+  stage: build
+  before_script:
+    - echo "$DOCKER_REGISTRY_PASS" | docker login http://registry.ops.mobit.ir/  --username root --password-stdin
+  script:
+    - docker build --no-cache -t $IMAGE_TAG_DEV -f Dockerfile.dev .
+    - docker push $IMAGE_TAG_DEV
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz dev.build/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ '
+      when: always
+    - when: never
+
+nginx-build-dev:
+  stage: build_nginx
+  before_script:
+    - echo "$DOCKER_REGISTRY_PASS" | docker login http://registry.ops.mobit.ir/  --username root --password-stdin
+  script:
+    - docker build -t $NGINX_IMAGE_TAG_DEV  -f Dockerfile.nginx.dev .
+    - docker push $NGINX_IMAGE_TAG_DEV
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz build/ || $CI_COMMIT_MESSAGE =~ /plz composer-install/ '
+      when: always
+    - when: never
+
+deploy-dev:
+  stage: deploy
+  before_script:
+    - echo "$DOCKER_REGISTRY_PASS" | docker login http://registry.ops.mobit.ir/ --username root --password-stdin
+  script:
+    - |
+      docker service update --force --with-registry-auth avinox_dev_backend --image $IMAGE_TAG_DEV
+      docker service update --force --with-registry-auth avinox_dev_nginx --image $NGINX_IMAGE_TAG_DEV
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz dev.build/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ '
+      when: on_success
+    - when: never
+
+
