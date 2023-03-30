@@ -42,7 +42,7 @@ nginx-build-dev:
     - docker build -t $NGINX_IMAGE_TAG_DEV  -f Dockerfile.nginx.dev .
     - docker push $NGINX_IMAGE_TAG_DEV
   rules:
-    - if: '$CI_COMMIT_MESSAGE =~ /plz build/ || $CI_COMMIT_MESSAGE =~ /plz composer-install/ '
+    - if: '$CI_COMMIT_MESSAGE =~ /plz dev.build/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ '
       when: always
     - when: never
 
