@@ -1,5 +1,5 @@
 default:
-  image: docker.iranrepo.ir/docker
+  image: registry.ops.mobit.ir/base/docker:latest
 stages:
   - build_base
   - build
