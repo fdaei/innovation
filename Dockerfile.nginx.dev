@@ -1,4 +1,4 @@
 FROM registry.ops.mobit.ir/avinox-dev/backend:latest as avinox
 
-FROM docker.iranrepo.ir/nginx
+FROM registry.ops.mobit.ir/base/nginx:latest
 COPY --from=avinox /app /app
