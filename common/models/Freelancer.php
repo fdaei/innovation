@@ -103,6 +103,12 @@ class Freelancer extends \yii\db\ActiveRecord
     {
         return new FreelancerQuery(get_called_class());
     }
+
+    public function getFreelancerCategories()
+    {
+        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id']);
+    }
+
     public function behaviors()
     {
         return [
