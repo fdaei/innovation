@@ -21,7 +21,7 @@ use yii\web\HttpException;
  */
 class BusinessesController extends ActiveController
 {
-    public $modelClass = "api\models\Businesses";
+    public $modelClass = 'api\models\Businesses';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
