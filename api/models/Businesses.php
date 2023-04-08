@@ -20,8 +20,11 @@ class Businesses extends \common\models\Businesses
             'picture_mobile' => function (self $model) {
                 return $model->getUploadUrl('picture_mobile');
             },
+
             'name',
-            'logo',
+            'business_logo' => function (self $model) {
+                return $model->getUploadUrl('business_logo');
+            },
             'business_color',
             'business_en_name',
             'description_brief',

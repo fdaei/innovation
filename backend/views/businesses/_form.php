@@ -14,11 +14,16 @@ use wbraganca\dynamicform\DynamicFormWidget;
             'id' => 'businesses_form'
     ]); ?>
     <div class="card card-body">
+        <?= $form->field($model, 'business_logo')->fileInput() ?>
         <?= $form->field($model, 'picture_desktop')->fileInput() ?>
 
         <?= $form->field($model, 'picture_mobile')->fileInput() ?>
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'business_en_name')->textInput(['business_color' => true]) ?>
+
+        <?= $form->field($model, 'business_color')->textInput(['business_color' => true]) ?>
 
         <?= $form->field($model, 'description_brief')->textInput(['maxlength' => true]) ?>
 

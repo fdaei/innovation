@@ -15,7 +15,7 @@ $menu_items = [
                 'group' => 'Business',
                 'label' => Yii::t('app', 'Business'),
                 'icon' => 'fas fa-building',
-                'url' => ['/business']
+                'url' => ['/businesses']
             ],
             [
                 'group' => 'location',
