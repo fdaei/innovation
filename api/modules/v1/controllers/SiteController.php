@@ -30,6 +30,7 @@ class SiteController extends Controller
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
+            'except' => ['say-hi'],
             'authMethods' => [
                 HttpBearerAuth::class,
             ],
