@@ -76,4 +76,8 @@ class SiteController extends Controller
     {
         return (new CaptchaHelper())->generateImage();
     }
+
+    public function actionSayHi(){
+        return ('hi');
+    }
 }
