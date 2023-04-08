@@ -15,6 +15,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string|null $picture_desktop
  * @property string|null $picture_mobile
  * @property string|null $name
+ * @property string|null $business_logo
+ * @property string|null $business_color
+ * @property string|null $business_en_name
  * @property string|null $description_brief
  * @property string|null $description
  * @property string|null $website
@@ -55,7 +58,7 @@ class Businesses extends \yii\db\ActiveRecord
         return [
             [['description'], 'string'],
             [['statistics', 'services', 'investors'], 'safe'],
-            [['status'], 'required'],
+            [['status','business_color','business_en_name'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
             [['name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp'], 'string', 'max' => 255],
         ];
@@ -124,6 +127,20 @@ class Businesses extends \yii\db\ActiveRecord
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'business_logo',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => false,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,

@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
+use kartik\file\FileInput;
+
 /** @var yii\web\View $this */
 /** @var common\models\Businesses $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -14,11 +16,18 @@ use wbraganca\dynamicform\DynamicFormWidget;
             'id' => 'businesses_form'
     ]); ?>
     <div class="card card-body">
+        <?= $form->field($model, 'business_logo')->widget(FileInput::class, [
+            'options' => ['accept' => 'image/*'],
+        ]) ?>
         <?= $form->field($model, 'picture_desktop')->fileInput() ?>
 
         <?= $form->field($model, 'picture_mobile')->fileInput() ?>
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'business_en_name')->textInput(['business_color' => true]) ?>
+
+        <?= $form->field($model, 'business_color')->textInput(['business_color' => true]) ?>
 
         <?= $form->field($model, 'description_brief')->textInput(['maxlength' => true]) ?>
 
