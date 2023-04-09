@@ -15,7 +15,8 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
-
+use yii\data\ActiveDataProvider;
+use api\models\Event;
 /**
  * CareerApply controller
  */
@@ -52,5 +53,11 @@ class EventController extends ActiveController
         // disable the "delete" and "create" actions
         unset($actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
+    }
+
+    public function actionLastEvent(){
+        return new ActiveDataProvider([
+            'query' => Event::find()->orderBy('id DESC')->limit(3),
+        ]);
     }
 }
