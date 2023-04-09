@@ -100,6 +100,12 @@ $menu_items = [
                         'url' => ['/event/']
                     ],
                     [
+                        'group' => 'event-teachers',
+                        'label' => Yii::t('app', 'Event Organizer'),
+                        'icon' => 'fas fa-user',
+                        'url' => ['event-organizer/']
+                    ],
+                    [
                         'group' => 'EventHall',
                         'label' => Yii::t('app', 'EventHall'),
                         'icon' => 'fas fa-user',

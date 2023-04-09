@@ -19,16 +19,9 @@ class Event extends \common\models\Event
             'picture' => function (self $model) {
                 return $model->getUploadUrl('picture');
             },
+            'organizerInfo',
             'price',
             'price_before_discount',
-            'organizer_picture' => function (self $model) {
-                return $model->getUploadUrl('organizer_picture');
-            },
-            'organizer_name',
-            'organizer_title_brief',
-            'organizer_instagram',
-            'organizer_telegram',
-            'organizer_linkedin',
             'evand_link',
             'description',
             'headlines',
