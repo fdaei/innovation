@@ -79,6 +79,6 @@ class SiteController extends Controller
     }
 
     public function actionSayHi(){
-        return ('hi');
+        return ('hi 9apr');
     }
 }
