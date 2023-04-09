@@ -96,7 +96,7 @@ class BusinessesController extends Controller
                 $model->statistics  =  BusinessesStatistics::handelData();
                 $model->services    =  BusinessesServices::handelData();
 
-                if($model->save()){
+                if($model->save(false)){
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }

@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Businesses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="businesses-view">
+<div class="card card-body">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -45,9 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'pic_small1_mobile',
             'pic_small2_desktop',
             'pic_small2_mobile',
-            'statistics',
-            'services',
-            'investors',
+//            'statistics',
+//            'services',
+//            'investors',
             'status',
             'updated_at',
             'updated_by',
