@@ -11,7 +11,6 @@ class EventHeadlines extends Model
 {
 
     public $isNewRecord = true;
-    public $imageFileHeadlines;
     public $pic;
     public $title;
     public $description;
@@ -21,7 +20,6 @@ class EventHeadlines extends Model
         return [
             [['title','description'],'required'],
             [['title','description','pic'],'string'],
-            [['imageFileHeadlines'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
 
@@ -34,19 +32,6 @@ class EventHeadlines extends Model
         ];
     }
 
-    public function upload()
-    {
-        if ($this->validate()) {
-            if($this->imageFileHeadlines){
-                $name = $this->imageFileHeadlines->baseName . rand(1000000,99999999). '.' . $this->imageFileHeadlines->extension;
-                $this->imageFileHeadlines->saveAs('@inceRoot/event/' . $name);
-                return $name;
-            }
-            return false;
-        } else {
-            return false;
-        }
-    }
 
     public static function headLineHandler($headlines = []){
         $eventHeadlines = \common\models\Model::createMultiple(EventHeadlines::classname());
@@ -54,13 +39,9 @@ class EventHeadlines extends Model
         $headlinesJson = [];
         foreach ($eventHeadlines as $index => $eventHeadline) {
             if($eventHeadline->validate()){
-                $eventHeadline->imageFileHeadlines = UploadedFile::getInstanceByName( "EventHeadlines[{$index}][imageFileHeadlines]");
-                $fileName = $eventHeadline->upload();
-                $fileName = ($fileName ? $fileName : (isset($headlines[$index]['pic']) ? $headlines[$index]['pic']: ''));
                 $headlinesJson[] = [
                     'title' => $eventHeadline->title,
                     'description' => $eventHeadline->description,
-                    'pic' => $fileName,
                 ];
             }
         }

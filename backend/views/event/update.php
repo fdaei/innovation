@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 'model' => $model,
                 'eventHeadlines' => $eventHeadlines,
                 'eventTimes' => $eventTimes,
+                'eventSponsors' => $eventSponsors,
             ]) ?>
         </div>
     </div>

@@ -21,6 +21,9 @@ use kartik\file\FileInput;
             ]) ?>
         </div>
         <div class='col-md-8 kohl'>
+            <?= $form->field($model, 'event_organizer_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Event::getOrganizerList(),'id','organizer_name')) ?>
+        </div>
+        <div class='col-md-8 kohl'>
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
         <div class='col-md-8 kohl'>
@@ -38,26 +41,6 @@ use kartik\file\FileInput;
             </div>
         </div>
 
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'organizer_picture')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
-            ]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'organizer_name')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'organizer_title_brief')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'organizer_instagram')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'organizer_telegram')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'organizer_linkedin')->textInput(['maxlength' => true]) ?>
-        </div>
 <!--        <div class='col-md-8 kohl'>-->
 <!--            --><?php //echo $form->field($model, 'sponsors')->textInput() ?>
 <!--        </div>-->
@@ -162,9 +145,6 @@ use kartik\file\FileInput;
                                 }
                                 ?>
                                 <div class="row">
-                                    <div class='col-sm-4'>
-                                        <?= $form->field($modelAddress, "[{$i}]imageFileHeadlines")->fileInput() ?>
-                                    </div>
                                     <div class="col-sm-4">
                                         <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                     </div>
@@ -259,10 +239,16 @@ use kartik\file\FileInput;
     <?php ActiveForm::end(); ?>
 
 </div>
-<script>
-    jalaliDatepicker.startWatch({
-        time: true,
-        hasSecond: false,
-    })
-</script>
 
+<?php
+$script = <<< JS
+    
+        jalaliDatepicker.startWatch({
+            time: true,
+            hasSecond: false,
+        })
+    
+JS;
+
+$this->registerJs($script, \yii\web\View::POS_END)
+?>
