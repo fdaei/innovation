@@ -30,7 +30,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'profile', 'update-profile'],
+                        'actions' => ['logout', 'index', 'profile', 'update-profile', 'clear'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -66,6 +66,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionClear()
+    {
+        Yii::$app->cache->flush();
+        die('ok');
     }
 
     /**
