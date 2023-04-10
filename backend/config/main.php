@@ -10,6 +10,11 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
+        'moresettings' => [
+            'class' => 'sadi01\moresettings\SettingsModule',
+            'rootAlias' => '@webroot',
+            'webAlias' => '@web',
+        ],
     ],
     'components' => [
         'request' => [

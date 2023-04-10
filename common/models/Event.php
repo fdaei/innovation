@@ -163,11 +163,11 @@ class Event extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/event",
-                'basePath' => "@inceRoot/event",
-                'path' => "@inceRoot/event",
-                'url' => "@cdnWeb/event"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
             ],
         ];
     }

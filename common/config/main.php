@@ -78,5 +78,8 @@ return [
         'customHelper' => [
             'class' => 'common\components\CustomHelper'
         ],
+        'Cdn' => [
+            'class' => 'common\components\Cdn',
+        ],
     ],
 ];

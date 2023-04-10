@@ -150,6 +150,27 @@ $menu_items = [
                 'icon' => 'fas fa-check-square',
                 'url' => ['/notification/']
             ],
+            [
+                'group' => 'Settings',
+                'label' => 'تنظیمات',
+                'icon' => 'fas fa-cogs',
+                'level' => "first-level",
+                'encode' => false,
+                'items' => [
+                    [
+                        'group' => 'Settings',
+                        'label' => Yii::t('app', 'Manage Settings'),
+                        'icon' => 'fas fa-cogs',
+                        'url' => ['/moresettings/default/index']
+                    ],
+                    [
+                        'group' => 'Settings',
+                        'label' => Yii::t('app', 'Settings'),
+                        'icon' => 'fas fa-cogs',
+                        'url' => ['/site/setting']
+                    ],
+                ]
+            ],
         ],
     ]
 ];
