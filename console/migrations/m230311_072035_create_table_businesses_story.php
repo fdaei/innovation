@@ -25,7 +25,7 @@ class m230311_072035_create_table_businesses_story extends Migration
                 'year' => $this->string()->notNull(),
                 'title' => $this->string()->notNull(),
                 'texts' => $this->json()->notNull(),
-                'picture' => $this->text()->notNull(),
+                'picture' => $this->text()->null(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
