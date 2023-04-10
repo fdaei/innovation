@@ -9,7 +9,7 @@ use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
- * This is the model class for table "{{%event_teachers}}".
+ * This is the model class for table "{{%event_organizer}}".
  *
  * @property int $id
  * @property string $organizer_name
@@ -32,7 +32,7 @@ class EventOrganizer extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%event_teachers}}';
+        return '{{%event_organizer}}';
     }
 
     /**
