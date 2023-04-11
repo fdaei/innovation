@@ -16,10 +16,11 @@ class m230221_095835_create_table_ince_mentor extends Migration
             [
                 'id' => $this->primaryKey()->unsigned(),
                 'user_id' => $this->integer()->unsigned()->notNull(),
-                'picture_mentor' => $this->string()->notNull(),
+                'name' => $this->string()->notNull(),
+                'picture_mentor' => $this->string()->null(),
                 'activity_field' => $this->string()->notNull(),
                 'activity_description' => $this->text()->notNull(),
-                'picture' => $this->string()->notNull(),
+                'picture' => $this->string()->null(),
                 'video' => $this->string()->null(),
                 'instagram' => $this->string()->null(),
                 'linkedin' => $this->string()->null(),

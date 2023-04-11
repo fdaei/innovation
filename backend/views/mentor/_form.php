@@ -20,6 +20,9 @@ use wbraganca\dynamicform\DynamicFormWidget;
     <div class="row justify-content-center">
 
         <div class='col-md-4'>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-4'>
             <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
         </div>
         <div class='col-md-4'>
@@ -119,7 +122,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
         <div class='col-md-12 kohl' style="margin-top:60px">
             <div class="panel-body ">
                 <?php DynamicFormWidget::begin([
-                    'widgetContainer' => 'dynamicform_wrapper1', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                    'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                     'widgetBody' => '.container_items_records', // required: css class selector
                     'widgetItem' => '.item_records', // required: css class
                     'limit' => 4, // the maximum times, an element can be cloned (default 999)

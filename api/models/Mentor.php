@@ -14,6 +14,7 @@ class Mentor extends \common\models\Mentor
     {
         return [
             'id',
+            'name',
             'picture' => function (self $model) {
                 return $model->getUploadUrl('picture');
             },

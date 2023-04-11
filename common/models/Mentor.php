@@ -52,15 +52,15 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'user_id', 'activity_field', 'activity_description','picture_mentor','picture'], 'required'],
+            [['user_id', 'name', 'activity_field', 'activity_description'], 'required'],
             [['activity_description'], 'string'],
             [[ 'services', 'records'], 'safe'],
             [['status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
 
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+//            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+//            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
