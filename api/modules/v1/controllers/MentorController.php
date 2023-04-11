@@ -49,8 +49,9 @@ class MentorController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
+        $actions['create']['modelClass'] = 'api\models\MentorCreate';
         // disable the "delete" and "create" actions
-        unset($actions['create'], $actions['delete'], $actions['update']);
+        unset( $actions['delete'], $actions['update']);
         return $actions;
     }
 }
