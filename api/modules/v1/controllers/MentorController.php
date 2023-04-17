@@ -13,8 +13,10 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
+use yii\web\ServerErrorHttpException;
 
 /**
  * CareerApply controller
@@ -53,5 +55,18 @@ class MentorController extends ActiveController
         // disable the "delete" and "create" actions
         unset( $actions['delete'], $actions['update']);
         return $actions;
+    }
+
+    public function actionAdviceRequest(){
+        $model = new \api\models\MentorsAdviceRequest;
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        if ($model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+        } elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        }
+        return $model;
     }
 }
