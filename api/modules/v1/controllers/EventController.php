@@ -68,4 +68,11 @@ class EventController extends ActiveController
             'query' => EventOrganizer::find()->orderBy('id DESC')->limit(3),
         ]);
     }
+
+    // need to fix
+    public function actionSimilarEvent(){
+        return new ActiveDataProvider([
+            'query' => Event::find()->orderBy('id DESC')->limit(3),
+        ]);
+    }
 }
