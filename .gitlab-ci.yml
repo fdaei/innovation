@@ -11,6 +11,9 @@ variables:
   IMAGE_TAG_DEV: registry.ops.mobit.ir/avinox-dev/backend:latest
   NGINX_IMAGE_TAG_DEV: registry.ops.mobit.ir/avinox-dev/nginx:latest
 
+  IMAGE_TAG_LATEST: registry.ops.mobit.ir/avinox/backend:latest
+  NGINX_IMAGE_TAG_LATEST: registry.ops.mobit.ir/avinox/nginx:latest
+
 build_base_image:
   stage: build_base
   before_script:
@@ -19,6 +22,18 @@ build_base_image:
     - docker build -f Dockerfile.base . -t $IMAGE_TAG_BASE
   rules:
     - if: '$CI_COMMIT_MESSAGE =~ /plz composer-install/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ || $CI_PIPELINE_SOURCE=="web"'
+      when: always
+    - when: never
+
+build:
+  stage: build
+  before_script:
+    - echo "$DOCKER_REGISTRY_PASS" | docker login http://registry.ops.mobit.ir/  --username root --password-stdin
+  script:
+    - docker build --no-cache -t $IMAGE_TAG_LATEST -f Dockerfile .
+    - docker push $IMAGE_TAG_LATEST
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plzbuild/ || $CI_COMMIT_MESSAGE =~ /plz composer-install/ '
       when: always
     - when: never
 
@@ -34,6 +49,18 @@ build-dev:
       when: always
     - when: never
 
+nginx-build:
+  stage: build_nginx
+  before_script:
+    - echo "$DOCKER_REGISTRY_PASS" | docker login http://registry.ops.mobit.ir/  --username root --password-stdin
+  script:
+    - docker build -t $NGINX_IMAGE_TAG_LATEST  -f Dockerfile.nginx .
+    - docker push $NGINX_IMAGE_TAG_LATEST
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz build/ || $CI_COMMIT_MESSAGE =~ /plz composer-install/ '
+      when: always
+    - when: never
+
 nginx-build-dev:
   stage: build_nginx
   before_script:
@@ -44,6 +71,19 @@ nginx-build-dev:
   rules:
     - if: '$CI_COMMIT_MESSAGE =~ /plz dev.build/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ '
       when: always
+    - when: never
+
+deploy:
+  stage: deploy
+  before_script:
+    - echo "$DOCKER_REGISTRY_PASS" | docker login http://registry.ops.mobit.ir/ --username root --password-stdin
+  script:
+    - |
+      docker service update --force --with-registry-auth avinox_backend --image $IMAGE_TAG_LATEST
+      docker service update --force --with-registry-auth avinox_nginx --image $NGINX_IMAGE_TAG_LATEST
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz build/ || $CI_COMMIT_MESSAGE =~ /plz composer-install/ '
+      when: on_success
     - when: never
 
 deploy-dev:
@@ -58,5 +98,4 @@ deploy-dev:
     - if: '$CI_COMMIT_MESSAGE =~ /plz dev.build/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ '
       when: on_success
     - when: never
-
 
