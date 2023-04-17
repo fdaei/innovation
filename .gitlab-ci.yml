@@ -33,7 +33,7 @@ build:
     - docker build --no-cache -t $IMAGE_TAG_LATEST -f Dockerfile .
     - docker push $IMAGE_TAG_LATEST
   rules:
-    - if: '$CI_COMMIT_MESSAGE =~ /plzbuild/ || $CI_COMMIT_MESSAGE =~ /plz composer-install/ '
+    - if: '$CI_COMMIT_MESSAGE =~ /plz build/ || $CI_COMMIT_MESSAGE =~ /plz composer-install/ '
       when: always
     - when: never
 
