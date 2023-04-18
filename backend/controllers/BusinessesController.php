@@ -89,8 +89,8 @@ class BusinessesController extends Controller
 
         if ($this->request->isPost) {
             $model->status = 1;
-            if ($model->load($this->request->post()) && $model->save()) {
-
+            if ($model->load($this->request->post())) {
+                $model->save();
                 BusinessesStory::handelData($model->id);
                 $model->investors   =  BusinessesSponsors::handelData();
                 $model->statistics  =  BusinessesStatistics::handelData();

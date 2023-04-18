@@ -10,3 +10,30 @@
 .kohl {
     color: #2f323e
 }
+.custom_background_color{
+    background-color: #00cc99;
+}
+.custom_background_color:hover{
+    background-color: #01a47b;
+}
+.custom_input_search{
+    border-radius: 20px;
+    padding: 10px;
+    border: 2px solid #00cc99;
+    display: inline;
+    width: 100%;
+}
+.custom_border{
+    border: 1px solid #007557;
+}
+.custom_background_color2{
+    background-color: #0b122b !important;
+}
+.custom_color{
+    color: #0b122b;
+}
+.custom_color2{
+    color: #00cc99;
+}
+
+

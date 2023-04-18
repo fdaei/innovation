@@ -11,6 +11,18 @@ use common\models\Businesses;
  */
 class BusinessesSearch extends Businesses
 {
+    public $business_logo;
+    public $picture_desktop;
+    public  $picture_mobile;
+    public $pic_main_desktop;
+    public  $pic_main_mobile;
+    public $pic_small1_desktop;
+    public $pic_small1_mobile;
+    public $pic_small2_desktop;
+    public $pic_small2_mobile;
+    public $id;
+
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +30,7 @@ class BusinessesSearch extends Businesses
     {
         return [
             [['id', 'status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
-            [['picture_desktop', 'picture_mobile', 'name', 'description_brief', 'description', 'website', 'telegram', 'instagram', 'whatsapp', 'pic_main_desktop', 'pic_main_mobile', 'pic_small1_desktop', 'pic_small1_mobile', 'pic_small2_desktop', 'pic_small2_mobile', 'statistics', 'services', 'investors'], 'safe'],
+            [['business_logo','picture_desktop', 'picture_mobile', 'name', 'description_brief', 'description', 'website', 'telegram', 'instagram', 'whatsapp', 'pic_main_desktop', 'pic_main_mobile', 'pic_small1_desktop', 'pic_small1_mobile', 'pic_small2_desktop', 'pic_small2_mobile', 'statistics', 'services', 'investors'], 'safe'],
         ];
     }
 

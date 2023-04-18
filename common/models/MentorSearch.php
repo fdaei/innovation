@@ -11,6 +11,7 @@ use common\models\Mentor;
  */
 class MentorSearch extends Mentor
 {
+    public $picture_mentor;
     /**
      * {@inheritdoc}
      */
