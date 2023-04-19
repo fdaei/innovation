@@ -9,10 +9,7 @@ $this->title = 'Create Businesses';
 $this->params['breadcrumbs'][] = ['label' => 'Businesses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="businesses-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="businesses-create custom_color">
     <?= $this->render('_form', [
         'model' => $model,
         'businessesSponsors' => $businessesSponsors,
@@ -20,6 +17,4 @@ $this->params['breadcrumbs'][] = $this->title;
         'businessesServices' => $businessesServices,
         'businessesStory' => $businessesStory,
     ]) ?>
-
-
 </div>

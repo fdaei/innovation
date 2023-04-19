@@ -38,6 +38,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Mentor extends \yii\db\ActiveRecord
 {
+    public $picture_mentor;
 
 
 
@@ -57,10 +58,7 @@ class Mentor extends \yii\db\ActiveRecord
             [[ 'services', 'records'], 'safe'],
             [['status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
-
-//            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-//            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 

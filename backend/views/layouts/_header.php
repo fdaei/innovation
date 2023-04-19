@@ -6,9 +6,9 @@ use yii\web\View;
 
 /* @var $this View */
 ?>
-<header class="topbar">
+<header class="topbar custom_background_color2">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-        <div class="navbar-header">
+        <div class="navbar-header custom_background_color2">
             <!-- This is for the sidebar toggle which is visible on mobile only -->
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
                 <i class="fal fa-bars"></i></a>
@@ -34,11 +34,11 @@ use yii\web\View;
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+        <div class="navbar-collapse collapse custom_background_color2" id="navbarSupportedContent">
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
-            <ul class="navbar-nav float-left mr-auto">
+            <ul class="navbar-nav float-left mr-auto ">
 
                 <!-- ============================================================== -->
                 <!-- Logo -->
