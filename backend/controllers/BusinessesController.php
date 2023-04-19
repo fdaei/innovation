@@ -124,9 +124,21 @@ class BusinessesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $businessesStatistics = [new BusinessesStatistics()];
+        $businessesServices = [new BusinessesServices()];
+        $businessesStory = [new BusinessesStory()];
+        $businessesSponsors = [new BusinessesSponsors()];
+
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+
+            BusinessesStory::handelData($model->id);
             $model->investors   =  BusinessesSponsors::handelData();
+            $model->statistics  =  BusinessesStatistics::handelData();
+
+            // services in update must be fix
+            $model->services    =  BusinessesServices::handelData();
+
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -134,7 +146,11 @@ class BusinessesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'eventSponsors' => BusinessesSponsors::loadDefaultValue($model->investors),
+            'businessesSponsors' => BusinessesSponsors::loadDefaultValue($model->investors),
+            'businessesStatistics' => BusinessesStatistics::loadDefaultValue($model->statistics),
+            'businessesServices' => BusinessesStatistics::loadDefaultValue($model->services),
+            'businessesStory' => BusinessesStory::loadDefaultValue($model->id),
+
         ]);
     }
 

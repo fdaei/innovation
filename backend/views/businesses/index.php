@@ -10,15 +10,12 @@ use yii\grid\GridView;
 /** @var common\models\BusinessesSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Businesses';
+$this->title = 'کسب و کار ها';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card card-body">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Create Businesses', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('کسب و کار جدید', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
