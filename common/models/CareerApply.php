@@ -200,7 +200,7 @@ class CareerApply extends \yii\db\ActiveRecord
                 'instanceByName' => false,
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/Apply",
                 'basePath' => "@inceRoot/Apply",
                 'path' => "@inceRoot/Apply",

@@ -139,7 +139,7 @@ class Freelancer extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/freelancer",
                 'basePath' => "@inceRoot/freelancer",
                 'path' => "@inceRoot/freelancer",
