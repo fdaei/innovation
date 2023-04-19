@@ -4,6 +4,7 @@ namespace backend\models;
 
 use common\behaviors\CdnUploadImageBehavior;
 use yii\base\Model;
+use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
@@ -12,7 +13,6 @@ class MentorServices extends Model
 {
 
     public $isNewRecord = true;
-    public $pic;
     public $title;
     public $description;
 
@@ -28,10 +28,36 @@ class MentorServices extends Model
     public function attributeLabels()
     {
         return [
-            'pic' => 'عکس',
             'title' => 'عنوان خدمت',
             'description' => 'توضیح کوتاه خدمت',
         ];
+    }
+
+    public static function handelData($defaultData = []){
+        $postData = \common\models\Model::createMultiple(self::className());
+        Model::loadMultiple($postData, Yii::$app->request->post());
+        $headlinesJson = [];
+        foreach ($postData as $index => $eachData) {
+            if($eachData->validate()){
+                $headlinesJson[] = [
+                    'title' => $eachData->title,
+                    'description' => $eachData->description,
+                ];
+            }
+        }
+        return $headlinesJson;
+    }
+    public static function loadDefaultValue($datas){
+        $arrayData = [];
+        for ($i = 0; $i < count($datas); $i++) {
+            $arrayData[$i] = new self();
+            $arrayData[$i]->attributes = $datas[$i];
+        }
+        if(empty($arrayData)){
+            $arrayData = [new self()];
+        }
+        return $arrayData;
+
     }
 
     public function behaviors()
