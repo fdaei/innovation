@@ -6,32 +6,32 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\HtmlPurifier;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
- * This is the model class for table "business_gallery".
+ * This is the model class for table "business_stat".
  *
  * @property int $id
  * @property int $business_id
- * @property string $image
- * @property string $mobile_image
+ * @property string $type
  * @property string $title
- * @property string $description
+ * @property string $subtitle
+ * @property string $icon
  * @property int $status
  * @property int $created_at
  * @property int $created_by
  * @property int $updated_at
  * @property int $updated_by
  * @property int $deleted_at
- *
+ *  *
  * @property Business $business
  * @property User $createdBy
  * @property User $updatedBy
- *
- * @mixin SoftDeleteBehavior
  * @mixin CdnUploadImageBehavior
+ * @mixin SoftDeleteBehavior
  */
-class BusinessGallery extends \yii\db\ActiveRecord
+class BusinessStat extends \yii\db\ActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
@@ -44,7 +44,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%business_gallery}}';
+        return '{{%business_stat}}';
     }
 
     /**
@@ -53,27 +53,19 @@ class BusinessGallery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id', 'title', 'description', 'image', 'mobile_image','status'], 'required', 'on' => [self::SCENARIO_CREATE]],
-            [['business_id', 'title', 'description'], 'required', 'on' => [self::SCENARIO_UPDATE]],
-            [['business_id', 'status'], 'integer'],
-            [['description'], 'string'],
-            [['title'], 'string', 'max' => 255],
-            [['image', 'mobile_image'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
-            ['image', 'image', 'minWidth' => 648, 'maxWidth' => 648, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
-            ['mobile_image', 'image', 'minWidth' => 316, 'maxWidth' => 316, 'minHeight' => 224, 'maxHeight' => 224, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
-            ['tablet_image', 'image', 'minWidth' => 1023, 'maxWidth' => 1023, 'minHeight' => 990, 'maxHeight' => 990, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-            [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
+            [['business_id', 'type', 'title', 'subtitle', 'status','icon'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['business_id', 'type', 'title', 'subtitle', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['business_id', 'status', 'type'], 'integer'],
+            [['title', 'subtitle'], 'string', 'max' => 255],
+            ['icon', 'image', 'minWidth' => 96, 'maxWidth' => 96, 'minHeight' => 96, 'maxHeight' => 96, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
         ];
     }
 
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-
-        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'title', 'description','status','image','mobile_image','tablet_image'];
-        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'title', 'description'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'type', 'title', 'subtitle', 'status','icon'];
+        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'type', 'title', 'subtitle', 'status'];
 
         return $scenarios;
     }
@@ -86,28 +78,34 @@ class BusinessGallery extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'business_id' => Yii::t('app', 'Business ID'),
-            'image' => Yii::t('app', 'Image'),
-            'mobile_image' => Yii::t('app', 'MobileImage'),
-            'tablet_image' => Yii::t('app', 'TabletImage'),
+            'type' => Yii::t('app', 'Type'),
             'title' => Yii::t('app', 'Title'),
-            'description' => Yii::t('app', 'Description'),
+            'subtitle' => Yii::t('app', 'Subtitle'),
+            'icon' => Yii::t('app', 'Icon'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'update_by' => Yii::t('app', 'Update By'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
     }
 
     /**
-     * Gets query for [[Business]].
-     *
-     * @return \yii\db\ActiveQuery|BusinessQuery
+     * {@inheritdoc}
+     * @return BusinessStatQuery the active query used by this AR class.
      */
     public function getBusiness()
     {
         return $this->hasOne(Business::class, ['id' => 'business_id']);
+    }
+
+
+    public function beforeSave($insert)
+    {
+        $this->subtitle = HtmlPurifier::process($this->subtitle);
+
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -130,13 +128,9 @@ class BusinessGallery extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
-    /**
-     * {@inheritdoc}
-     * @return BusinessGalleryQuery the active query used by this AR class.
-     */
-    public static function find()
+    public static function find(): BusinessStatQuery
     {
-        $query = new BusinessGalleryQuery(get_called_class());
+        $query = new BusinessStatQuery(get_called_class());
         return $query->active();
     }
 
@@ -144,7 +138,6 @@ class BusinessGallery extends \yii\db\ActiveRecord
     {
         return true;
     }
-
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
@@ -195,35 +188,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'image',
-                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
-            ],
-            [
-                'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'mobile_image',
-                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
-            ],
-            [
-                'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'tablet_image',
+                'attribute' => 'icon',
                 'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
@@ -241,18 +206,12 @@ class BusinessGallery extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            'id' => 'id',
-            'business_id' => 'business_id',
-            'title' => 'title',
-            'description' => 'description',
-            'image' => function (self $model) {
-                return $model->getUploadUrl('image');
-            },
-            'mobile_image' => function (self $model) {
-                return $model->getUploadUrl('mobile_image');
-            },
-            'tabletImage' => function (self $model) {
-                return $model->getUploadUrl('tablet_image');
+            'id',
+            'type',
+            'title',
+            'subtitle',
+            'icon' => function (self $model) {
+                return $model->getUploadUrl('icon');
             },
         ];
     }
