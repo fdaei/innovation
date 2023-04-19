@@ -1,9 +1,10 @@
 <?php
 
 use common\models\Businesses;
+use common\widgets\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use common\widgets\grid\ActionColumn;
+//use common\widgets\grid\ActionColumn;
 use common\widgets\grid\GridView;
 
 /** @var yii\web\View $this */
@@ -26,9 +27,7 @@ $this->title = Yii::t('app', 'Businesses');
         'columns' => [
             [
                 'class' => 'yii\grid\SerialColumn'
-
             ],
-
             'id',
             'name',
             'website',
@@ -40,7 +39,7 @@ $this->title = Yii::t('app', 'Businesses');
             'investors',
             'status',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Businesses $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  },

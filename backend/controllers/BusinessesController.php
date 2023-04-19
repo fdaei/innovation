@@ -69,6 +69,8 @@ class BusinessesController extends Controller
      */
     public function actionView($id)
     {
+        var_dump($id);
+        die();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

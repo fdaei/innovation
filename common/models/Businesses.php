@@ -171,19 +171,6 @@ class Businesses extends \yii\db\ActiveRecord
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'picture_mobile',
-                'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/businesses",
-                'basePath' => "@inceRoot/businesses",
-                'path' => "@inceRoot/businesses",
-                'url' => "@cdnWeb/businesses"
-            ],[
-                'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_main_desktop',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
