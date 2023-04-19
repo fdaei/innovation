@@ -114,7 +114,7 @@ use kartik\file\FileInput;
         <div class='col-md-8 kohl' style="margin-top:60px">
             <div class="panel-body ">
                 <?php DynamicFormWidget::begin([
-                    'widgetContainer' => 'dynamicform_wrapper1', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                    'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                     'widgetBody' => '.container-items-headline', // required: css class selector
                     'widgetItem' => '.item-headline', // required: css class
                     'limit' => 4, // the maximum times, an element can be cloned (default 999)

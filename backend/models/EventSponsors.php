@@ -62,6 +62,9 @@ class EventSponsors extends Model
                 $headlinesJson[] = [
                     'title' => $eventHeadline->title,
                     'description' => $eventHeadline->description,
+                    'instagram' => $eventHeadline->instagram,
+                    'telegram' => $eventHeadline->telegram,
+                    'whatsapp' => $eventHeadline->whatsapp,
                     'pic' => $fileName,
                 ];
             }

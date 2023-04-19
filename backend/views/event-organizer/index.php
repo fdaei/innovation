@@ -10,15 +10,13 @@ use yii\grid\GridView;
 /** @var common\models\EventOrganizerSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Event Teachers';
+$this->title = 'برگذار کنندگان';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="event-teachers-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="card card-body">
 
     <p>
-        <?= Html::a('Create Event Teachers', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('برگذار کنننده جدید', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
