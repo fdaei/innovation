@@ -135,6 +135,12 @@ class Mentor extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function getMentorCategories()
+    {
+        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Mentor::className()]);
+    }
+
+
     public function behaviors()
     {
         return [
