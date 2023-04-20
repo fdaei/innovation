@@ -181,7 +181,7 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/MentorsAdviceRequest",
                 'basePath' => "@inceRoot/MentorsAdviceRequest",
                 'path' => "@inceRoot/MentorsAdviceRequest",
