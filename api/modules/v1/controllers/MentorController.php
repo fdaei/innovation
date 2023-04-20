@@ -27,7 +27,7 @@ use common\models\Mentor;
  */
 class MentorController extends ActiveController
 {
-    public $modelClass = "api\models\Mentor";
+    public $modelClass = 'api\models\Mentor';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
