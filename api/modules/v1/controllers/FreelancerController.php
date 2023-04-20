@@ -3,6 +3,7 @@
 namespace api\modules\v1\controllers;
 
 use api\models\FreelancerCategoryList;
+use common\models\Freelancer;
 use common\models\FreelancerSearch;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
@@ -50,7 +51,7 @@ class FreelancerController extends ActiveController
 
     public function actionCategoryList(){
         return new ActiveDataProvider([
-            'query' => FreelancerCategoryList::find()
+            'query' => FreelancerCategoryList::find()->where(['model_class'=>Freelancer::className()])
         ]);
 
     }
