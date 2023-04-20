@@ -101,7 +101,7 @@ $menu_items = [
                     ],
                     [
                         'group' => 'event-teachers',
-                        'label' => Yii::t('app', 'Event Organizer'),
+                        'label' => 'برگذار کنندگان',
                         'icon' => 'fas fa-user',
                         'url' => ['event-organizer/']
                     ],
