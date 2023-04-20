@@ -30,7 +30,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'profile', 'update-profile', 'clear'],
+                        'actions' => ['logout', 'index', 'profile', 'update-profile', 'clear', 'setting'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -134,5 +134,10 @@ class SiteController extends Controller
             'model' => $model,
         ]);
         $oldmodel = SignupForm::findModel($id);
+    }
+
+    public function actionSetting()
+    {
+        return $this->render('setting');
     }
 }

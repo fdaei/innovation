@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Mentor $model */
 
-$this->title = $model->name;
+$this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Mentors'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -18,18 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Card -->
         <div class="card text-left mx-auto col-12">
             <div class="card-body row">
-                <div class="col-3">
-                    <label class="text-muted"><?= Yii::t('app', 'status') ?></label>
-                    <p class="card-title border-bottom m-2 pb-3"><?= Statuses::find()->where(['id' => $model->status])->one()->title_fa; ?></p>
-                </div>
-                <div class="col-3">
-                    <label><?= Yii::t('app', 'Name') ?></label>
-                    <p class="card-title border-bottom m-2 pb-3"><?= $model->name ?></p>
-                </div>
-                <div class="col-3">
-                    <label><?= Yii::t('app', 'mobile') ?></label>
-                    <p class="card-title border-bottom m-2 pb-3"><?= $model->mobile?></p>
-                </div class="col-3">
                 <div class="col-3">
                     <label><?= Yii::t('app', 'Instagram') ?></label>
                     <p class="card-title border-bottom m-2 pb-3"><?= $model->instagram ?></p>
@@ -41,18 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-3">
                     <label><?= Yii::t('app', 'Twitter') ?></label>
                     <p class="card-title border-bottom m-2 pb-3"><?= $model->twitter ?></p>
-                </div>
-                <div class="col-3">
-                    <label><?= Yii::t('app', 'records') ?></label>
-                    <p class="card-title border-bottom m-2 pb-3"><?= $model->records ?></p>
-                </div>
-                <div class="col-3">
-                    <label><?= Yii::t('app', 'services') ?></label>
-                    <p class="card-title border-bottom m-2 pb-3"><?= $model->services ?></p>
-                </div>
-                <div class="col-3">
-                    <label><?= Yii::t('app', 'activity_field') ?></label>
-                    <p class="card-title border-bottom m-2 pb-3"><?= $model->activity_field ?></p>
                 </div>
                 <div class="col-3">
                     <label><?= Yii::t('app', 'activity_description') ?></label>

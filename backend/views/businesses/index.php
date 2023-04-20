@@ -3,8 +3,8 @@
 use common\models\Businesses;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var common\models\BusinessesSearch $searchModel */
@@ -12,6 +12,7 @@ use yii\grid\GridView;
 
 $this->title = 'کسب و کار ها';
 $this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'Businesses');
 ?>
 <div class="card card-body">
     <p>
@@ -22,41 +23,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn'
+
+            ],
 
             'id',
-            'picture_desktop',
-            'picture_mobile',
             'name',
-            'description_brief',
-            //'description:ntext',
-            //'website',
-            //'telegram',
-            //'instagram',
-            //'whatsapp',
-            //'pic_main_desktop',
-            //'pic_main_mobile',
-            //'pic_small1_desktop',
-            //'pic_small1_mobile',
-            //'pic_small2_desktop',
-            //'pic_small2_mobile',
-            //'statistics',
-            //'services',
-            //'investors',
-            //'status',
-            //'updated_at',
-            //'updated_by',
-            //'created_by',
-            //'created_at',
-            //'deleted_at',
+            'website',
+            'telegram',
+            'instagram',
+            'whatsapp',
+            'statistics',
+            'services',
+            'investors',
+            'status',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Businesses $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
+                 },
+            ]
         ],
     ]); ?>
 

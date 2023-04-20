@@ -15,7 +15,9 @@ class m230214_101621_create_table_event extends Migration
             '{{%event}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
+                'event_organizer_id' => $this->integer()->notNull(),
                 'title' => $this->string()->notNull(),
+                'title_brief' => $this->string(),
                 'price' => $this->float()->notNull(),
                 'price_before_discount' => $this->float()->notNull(),
                 'picture' => $this->string()->notNull(),

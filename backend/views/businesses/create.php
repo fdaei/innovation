@@ -9,8 +9,7 @@ $this->title = 'ایجاد کسب و کار جدید';
 $this->params['breadcrumbs'][] = ['label' => 'Businesses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="businesses-create">
-
+<div class="businesses-create custom_color">
     <?= $this->render('_form', [
         'model' => $model,
         'businessesSponsors' => $businessesSponsors,
@@ -18,6 +17,4 @@ $this->params['breadcrumbs'][] = $this->title;
         'businessesServices' => $businessesServices,
         'businessesStory' => $businessesStory,
     ]) ?>
-
-
 </div>

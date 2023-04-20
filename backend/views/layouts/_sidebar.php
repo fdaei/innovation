@@ -100,6 +100,12 @@ $menu_items = [
                         'url' => ['/event/']
                     ],
                     [
+                        'group' => 'event-teachers',
+                        'label' => 'برگذار کنندگان',
+                        'icon' => 'fas fa-user',
+                        'url' => ['event-organizer/']
+                    ],
+                    [
                         'group' => 'EventHall',
                         'label' => Yii::t('app', 'EventHall'),
                         'icon' => 'fas fa-user',
@@ -143,6 +149,27 @@ $menu_items = [
                 'label' => Yii::t('app', 'Notification'),
                 'icon' => 'fas fa-check-square',
                 'url' => ['/notification/']
+            ],
+            [
+                'group' => 'Settings',
+                'label' => 'تنظیمات',
+                'icon' => 'fas fa-cogs',
+                'level' => "first-level",
+                'encode' => false,
+                'items' => [
+                    [
+                        'group' => 'Settings',
+                        'label' => Yii::t('app', 'Manage Settings'),
+                        'icon' => 'fas fa-cogs',
+                        'url' => ['/moresettings/default/index']
+                    ],
+                    [
+                        'group' => 'Settings',
+                        'label' => Yii::t('app', 'Settings'),
+                        'icon' => 'fas fa-cogs',
+                        'url' => ['/site/setting']
+                    ],
+                ]
             ],
         ],
     ]

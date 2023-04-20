@@ -2,8 +2,7 @@
 
 namespace common\components;
 
-use common\models\SettingsAccount;
-use common\traits\CoreTrait;
+use sadi01\moresettings\models\SettingValue;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use WebPConvert\WebPConvert;
@@ -15,8 +14,6 @@ use yii\helpers\ArrayHelper;
 /**@property Client $guzzleClient */
 class Cdn extends Component
 {
-    use CoreTrait;
-
     public $clientId;
     public $clientSecret;
     public $debug = false;
@@ -30,11 +27,11 @@ class Cdn extends Component
      */
     public function init()
     {
-        if (!($this->clientId = trim(SettingsAccount::get('cdnClientID')))) {
+        if (!($this->clientId = trim(SettingValue::getValue('base', 'cdnClientID')))) {
             throw new InvalidConfigException('CDN clientID is required!');
         }
 
-        if (!($this->clientSecret = trim(SettingsAccount::get('cdnClientSecret')))) {
+        if (!($this->clientSecret = trim(SettingValue::getValue('base', 'cdnClientSecret')))) {
             throw new InvalidConfigException('CDN client secret is required!');
         }
 

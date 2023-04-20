@@ -44,7 +44,6 @@ class BusinessesStory extends \yii\db\ActiveRecord
             [['businesses_id', 'year', 'title', 'texts'], 'required'],
             [['businesses_id', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['texts'], 'safe'],
-            [['year', 'title'], 'string', 'max' => 255],
         ];
     }
 
@@ -117,11 +116,11 @@ class BusinessesStory extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/businesses",
-                'basePath' => "@inceRoot/businesses",
-                'path' => "@inceRoot/businesses",
-                'url' => "@cdnWeb/businesses"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/BusinessesStory",
+                'basePath' => "@inceRoot/BusinessesStory",
+                'path' => "@inceRoot/BusinessesStory",
+                'url' => "@cdnWeb/BusinessesStory"
             ],
         ];
     }
