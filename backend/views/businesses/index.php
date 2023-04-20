@@ -10,17 +10,17 @@ use common\widgets\grid\GridView;
 /** @var common\models\BusinessesSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+$this->title = 'کسب و کار ها';
 $this->params['breadcrumbs'][] = $this->title;
 $this->title = Yii::t('app', 'Businesses');
 ?>
-<div class=" p-3 card material-card rounded-lg custom_color">
-    <div class="d-flex flex-row justify-content-between">
-        <h1 class="custom_color"><?= Html::encode($this->title) ?></h1>
-        <p class="">
-            <?= Html::a('Create Businesses', ['create'], ['class' => 'btn custom_background_color rounded-pill text-white']) ?>
-        </p>
-    </div>
-    <?= $this->render('_search', ['model' => $searchModel]); ?>
+<div class="card card-body">
+    <p>
+        <?= Html::a('کسب و کار جدید', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [

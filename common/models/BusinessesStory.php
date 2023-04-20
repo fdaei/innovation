@@ -124,4 +124,21 @@ class BusinessesStory extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+    public static function loadDefaultValue($id){
+        $datas = BusinessesStory::find()->where(['businesses_id'=>$id])->asArray()->all();
+        $arrayData = [];
+        for ($i = 0; $i < count($datas); $i++) {
+            $arrayData[$i] = new self();
+            $arrayData[$i]->attributes = $datas[$i];
+            $texts = $arrayData[$i]->attributes['texts'];
+            $arrayData[$i]->texts = implode(PHP_EOL,json_decode($texts,1));
+        }
+        if(empty($arrayData)){
+            $arrayData = [new self()];
+        }
+//        print_r($arrayData); die;
+        return $arrayData;
+
+    }
 }
