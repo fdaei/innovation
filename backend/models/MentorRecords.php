@@ -2,7 +2,7 @@
 
 namespace backend\models;
 use yii\base\Model;
-
+use Yii;
 class MentorRecords extends Model
 {
 
@@ -27,4 +27,33 @@ class MentorRecords extends Model
             'description' => 'توضیح سابقه',
         ];
     }
+
+    public static function handelData($defaultData = []){
+        $postData = \common\models\Model::createMultiple(self::className());
+        Model::loadMultiple($postData, Yii::$app->request->post());
+        $headlinesJson = [];
+        foreach ($postData as $index => $eachData) {
+            if($eachData->validate()){
+                $headlinesJson[] = [
+                    'year' => $eachData->year,
+                    'title' => $eachData->title,
+                    'description' => $eachData->description,
+                ];
+            }
+        }
+        return $headlinesJson;
+    }
+    public static function loadDefaultValue($datas){
+        $arrayData = [];
+        for ($i = 0; $i < count($datas); $i++) {
+            $arrayData[$i] = new self();
+            $arrayData[$i]->attributes = $datas[$i];
+        }
+        if(empty($arrayData)){
+            $arrayData = [new self()];
+        }
+        return $arrayData;
+
+    }
+
 }
