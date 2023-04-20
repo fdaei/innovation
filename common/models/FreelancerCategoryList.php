@@ -102,10 +102,17 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
+<<<<<<< HEAD
                 'cdnPath' => "@cdnRoot/freelancer",
                 'basePath' => "@inceRoot/freelancer",
                 'path' => "@inceRoot/freelancer",
                 'url' => "@cdnWeb/freelancer"
+=======
+                'cdnPath' => "@cdnRoot/FreelancerCategoryList",
+                'basePath' => "@inceRoot/FreelancerCategoryList",
+                'path' => "@inceRoot/FreelancerCategoryList",
+                'url' => "@cdnWeb/FreelancerCategoryList"
+>>>>>>> upload-image
             ],
 
         ];

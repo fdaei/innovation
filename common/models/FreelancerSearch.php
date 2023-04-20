@@ -2,9 +2,13 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use yii\base\Model;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
 use common\models\Freelancer;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * FreelancerSearch represents the model behind the search form of `common\models\Freelancer`.
@@ -100,5 +104,52 @@ class FreelancerSearch extends \api\models\Freelancer
             ->andFilterWhere(['like', 'description_user', $this->description_user]);
 
         return $dataProvider;
+    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'header_picture_desktop',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/FreelancerSearch",
+                'basePath' => "@inceRoot/FreelancerSearch",
+                'path' => "@inceRoot/FreelancerSearch",
+                'url' => "@cdnWeb/FreelancerSearch"
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'header_picture_mobile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/FreelancerSearch",
+                'basePath' => "@inceRoot/FreelancerSearch",
+                'path' => "@inceRoot/FreelancerSearch",
+                'url' => "@cdnWeb/FreelancerSearch"
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'freelancer_picture',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/FreelancerSearch",
+                'basePath' => "@inceRoot/FreelancerSearch",
+                'path' => "@inceRoot/FreelancerSearch",
+                'url' => "@cdnWeb/FreelancerSearch"
+            ]
+        ];
     }
 }

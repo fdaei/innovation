@@ -110,10 +110,17 @@ class EventOrganizer extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
+<<<<<<< HEAD
                 'cdnPath' => "@cdnRoot/event",
                 'basePath' => "@inceRoot/event",
                 'path' => "@inceRoot/event",
                 'url' => "@cdnWeb/event"
+=======
+                'cdnPath' => "@cdnRoot/EventOrganizer",
+                'basePath' => "@inceRoot/EventOrganizer",
+                'path' => "@inceRoot/EventOrganizer",
+                'url' => "@cdnWeb/EventOrganizer"
+>>>>>>> upload-image
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -124,10 +131,17 @@ class EventOrganizer extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
+<<<<<<< HEAD
                 'cdnPath' => "@cdnRoot/event",
                 'basePath' => "@inceRoot/event",
                 'path' => "@inceRoot/event",
                 'url' => "@cdnWeb/event"
+=======
+                'cdnPath' => "@cdnRoot/EventOrganizer",
+                'basePath' => "@inceRoot/EventOrganizer",
+                'path' => "@inceRoot/EventOrganizer",
+                'url' => "@cdnWeb/EventOrganizer"
+>>>>>>> upload-image
             ],
         ];
     }
