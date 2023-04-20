@@ -23,6 +23,7 @@ class m230404_084625_create_table_freelancer_categories extends Migration
                 'id' => $this->primaryKey()->unsigned(),
                 'freelancer_id' => $this->integer()->notNull(),
                 'categories_id' => $this->integer()->notNull(),
+                'model_class' => $this->string()
             ],
             $tableOptions
         );

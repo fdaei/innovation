@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property int $freelancer_id
  * @property int $categories_id
+ * @property string $model_class
  */
 class FreelancerCategories extends \yii\db\ActiveRecord
 {
@@ -27,8 +28,9 @@ class FreelancerCategories extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['freelancer_id', 'categories_id'], 'required'],
+            [['freelancer_id', 'categories_id','model_class'], 'required'],
             [['freelancer_id', 'categories_id'], 'integer'],
+            ['model_class','string']
         ];
     }
 

@@ -22,9 +22,10 @@ class m230404_070358_create_table_freelancer_category_list extends Migration
             [
                 'id' => $this->primaryKey()->unsigned(),
                 'title' => $this->string()->notNull(),
-                'brief_description' => $this->string()->notNull(),
-                'picture' => $this->string()->notNull(),
+                'brief_description' => $this->string()->null(),
+                'picture' => $this->string()->null(),
                 'status' => $this->integer()->notNull(),
+                'model_class' => $this->string()->notNull(),
                 'updated_by' => $this->integer()->unsigned(),
                 'updated_at' => $this->integer()->unsigned(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
