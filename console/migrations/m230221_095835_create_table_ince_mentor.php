@@ -27,6 +27,7 @@ class m230221_095835_create_table_ince_mentor extends Migration
                 'twitter' => $this->string()->null(),
                 'whatsapp' => $this->string()->null(),
                 'telegram' => $this->string()->null(),
+                'resume_file' => $this->string()->null(),
                 'status' => $this->tinyInteger()->notNull()->defaultValue('0'),
                 'consultation_face_to_face_status' => $this->boolean()->defaultValue(0),
                 'consultation_face_to_face_cost' => $this->float()->null(),
