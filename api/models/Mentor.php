@@ -21,14 +21,15 @@ class Mentor extends \common\models\Mentor
             'picture_mentor' => function (self $model) {
                 return $model->getUploadUrl('picture_mentor');
             },
-//            'activity_field',
-//            'activity_description',
-//            'instagram',
-//            'linkedin',
-//            'twitter',
-//            'telegram',
-//            'services',
-//            'records',
+            'activity_field',
+            'activity_description',
+            'instagram',
+            'linkedin',
+            'twitter',
+            'telegram',
+            'services',
+            'records',
+            'resume_file'
         ];
     }
 }
