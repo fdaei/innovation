@@ -35,9 +35,9 @@ $this->title = Yii::t('app', 'Businesses');
             'telegram',
             'instagram',
             'whatsapp',
-            'statistics',
-            'services',
-            'investors',
+//            'statistics',
+//            'services',
+//            'investors',
             'status',
             [
                 'class' => ActionColumn::className(),
