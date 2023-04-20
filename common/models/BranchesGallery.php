@@ -155,11 +155,11 @@ class BranchesGallery extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/BranchesGallery",
+                'basePath' => "@inceRoot/BranchesGallery",
+                'path' => "@inceRoot/BranchesGallery",
+                'url' => "@cdnWeb/BranchesGallery"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -169,11 +169,11 @@ class BranchesGallery extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/BranchesGallery",
+                'basePath' => "@inceRoot/BranchesGallery",
+                'path' => "@inceRoot/BranchesGallery",
+                'url' => "@cdnWeb/BranchesGallery"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -183,11 +183,11 @@ class BranchesGallery extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/BranchesGallery",
+                'basePath' => "@inceRoot/BranchesGallery",
+                'path' => "@inceRoot/BranchesGallery",
+                'url' => "@cdnWeb/BranchesGallery"
             ],
         ];
     }

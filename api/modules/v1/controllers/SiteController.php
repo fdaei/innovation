@@ -30,6 +30,7 @@ class SiteController extends Controller
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
+            'except' => ['say-hi'],
             'authMethods' => [
                 HttpBearerAuth::class,
             ],
@@ -75,5 +76,9 @@ class SiteController extends Controller
     public function actionCaptcha()
     {
         return (new CaptchaHelper())->generateImage();
+    }
+
+    public function actionSayHi(){
+        return ('hi 17apr.');
     }
 }

@@ -21,7 +21,6 @@ class MentorServices extends Model
         return [
             [['title','description'],'required'],
             [['title','description'],'string'],
-//            ['pic','safe']
         ];
     }
 
@@ -63,20 +62,20 @@ class MentorServices extends Model
     public function behaviors()
     {
         return [
-//            [
-//                'class' => CdnUploadImageBehavior::class,
-//                'attribute' => 'pic',
-//                'scenarios' => [self::SCENARIO_DEFAULT],
-//                'instanceByName' => false,
-//                //'placeholder' => "/assets/images/default.jpg",
-//                'deleteBasePathOnDelete' => false,
-//                'createThumbsOnSave' => false,
-//                'transferToCDN' => false,
-//                'cdnPath' => "@cdnRoot/event",
-//                'basePath' => "@inceRoot/event",
-//                'path' => "@inceRoot/event",
-//                'url' => "@cdnWeb/event"
-//            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'imageFile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/MentorServices",
+                'basePath' => "@inceRoot/MentorServices",
+                'path' => "@inceRoot/MentorServices",
+                'url' => "@cdnWeb/MentorServices"
+            ],
         ];
     }
 }

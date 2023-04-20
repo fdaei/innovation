@@ -2,11 +2,10 @@
 
 namespace backend\models;
 
+use yii;
 use common\behaviors\CdnUploadImageBehavior;
 use yii\base\Model;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
-use yii2tech\ar\softdelete\SoftDeleteBehavior;
+use yii\web\UploadedFile;
 
 class EventHeadlines extends Model
 {
@@ -20,8 +19,7 @@ class EventHeadlines extends Model
     {
         return [
             [['title','description'],'required'],
-            [['title','description'],'string'],
-//            ['pic','safe']
+            [['title','description','pic'],'string'],
         ];
     }
 
@@ -34,23 +32,32 @@ class EventHeadlines extends Model
         ];
     }
 
-    public function behaviors()
-    {
-        return [
-//            [
-//                'class' => CdnUploadImageBehavior::class,
-//                'attribute' => 'pic',
-//                'scenarios' => [self::SCENARIO_DEFAULT],
-//                'instanceByName' => false,
-//                //'placeholder' => "/assets/images/default.jpg",
-//                'deleteBasePathOnDelete' => false,
-//                'createThumbsOnSave' => false,
-//                'transferToCDN' => false,
-//                'cdnPath' => "@cdnRoot/event",
-//                'basePath' => "@inceRoot/event",
-//                'path' => "@inceRoot/event",
-//                'url' => "@cdnWeb/event"
-//            ],
-        ];
+
+    public static function headLineHandler($headlines = []){
+        $eventHeadlines = \common\models\Model::createMultiple(EventHeadlines::classname());
+        Model::loadMultiple($eventHeadlines, Yii::$app->request->post());
+        $headlinesJson = [];
+        foreach ($eventHeadlines as $index => $eventHeadline) {
+            if($eventHeadline->validate()){
+                $headlinesJson[] = [
+                    'title' => $eventHeadline->title,
+                    'description' => $eventHeadline->description,
+                ];
+            }
+        }
+        return $headlinesJson;
     }
+    public static function loadDefaultValue($headlines){
+        $eventHeadlines = [];
+        for ($i = 0; $i < count($headlines); $i++) {
+            $eventHeadlines[$i] = new EventHeadlines();
+            $eventHeadlines[$i]->attributes = $headlines[$i];
+        }
+        if(empty($eventHeadlines)){
+            $eventHeadlines = [new EventHeadlines];
+        }
+        return $eventHeadlines;
+
+    }
+
 }

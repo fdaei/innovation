@@ -2,17 +2,23 @@
 
 namespace common\models;
 
+use backend\models\EventHeadlines;
+use backend\models\EventTimes;
 use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "{{%event}}".
  *
  * @property int $id
+ * @property int $event_organizer_id
  * @property string $title
+ * @property string $title_brief
  * @property float $price
  * @property float $price_before_discount
  * @property string $description
@@ -46,7 +52,7 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'sponsors','evand_link'], 'required'],
+            [['event_organizer_id','title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude','evand_link','title_brief'], 'required'],
             [['description', 'address','evand_link'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -66,6 +72,7 @@ class Event extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
+            'title_brief' => Yii::t('app', 'Title Brief'),
             'price' => Yii::t('app', 'Price'),
             'price_before_discount' => Yii::t('app', 'Price Before Discount'),
             'description' => Yii::t('app', 'Description'),
@@ -104,6 +111,11 @@ class Event extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getOrganizerInfo()
+    {
+        return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
     }
 
     /**
@@ -151,34 +163,30 @@ class Event extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/event",
-                'basePath' => "@inceRoot/event",
-                'path' => "@inceRoot/event",
-                'url' => "@cdnWeb/event"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
             ],
-        ];
-    }
-
-    public function fields()
-    {
-        return [
-            'id',
-            'title',
-            'price',
-            'price_before_discount',
-            'description',
-            'headlines',
-            'event_times',
-            'address',
-            'longitude',
-            'latitude',
-            'sponsors',
         ];
     }
 
     public function extraFields()
     {
         return [];
+    }
+    public function getSponsor()
+    {
+        return array_map(function ($model){
+            if(!empty($model['pic'])){
+                $model['pic'] = Yii::getAlias('@cdnWeb/event/' . $model['pic']);
+            }
+            return $model;
+        },$this->sponsors);
+    }
+
+    public static function getOrganizerList(){
+        return EventOrganizer::find()->all();
     }
 }

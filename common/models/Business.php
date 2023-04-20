@@ -225,7 +225,7 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
             "name"=>"success_story",
             "content"=>$this->success_story
         ];
-       return $metaTags;
+        return $metaTags;
     }
 
     /**

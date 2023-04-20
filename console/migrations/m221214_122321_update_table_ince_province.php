@@ -6,8 +6,6 @@ class m221214_122321_update_table_ince_province extends Migration
 {
     public function safeUp()
     {
-        $this->dropIndex('name', '{{%province}}');
-
         $this->createIndex('name', '{{%province}}', ['name', 'deleted_at'], true);
     }
 
