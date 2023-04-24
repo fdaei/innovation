@@ -318,10 +318,10 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'cdnPath' => "@cdnRoot/business",
+                'basePath' => "@inceRoot/business",
+                'path' => "@inceRoot/business",
+                'url' => "@cdnWeb/business"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -332,10 +332,10 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'cdnPath' => "@cdnRoot/business",
+                'basePath' => "@inceRoot/business",
+                'path' => "@inceRoot/business",
+                'url' => "@cdnWeb/business"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -346,10 +346,10 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'cdnPath' => "@cdnRoot/business",
+                'basePath' => "@inceRoot/business",
+                'path' => "@inceRoot/business",
+                'url' => "@cdnWeb/business"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -359,10 +359,10 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/Business",
-                'basePath' => "@inceRoot/Business",
-                'path' => "@inceRoot/Business",
-                'url' => "@cdnWeb/Business"
+                'cdnPath' => "@cdnRoot/business",
+                'basePath' => "@inceRoot/business",
+                'path' => "@inceRoot/business",
+                'url' => "@cdnWeb/business"
             ],
         ];
     }
