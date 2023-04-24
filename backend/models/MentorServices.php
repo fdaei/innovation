@@ -64,7 +64,7 @@ class MentorServices extends Model
         return [
             [
                 'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'imageFile',
+                'attribute' => 'pic',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
