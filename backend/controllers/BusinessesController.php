@@ -6,9 +6,9 @@ use backend\models\BusinessesServices;
 use backend\models\BusinessesSponsors;
 use backend\models\BusinessesStatistics;
 use common\models\Businesses;
-use common\models\BusinessesSearch;
 use common\models\BusinessesStory;
-use yii\filters\AccessControl;
+use common\models\BusinessSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,17 +26,8 @@ class BusinessesController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -52,7 +43,7 @@ class BusinessesController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BusinessesSearch();
+        $searchModel = new BusinessSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -63,7 +54,7 @@ class BusinessesController extends Controller
 
     /**
      * Displays a single Businesses model.
-     * @param int $id ایدی
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -82,82 +73,46 @@ class BusinessesController extends Controller
     public function actionCreate()
     {
         $model = new Businesses();
-        $businessesSponsors = [new BusinessesSponsors()];
-        $businessesStatistics = [new BusinessesStatistics()];
-        $businessesServices = [new BusinessesServices()];
-        $businessesStory = [new BusinessesStory()];
 
         if ($this->request->isPost) {
-            $model->status = 1;
             if ($model->load($this->request->post())) {
+                $model->status = 1;
                 $model->save();
-                BusinessesStory::handelData($model->id);
-                $model->investors   =  BusinessesSponsors::handelData();
-                $model->statistics  =  BusinessesStatistics::handelData();
-                $model->services    =  BusinessesServices::handelData();
-
-                if($model->save(false)){
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-            print_r($model->errors); die;
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
-            'businessesSponsors' => $businessesSponsors,
-            'businessesStatistics' => $businessesStatistics,
-            'businessesServices' => $businessesServices,
-            'businessesStory' => $businessesStory,
         ]);
     }
 
     /**
      * Updates an existing Businesses model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ایدی
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $businessesStatistics = [new BusinessesStatistics()];
-        $businessesServices = [new BusinessesServices()];
-        $businessesStory = [new BusinessesStory()];
-        $businessesSponsors = [new BusinessesSponsors()];
-
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-
-            BusinessesStory::handelData($model->id);
-            $model->investors   =  BusinessesSponsors::handelData();
-            $model->statistics  =  BusinessesStatistics::handelData();
-
-            // services in update must be fix
-            $model->services    =  BusinessesServices::handelData();
-
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'businessesSponsors' => BusinessesSponsors::loadDefaultValue($model->investors),
-            'businessesStatistics' => BusinessesStatistics::loadDefaultValue($model->statistics),
-            'businessesServices' => BusinessesStatistics::loadDefaultValue($model->services),
-            'businessesStory' => BusinessesStory::loadDefaultValue($model->id),
-
         ]);
     }
 
     /**
      * Deletes an existing Businesses model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ایدی
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -171,7 +126,7 @@ class BusinessesController extends Controller
     /**
      * Finds the Businesses model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ایدی
+     * @param int $id ID
      * @return Businesses the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -181,6 +136,30 @@ class BusinessesController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function actionGetBlock($id)
+    {
+        $id2 = Yii::$app->request->get('id');
+        var_dump($id2);
+        die();
+        if ($id == 1) {
+            return "1";
+        }
+        elseif ($id == 2) {
+            return "2";
+        }
+        elseif ($id == 3) {
+            return "3";
+        }
+        elseif ($id == 4) {
+            return "4";
+        }
+        elseif ($id == 5) {
+            return "5";
+        }
+
+    }
+
 }

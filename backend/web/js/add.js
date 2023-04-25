@@ -105,3 +105,25 @@ function viewMap() {
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 }
+$(document).ready(function() {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href"); // Get the target tab
+        var pjaxContainer = $(target + ' .yii2-pjax-container'); // Get the pjax container inside the tab
+        if (pjaxContainer.length) {
+            $.pjax.reload({container: pjaxContainer.attr('id'), timeout: 10000});
+        }
+    });
+});
+function updateBlock(blockId, targetElementId) {
+    $.ajax({
+        url: '/businesses/get-block?id=' + blockId,
+        type: 'GET',
+        success: function(response) {
+            $('#' + targetElementId).html(response);
+        },
+        error: function() {
+            console.log('error');
+        }
+    });
+}
+

@@ -9,7 +9,7 @@ use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
- * This is the model class for table "businesses".
+ * This is the model class for table "ince_businesses".
  *
  * @property int $id
  * @property string|null $picture_desktop
@@ -42,25 +42,13 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Businesses extends \yii\db\ActiveRecord
 {
-    public $business_logo;
-    public $picture_desktop;
-    public $picture_mobile;
-    public $business_en_name;
-    public $business_color;
-    public $pic_main_desktop;
-    public $pic_main_mobile;
-    public $pic_small1_desktop;
-    public $pic_small1_mobile;
-    public $pic_small2_desktop;
-    public $pic_small2_mobile;
-    public $id;
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%businesses}}';
+        return 'ince_businesses';
     }
 
     /**
@@ -71,9 +59,10 @@ class Businesses extends \yii\db\ActiveRecord
         return [
             [['description'], 'string'],
             [['statistics', 'services', 'investors'], 'safe'],
-            [['status','business_color','business_en_name'], 'required'],
+            [['status'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
-//            [['name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp'], 'string', 'max' => 255],
+            ['picture_desktop', 'image','extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
+            [[ 'picture_mobile', 'name', 'business_logo', 'business_color', 'business_en_name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp', 'pic_main_desktop', 'pic_main_mobile', 'pic_small1_desktop', 'pic_small1_mobile', 'pic_small2_desktop', 'pic_small2_mobile'], 'string', 'max' => 255],
         ];
     }
 
@@ -83,38 +72,36 @@ class Businesses extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'picture_desktop' => Yii::t('app', 'Picture Desktop'),
-            'picture_mobile' => Yii::t('app', 'Picture Mobile'),
-            'name' => Yii::t('app', 'Name'),
-            'description_brief' => Yii::t('app', 'Description Brief'),
-            'description' => Yii::t('app', 'Description'),
-            'website' => Yii::t('app', 'Website'),
-            'telegram' => Yii::t('app', 'Telegram'),
-            'instagram' => Yii::t('app', 'Instagram'),
-            'whatsapp' => Yii::t('app', 'Whatsapp'),
-            'pic_main_desktop' => Yii::t('app', 'Pic Main Desktop'),
-            'pic_main_mobile' => Yii::t('app', 'Pic Main Mobile'),
-            'pic_small1_desktop' => Yii::t('app', 'Pic Small1 Desktop'),
-            'pic_small1_mobile' => Yii::t('app', 'Pic Small1 Mobile'),
-            'pic_small2_desktop' => Yii::t('app', 'Pic Small2 Desktop'),
-            'pic_small2_mobile' => Yii::t('app', 'Pic Small2 Mobile'),
-            'statistics' => Yii::t('app', 'Statistics'),
-            'services' => Yii::t('app', 'Services'),
-            'investors' => Yii::t('app', 'Investors'),
-            'status' => Yii::t('app', 'Status'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'deleted_at' => Yii::t('app', 'Deleted At'),
+            'id' => 'ID',
+            'picture_desktop' => 'Picture Desktop',
+            'picture_mobile' => 'Picture Mobile',
+            'name' => 'Name',
+            'business_logo' => 'Business Logo',
+            'business_color' => 'Business Color',
+            'business_en_name' => 'Business En Name',
+            'description_brief' => 'Description Brief',
+            'description' => 'Description',
+            'website' => 'Website',
+            'telegram' => 'Telegram',
+            'instagram' => 'Instagram',
+            'whatsapp' => 'Whatsapp',
+            'pic_main_desktop' => 'Pic Main Desktop',
+            'pic_main_mobile' => 'Pic Main Mobile',
+            'pic_small1_desktop' => 'Pic Small1 Desktop',
+            'pic_small1_mobile' => 'Pic Small1 Mobile',
+            'pic_small2_desktop' => 'Pic Small2 Desktop',
+            'pic_small2_mobile' => 'Pic Small2 Mobile',
+            'statistics' => 'Statistics',
+            'services' => 'Services',
+            'investors' => 'Investors',
+            'status' => 'Status',
+            'updated_at' => 'Updated At',
+            'updated_by' => 'Updated By',
+            'created_by' => 'Created By',
+            'created_at' => 'Created At',
+            'deleted_at' => 'Deleted At',
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     * @return BusinessesQuery the active query used by this AR class.
-     */
     public static function find()
     {
         return new BusinessesQuery(get_called_class());
@@ -276,8 +263,5 @@ class Businesses extends \yii\db\ActiveRecord
             ],
         ];
     }
-    public function getBusinessStory()
-    {
-        return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id'])->select(['id','year','title','texts']);
-    }
+
 }
