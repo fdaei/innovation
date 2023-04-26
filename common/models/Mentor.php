@@ -22,6 +22,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $user_id
  * @property string|null $whatsapp
  * @property string|null $telegram
+ * @property string|null $resume_file
  * @property string $activity_field
  * @property string $activity_description
  * @property string $services
@@ -38,6 +39,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Mentor extends \yii\db\ActiveRecord
 {
+    public $picture_mentor;
 
 
 
@@ -52,15 +54,12 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'user_id', 'activity_field', 'activity_description','picture_mentor','picture'], 'required'],
-            [['activity_description'], 'string'],
+            [['user_id', 'name', 'activity_field', 'activity_description'], 'required'],
+            [['activity_description','resume_file'], 'string'],
             [[ 'services', 'records'], 'safe'],
             [['status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
-
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -137,6 +136,12 @@ class Mentor extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function getMentorCategories()
+    {
+        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Mentor::className()]);
+    }
+
+
     public function behaviors()
     {
         return [
@@ -167,7 +172,7 @@ class Mentor extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/mentor",
                 'basePath' => "@inceRoot/mentor",
                 'path' => "@inceRoot/mentor",
@@ -181,7 +186,7 @@ class Mentor extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/mentor",
                 'basePath' => "@inceRoot/mentor",
                 'path' => "@inceRoot/mentor",
@@ -195,7 +200,7 @@ class Mentor extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/mentor",
                 'basePath' => "@inceRoot/mentor",
                 'path' => "@inceRoot/mentor",

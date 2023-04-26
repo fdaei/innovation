@@ -163,7 +163,7 @@ class Branches extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/Branches",
                 'basePath' => "@inceRoot/Branches",
                 'path' => "@inceRoot/Branches",

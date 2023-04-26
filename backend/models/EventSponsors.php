@@ -50,7 +50,7 @@ class EventSponsors extends Model
         }
     }
 
-    public static function headSpnser($sponsors = []){
+    public static function sponsorsHandler($sponsors = []){
         $eventSponsors = \common\models\Model::createMultiple(EventSponsors::classname());
         Model::loadMultiple($eventSponsors, Yii::$app->request->post());
         $headlinesJson = [];
@@ -62,6 +62,9 @@ class EventSponsors extends Model
                 $headlinesJson[] = [
                     'title' => $eventHeadline->title,
                     'description' => $eventHeadline->description,
+                    'instagram' => $eventHeadline->instagram,
+                    'telegram' => $eventHeadline->telegram,
+                    'whatsapp' => $eventHeadline->whatsapp,
                     'pic' => $fileName,
                 ];
             }

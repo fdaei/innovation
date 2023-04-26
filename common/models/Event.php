@@ -8,6 +8,7 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
@@ -15,6 +16,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * This is the model class for table "{{%event}}".
  *
  * @property int $id
+ * @property int $event_organizer_id
  * @property string $title
  * @property string $title_brief
  * @property float $price
@@ -50,8 +52,8 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['organizer_name','organizer_title_brief','title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude','evand_link','title_brief'], 'required'],
-            [['description', 'address','evand_link','organizer_instagram','organizer_telegram','organizer_linkedin'], 'string'],
+            [['event_organizer_id','title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude','evand_link','title_brief'], 'required'],
+            [['description', 'address','evand_link'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['price','longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
@@ -111,6 +113,11 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
+    public function getOrganizerInfo()
+    {
+        return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
+    }
+
     /**
      * {@inheritdoc}
      * @return EventQuery the active query used by this AR class.
@@ -156,25 +163,11 @@ class Event extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/event",
-                'basePath' => "@inceRoot/event",
-                'path' => "@inceRoot/event",
-                'url' => "@cdnWeb/event"
-            ],
-            [
-                'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'organizer_picture',
-                'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/event",
-                'basePath' => "@inceRoot/event",
-                'path' => "@inceRoot/event",
-                'url' => "@cdnWeb/event"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
             ],
         ];
     }
@@ -182,15 +175,6 @@ class Event extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return [];
-    }
-    public function getHeadLine()
-    {
-        return array_map(function ($model){
-            if(!empty($model['pic'])){
-                $model['pic'] = Yii::getAlias('@cdnWeb/event/' . $model['pic']);
-            }
-            return $model;
-        },$this->headlines);
     }
     public function getSponsor()
     {
@@ -200,5 +184,9 @@ class Event extends \yii\db\ActiveRecord
             }
             return $model;
         },$this->sponsors);
+    }
+
+    public static function getOrganizerList(){
+        return EventOrganizer::find()->all();
     }
 }

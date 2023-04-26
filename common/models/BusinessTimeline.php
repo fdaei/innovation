@@ -84,11 +84,21 @@ class BusinessTimeline extends \yii\db\ActiveRecord
         return $this->hasOne(Business::class, ['id' => 'business_id']);
     }
 
+    /**
+     * Gets query for [[CreatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|UserQuery
+     */
     public function getCreatedBy()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
+    /**
+     * Gets query for [[UpdatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|UserQuery
+     */
     public function getUpdatedBy()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
@@ -180,9 +190,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
         return [
             'id',
             'businessId' => 'business_id',
-            'year'=>function(self $model){
-            return Yii::$app->customHelper->toFa($model->year);
-            },
+            'year',
             'yearFa' => function (self $model) {
                 return $model->convert([$model->year]);
             },

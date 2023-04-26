@@ -103,6 +103,12 @@ class Freelancer extends \yii\db\ActiveRecord
     {
         return new FreelancerQuery(get_called_class());
     }
+
+    public function getFreelancerCategories()
+    {
+        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Freelancer::className()]);
+    }
+
     public function behaviors()
     {
         return [
@@ -133,7 +139,7 @@ class Freelancer extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/freelancer",
                 'basePath' => "@inceRoot/freelancer",
                 'path' => "@inceRoot/freelancer",

@@ -14,6 +14,7 @@ class Mentor extends \common\models\Mentor
     {
         return [
             'id',
+            'name',
             'picture' => function (self $model) {
                 return $model->getUploadUrl('picture');
             },
@@ -28,6 +29,7 @@ class Mentor extends \common\models\Mentor
             'telegram',
             'services',
             'records',
+            'resume_file'
         ];
     }
 }

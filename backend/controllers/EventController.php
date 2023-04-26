@@ -94,7 +94,7 @@ class EventController extends Controller
             if ($model->load($this->request->post()) && $model->validate()) {
                 $model->headlines   =  EventHeadlines::headLineHandler();
                 $model->event_times =  EventTimes::eventTimesHandler();
-                $model->sponsors =  EventSponsors::headSpnser();
+                $model->sponsors    =  EventSponsors::sponsorsHandler();
 
                 if($model->save()){
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -125,8 +125,9 @@ class EventController extends Controller
 
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $model->headlines =  EventHeadlines::headLineHandler($model->headlines);
+            $model->headlines   =  EventHeadlines::headLineHandler($model->headlines);
             $model->event_times =  EventTimes::eventTimesHandler();
+            $model->sponsors    =  EventSponsors::sponsorsHandler($model->sponsors);
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -135,6 +136,7 @@ class EventController extends Controller
             'model' => $model,
             'eventHeadlines' => EventHeadlines::loadDefaultValue($model->headlines),
             'eventTimes' => EventTimes::loadDefaultValue($model->event_times),
+            'eventSponsors' => EventSponsors::loadDefaultValue($model->sponsors),
         ]);
     }
 

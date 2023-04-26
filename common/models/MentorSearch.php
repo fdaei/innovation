@@ -11,6 +11,8 @@ use common\models\Mentor;
  */
 class MentorSearch extends Mentor
 {
+    public $categories;
+    public $picture_mentor;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class MentorSearch extends Mentor
     {
         return [
             [['id', 'status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
-            [['name', 'mobile', 'picture', 'video', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field', 'activity_description', 'services', 'records'], 'safe'],
+            [['picture', 'video', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field', 'activity_description', 'services', 'records','categories'], 'safe'],
         ];
     }
 
@@ -55,6 +57,12 @@ class MentorSearch extends Mentor
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        if($this->categories){
+            $query->joinWith('mentorCategories')
+                ->andFilterWhere(['in', 'categories_id', $this->categories]);
+        }
+
 
         // grid filtering conditions
         $query->andFilterWhere([

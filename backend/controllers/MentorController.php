@@ -89,33 +89,8 @@ class MentorController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
 
-                $mentorRecords = Model::createMultiple(MentorRecords::classname());
-                Model::loadMultiple($mentorRecords, Yii::$app->request->post());
-                if (Model::validateMultiple($mentorRecords)) {
-                    $recordsJson = [];
-                    foreach ($mentorRecords as $mentorRecord) {
-                        $recordsJson[] = [
-                            'year' => $mentorRecord->year,
-                            'title' => $mentorRecord->title,
-                            'description' => $mentorRecord->description,
-                        ];
-                    }
-                    $model->records = $recordsJson;
-                }
-
-                $mentorServices = Model::createMultiple(MentorServices::classname());
-                Model::loadMultiple($mentorServices, Yii::$app->request->post());
-
-                if (Model::validateMultiple($mentorServices)) {
-                    $servicesJson = [];
-                    foreach ($mentorServices as $mentorService) {
-                        $servicesJson[] = [
-                            'title' => $mentorService->title,
-                            'description' => $mentorService->description,
-                        ];
-                    }
-                    $model->services = $servicesJson;
-                }
+                $model->records  = MentorRecords::handelData();
+                $model->services = MentorServices::handelData();
 
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -143,12 +118,19 @@ class MentorController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
+
+            $model->records  = MentorRecords::handelData();
+            $model->services = MentorServices::handelData();
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'mentorServices' => MentorServices::loadDefaultValue($model->services),
+            'mentorRecords'  => MentorRecords::loadDefaultValue($model->records),
         ]);
     }
 

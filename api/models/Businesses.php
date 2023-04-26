@@ -21,18 +21,35 @@ class Businesses extends \common\models\Businesses
                 return $model->getUploadUrl('picture_mobile');
             },
             'name',
+            'business_logo' => function (self $model) {
+                return $model->getUploadUrl('business_logo');
+            },
+            'business_color',
+            'business_en_name',
             'description_brief',
             'description',
             'website',
             'telegram',
             'instagram',
             'whatsapp',
-            'pic_main_desktop',
-            'pic_main_mobile',
-            'pic_small1_desktop',
-            'pic_small1_mobile',
-            'pic_small2_desktop',
-            'pic_small2_mobile',
+            'pic_main_desktop' => function (self $model) {
+                return $model->getUploadUrl('pic_main_desktop');
+            },
+            'pic_main_mobile' => function (self $model) {
+                return $model->getUploadUrl('pic_main_mobile');
+            },
+            'pic_small1_desktop' => function (self $model) {
+                return $model->getUploadUrl('pic_small1_desktop');
+            },
+            'pic_small1_mobile' => function (self $model) {
+                return $model->getUploadUrl('pic_small1_mobile');
+            },
+            'pic_small2_desktop' => function (self $model) {
+                return $model->getUploadUrl('pic_small2_desktop');
+            },
+            'pic_small2_mobile' => function (self $model) {
+                return $model->getUploadUrl('pic_small2_mobile');
+            },
             'statistics',
             'services',
             'investors',

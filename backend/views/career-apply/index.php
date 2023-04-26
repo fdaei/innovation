@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2><?= Html::encode($this->title) ?></h2>
     </div>
     <?php Pjax::begin(); ?>
-    <div class="card-body">
+    <div class="card-body m-2">
         <?= $this->render('_search', ['model' => $searchModel]); ?>
 
         <?= GridView::widget([
