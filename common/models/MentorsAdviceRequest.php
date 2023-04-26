@@ -143,23 +143,6 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
             ],
-<<<<<<< HEAD
-=======
-            [
-                'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'file',
-                'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/MentorsAdviceRequest",
-                'basePath' => "@inceRoot/MentorsAdviceRequest",
-                'path' => "@inceRoot/MentorsAdviceRequest",
-                'url' => "@cdnWeb/MentorsAdviceRequest"
-            ],
->>>>>>> upload-image
         ];
     }
 }
