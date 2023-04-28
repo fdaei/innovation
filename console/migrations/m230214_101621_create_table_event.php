@@ -28,7 +28,6 @@ class m230214_101621_create_table_event extends Migration
                 'address' => $this->text()->notNull(),
                 'longitude' => $this->float()->notNull(),
                 'latitude' => $this->float()->notNull(),
-                'sponsors' => $this->json()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
