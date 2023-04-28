@@ -42,18 +42,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Businesses extends \yii\db\ActiveRecord
 {
-    public $business_logo;
-    public $picture_desktop;
-    public $picture_mobile;
-    public $business_en_name;
-    public $business_color;
-    public $pic_main_desktop;
-    public $pic_main_mobile;
-    public $pic_small1_desktop;
-    public $pic_small1_mobile;
-    public $pic_small2_desktop;
-    public $pic_small2_mobile;
-    public $id;
 
     /**
      * {@inheritdoc}
@@ -265,6 +253,11 @@ class Businesses extends \yii\db\ActiveRecord
     }
     public function getBusinessStory()
     {
-        return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id'])->select(['id','year','title','texts']);
+        return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id'])->select(['id','year','title','texts','picture']);
     }
+    public function getBusinessesInvestors()
+    {
+        return $this->hasMany(BusinessesInvestors::class, ['businesses_id' => 'id']);
+    }
+
 }

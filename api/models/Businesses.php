@@ -53,7 +53,12 @@ class Businesses extends \common\models\Businesses
             'statistics',
             'services',
             'investors',
-            'business_story' => 'businessStory',
+            'investors' => function (self $model) {
+                return $model->businessesInvestors;
+            },
+            'business_story' => function (self $model) {
+                return $model->businessStory;
+            },
         ];
     }
 }

@@ -18,7 +18,7 @@ $this->title = Yii::t('app', 'Businesses');
     <div class="d-flex flex-row justify-content-between">
         <h1 class="custom_color"><?= Html::encode($this->title) ?></h1>
         <p class="">
-            <?= Html::a('Create Businesses', ['create'], ['class' => 'btn custom_background_color rounded-pill text-white']) ?>
+            <?= Html::a('ایجاد کسب و کار جدید', ['create'], ['class' => 'btn custom_background_color rounded-pill text-white']) ?>
         </p>
     </div>
     <?= $this->render('_search', ['model' => $searchModel]); ?>
@@ -34,9 +34,9 @@ $this->title = Yii::t('app', 'Businesses');
             'telegram',
             'instagram',
             'whatsapp',
-            'statistics',
-            'services',
-            'investors',
+//            'statistics',
+//            'services',
+//            'investors',
             'status',
             [
                 'class' => ActionColumn::class,

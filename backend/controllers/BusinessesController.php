@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\BusinessesServices;
-use backend\models\BusinessesSponsors;
+use common\models\BusinessesInvestors;
 use backend\models\BusinessesStatistics;
 use common\models\Businesses;
 use common\models\BusinessesSearch;
@@ -69,8 +69,6 @@ class BusinessesController extends Controller
      */
     public function actionView($id)
     {
-        var_dump($id);
-        die();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -84,21 +82,20 @@ class BusinessesController extends Controller
     public function actionCreate()
     {
         $model = new Businesses();
-        $businessesSponsors = [new BusinessesSponsors()];
+        $BusinessesInvestors = [new BusinessesInvestors()];
         $businessesStatistics = [new BusinessesStatistics()];
         $businessesServices = [new BusinessesServices()];
         $businessesStory = [new BusinessesStory()];
 
         if ($this->request->isPost) {
             $model->status = 1;
-            if ($model->load($this->request->post())) {
-                $model->save();
-                BusinessesStory::handelData($model->id);
-                $model->investors   =  BusinessesSponsors::handelData();
+            if ($model->load($this->request->post()) && $model->validate()) {
                 $model->statistics  =  BusinessesStatistics::handelData();
                 $model->services    =  BusinessesServices::handelData();
 
-                if($model->save(false)){
+                if($model->save()){
+                    BusinessesStory::handelData($model->id);
+                    BusinessesInvestors::handelData($model->id);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -109,7 +106,7 @@ class BusinessesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'businessesSponsors' => $businessesSponsors,
+            'businessesSponsors' => $BusinessesInvestors,
             'businessesStatistics' => $businessesStatistics,
             'businessesServices' => $businessesServices,
             'businessesStory' => $businessesStory,
@@ -128,15 +125,22 @@ class BusinessesController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $model->investors   =  BusinessesSponsors::handelData();
+            $model->statistics  =  BusinessesStatistics::handelData();
+            $model->services    =  BusinessesServices::handelData();
+
             if($model->save()){
+                BusinessesStory::handelData($model->id,$model->businessStory);
+                BusinessesInvestors::handelData($model->id,$model->businessesInvestors);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 
         return $this->render('update', [
             'model' => $model,
-            'eventSponsors' => BusinessesSponsors::loadDefaultValue($model->investors),
+            'businessesStatistics' => BusinessesStatistics::loadDefaultValue($model->statistics),
+            'businessesServices' => BusinessesServices::loadDefaultValue($model->services),
+            'businessesSponsors' =>  !empty($model->businessesInvestors) ? $model->businessesInvestors : [new BusinessesInvestors],
+            'businessesStory' =>  !empty($model->businessStory) ? $model->businessStory : [new BusinessesStory],
         ]);
     }
 
