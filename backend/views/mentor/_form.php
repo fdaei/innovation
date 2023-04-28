@@ -102,6 +102,9 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                 }
                                 ?>
                                 <div class="row">
+                                    <div class='col-sm-5'>
+                                        <?= $form->field($modelAddress, "[{$i}]picture")->fileInput() ?>
+                                    </div>
                                     <div class="col-sm-6">
                                         <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                     </div>

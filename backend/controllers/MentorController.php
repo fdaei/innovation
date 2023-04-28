@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use backend\models\EventHeadlines;
 use backend\models\MentorRecords;
-use backend\models\MentorServices;
+use common\models\MentorServices;
 use common\models\Mentor;
 use common\models\MentorSearch;
 use common\models\Model;
@@ -87,12 +87,13 @@ class MentorController extends Controller
         $mentorServices = [new MentorServices()];
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post()) && $model->validate()) {
 
                 $model->records  = MentorRecords::handelData();
-                $model->services = MentorServices::handelData();
+                if($model->save()){
+                    MentorServices::handelData($model->id);
+                }
 
-                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             print_r($model->errors); die;
@@ -121,16 +122,17 @@ class MentorController extends Controller
         if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
 
             $model->records  = MentorRecords::handelData();
-            $model->services = MentorServices::handelData();
+            MentorServices::handelData($model->id,$model->mentorServices);
             $model->save();
+
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'mentorServices' => MentorServices::loadDefaultValue($model->services),
             'mentorRecords'  => MentorRecords::loadDefaultValue($model->records),
+            'mentorServices' => !empty($model->mentorServices) ? $model->mentorServices :  [new MentorServices()],
         ]);
     }
 

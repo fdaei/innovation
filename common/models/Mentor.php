@@ -39,9 +39,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Mentor extends \yii\db\ActiveRecord
 {
-    public $picture_mentor;
-
-
 
     public static function tableName()
     {
@@ -141,6 +138,11 @@ class Mentor extends \yii\db\ActiveRecord
         return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Mentor::className()]);
     }
 
+    public function getMentorServices()
+    {
+        return $this->hasMany(MentorServices::class, ['mentor_id' => 'id']);
+    }
+
 
     public function behaviors()
     {
@@ -173,10 +175,10 @@ class Mentor extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/mentor",
-                'basePath' => "@inceRoot/mentor",
-                'path' => "@inceRoot/mentor",
-                'url' => "@cdnWeb/mentor"
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -187,10 +189,10 @@ class Mentor extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/mentor",
-                'basePath' => "@inceRoot/mentor",
-                'path' => "@inceRoot/mentor",
-                'url' => "@cdnWeb/mentor"
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -201,10 +203,10 @@ class Mentor extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/mentor",
-                'basePath' => "@inceRoot/mentor",
-                'path' => "@inceRoot/mentor",
-                'url' => "@cdnWeb/mentor"
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
             ]
         ];
     }

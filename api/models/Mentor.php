@@ -27,7 +27,9 @@ class Mentor extends \common\models\Mentor
             'linkedin',
             'twitter',
             'telegram',
-            'services',
+            'services' => function (self $model) {
+                return $model->mentorServices;
+            },
             'records',
             'resume_file'
         ];

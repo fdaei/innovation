@@ -4,31 +4,25 @@ namespace common\models;
 
 use common\behaviors\CdnUploadImageBehavior;
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
-use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
- * This is the model class for table "{{%event_sponsors}}".
+ * This is the model class for table "{{%mentor_services}}".
  *
  * @property int $id
- * @property string $event_id
+ * @property int $mentor_id
+ * @property string|null $picture
  * @property string $title
  * @property string $description
- * @property string|null $picture
- * @property string|null $instagram
- * @property string|null $telegram
- * @property string|null $whatsapp
  */
-class EventSponsors extends \yii\db\ActiveRecord
+class MentorServices extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%event_sponsors}}';
+        return '{{%mentor_services}}';
     }
 
     /**
@@ -37,9 +31,10 @@ class EventSponsors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_id', 'title', 'description'], 'required'],
+            [['mentor_id', 'title', 'description'], 'required'],
+            [['mentor_id'], 'integer'],
             [['description'], 'string'],
-            [['title', 'instagram', 'telegram', 'whatsapp'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,13 +45,9 @@ class EventSponsors extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'event_id' => Yii::t('app', 'Event ID'),
+            'mentor_id' => Yii::t('app', 'Mentor ID'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
-            'picture' => Yii::t('app', 'Picture'),
-            'instagram' => Yii::t('app', 'Instagram'),
-            'telegram' => Yii::t('app', 'Telegram'),
-            'whatsapp' => Yii::t('app', 'Whatsapp'),
         ];
     }
     public static function handelData($eid,$defaultData = []){
@@ -75,8 +66,8 @@ class EventSponsors extends \yii\db\ActiveRecord
 
 
         foreach ($postData as $index => $eachData) {
-            $eachData->event_id = $eid;
-            $eachData->instanceNames = ['picture' => "EventSponsors[{$index}][picture]"];
+            $eachData->mentor_id = $eid;
+            $eachData->instanceNames = ['picture' => "MentorServices[{$index}][picture]"];
             if($eachData->validate()){
                 $eachData->save();
             }
@@ -96,10 +87,10 @@ class EventSponsors extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/event",
-                'basePath' => "@inceRoot/event",
-                'path' => "@inceRoot/event",
-                'url' => "@cdnWeb/event"
+                'cdnPath' => "@cdnRoot/mentor",
+                'basePath' => "@inceRoot/mentor",
+                'path' => "@inceRoot/mentor",
+                'url' => "@cdnWeb/mentor"
             ],
         ];
     }
