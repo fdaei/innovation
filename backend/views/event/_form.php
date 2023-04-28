@@ -79,7 +79,7 @@ use kartik\file\FileInput;
                                 ?>
                                 <div class="row">
                                     <div class='col-sm-5'>
-                                        <?= $form->field($modelAddress, "[{$i}]imageFileSponsors")->fileInput() ?>
+                                        <?= $form->field($modelAddress, "[{$i}]picture")->fileInput() ?>
                                     </div>
                                     <div class="col-sm-7">
                                         <div class="row">
