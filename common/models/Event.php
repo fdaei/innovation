@@ -117,6 +117,10 @@ class Event extends \yii\db\ActiveRecord
     {
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
     }
+    public function getEventSponsorsInfo()
+    {
+        return $this->hasMany(EventSponsors::class, ['event_id' => 'id']);
+    }
 
     /**
      * {@inheritdoc}
@@ -175,15 +179,6 @@ class Event extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return [];
-    }
-    public function getSponsor()
-    {
-        return array_map(function ($model){
-            if(!empty($model['pic'])){
-                $model['pic'] = Yii::getAlias('@cdnWeb/event/' . $model['pic']);
-            }
-            return $model;
-        },$this->sponsors);
     }
 
     public static function getOrganizerList(){

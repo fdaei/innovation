@@ -26,7 +26,9 @@ class Event extends \common\models\Event
             'description',
             'headlines',
             'event_times',
-            'sponsor',
+            'sponsor' => function (self $model) {
+                return $model->eventSponsorsInfo;
+            },
             'address',
             'longitude',
             'latitude',

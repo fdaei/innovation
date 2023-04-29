@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use backend\assets\Datapicker;
-use backend\models\EventSponsors;
+use common\models\EventSponsors;
 use common\models\Event;
 use common\models\EventSearch;
 use Yii;
@@ -94,9 +94,9 @@ class EventController extends Controller
             if ($model->load($this->request->post()) && $model->validate()) {
                 $model->headlines   =  EventHeadlines::headLineHandler();
                 $model->event_times =  EventTimes::eventTimesHandler();
-                $model->sponsors    =  EventSponsors::sponsorsHandler();
 
                 if($model->save()){
+                    EventSponsors::handelData($model->id);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
@@ -127,7 +127,7 @@ class EventController extends Controller
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             $model->headlines   =  EventHeadlines::headLineHandler($model->headlines);
             $model->event_times =  EventTimes::eventTimesHandler();
-            $model->sponsors    =  EventSponsors::sponsorsHandler($model->sponsors);
+            EventSponsors::handelData($model->id,$model->eventSponsorsInfo);
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -136,7 +136,7 @@ class EventController extends Controller
             'model' => $model,
             'eventHeadlines' => EventHeadlines::loadDefaultValue($model->headlines),
             'eventTimes' => EventTimes::loadDefaultValue($model->event_times),
-            'eventSponsors' => EventSponsors::loadDefaultValue($model->sponsors),
+            'eventSponsors' => !empty($model->eventSponsorsInfo) ? $model->eventSponsorsInfo : [new EventSponsors],
         ]);
     }
 

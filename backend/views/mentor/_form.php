@@ -17,57 +17,58 @@ use wbraganca\dynamicform\DynamicFormWidget;
 <div class="mentor-form">
 
     <?php $form = ActiveForm::begin(['id'=>'mentor_form']); ?>
-    <div class="row justify-content-center">
-
-        <div class='col-md-4'>
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <div class="card card-body">
+        <div class="row">
+            <div class='col-md-4'>
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'activity_description')->textarea(['rows' => 6]) ?>
+            </div>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'linkedin')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'twitter')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
+                <?=
+                $form->field($model, 'status')->widget(Select2::class, [
+                    'data' => ArrayHelper::map(Statuses::find()->onCondition(['type'=>'mentor'])->all(), 'id', 'title_fa'),
+                    'options' => ['placeholder' => Yii::t('app', 'Select Mentor')],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class='col-md-4'>
+                <?=
+                $form->field($model, 'user_id')->widget(Select2::class, [
+                    'data' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
+                    'options' => ['placeholder' => Yii::t('app', 'Select user')],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'whatsapp')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'telegram')->textInput(['maxlength' => true]) ?>
+            </div>
         </div>
-        <div class='col-md-4'>
-            <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-4'>
-            <?= $form->field($model, 'activity_description')->textarea(['rows' => 6]) ?>
-        </div>
-
-        <div class='col-md-4'>
-            <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-4'>
-            <?= $form->field($model, 'linkedin')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-4'>
-            <?= $form->field($model, 'twitter')->textInput(['maxlength' => true]) ?>
-        </div>
-
-        <div class="col-md-4">
-            <?=
-            $form->field($model, 'status')->widget(Select2::class, [
-                'data' => ArrayHelper::map(Statuses::find()->onCondition(['type'=>'mentor'])->all(), 'id', 'title_fa'),
-                'options' => ['placeholder' => Yii::t('app', 'Select Mentor')],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ]);
-            ?>
-        </div>
-        <div class='col-md-4'>
-            <?=
-            $form->field($model, 'user_id')->widget(Select2::class, [
-                'data' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
-                'options' => ['placeholder' => Yii::t('app', 'Select user')],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ]);
-            ?>
-        </div>
-        <div class='col-md-4'>
-            <?= $form->field($model, 'whatsapp')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-4'>
-            <?= $form->field($model, 'telegram')->textInput(['maxlength' => true]) ?>
-        </div>
-
+    </div>
+    <div class="card card-body">
+        <div class="row">
         <div class='col-md-12 kohl' style="margin-top:60px">
             <div class="panel-body ">
                 <?php DynamicFormWidget::begin([
@@ -102,10 +103,13 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                 }
                                 ?>
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class='col-sm-3'>
+                                        <?= $form->field($modelAddress, "[{$i}]picture")->fileInput() ?>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <?= $form->field($modelAddress, "[{$i}]description")->textarea(['maxlength' => true]) ?>
                                     </div>
                                 </div><!-- .row -->
@@ -117,8 +121,11 @@ use wbraganca\dynamicform\DynamicFormWidget;
                 <?php DynamicFormWidget::end(); ?>
             </div>
         </div>
+        </div>
+    </div>
 
-
+    <div class="card card-body">
+        <div class="row">
         <div class='col-md-12 kohl' style="margin-top:60px">
             <div class="panel-body ">
                 <?php DynamicFormWidget::begin([
@@ -172,9 +179,11 @@ use wbraganca\dynamicform\DynamicFormWidget;
                 <?php DynamicFormWidget::end(); ?>
             </div>
         </div>
+        </div>
+    </div>
 
-
-
+    <div class="card card-body">
+        <div class="row">
         <div class='col-md-4'>
             <?= $form->field($model, 'picture_mentor')->widget(FileInput::class, [
                 'options' => ['accept' => 'image/*'],
@@ -189,6 +198,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
             <?= $form->field($model, 'video')->widget(FileInput::class, [
                 'name' => 'attachment_3',
             ]) ?>
+        </div>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">
