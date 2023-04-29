@@ -11,16 +11,6 @@ use common\models\Businesses;
  */
 class BusinessesSearch extends Businesses
 {
-    public $business_logo;
-    public $picture_desktop;
-    public  $picture_mobile;
-    public $pic_main_desktop;
-    public  $pic_main_mobile;
-    public $pic_small1_desktop;
-    public $pic_small1_mobile;
-    public $pic_small2_desktop;
-    public $pic_small2_mobile;
-    public $id;
 
 
     /**

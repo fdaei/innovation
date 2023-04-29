@@ -22,7 +22,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $user_id
  * @property string|null $whatsapp
  * @property string|null $telegram
- * @property string|null $resume_file
  * @property string $activity_field
  * @property string $activity_description
  * @property string $services
@@ -39,6 +38,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Mentor extends \yii\db\ActiveRecord
 {
+    public $picture_mentor;
+
+
 
     public static function tableName()
     {
@@ -52,7 +54,7 @@ class Mentor extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'name', 'activity_field', 'activity_description'], 'required'],
-            [['activity_description','resume_file'], 'string'],
+            [['activity_description'], 'string'],
             [[ 'services', 'records'], 'safe'],
             [['status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
@@ -133,17 +135,6 @@ class Mentor extends \yii\db\ActiveRecord
         return true;
     }
 
-    public function getMentorCategories()
-    {
-        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Mentor::className()]);
-    }
-
-    public function getMentorServices()
-    {
-        return $this->hasMany(MentorServices::class, ['mentor_id' => 'id']);
-    }
-
-
     public function behaviors()
     {
         return [
@@ -175,10 +166,10 @@ class Mentor extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/mentor",
+                'basePath' => "@inceRoot/mentor",
+                'path' => "@inceRoot/mentor",
+                'url' => "@cdnWeb/mentor"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -189,10 +180,10 @@ class Mentor extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/mentor",
+                'basePath' => "@inceRoot/mentor",
+                'path' => "@inceRoot/mentor",
+                'url' => "@cdnWeb/mentor"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -203,10 +194,10 @@ class Mentor extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/mentor",
+                'basePath' => "@inceRoot/mentor",
+                'path' => "@inceRoot/mentor",
+                'url' => "@cdnWeb/mentor"
             ]
         ];
     }

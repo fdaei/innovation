@@ -20,7 +20,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int|null $updated_at
  * @property int $created_at
  * @property int $deleted_at
- * @property string $model_class
  */
 class FreelancerCategoryList extends \yii\db\ActiveRecord
 {
@@ -38,10 +37,9 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'status'], 'required'],
+            [['title', 'brief_description', 'status'], 'required'],
             [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at'], 'integer'],
             [['title', 'brief_description', 'picture'], 'string', 'max' => 255],
-            ['model_class','string']
         ];
     }
 
@@ -102,10 +100,10 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/FreelancerCategoryList",
-                'basePath' => "@inceRoot/FreelancerCategoryList",
-                'path' => "@inceRoot/FreelancerCategoryList",
-                'url' => "@cdnWeb/FreelancerCategoryList"
+                'cdnPath' => "@cdnRoot/freelancer",
+                'basePath' => "@inceRoot/freelancer",
+                'path' => "@inceRoot/freelancer",
+                'url' => "@cdnWeb/freelancer"
             ],
 
         ];

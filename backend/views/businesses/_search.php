@@ -42,7 +42,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary custom_background_color rounded-pill ']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn custom_background_color rounded-pill text-white']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary custom_border rounded-pill ']) ?>
     </div>
 

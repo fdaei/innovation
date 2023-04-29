@@ -77,24 +77,4 @@ class BusinessesSponsors extends Model
         return $arrayData;
 
     }
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'imageFile',
-                'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/BusinessesSponsors",
-                'basePath' => "@inceRoot/BusinessesSponsors",
-                'path' => "@inceRoot/BusinessesSponsors",
-                'url' => "@cdnWeb/BusinessesSponsors"
-            ],
-        ];
-    }
-
 }

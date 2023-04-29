@@ -15,11 +15,6 @@ use kartik\file\FileInput;
     <?php $form = ActiveForm::begin([
         'id' => 'businesses_form'
     ]); ?>
-    <div class="row bg-white p-3">
-        <div class="col-md-12 ">
-            <h1 class="bg-white mx-0 m-0"><?= Html::encode($this->title) ?></h1>
-        </div>
-    </div>
     <div class="row bg-white p-3 rounded">
         <div class="col-md-4 ">
             <?= $form->field($model, 'name')->textInput(['class' => 'custom_input_search d-inline', 'maxlength' => true]) ?>
@@ -68,12 +63,19 @@ use kartik\file\FileInput;
                 ],
             ]); ?>
             <div class="container-items-statistics"><!-- widgetContainer -->
-                <div>
-                    <h2 class="mb-4">اضافه کردن آمار</h2>
-                    <button type="button" class="add-item-statistics btn  btn-xs float-right rounded-pill custom_background_color text-white">آمار جدید</button>
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>اضافه کردن آمار جدید</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="float-right add-item-statistics btn custom_background_color btn-xs text-white rounded-pill">آمار جدید</button>
+                    </div>
                 </div>
                 <?php foreach ($businessesStatistics as $i => $modelAddress): ?>
-                    <div class="item-statistics panel panel-default" style="padding-right: 0px"><!-- widgetBody -->
+                    <div class="item-statistics panel panel-default " ><!-- widgetBody -->
+                        <div class="panel-heading">
+                            <div class="clearfix"></div>
+                        </div>
                         <div class="panel-body">
                             <?php
                             // necessary for update action.
@@ -81,20 +83,17 @@ use kartik\file\FileInput;
                                 echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
                             }
                             ?>
-                            <div class="row">
+                            <div class="row my-4">
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search','maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search d-inline','maxlength' => true]) ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search','rows'=>6,'maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search d-inline','rows' => 6,'maxlength' => true]) ?>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button type="button" class="float-right remove-item-statistics btn custom_background_color2 btn-xs text-white rounded-pill ">حذف</button>
                                 </div>
                             </div><!-- .row -->
-                        </div>
-                        <div class="">
-                            <div class="">
-                                <button type="button" class="remove-item-statistics btn  btn-xs float-right rounded-pill custom_background_color2 text-white">حذف</button>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -120,12 +119,21 @@ use kartik\file\FileInput;
                 ],
             ]); ?>
             <div class="container-items-services"><!-- widgetContainer -->
-                <div>
-                    <h2 class="mb-4">اضافه کردن خدمت</h2>
-                    <button type="button" class="add-item-services  btn  btn-xs float-right rounded-pill custom_background_color text-white">خدمت جدید</button>
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>اضافه کردن خدمت جدید</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="add-item-services btn btn-success btn-xs custom_background_color rounded-pill">خدمت جدید</button>
+                    </div>
                 </div>
                 <?php foreach ($businessesServices as $i => $modelAddress): ?>
-                    <div class="item-services panel panel-default" style="padding-right: 0px"><!-- widgetBody -->
+                    <div class="item-services panel panel-default " style="padding-right: 0px"><!-- widgetBody -->
+                        <div class="panel-heading">
+                            <div class="pull-right">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                         <div class="panel-body">
                             <?php
                             // necessary for update action.
@@ -135,18 +143,15 @@ use kartik\file\FileInput;
                             ?>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search','maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search d-inline','maxlength' => true]) ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search','rows'=>6,'maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search d-inline','rows' => 6,'maxlength' => true]) ?>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button type="button" class="float-right remove-item-services btn text-white btn-xs custom_background_color2 rounded-pill">حذف</button>
                                 </div>
                             </div><!-- .row -->
-                        </div>
-                        <div class="">
-                            <div class="">
-                                <button type="button" class="remove-item-services btn  btn-xs float-right rounded-pill custom_background_color2 text-white">حذف</button>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -155,6 +160,7 @@ use kartik\file\FileInput;
         </div>
     </div>
     <div class="row bg-white p-3 rounded my-3">
+
         <div class="card card-body">
             <?php DynamicFormWidget::begin([
                 'widgetContainer' => 'dynamicform_wrapper3', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -172,12 +178,21 @@ use kartik\file\FileInput;
                 ],
             ]); ?>
             <div class="container-items-sponsors"><!-- widgetContainer -->
-                <div>
-                    <h2 class="mb-4">اضافه کردن اسپانسر</h2>
-                    <button type="button" class="add-item-sponsors btn  btn-xs float-right rounded-pill custom_background_color text-white">اسپانسر جدید</button>
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>اضافه کردن اسپانسر جدید</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="add-item-sponsors btn btn-success btn-xs custom_background_color rounded-pill">اسپانسر جدید</button>
+                    </div>
                 </div>
                 <?php foreach ($businessesSponsors as $i => $modelAddress): ?>
-                    <div class="item-sponsors panel panel-default " style="padding-right: 0px"><!-- widgetBody -->
+                    <div class="item-sponsors panel panel-default c"><!-- widgetBody -->
+                        <div class="panel-heading">
+                            <div class="pull-right">
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                         <div class="panel-body">
                             <?php
                             // necessary for update action.
@@ -186,26 +201,28 @@ use kartik\file\FileInput;
                             }
                             ?>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search','maxlength' => true]) ?>
+                                <div class="col-sm-3">
+                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search d-inline','maxlength' => true]) ?>
+                                </div>
+                                <div class="col-sm-3">
+                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search d-inline','rows' => 6,'maxlength' => true]) ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search','rows'=>6,'maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]picture")->widget(FileInput::class, [
+                                        'options' => ['accept' => 'image/*'],
+                                    ]) ?>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button type="button" class="remove-item-sponsors btn btn-xs custom_background_color2 rounded-pill text-white float-right">حذف</button>
                                 </div>
                             </div><!-- .row -->
-                        </div>
-                        <div class="">
-                            <div class="">
-                                <button type="button" class="remove-item-sponsors  btn-xs float-right rounded-pill custom_background_color2 text-white">حذف</button>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
             <?php DynamicFormWidget::end(); ?>
         </div>
-
     </div>
     <div class="row bg-white p-3 rounded my-3">
         <div class="card card-body">
@@ -225,38 +242,47 @@ use kartik\file\FileInput;
                 ],
             ]); ?>
             <div class="container-items-story"><!-- widgetContainer -->
-                <div>
-                    <h2 class="mb-4">اضافه کردن داستان</h2>
-                    <button type="button" class="add-item-story  btn  btn-xs float-right rounded-pill custom_background_color text-white">داستان جدید</button>
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>اضافه کردن داستان جدید</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="add-item-story btn btn-success btn-xs custom_background_color rounded-pill">اسپانسر جدید</button>
+                    </div>
                 </div>
                 <?php foreach ($businessesStory as $i => $modelAddress): ?>
                     <div class="item-story panel panel-default"><!-- widgetBody -->
+                        <div class="panel-heading">
+                            <div class="pull-right">
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                         <div class="panel-body">
                             <?php
                             // necessary for update action.
                             if (!$modelAddress->isNewRecord) {
                                 echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                                $modelAddress->texts = implode(PHP_EOL, $modelAddress->texts);
                             }
+
                             ?>
                             <div class="row">
+
+                                <div class="col-sm-6">
+                                    <?= $form->field($modelAddress, "[{$i}]year")->textInput(['class' => 'custom_input_search d-inline','maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]title")->textarea(['class' => 'custom_input_search d-inline','rows' => 6,'maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]texts")->textarea(['class' => 'custom_input_search d-inline','rows' => 6,'maxlength' => true]) ?>
+                                </div>
                                 <div class="col-sm-6">
                                     <?= $form->field($modelAddress, "[{$i}]picture")->widget(FileInput::class, [
                                         'options' => ['accept' => 'image/*'],
                                     ]) ?>
                                 </div>
-                                <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]year")->textInput(['class' => 'custom_input_search','maxlength' => true]) ?>
-                                    <?= $form->field($modelAddress, "[{$i}]title")->textarea(['class' => 'custom_input_search','rows'=>6,'maxlength' => true]) ?>
-                                    <?= $form->field($modelAddress, "[{$i}]texts")->textarea(['class' => 'custom_input_search','rows'=>6,'maxlength' => true]) ?>
+                                <div class="col-sm-12">
+                                    <button type="button" class="remove-item-story btn btn-xs custom_background_color2 rounded-pill text-white float-right">حذف</button>
                                 </div>
-
                             </div><!-- .row -->
-                        </div>
-                        <div class="">
-                            <div class="">
-                                <button type="button" class="remove-item-story btn  btn-xs float-right rounded-pill custom_background_color2 text-white">حذف</button>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -264,39 +290,63 @@ use kartik\file\FileInput;
             <?php DynamicFormWidget::end(); ?>
         </div>
     </div>
-</div>
-<div class="card card-body">
-    <?= $form->field($model, 'business_logo')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'picture_desktop')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'picture_mobile')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'pic_main_desktop')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'pic_main_mobile')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'pic_small1_desktop')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'pic_small1_mobile')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'pic_small2_desktop')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-    <?= $form->field($model, 'pic_small2_mobile')->widget(FileInput::class, [
-        'options' => ['accept' => 'image/*'],
-    ]) ?>
-</div>
-<div class="form-group">
-    <?= Html::submitButton('Save', ['class' => 'btn custom_background_color text-white btn-lg px-5']) ?>
-</div>
-<?php ActiveForm::end(); ?>
+    <div class="card card-body">
+        <div class="row">
 
+            <div class="col col-md-4">
+                <?= $form->field($model, "business_logo")->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+            <div class="col col-md-4">
+                <?= $form->field($model, 'picture_desktop')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+            <div class="col col-md-4">
+                <?= $form->field($model, 'picture_mobile')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+
+
+            <div class="col col-md-4">
+                <?= $form->field($model, 'pic_main_desktop')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+            <div class="col col-md-4">
+                <?= $form->field($model, 'pic_main_mobile')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+
+            </div>
+
+            <div class="col col-md-4">
+                <?= $form->field($model, 'pic_small1_desktop')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+            <div class="col col-md-4">
+                <?= $form->field($model, 'pic_small1_mobile')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+
+            <div class="col col-md-4">
+                <?= $form->field($model, 'pic_small2_desktop')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+            <div class="col col-md-4">
+                <?= $form->field($model, 'pic_small2_mobile')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <?= Html::submitButton('Save', ['class' => ' btn btn-success btn-lg px-5 custom_background_color rounded-pill']) ?>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
 </div>
