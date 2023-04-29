@@ -14,37 +14,39 @@ use kartik\file\FileInput;
 
 <div class="event-form">
     <?php $form = ActiveForm::begin(['id'=>'event_form']); ?>
-    <div class="row justify-content-center">
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'picture')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
-            ]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'event_organizer_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Event::getOrganizerList(),'id','organizer_name')) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'title_brief')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-8 kohl'>
-            <?= $form->field($model, 'evand_link')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-8 row justify-content-center'>
-            <div class='col-md-6 p-0'>
-                <?= $form->field($model, 'price')->textInput() ?>
+    <div class="card card-body">
+        <div class="row justify-content-center">
+            <div class='col-md-8 kohl'>
+                <?= $form->field($model, 'picture')->widget(FileInput::class, [
+                    'options' => ['accept' => 'image/*'],
+                ]) ?>
             </div>
-            <div class='col-md-6 p-0'>
-                <?= $form->field($model, 'price_before_discount')->textInput() ?>
+            <div class='col-md-8 kohl'>
+                <?= $form->field($model, 'event_organizer_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Event::getOrganizerList(),'id','organizer_name')) ?>
+            </div>
+            <div class='col-md-8 kohl'>
+                <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-8 kohl'>
+                <?= $form->field($model, 'title_brief')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-8 kohl'>
+                <?= $form->field($model, 'evand_link')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class='col-md-8 row justify-content-center'>
+                <div class='col-md-6 p-0'>
+                    <?= $form->field($model, 'price')->textInput() ?>
+                </div>
+                <div class='col-md-6 p-0'>
+                    <?= $form->field($model, 'price_before_discount')->textInput() ?>
+                </div>
             </div>
         </div>
+    </div>
 
-<!--        <div class='col-md-8 kohl'>-->
-<!--            --><?php //echo $form->field($model, 'sponsors')->textInput() ?>
-<!--        </div>-->
-        <div class='col-md-8 kohl' style="margin-top:60px">
+
+    <div class="card card-body">
+        <div class='col-md-12 kohl' style="">
             <div class="panel-body ">
                 <?php DynamicFormWidget::begin([
                     'widgetContainer' => 'dynamicform_wrapper1', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -110,8 +112,9 @@ use kartik\file\FileInput;
                 <?php DynamicFormWidget::end(); ?>
             </div>
         </div>
-
-        <div class='col-md-8 kohl' style="margin-top:60px">
+    </div>
+    <div class="card card-body">
+        <div class='col-md-12 kohl' style="">
             <div class="panel-body ">
                 <?php DynamicFormWidget::begin([
                     'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -160,8 +163,9 @@ use kartik\file\FileInput;
                 <?php DynamicFormWidget::end(); ?>
             </div>
         </div>
-
-        <div class='col-md-8 kohl' style="margin-top:60px">
+    </div>
+    <div class="card card-body">
+        <div class='col-md-12 kohl' style="">
             <div class="panel-body ">
                 <?php DynamicFormWidget::begin([
                     'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -210,24 +214,25 @@ use kartik\file\FileInput;
                 <?php DynamicFormWidget::end(); ?>
             </div>
         </div>
+    </div>
 
 
-
-
-        <div class='col-md-6 kohl'>
-            <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
-        </div>
-        <div class='col-md-6 kohl'>
-            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-        </div>
-        <span class='col-md-12'>
+    <div class="card card-body">
+        <div class="row">
+            <div class='col-md-6 kohl'>
+                <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
+            </div>
+            <div class='col-md-6 kohl'>
+                <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+            </div>
+            <span class='col-md-12'>
                  <p class="card-title border-bottom m-2 pb-3">
                 <div id="map" style="width: 100%;height: 400px;"></div>
             </p>
             <?= $form->field($model, 'longitude')->textInput(['style' => 'display: none'])->label(false) ?>
             <?= $form->field($model, 'latitude')->textInput(['style' => 'display: none'])->label(false) ?>
         </span>
-
+        </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex ">
         <div class="float-right">

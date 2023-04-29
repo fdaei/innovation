@@ -9,7 +9,7 @@ $this->title = Yii::t('app', 'Create Event');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="event-create card material-card">
+<div class="event-create material-card">
     <div class="card-header kohl">
         <h3><?= Html::encode($this->title) ?></h3>
     </div>
