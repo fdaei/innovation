@@ -6,19 +6,26 @@ use yii\base\Model;
 
 class BusinessesStatistics extends Model
 {
+    const SCENARIO_CREATE = 'create';
 
-    public $isNewRecord = true;
     public $title;
     public $description;
+    public $isNewRecord = true;
 
     public function rules()
     {
         return [
-            [['title','description'],'required'],
-            [['title','description'],'string'],
+            [['title', 'description'], 'required'],
+            // Add other validation rules
         ];
     }
 
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_CREATE] = ['title', 'description'];
+        return $scenarios;
+    }
     public function attributeLabels()
     {
         return [
@@ -28,7 +35,7 @@ class BusinessesStatistics extends Model
     }
 
     public static function handelData($defaultData = []){
-        $postData = \common\models\Model::createMultiple(self::className());
+        $postData = \common\models\Model::createMultiple(self::class);
         Model::loadMultiple($postData, Yii::$app->request->post());
         $headlinesJson = [];
         foreach ($postData as $index => $eachData) {

@@ -12,6 +12,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
 
 /**
  * BusinessesController implements the CRUD actions for Businesses model.
@@ -60,8 +61,11 @@ class BusinessesController extends Controller
      */
     public function actionView($id)
     {
+
+        $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'story' => $model->businessesStory,
         ]);
     }
 
@@ -88,7 +92,6 @@ class BusinessesController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Updates an existing Businesses model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -108,6 +111,59 @@ class BusinessesController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionCreateStatistics($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+        $businessesStatistics = [new BusinessesStatistics()];
+
+        if ($this->request->isPost) {
+            $newData = BusinessesStatistics::handelData();
+            $newModels = [];
+
+            foreach ($newData as $item) {
+                $newModel = new BusinessesStatistics();
+                $newModel->attributes = $item;
+                $newModel->scenario = BusinessesStatistics::SCENARIO_CREATE;
+                $newModels[] = $newModel;
+            }
+
+            // Validate all models
+            $isValid = BusinessesStatistics::validateMultiple($newModels);
+
+            if ($isValid) {
+                $model->statistics = array_merge($model->statistics, $newData);
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        }
+
+        return $this->renderAjax('_statistics', [
+            'model' => $model,
+            'businessesStatistics' => $businessesStatistics,
+            'form' => $form,
+        ]);
+    }
+    public function actionUpdateStatistics($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+
+        if ($this->request->isPost) {
+            $model->statistics  =  BusinessesStatistics::handelData();
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+        return $this->renderAjax('_statistics', [
+            'model' => $model,
+            'businessesStatistics' => BusinessesStatistics::loadDefaultValue($model->statistics),
+            'form' => $form,
+        ]);
+
+    }
 
     /**
      * Deletes an existing Businesses model.
@@ -118,8 +174,12 @@ class BusinessesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        if ($model->canDelete() && $model->softDelete()) {
+            $this->flash('success', Yii::t('app', 'Item Deleted'));
+        } else {
+            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
+        }
         return $this->redirect(['index']);
     }
 
@@ -138,28 +198,8 @@ class BusinessesController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-
-    public function actionGetBlock($id)
+    public function flash($type, $message)
     {
-        $id2 = Yii::$app->request->get('id');
-        var_dump($id2);
-        die();
-        if ($id == 1) {
-            return "1";
-        }
-        elseif ($id == 2) {
-            return "2";
-        }
-        elseif ($id == 3) {
-            return "3";
-        }
-        elseif ($id == 4) {
-            return "4";
-        }
-        elseif ($id == 5) {
-            return "5";
-        }
-
+        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
-
 }

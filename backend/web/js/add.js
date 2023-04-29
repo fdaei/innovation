@@ -106,24 +106,15 @@ function viewMap() {
     }).addTo(map);
 }
 $(document).ready(function() {
+    // Reload pjax container when a tab is shown
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        var target = $(e.target).attr("href"); // Get the target tab
+
+        var target = $(e.target).attr("http://backend.ince.local/businesses/get-block"); // Get the target tab
         var pjaxContainer = $(target + ' .yii2-pjax-container'); // Get the pjax container inside the tab
         if (pjaxContainer.length) {
             $.pjax.reload({container: pjaxContainer.attr('id'), timeout: 10000});
         }
     });
 });
-function updateBlock(blockId, targetElementId) {
-    $.ajax({
-        url: '/businesses/get-block?id=' + blockId,
-        type: 'GET',
-        success: function(response) {
-            $('#' + targetElementId).html(response);
-        },
-        error: function() {
-            console.log('error');
-        }
-    });
-}
+
 

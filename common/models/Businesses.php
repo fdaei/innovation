@@ -102,6 +102,11 @@ class Businesses extends \yii\db\ActiveRecord
             'deleted_at' => 'Deleted At',
         ];
     }
+    public function getBusinessesStory()
+    {
+        return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id']);
+    }
+
     public static function find()
     {
         return new BusinessesQuery(get_called_class());
@@ -262,6 +267,11 @@ class Businesses extends \yii\db\ActiveRecord
                 'url' => "@cdnWeb/businesses"
             ],
         ];
+    }
+
+    public function canDelete()
+    {
+        return true;
     }
 
 }

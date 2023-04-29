@@ -19,6 +19,7 @@ use yii\filters\VerbFilter;
  */
 class MentorController extends Controller
 {
+
     /**
      * @inheritDoc
      */
@@ -83,27 +84,18 @@ class MentorController extends Controller
     public function actionCreate()
     {
         $model = new Mentor();
-        $mentorRecords = [new MentorRecords()];
-        $mentorServices = [new MentorServices()];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
 
-                $model->records  = MentorRecords::handelData();
-                $model->services = MentorServices::handelData();
-
-                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-            print_r($model->errors); die;
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
-            'mentorServices' => $mentorServices,
-            'mentorRecords'  => $mentorRecords
         ]);
     }
 

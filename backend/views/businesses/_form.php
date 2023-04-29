@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'picture_desktop')->widget(FileInput::class, [
+            <?= $form->field($model, 'business_logo')->widget(FileInput::class, [
                 'options' => ['accept' => 'image/*'],
             ]) ?>
         </div>

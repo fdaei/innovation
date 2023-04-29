@@ -42,9 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'telegram',
                 'instagram',
                 'whatsapp',
-                'statistics',
-                'services',
-                'investors',
                 'status',
                 [
                     'class' => ActionColumn::className(),

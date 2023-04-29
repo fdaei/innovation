@@ -143,8 +143,6 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
             ],
-<<<<<<< HEAD
-=======
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'file',
