@@ -27,6 +27,7 @@ class m230207_223404_create_table_businesses extends Migration
                 'business_logo' => $this->string(),
                 'business_color' => $this->string(),
                 'business_en_name' => $this->string(),
+                'site_name' => $this->string(),
                 'description_brief' => $this->string(),
                 'description' => $this->text(),
                 'website' => $this->string(),

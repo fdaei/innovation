@@ -20,6 +20,9 @@ use kartik\file\FileInput;
             <?= $form->field($model, 'name')->textInput(['class' => 'custom_input_search d-inline', 'maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
+            <?= $form->field($model, 'site_name')->textInput(['class' => 'custom_input_search d-inline', 'business_color' => true]) ?>
+        </div>
+        <div class="col-md-4">
             <?= $form->field($model, 'business_en_name')->textInput(['class' => 'custom_input_search d-inline', 'business_color' => true]) ?>
         </div>
         <div class="col-md-4">

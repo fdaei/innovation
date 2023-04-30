@@ -24,6 +24,7 @@ class Businesses extends \common\models\Businesses
             'business_logo' => function (self $model) {
                 return $model->getUploadUrl('business_logo');
             },
+            'site_name',
             'business_color',
             'business_en_name',
             'description_brief',
