@@ -5,7 +5,8 @@ namespace api\modules\v1\controllers;
 use api\models\FreelancerCategoryList;
 use common\models\CareerApply;
 use common\models\Freelancer;
-use common\models\Hitech;
+use api\models\Hitech;
+use common\models\HitechProposal;
 use common\models\Job;
 use common\models\HitechSearch;
 use common\models\MentorsAdviceRequest;
@@ -22,6 +23,8 @@ use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 use yii\web\HttpException;
 use yii\data\ActiveDataProvider;
+use yii\web\ServerErrorHttpException;
+
 /**
  * CareerApply controller
  */
@@ -68,10 +71,29 @@ class HitechController extends ActiveController
         return $dataProvider;
     }
 
+    public function actionSimilarHitech(){
+        return new ActiveDataProvider([
+            'query' => Hitech::find()->orderBy('id DESC')->limit(3),
+        ]);
+    }
+
     public function actionHitechList(){
         return new ActiveDataProvider([
             'query' => FreelancerCategoryList::find()->where(['model_class'=>Hitech::className()])
         ]);
+    }
 
+    public function actionHitechProposalCreate()
+    {
+        $model = new HitechProposal();
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        if ($model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+        } elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        }
+
+        return $model;
     }
 }

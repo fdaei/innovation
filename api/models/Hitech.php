@@ -20,6 +20,9 @@ class Hitech extends \common\models\Hitech
             'minimum_budget',
             'maximum_budget',
             'required_skills',
+            'time' => function($model){
+                return \Yii::$app->pdate->jdate('Y/m/d H:i',$model->created_at);
+            }
         ];
     }
 
