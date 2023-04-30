@@ -57,7 +57,7 @@ class Businesses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description'], 'string'],
+            [['description','site_name'], 'string'],
             [['statistics', 'services', 'investors'], 'safe'],
             [['status','business_color','business_en_name'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
