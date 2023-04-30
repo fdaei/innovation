@@ -157,6 +157,12 @@ $menu_items = [
                 'url' => ['/hitech/']
             ],
             [
+                'group' => 'hitech',
+                'label' => Yii::t('app', 'Hitech Proposal'),
+                'icon' => 'fas fa-check-square',
+                'url' => ['/hitech-proposal/']
+            ],
+            [
                 'group' => 'Settings',
                 'label' => 'تنظیمات',
                 'icon' => 'fas fa-cogs',
