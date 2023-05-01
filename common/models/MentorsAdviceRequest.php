@@ -157,7 +157,6 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
                 'path' => "@inceRoot/MentorsAdviceRequest",
                 'url' => "@cdnWeb/MentorsAdviceRequest"
             ],
->>>>>>> upload-image
         ];
     }
 }

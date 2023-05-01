@@ -85,4 +85,9 @@ class Job extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Businesses::class, ['id' => 'business_id']);
     }
+
+    public function getJobCategories()
+    {
+        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Job::className()]);
+    }
 }

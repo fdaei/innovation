@@ -5,8 +5,9 @@ namespace api\modules\v1\controllers;
 use api\models\FreelancerCategoryList;
 use common\models\CareerApply;
 use common\models\Freelancer;
+use common\models\Hitech;
 use common\models\Job;
-use common\models\JobSearch;
+use common\models\HitechSearch;
 use common\models\MentorsAdviceRequest;
 use common\models\OrgUnitSearch;
 use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
@@ -24,9 +25,9 @@ use yii\data\ActiveDataProvider;
 /**
  * CareerApply controller
  */
-class JobController extends ActiveController
+class HitechController extends ActiveController
 {
-    public $modelClass = "api\models\Job";
+    public $modelClass = 'api\models\Hitech';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -61,15 +62,15 @@ class JobController extends ActiveController
 
     public function actionIndex()
     {
-        $searchModel = new JobSearch();
+        $searchModel = new HitechSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $dataProvider;
     }
 
-    public function actionJobList(){
+    public function actionHitechList(){
         return new ActiveDataProvider([
-            'query' => FreelancerCategoryList::find()->where(['model_class'=>Job::className()])
+            'query' => FreelancerCategoryList::find()->where(['model_class'=>Hitech::className()])
         ]);
 
     }

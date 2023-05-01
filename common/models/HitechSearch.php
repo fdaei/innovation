@@ -4,23 +4,23 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use api\models\Mentor;
+use api\models\Hitech;
 
 /**
- * MentorSearch represents the model behind the search form of `common\models\Mentor`.
+ * HitechSearch represents the model behind the search form of `common\models\Hitech`.
  */
-class MentorSearch extends Mentor
+class HitechSearch extends Hitech
 {
     public $categories;
-    public $picture_mentor;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
-            [['picture', 'video', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field', 'activity_description', 'services', 'records','categories'], 'safe'],
+            [['id', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
+            [['title', 'description', 'required_skills','categories'], 'safe'],
+            [['minimum_budget', 'maximum_budget'], 'number'],
         ];
     }
 
@@ -42,7 +42,7 @@ class MentorSearch extends Mentor
      */
     public function search($params)
     {
-        $query = Mentor::find();
+        $query = Hitech::find();
 
         // add conditions that should always apply here
 
@@ -59,32 +59,25 @@ class MentorSearch extends Mentor
         }
 
         if($this->categories){
-            $query->joinWith('mentorCategories')
+            $query->joinWith('hitechCategories')
                 ->andFilterWhere(['in', 'categories_id', $this->categories]);
         }
-
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'minimum_budget' => $this->minimum_budget,
+            'maximum_budget' => $this->maximum_budget,
             'status' => $this->status,
-            'user_id' => $this->user_id,
             'updated_by' => $this->updated_by,
+            'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'picture', $this->picture])
-            ->andFilterWhere(['like', 'video', $this->video])
-            ->andFilterWhere(['like', 'instagram', $this->instagram])
-            ->andFilterWhere(['like', 'linkedin', $this->linkedin])
-            ->andFilterWhere(['like', 'twitter', $this->twitter])
-            ->andFilterWhere(['like', 'whatsapp', $this->whatsapp])
-            ->andFilterWhere(['like', 'telegram', $this->telegram])
-            ->andFilterWhere(['like', 'activity_field', $this->activity_field])
-            ->andFilterWhere(['like', 'activity_description', $this->activity_description]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'required_skills', $this->required_skills]);
 
         return $dataProvider;
     }

@@ -63,9 +63,11 @@ class BusinessesController extends Controller
     {
 
         $model = $this->findModel($id);
+        $investors=$model->businessesInvestors;
         return $this->render('view', [
             'model' => $model,
             'story' => $model->businessesStory,
+            'investors'=>$investors
         ]);
     }
 
@@ -153,6 +155,14 @@ class BusinessesController extends Controller
 
         if ($this->request->isPost) {
             $model->statistics  =  BusinessesStatistics::handelData();
+            foreach ( $model->statistics  as $item) {
+                $newModel = new BusinessesStatistics();
+                $newModel->attributes = $item;
+                $newModel->scenario = BusinessesStatistics::SCENARIO_CREATE;
+                $newModels[] = $newModel;
+            }
+            // Validate all models
+            $isValid = BusinessesStatistics::validateMultiple($newModels);
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -164,7 +174,93 @@ class BusinessesController extends Controller
         ]);
 
     }
+    public function actionCreateServices($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+        $BusinessesServices = [new BusinessesServices()];
 
+        if ($this->request->isPost) {
+            $newData = BusinessesServices::handelData();
+            $newModels = [];
+
+            foreach ($newData as $item) {
+                $newModel = new BusinessesServices();
+                $newModel->attributes = $item;
+                $newModels[] = $newModel;
+            }
+
+            // Validate all models
+            $isValid = BusinessesServices::validateMultiple($newModels);
+
+            if ($isValid) {
+                $model->services = array_merge($model->services, $newData);
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        }
+        return $this->renderAjax('_services', [
+            'model' => $model,
+            'BusinessesServices' => $BusinessesServices,
+            'form' => $form,
+        ]);
+    }
+    public function actionUpdateServices($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+
+        if ($this->request->isPost) {
+            $model->services  =  BusinessesServices::handelData();
+            foreach ( $model->services  as $item) {
+                $newModel = new BusinessesServices();
+                $newModel->attributes = $item;
+
+                $newModels[] = $newModel;
+            }
+            // Validate all models
+            $isValid = BusinessesServices::validateMultiple($newModels);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+        return $this->renderAjax('_services', [
+            'model' => $model,
+            'BusinessesServices' => BusinessesServices::loadDefaultValue($model->services),
+            'form' => $form,
+        ]);
+
+    }
+    public function actionPicCreate($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            if ($model->validate() && $model->save(false) ) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+        return $this->renderAjax('_picture', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionPicUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            if ($model->validate() && $model->save(false) ) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+        return $this->renderAjax('_picture', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Deletes an existing Businesses model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

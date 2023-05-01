@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use backend\models\EventHeadlines;
 use backend\models\MentorRecords;
-use backend\models\MentorServices;
+use common\models\MentorServices;
 use common\models\Mentor;
 use common\models\MentorSearch;
 use common\models\Model;
@@ -19,7 +19,6 @@ use yii\filters\VerbFilter;
  */
 class MentorController extends Controller
 {
-
     /**
      * @inheritDoc
      */
@@ -84,18 +83,28 @@ class MentorController extends Controller
     public function actionCreate()
     {
         $model = new Mentor();
+        $mentorRecords = [new MentorRecords()];
+        $mentorServices = [new MentorServices()];
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post()) && $model->validate()) {
+
+                $model->records  = MentorRecords::handelData();
+                if($model->save()){
+                    MentorServices::handelData($model->id);
+                }
 
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+            print_r($model->errors); die;
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'mentorServices' => $mentorServices,
+            'mentorRecords'  => $mentorRecords
         ]);
     }
 
@@ -113,16 +122,17 @@ class MentorController extends Controller
         if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
 
             $model->records  = MentorRecords::handelData();
-            $model->services = MentorServices::handelData();
+            MentorServices::handelData($model->id,$model->mentorServices);
             $model->save();
+
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'mentorServices' => MentorServices::loadDefaultValue($model->services),
             'mentorRecords'  => MentorRecords::loadDefaultValue($model->records),
+            'mentorServices' => !empty($model->mentorServices) ? $model->mentorServices :  [new MentorServices()],
         ]);
     }
 
@@ -137,7 +147,7 @@ class MentorController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->canDelete() && $model->softDelete()) {
+        if ($model->canDelete() && $model->deleted()) {
             $this->flash('success', Yii::t('app', 'Item Deleted'));
         } else {
             $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));

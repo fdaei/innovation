@@ -149,7 +149,9 @@ class FreelancerSearch extends \api\models\Freelancer
                 'basePath' => "@inceRoot/FreelancerSearch",
                 'path' => "@inceRoot/FreelancerSearch",
                 'url' => "@cdnWeb/FreelancerSearch"
-            ]
+            ],
+
         ];
     }
+
 }

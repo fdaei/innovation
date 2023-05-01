@@ -2,6 +2,7 @@
 
 
 use common\models\Business;
+use common\models\BusinessesInvestors;
 use common\models\BusinessesStory;
 use common\models\BusinessGallery;
 use common\models\BusinessMember;
@@ -20,6 +21,8 @@ use yii\widgets\Pjax;
 /** @var BusinessGallery $gallery */
 /** @var BusinessMember $services */
 /** @var BusinessStat $stat */
+/** @var BusinessesInvestors $investors */
+
 
 
 
@@ -136,11 +139,39 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('services'); ?>
+        <?php Pjax::begin(['id' => 'p-jax-business-services', 'enablePushState' => false]); ?>
         <div class="card">
             <div class="card-header">
                 <div>
                     <h3 class="float-left">خدمت ها</h3>
-                    <button class="btn btn-success float-right"><i class="fa fa-plus"></i></button>
+                    <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-success float-right ",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/businesses/create-services','id'=>$model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-business-services',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
+                    <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-success float-right ",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'update'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/businesses/update-services','id'=>$model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-business-services',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
                 </div>
             </div>
             <table class="table table-striped">
@@ -149,7 +180,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>#</th>
                     <th>title</th>
                     <th>description</th>
-                    <th class="float-right mx-5">action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -158,23 +188,34 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $i ?></td>
                     <td><?= $item['title'] ?></td>
                     <td><?= $item['description'] ?></td>
-                    <td class="float-right">
-                        <button class="btn btn-outline-danger border-0"><i class="fa fa-trash"></i></button>
-                        <button class="btn btn-outline-info border-0"><i class="fa fa-pencil"></i></button>
-                    </td>
                     </tr>
                 <?php endforeach; ?>
                 <?php endif; ?>
                 </tbody>
             </table>
         </div>
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('investors'); ?>
+        <?php Pjax::begin(['id' => 'p-jax-business-investors', 'enablePushState' => false]); ?>
         <div class="card">
             <div class="card-header">
                 <div>
                     <h3 class="float-left">سرمایه گذاران </h3>
-                    <button class="btn btn-success float-right"><i class="fa fa-plus"></i></button>
+                    <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-success float-right ",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/businesses-investors/create','id'=>$model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-business-investors',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
                 </div>
             </div>
             <table class="table table-striped">
@@ -183,18 +224,44 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>#</th>
                     <th>name</th>
                     <th>title</th>
+                    <th>picture</th>
                     <th class="float-right mx-5">action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php if($model->investors): ?>
-                <?php foreach ($model->investors as $i => $item): ?>
+                <?php if($investors): ?>
+                <?php foreach ($investors as $i => $item): ?>
                     <td><?= $i ?></td>
-                    <td><?= $item['name'] ?></td>
-                    <td><?= $item['title'] ?></td>
+                    <td><?= $item->title ?></td>
+                    <td><?= $item->description ?></td>
+                        <td><?= $item->picture ?></td>
                     <td class="float-right">
-                        <button class="btn btn-outline-danger border-0"><i class="fa fa-trash"></i></button>
-                        <button class="btn btn-outline-info border-0"><i class="fa fa-pencil"></i></button>
+                        <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
+                            [
+                                'title' => Yii::t('yii', 'delete'),
+                                'aria-label' => Yii::t('yii', 'delete'),
+                                'data-reload-pjax-container' => 'p-jax-business-member',
+                                'data-pjax' => '0',
+                                'data-url' => Url::to(['/businesses-investors/delete','id'=>$item->id, 'model_id'=>$model->id]),
+                                'class' => " p-jax-btn",
+                                'data-title' => Yii::t('yii', 'delete'),
+                                'data-toggle' => 'tooltip',
+                                'data-method' => ''
+                            ]);?>
+                        <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                            [
+                                'data-pjax' => '0',
+                                'class' => "btn btn-outline-success float-right ",
+                                'data-size' => 'modal-xl',
+                                'data-title' => Yii::t('app', 'update'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#modal-pjax',
+                                'data-url' => Url::to(['/businesses-investors/update','id'=>$item->id, 'model_id'=>$model->id]),
+                                'data-handle-form-submit' => 1,
+                                'data-show-loading' => 0,
+                                'data-reload-pjax-container' => 'p-jax-business-Statistics',
+                                'data-reload-pjax-container-on-show' => 0
+                            ]) ?>
                     </td>
                     </tr>
                 <?php endforeach; ?>
@@ -202,17 +269,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tbody>
             </table>
         </div>
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('story'); ?>
-        <div class="m-3 card">
+        <?php Pjax::begin(['id' => 'p-jax-business-services', 'enablePushState' => false]); ?>
+        <div class=" card">
             <div class="card-header">
                 <h3 class="float-left">سرمایه گذاران </h3>
-                <button class="btn btn-success float-right"><i class="fa fa-plus"></i></button>
+                <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                    [
+                        'data-pjax' => '0',
+                        'class' => "btn btn-outline-success float-right ",
+                        'data-size' => 'modal-xl',
+                        'data-title' => Yii::t('app', 'create'),
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal-pjax',
+                        'data-url' => Url::to(['/businesses-story/create','id'=>$model->id]),
+                        'data-handle-form-submit' => 1,
+                        'data-show-loading' => 0,
+                        'data-reload-pjax-container' => 'p-jax-business-Statistics',
+                        'data-reload-pjax-container-on-show' => 0
+                    ]) ?>
             </div>
             <div class="row">
 
                 <?php foreach ($story as $i => $item): ?>
-                    <div class="col-sm-6 row shadow-sm p-5">
+                    <div class="col-sm-6 row p-5">
                         <div class="col-9 row">
                             <div class="col-sm-6">
                                 <label for="email">title:</label>
@@ -225,86 +307,121 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-2 m-2">
                             <img width="120px" height="120px" class="rounded-circle border border-0 border-dark"
-                                 src="https://cdn.mobit.ir/get/avinox/business/246/unnamed.png">
+                                 src="<?= $model->getUploadUrl('picture')?>">
                         </div>
                         <div class="col-12">
                             <label for="phone"> text:</label>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p><?= $item->texts ?></p>
                             <div class="card-footer m-0">
-                                <button class="btn btn-outline-danger border-0"><i class="fa fa-trash"></i></button>
-                                <button class="btn btn-outline-info border-0"><i class="fa fa-pencil"></i></button>
+                                <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
+                                    [
+                                        'title' => Yii::t('yii', 'delete'),
+                                        'aria-label' => Yii::t('yii', 'delete'),
+                                        'data-reload-pjax-container' => 'p-jax-business-member',
+                                        'data-pjax' => '0',
+                                        'data-url' => Url::to(['/businesses-story/delete','id'=>$item->id, 'model_id'=>$model->id]),
+                                        'class' => " p-jax-btn",
+                                        'data-title' => Yii::t('yii', 'delete'),
+                                        'data-toggle' => 'tooltip',
+                                        'data-method' => ''
+                                    ]);?>
+                                <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                    [
+                                        'data-pjax' => '0',
+                                        'class' => "btn btn-outline-success float-right ",
+                                        'data-size' => 'modal-xl',
+                                        'data-title' => Yii::t('app', 'update'),
+                                        'data-toggle' => 'modal',
+                                        'data-target' => '#modal-pjax',
+                                        'data-url' => Url::to(['/businesses-story/update','id'=>$item->id, 'model_id'=>$model->id]),
+                                        'data-handle-form-submit' => 1,
+                                        'data-show-loading' => 0,
+                                        'data-reload-pjax-container' => 'p-jax-business-Statistics',
+                                        'data-reload-pjax-container-on-show' => 0
+                                    ]) ?>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('gallery'); ?>
-        <div class="card container">
+        <?php Pjax::begin(['id' => 'p-jax-business-gallery', 'enablePushState' => false]); ?>
+        <div class="card ">
             <div class="card-header">
                 <h3 class="float-left"> گالرس عکس ها </h3>
-                <button class="btn btn-success float-right"><i class="fa fa-plus"></i></button>
+                <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                    [
+                        'data-pjax' => '0',
+                        'class' => "btn btn-outline-success float-right ",
+                        'data-size' => 'modal-xl',
+                        'data-title' => Yii::t('app', 'create'),
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal-pjax',
+                        'data-url' => Url::to(['/businesses/pic-create','id'=>$model->id]),
+                        'data-handle-form-submit' => 1,
+                        'data-show-loading' => 0,
+                        'data-reload-pjax-container' => 'p-jax-business-Statistics',
+                        'data-reload-pjax-container-on-show' => 0
+                    ]) ?>
+                <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                    [
+                        'data-pjax' => '0',
+                        'class' => "btn btn-outline-info float-right ",
+                        'data-size' => 'modal-xl',
+                        'data-title' => Yii::t('app', 'create'),
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal-pjax',
+                        'data-url' => Url::to(['/businesses/pic-update','id'=>$model->id]),
+                        'data-handle-form-submit' => 1,
+                        'data-show-loading' => 0,
+                        'data-reload-pjax-container' => 'p-jax-business-Statistics',
+                        'data-reload-pjax-container-on-show' => 0
+                    ]) ?>
             </div>
             <div class="row">
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_main_desktop') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_main_mobile') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_desktop') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_mobile') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_desktop') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_mobile') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
-
         <?php echo Tabs::Widget([
             'items' => [
                 [

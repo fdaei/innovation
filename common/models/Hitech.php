@@ -9,26 +9,31 @@ use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
- * This is the model class for table "{{%freelancer_category_list}}".
+ * This is the model class for table "{{%hitech}}".
  *
  * @property int $id
- * @property string $title
- * @property string $brief_description
- * @property string $picture
+ * @property string|null $title
+ * @property string|null $description
+ * @property string $required_skills
+ * @property float|null $minimum_budget
+ * @property float|null $maximum_budget
  * @property int $status
  * @property int|null $updated_by
  * @property int|null $updated_at
- * @property int $created_at
+ * @property int|null $created_at
+ * @property int|null $created_by
  * @property int $deleted_at
  */
-class FreelancerCategoryList extends \yii\db\ActiveRecord
+class Hitech extends \yii\db\ActiveRecord
 {
+    const STATUS_NOT_ACTIVE  = 0;
+    const STATUS_ACTIVE     = 1;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%freelancer_category_list}}';
+        return '{{%hitech}}';
     }
 
     /**
@@ -37,9 +42,12 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'brief_description', 'status'], 'required'],
-            [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at'], 'integer'],
-            [['title', 'brief_description', 'picture'], 'string', 'max' => 255],
+            [['description'], 'string'],
+            [['required_skills', 'status'], 'required'],
+            [['required_skills'], 'safe'],
+            [['minimum_budget', 'maximum_budget'], 'number'],
+            [['status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -51,23 +59,21 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
-            'brief_description' => Yii::t('app', 'Brief Description'),
-            'picture' => Yii::t('app', 'Picture'),
+            'description' => Yii::t('app', 'Description'),
+            'required_skills' => Yii::t('app', 'Required Skills'),
+            'minimum_budget' => Yii::t('app', 'Minimum Budget'),
+            'maximum_budget' => Yii::t('app', 'Maximum Budget'),
             'status' => Yii::t('app', 'Status'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_at' => Yii::t('app', 'Created At'),
+            'created_by' => Yii::t('app', 'Created By'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     * @return FreelancerCategoryListQuery the active query used by this AR class.
-     */
-    public static function find()
+    public function getHitechCategories()
     {
-        return new FreelancerCategoryListQuery(get_called_class());
+        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Hitech::className()]);
     }
     public function behaviors()
     {
@@ -91,21 +97,6 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
             ],
-            [
-                'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'picture',
-                'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/freelancer",
-                'basePath' => "@inceRoot/freelancer",
-                'path' => "@inceRoot/freelancer",
-                'url' => "@cdnWeb/freelancer"
-            ],
-
         ];
     }
 }
