@@ -56,7 +56,7 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                     <div class="">
                         <div class="">
                             <button type="button"
-                                    class="remove-item-statistics btn  btn-xs float-right rounded-pill custom_background_color2 text-white">
+                                    class="remove-item-statistics btn  btn-xs float-right rounded-pill btn-danger text-white">
                                 حذف
                             </button>
                         </div>

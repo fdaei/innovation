@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card material-card">
     <div class="p-4">
         <?php $this->beginBlock('Business'); ?>
-        <div class="container mt-2">
+        <div class="m-4">
             <div class="row">
                 <div class="col-10 row">
                     <div class="col-3">
@@ -76,8 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label for="address">description:</label>
                     <p><?= $model->description ?></p>
                 </div>
-
             </div>
+            <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-info btn-rounded']) ?>
         </div>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('Statistics'); ?>
