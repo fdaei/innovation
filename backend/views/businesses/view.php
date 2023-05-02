@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <div class="col-2">
-                    <img src="<?= $model->getUploadUrl('business_logo') ?>">
+                    <img  style="height: 300px;width: 300px;" src="<?= $model->getUploadUrl('business_logo') ?>">
                 </div>
 
                 <div class="col-12">
@@ -99,6 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-reload-pjax-container' => 'p-jax-business-Statistics',
                             'data-reload-pjax-container-on-show' => 0
                         ]) ?>
+                    <?php if($model->statistics): ?>
                     <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
@@ -113,6 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-reload-pjax-container' => 'p-jax-business-Statistics',
                             'data-reload-pjax-container-on-show' => 0
                         ]) ?>
+                    <?php endif; ?>
                     <h3 class="float-left d-inline">آمارها</h3>
                 </div>
             </div>
@@ -158,6 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-reload-pjax-container' => 'p-jax-business-services',
                             'data-reload-pjax-container-on-show' => 0
                         ]) ?>
+                    <?php if($model->services): ?>
                     <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
@@ -172,6 +175,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-reload-pjax-container' => 'p-jax-business-services',
                             'data-reload-pjax-container-on-show' => 0
                         ]) ?>
+                    <?php endif; ?>
                 </div>
             </div>
             <table class="table table-striped">
@@ -366,6 +370,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'data-reload-pjax-container' => 'p-jax-business-Statistics',
                         'data-reload-pjax-container-on-show' => 0
                     ]) ?>
+                <?php if($model->pic_main_desktop || $model->pic_main_mobile || $model->pic_small1_desktop || $model->pic_small1_mobile ||
+                $model->pic_small2_desktop	 || $model->pic_small2_mobile ): ?>
                 <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                     [
                         'data-pjax' => '0',
@@ -380,6 +386,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'data-reload-pjax-container' => 'p-jax-business-Statistics',
                         'data-reload-pjax-container-on-show' => 0
                     ]) ?>
+                <?php endif; ?>
             </div>
             <div class="row">
                 <div class="col-3">

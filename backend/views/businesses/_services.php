@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /** @var \common\models\Businesses $model */
 
 
-$form = ActiveForm::begin(); // Start the ActiveForm
+$form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
 ?>
 
 <div class="row bg-white p-3 rounded my-3">
@@ -30,26 +30,26 @@ $form = ActiveForm::begin(); // Start the ActiveForm
         ]); ?>
         <div class="container-items-statistics">
             <div>
-                <h2 class="mb-4">اضافه کردن آمار</h2>
+                <h2 class="mb-4">اضافه کردن خدمات</h2>
                 <button type="button"
                         class="add-item-statistics btn  btn-xs float-right rounded-pill custom_background_color text-white">
-                    آمار جدید
+                    خدمات جدید
                 </button>
             </div>
-            <?php foreach ($BusinessesServices as $i => $modelAddress): ?>
+            <?php foreach ($BusinessesServices as $i => $modelServices): ?>
                 <div class="item-statistics panel panel-default" style="padding-right: 0px">
                     <div class="panel-body">
                         <?php
-                        if (!$modelAddress->isNewRecord) {
-                            echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                        if (!$modelServices->isNewRecord) {
+                            echo Html::activeHiddenInput($modelServices, "[{$i}]id");
                         }
                         ?>
                         <div class="row">
                             <div class="col-sm-6">
-                                <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search', 'maxlength' => true]) ?>
+                                <?= $form->field($modelServices, "[{$i}]title")->textInput(['class' => 'custom_input_search', 'maxlength' => true]) ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search', 'rows' => 6, 'maxlength' => true]) ?>
+                                <?= $form->field($modelServices, "[{$i}]description")->textarea(['class' => 'custom_input_search', 'rows' => 6, 'maxlength' => true]) ?>
                             </div>
                         </div>
                     </div>

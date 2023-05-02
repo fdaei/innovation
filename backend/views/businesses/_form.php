@@ -41,8 +41,25 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'business_logo')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($model, "business_logo")->label(false)->widget(FileInput::class, [
+                'options' => [
+                    'multiple' => false,
+                    //'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'showCaption' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'theme' => 'explorer-fas',
+                    'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                    'browseIcon' => '<i class="fas fa-file"></i> ',
+                    'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                    'previewFileType' => 'image',
+                    'initialPreviewAsData' => true,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("business_logo")) ? $model->getUploadUrl("business_logo") : false,
+                    'initialPreviewFileType' => 'image',
+                ]
             ]) ?>
         </div>
         <div class="form-group m-2">

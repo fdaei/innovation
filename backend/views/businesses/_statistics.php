@@ -39,20 +39,20 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                         آمار جدید
                     </button>
                 </div>
-                <?php foreach ($businessesStatistics as $i => $modelAddress): ?>
+                <?php foreach ($businessesStatistics as $i => $modelStatistics): ?>
                     <div class="item-statistics panel panel-default" style="padding-right: 0px">
                         <div class="panel-body">
                             <?php
-                            if (!$modelAddress->isNewRecord) {
-                                echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                            if (!$modelStatistics->isNewRecord) {
+                                echo Html::activeHiddenInput($modelStatistics, "[{$i}]id");
                             }
                             ?>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search', 'maxlength' => true]) ?>
+                                    <?= $form->field($modelStatistics, "[{$i}]title")->textInput(['class' => 'custom_input_search', 'maxlength' => true]) ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['class' => 'custom_input_search', 'rows' => 6, 'maxlength' => true]) ?>
+                                    <?= $form->field($modelStatistics, "[{$i}]description")->textarea(['class' => 'custom_input_search', 'rows' => 6, 'maxlength' => true]) ?>
                                 </div>
                             </div>
                         </div>

@@ -14,33 +14,135 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class='col-md-12'>
-            <?= $form->field($model, 'pic_main_desktop')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($model, "pic_main_desktop")->label(false)->widget(FileInput::class, [
+                'options' => [
+                    'multiple' => false,
+                    //'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'showCaption' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'theme' => 'explorer-fas',
+                    'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                    'browseIcon' => '<i class="fas fa-file"></i> ',
+                    'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                    'previewFileType' => 'image',
+                    'initialPreviewAsData' => true,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_main_desktop")) ? $model->getUploadUrl("pic_main_desktop") : false,
+                    'initialPreviewFileType' => 'image',
+                ]
             ]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'pic_main_mobile')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($model, "pic_main_mobile")->label(false)->widget(FileInput::class, [
+                'options' => [
+                    'multiple' => false,
+                    //'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'showCaption' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'theme' => 'explorer-fas',
+                    'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                    'browseIcon' => '<i class="fas fa-file"></i> ',
+                    'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                    'previewFileType' => 'image',
+                    'initialPreviewAsData' => true,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_main_mobile")) ? $model->getUploadUrl("pic_main_mobile") : false,
+                    'initialPreviewFileType' => 'image',
+                ]
             ]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'pic_small1_desktop')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($model, "pic_small1_desktop")->label(false)->widget(FileInput::class, [
+                'options' => [
+                    'multiple' => false,
+                    //'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'showCaption' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'theme' => 'explorer-fas',
+                    'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                    'browseIcon' => '<i class="fas fa-file"></i> ',
+                    'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                    'previewFileType' => 'image',
+                    'initialPreviewAsData' => true,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_small1_desktop")) ? $model->getUploadUrl("pic_small1_desktop") : false,
+                    'initialPreviewFileType' => 'image',
+                ]
             ]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'pic_small1_mobile')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($model, "pic_small1_mobile")->label(false)->widget(FileInput::class, [
+                'options' => [
+                    'multiple' => false,
+                    //'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'showCaption' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'theme' => 'explorer-fas',
+                    'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                    'browseIcon' => '<i class="fas fa-file"></i> ',
+                    'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                    'previewFileType' => 'image',
+                    'initialPreviewAsData' => true,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_small1_mobile")) ? $model->getUploadUrl("pic_small1_mobile") : false,
+                    'initialPreviewFileType' => 'image',
+                ]
             ]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'pic_small2_desktop')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($model, "pic_small2_desktop")->label(false)->widget(FileInput::class, [
+                'options' => [
+                    'multiple' => false,
+                    //'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'showCaption' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'theme' => 'explorer-fas',
+                    'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                    'browseIcon' => '<i class="fas fa-file"></i> ',
+                    'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                    'previewFileType' => 'image',
+                    'initialPreviewAsData' => true,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_small2_desktop")) ? $model->getUploadUrl("pic_small2_desktop") : false,
+                    'initialPreviewFileType' => 'image',
+                ]
             ]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'pic_small2_mobile')->widget(FileInput::class, [
-                'options' => ['accept' => 'image/*'],
+            <?= $form->field($model, "pic_small2_mobile")->label(false)->widget(FileInput::class, [
+                'options' => [
+                    'multiple' => false,
+                    //'accept' => 'image/*',
+                ],
+                'pluginOptions' => [
+                    'showCaption' => false,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                    'showCancel' => false,
+                    'theme' => 'explorer-fas',
+                    'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                    'browseIcon' => '<i class="fas fa-file"></i> ',
+                    'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                    'previewFileType' => 'image',
+                    'initialPreviewAsData' => true,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_small2_mobile")) ? $model->getUploadUrl("pic_small2_mobile") : false,
+                    'initialPreviewFileType' => 'image',
+                ]
             ]) ?>
         </div>
         <div class="form-group m-2">

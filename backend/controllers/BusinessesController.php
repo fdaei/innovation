@@ -134,8 +134,11 @@ class BusinessesController extends Controller
             $isValid = BusinessesStatistics::validateMultiple($newModels);
 
             if ($isValid) {
-                $model->statistics = array_merge($model->statistics, $newData);
-
+                if($model->statistics){
+                    $model->statistics = array_merge($model->statistics, $newData);
+                }else {
+                    $model->statistics = $newData;
+                }
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
@@ -194,7 +197,12 @@ class BusinessesController extends Controller
             $isValid = BusinessesServices::validateMultiple($newModels);
 
             if ($isValid) {
-                $model->services = array_merge($model->services, $newData);
+                if($model->services){
+                    $model->services = array_merge($model->services, $newData);
+                }else {
+                    $model->services = $newData;
+                }
+
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
