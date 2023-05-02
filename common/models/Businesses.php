@@ -115,7 +115,8 @@ class Businesses extends \yii\db\ActiveRecord
 
     public static function find()
     {
-        return new BusinessesQuery(get_called_class());
+        $query = new BusinessesQuery(get_called_class());
+        return $query->active();
     }
     public function behaviors()
     {

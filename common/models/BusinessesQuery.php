@@ -31,4 +31,9 @@ class BusinessesQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function active()
+    {
+        return $this->onCondition(['=', 'deleted_at', 0]);
+    }
 }
