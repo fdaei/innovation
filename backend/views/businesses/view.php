@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
-                            'class' => "btn btn-outline-success float-right ",
+                            'class' => "btn btn-outline-info float-right ",
                             'data-size' => 'modal-xl',
                             'data-title' => Yii::t('app', 'update'),
                             'data-toggle' => 'modal',
@@ -161,7 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
-                            'class' => "btn btn-outline-success float-right ",
+                            'class' => "btn btn-outline-info float-right ",
                             'data-size' => 'modal-xl',
                             'data-title' => Yii::t('app', 'update'),
                             'data-toggle' => 'modal',
@@ -222,9 +222,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>picture</th>
                     <th>name</th>
                     <th>title</th>
-                    <th>picture</th>
+
                     <th class="float-right mx-5">action</th>
                 </tr>
                 </thead>
@@ -232,9 +233,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if($investors): ?>
                 <?php foreach ($investors as $i => $item): ?>
                     <td><?= $i ?></td>
+                    <td><img style="width: 30px;height: 30px;" src="<?=  $item->getUploadUrl('picture') ?>" ></td>
                     <td><?= $item->title ?></td>
                     <td><?= $item->description ?></td>
-                        <td><?= $item->picture ?></td>
                     <td class="float-right">
                         <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
                             [
@@ -306,8 +307,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                         <div class="col-2 m-2">
-                            <img width="120px" height="120px" class="rounded-circle border border-0 border-dark"
-                                 src="<?= $model->getUploadUrl('picture')?>">
+                            <img style="width: 100px; height: 100px;" src="<?= $item->getUploadUrl('picture')?>" >
                         </div>
                         <div class="col-12">
                             <label for="phone"> text:</label>
@@ -328,7 +328,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                                     [
                                         'data-pjax' => '0',
-                                        'class' => "btn btn-outline-success float-right ",
+                                        'class' => "btn btn-outline-info float-right ",
                                         'data-size' => 'modal-xl',
                                         'data-title' => Yii::t('app', 'update'),
                                         'data-toggle' => 'modal',

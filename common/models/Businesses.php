@@ -14,6 +14,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $id
  * @property string|null $picture_desktop
  * @property string|null $picture_mobile
+ * @property string|null site_name
  * @property string|null $name
  * @property string|null $business_logo
  * @property string|null $business_color
@@ -42,6 +43,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Businesses extends \yii\db\ActiveRecord
 {
+    public $site_name;
 
     /**
      * {@inheritdoc}
@@ -57,7 +59,7 @@ class Businesses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description'], 'string'],
+            [['description','site_name'], 'string'],
             [['statistics', 'services', 'investors'], 'safe'],
             [['status'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],

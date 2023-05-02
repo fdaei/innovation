@@ -50,7 +50,8 @@
         "codeception/module-phpbrowser": "*",
         "voime/yii2-google-maps": "*",
         "sadi01/yii2-more-settings": "*",
-        "rosell-dk/webp-convert": "^2.6"
+        "rosell-dk/webp-convert": "^2.6",
+        "2amigos/yii2-selectize-widget": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

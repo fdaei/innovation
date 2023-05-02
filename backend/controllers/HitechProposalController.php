@@ -2,18 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\BusinessesStory;
-use common\models\BusinessesStorySearch;
-use Yii;
-use yii\helpers\Url;
+use common\models\HitechProposal;
+use common\models\HitechProposalSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BusinessesStoryController implements the CRUD actions for BusinessesStory model.
+ * HitechProposalController implements the CRUD actions for HitechProposal model.
  */
-class BusinessesStoryController extends Controller
+class HitechProposalController extends Controller
 {
     /**
      * @inheritDoc
@@ -23,8 +22,17 @@ class BusinessesStoryController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -34,104 +42,103 @@ class BusinessesStoryController extends Controller
     }
 
     /**
-     * Lists all BusinessesStory models.
+     * Lists all HitechProposal models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new BusinessesStorySearch();
+        $searchModel = new HitechProposalSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->renderAjax('index', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single BusinessesStory model.
+     * Displays a single HitechProposal model.
      * @param int $id ایدی
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new BusinessesStory model.
+     * Creates a new HitechProposal model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($id)
-    {
-        $model = new BusinessesStory();
-        $model->businesses_id=$id;
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate() && $model->save(false)) {
-
-              return $this->redirect(Url::to(['businesses/view', 'id' => $id]));
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->renderAjax('create', [
-            'model' => $model,
-        ]);
-    }
+//    public function actionCreate()
+//    {
+//        $model = new HitechProposal();
+//
+//        if ($this->request->isPost) {
+//            if ($model->load($this->request->post()) && $model->save()) {
+//                return $this->redirect(['view', 'id' => $model->id]);
+//            }
+//        } else {
+//            $model->loadDefaultValues();
+//        }
+//
+//        return $this->render('create', [
+//            'model' => $model,
+//        ]);
+//    }
 
     /**
-     * Updates an existing BusinessesStory model.
+     * Updates an existing HitechProposal model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ایدی
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id,$model_id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-          return $this->redirect(Url::to(['businesses/view', 'id' => $model_id]));
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->renderAjax('update', [
+        return $this->render('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing BusinessesStory model.
+     * Deletes an existing HitechProposal model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ایدی
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id,$model_id)
+    public function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(Url::to(['businesses/view', 'id' => $model_id]));
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the BusinessesStory model based on its primary key value.
+     * Finds the HitechProposal model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ایدی
-     * @return BusinessesStory the loaded model
+     * @return HitechProposal the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BusinessesStory::findOne(['id' => $id])) !== null) {
+        if (($model = HitechProposal::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
