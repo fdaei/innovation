@@ -40,6 +40,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_by
  * @property int $created_at
  * @property int|null $deleted_at
+ * @property BusinessesStory[] $businessesStory
+ * @property BusinessesInvestors[] $businessesInvestors
  */
 class Businesses extends \yii\db\ActiveRecord
 {
@@ -102,10 +104,12 @@ class Businesses extends \yii\db\ActiveRecord
             'deleted_at' => 'Deleted At',
         ];
     }
+
     public function getBusinessesStory()
     {
         return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id']);
     }
+
     public function getBusinessesInvestors()
     {
         return $this->hasMany(BusinessesInvestors::class, ['businesses_id' => 'id']);

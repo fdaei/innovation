@@ -58,7 +58,7 @@ class Businesses extends \common\models\Businesses
                 return $model->businessesInvestors;
             },
             'business_story' => function (self $model) {
-                return $model->businessStory;
+                return $model->businessesStory;
             },
         ];
     }
