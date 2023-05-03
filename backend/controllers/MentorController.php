@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
 
 /**
  * MentorController implements the CRUD actions for Mentor model.
@@ -106,6 +107,97 @@ class MentorController extends Controller
             'mentorServices' => $mentorServices,
             'mentorRecords'  => $mentorRecords
         ]);
+    }
+    public function actionPicCreate($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            if ($model->validate() && $model->save(false) ) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+        return $this->renderAjax('_picture', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionPicUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            if ($model->validate() && $model->save(false) ) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+        return $this->renderAjax('_picture', [
+            'model' => $model,
+        ]);
+    }
+    public function actionCreateRecords($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+        $MentorRecords = [new MentorRecords()];
+
+        if ($this->request->isPost) {
+            $newData = MentorRecords::handelData();
+            $newModels = [];
+
+            foreach ($newData as $item) {
+                $newModel = new MentorRecords();
+                $newModel->attributes = $item;
+                $newModels[] = $newModel;
+            }
+
+            // Validate all models
+            $isValid = MentorRecords::validateMultiple($newModels);
+
+            if ($isValid) {
+                if($model->records){
+                    $model->records = array_merge($model->records, $newData);
+                }else {
+                    $model->records = $newData;
+                }
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        }
+
+        return $this->renderAjax('_records', [
+            'model' => $model,
+            'MentorRecords' => $MentorRecords,
+            'form' => $form,
+        ]);
+    }
+    public function actionUpdateRecords($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+
+        if ($this->request->isPost) {
+            $model->records  =  MentorRecords::handelData();
+            foreach ( $model->records  as $item) {
+                $newModel = new MentorRecords();
+                $newModel->attributes = $item;
+                $newModels[] = $newModel;
+            }
+            // Validate all models
+            $isValid = MentorRecords::validateMultiple($newModels);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+        return $this->renderAjax('_records', [
+            'model' => $model,
+            'MentorRecords' => MentorRecords::loadDefaultValue($model->records),
+            'form' => $form,
+        ]);
+
     }
 
     /**

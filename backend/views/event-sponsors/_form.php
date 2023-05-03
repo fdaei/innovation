@@ -5,17 +5,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\MentorServices $model */
+/** @var common\models\EventSponsors $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="mentor-services-form">
+<div class="event-sponsors-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'telegram')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'whatsapp')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
         'options' => [

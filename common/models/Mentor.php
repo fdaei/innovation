@@ -39,6 +39,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Mentor extends \yii\db\ActiveRecord
 {
+    public $resume_file;
 
     public static function tableName()
     {
