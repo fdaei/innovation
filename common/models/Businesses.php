@@ -63,8 +63,8 @@ class Businesses extends \yii\db\ActiveRecord
             [['statistics', 'services', 'investors'], 'safe'],
             [['status'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
-            [['picture_desktop','pic_main_mobile','pic_small1_desktop','pic_small1_mobile','pic_small2_desktop','pic_small2_mobile'], 'image','extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
-            [[  'name','business_color', 'business_en_name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp'], 'string', 'max' => 255],
+            [['picture_desktop','pic_main_mobile','pic_small1_desktop','pic_small1_mobile','pic_small2_desktop','pic_small2_mobile','picture_mobile','business_logo'], 'image','extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
+            [[ 'name','business_color', 'business_en_name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp'], 'string', 'max' => 255],
         ];
     }
 

@@ -82,7 +82,7 @@ class MentorServices extends \yii\db\ActiveRecord
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'picture',
                 'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => true,
+                'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,

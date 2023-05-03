@@ -15,6 +15,7 @@ use common\models\Model;
 use backend\models\EventTimes;
 use backend\models\EventHeadlines;
 use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -86,29 +87,54 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event();
-        $eventHeadlines = [new EventHeadlines()];
-        $eventTimes = [new EventTimes];
-        $eventSponsors = [new EventSponsors];
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
-                $model->headlines   =  EventHeadlines::headLineHandler();
-                $model->event_times =  EventTimes::eventTimesHandler();
-
                 if($model->save()){
-                    EventSponsors::handelData($model->id);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
         } else {
             $model->loadDefaultValues();
         }
-
         return $this->render('create', [
             'model' => $model,
-            'eventHeadlines' => $eventHeadlines,
-            'eventTimes' => $eventTimes,
-            'eventSponsors' => $eventSponsors,
+        ]);
+    }
+    public function actionCreateHead($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+        $EventHeadlines = [new EventHeadlines()];
+
+        if ($this->request->isPost) {
+            $newData = EventHeadlines::handelData();
+            $newModels = [];
+
+            foreach ($newData as $item) {
+                $newModel = new EventHeadlines();
+                $newModel->attributes = $item;
+                $newModels[] = $newModel;
+            }
+
+            // Validate all models
+            $isValid = EventHeadlines::validateMultiple($newModels);
+
+            if ($isValid) {
+                if($model->headlines){
+                    $model->headlines = array_merge($model->headlines, $newData);
+                }else {
+                    $model->headlines = $newData;
+                }
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        }
+        return $this->renderAjax('_time', [
+            'model' => $model,
+            'EventHeadlines' => $EventHeadlines,
+            'form' => $form,
         ]);
     }
 

@@ -4,7 +4,9 @@ use common\models\Statuses;
 use voime\GoogleMaps\Map;
 use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
+use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var common\models\Mentor $model */
@@ -64,93 +66,189 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('services'); ?>
+        <?php Pjax::begin(['id' => 'p-jax-mentor-services', 'enablePushState' => false]); ?>
         <div class="card">
             <div class="card-header">
                 <div>
                     <h3 class="float-left">خدمت ها</h3>
-                    <button class="btn btn-success float-right"><i class="fa fa-plus"></i></button>
+                    <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-success float-right ",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/mentor-services/create', 'id' => $model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-mentor-services',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
                 </div>
             </div>
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>picture</th>
                     <th>title</th>
                     <th>Description</th>
                     <th class="float-right mx-5">action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($model->services as $i => $item): ?>
-                    <td><?= $i ?></td>
-                    <td><?= $item['title'] ?></td>
-                    <td><?= $item['description'] ?></td>
-                    <td class="float-right">
-                        <button class="btn btn-outline-danger border-0"><i class="fa fa-trash"></i></button>
-                        <button class="btn btn-outline-info border-0"><i class="fa fa-pencil"></i></button>
-                    </td>
-                    </tr>
-                <?php endforeach; ?>
+                <?php if ($model->mentorServices): ?>
+                    <?php foreach ($model->mentorServices as $i => $item): ?>
+                        <td><?= $i ?></td>
+                        <td><img style="width: 30px;height: 30px;" src="<?= $item->getUploadUrl('picture') ?>"></td>
+                        <td><?= $item->title ?></td>
+                        <td><?= $item->description ?></td>
+                        <td class="float-right">
+                            <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
+                                [
+                                    'title' => Yii::t('yii', 'delete'),
+                                    'aria-label' => Yii::t('yii', 'delete'),
+                                    'data-reload-pjax-container' => 'p-jax-business-member',
+                                    'data-pjax' => '0',
+                                    'data-url' => Url::to(['/mentor-services/delete', 'id' => $item->id, 'model_id' => $model->id]),
+                                    'class' => " p-jax-btn",
+                                    'data-title' => Yii::t('yii', 'delete'),
+                                    'data-toggle' => 'tooltip',
+                                    'data-method' => ''
+                                ]); ?>
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'update'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/mentor-services/update', 'id' => $item->id, 'model_id' => $model->id]),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-Statistics',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 </tbody>
             </table>
         </div>
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
-        <?php $this->beginBlock('history'); ?>
+        <?php $this->beginBlock('records'); ?>
+        <?php Pjax::begin(['id' => 'p-jax-mentor-records', 'enablePushState' => false]); ?>
         <div class="card">
             <div class="card-header">
                 <div>
                     <h3 class="float-left">سابقه ها</h3>
-                    <button class="btn btn-success float-right"><i class="fa fa-plus"></i></button>
+                    <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-success float-right ",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/mentor/create-records','id'=>$model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-mentor-records',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
+                    <?php if($model->records): ?>
+                        <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                            [
+                                'data-pjax' => '0',
+                                'class' => "btn btn-outline-info float-right ",
+                                'data-size' => 'modal-xl',
+                                'data-title' => Yii::t('app', 'update'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#modal-pjax',
+                                'data-url' => Url::to(['/mentor/update-records','id'=>$model->id]),
+                                'data-handle-form-submit' => 1,
+                                'data-show-loading' => 0,
+                                'data-reload-pjax-container' => 'p-jax-mentor-records',
+                                'data-reload-pjax-container-on-show' => 0
+                            ]) ?>
+                    <?php endif; ?>
                 </div>
             </div>
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>year</th>
                     <th>title</th>
-                    <th>number</th>
-                    <th class="float-right mx-5">action</th>
+                    <th>description</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($model->records as $i => $item): ?>
-                    <td><?= $i ?></td>
-                    <td><?= $item['title'] ?></td>
-                    <td><?= $item['year'] ?></td>
-                    <td><?= $item['description'] ?></td>
-                    <td class="float-right">
-                        <button class="btn btn-outline-danger border-0"><i class="fa fa-trash"></i></button>
-                        <button class="btn btn-outline-info border-0"><i class="fa fa-pencil"></i></button>
-                    </td>
-                    </tr>
-                <?php endforeach; ?>
+                <?php if($model->records): ?>
+                    <?php foreach ($model->records as $i => $item): ?>
+                        <td><?= $i ?></td>
+                        <td><?= $item['year'] ?></td>
+                        <td><?= $item['title'] ?></td>
+                        <td><?= $item['description'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 </tbody>
             </table>
         </div>
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('gallery'); ?>
+        <?php Pjax::begin(['id' =>'p-jax-mentor-pic', 'enablePushState' => false]); ?>
         <div class="card">
             <div class="card-header">
                 <h3 class="float-left"> گالرس عکس ها </h3>
-                <button class="btn btn-success float-right"><i class="fa fa-plus"></i></button>
+                <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                    [
+                        'data-pjax' => '0',
+                        'class' => "btn btn-outline-success float-right ",
+                        'data-size' => 'modal-xl',
+                        'data-title' => Yii::t('app', 'create'),
+                        'data-toggle' => 'modal',
+                        'data-target' => '#modal-pjax',
+                        'data-url' => Url::to(['/mentor/pic-create','id'=>$model->id]),
+                        'data-handle-form-submit' => 1,
+                        'data-show-loading' => 0,
+                        'data-reload-pjax-container' => 'p-jax-mentor-pic',
+                        'data-reload-pjax-container-on-show' => 0
+                    ]) ?>
+                <?php if($model->picture_mentor || $model->picture || $model->video ): ?>
+                    <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-info float-right ",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/mentor/pic-update','id'=>$model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-mentor-pic',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
+                <?php endif; ?>
             </div>
             <div class="row my-3">
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس مشاور</label>
                         <img src="<?= $model->getUploadUrl('picture_mentor') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس</label>
                         <img src="<?= $model->getUploadUrl('picture') ?>">
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
                 <div class="col-6">
@@ -159,13 +257,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <video width="100%" controls="">
                             <source src=""<?= $model->getUploadUrl('video') ?>">
                         </video>
-                        <div class="card-footer">
-                            <button class="btn btn-info">ویرایش</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
 
         <?php echo Tabs::Widget([
@@ -179,9 +275,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'content' => $this->blocks['services'],
                 ],
                 [
-                    'label' => Yii::t('app', 'history'),
-                    'content' => $this->blocks['history'],
-                    'content' => $this->blocks['history'],
+                    'label' => Yii::t('app', 'records'),
+                    'content' => $this->blocks['records'],
                 ],
                 [
                     'label' => Yii::t('app', 'gallery'),
