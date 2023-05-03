@@ -31,9 +31,10 @@ class BusinessesInvestors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['businesses_id', 'title', 'description'], 'required'],
+            [['title', 'description'], 'required'],
             [['businesses_id'], 'integer'],
             [['title', 'description'], 'string', 'max' => 255],
+            ['picture', 'image', 'extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
         ];
     }
 
@@ -54,7 +55,7 @@ class BusinessesInvestors extends \yii\db\ActiveRecord
 
 
         $oldIDs = ArrayHelper::map($defaultData, 'id', 'id');
-        $postData = \common\models\Model::createMultiple(self::className(),$defaultData);
+        $postData = \common\models\Model::createMultiple(self::class,$defaultData);
         Model::loadMultiple($postData, Yii::$app->request->post());
         $headlinesJson = [];
         $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($postData, 'id', 'id')));
@@ -82,7 +83,7 @@ class BusinessesInvestors extends \yii\db\ActiveRecord
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'picture',
                 'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => true,
+                'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
@@ -111,5 +112,10 @@ class BusinessesInvestors extends \yii\db\ActiveRecord
             $arrayData = [new self()];
         }
         return $arrayData;
+    }
+
+    public function canDelete()
+    {
+        return true;
     }
 }

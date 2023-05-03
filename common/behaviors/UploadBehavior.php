@@ -570,7 +570,6 @@ class UploadBehavior extends Behavior
                 $hasModelId ? $cdn_path[1] : $cdn_path[0],
                 $hasModelId ? $cdn_path[0] : null,
                 $this->convertImageToWebp);
-
             if ($transferToCdnResult['status'] != 200) {
                 throw new InvalidParamException("Cannot transfer file to CDN.");
             } else {

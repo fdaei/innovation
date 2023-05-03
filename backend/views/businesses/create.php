@@ -5,16 +5,16 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Businesses $model */
 
-$this->title = 'کسب و کار جدید';
-$this->params['breadcrumbs'][] = ['label' => 'کسب و کار ها', 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Businesses');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Businesses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="businesses-create custom_color">
+<div class="businesses-create bg-white p-3">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
     <?= $this->render('_form', [
         'model' => $model,
-        'businessesSponsors' => $businessesSponsors,
-        'businessesStatistics' => $businessesStatistics,
-        'businessesServices' => $businessesServices,
-        'businessesStory' => $businessesStory,
     ]) ?>
+
 </div>

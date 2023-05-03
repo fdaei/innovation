@@ -1,51 +1,57 @@
 <?php
 
 use common\models\Businesses;
+use common\models\City;
+use common\models\CitySearch;
 use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
-//use common\widgets\grid\ActionColumn;
-use common\widgets\grid\GridView;
+use yii\web\View;
+use yii\widgets\Pjax;
+/** @var View $this */
+/** @var CitySearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
+/** @var City $model */
 
-/** @var yii\web\View $this */
-/** @var common\models\BusinessesSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
-
-$this->params['breadcrumbs'][] = $this->title;
 $this->title = Yii::t('app', 'Businesses');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class=" p-3 card material-card rounded-lg custom_color">
-    <div class="d-flex flex-row justify-content-between">
-        <h1 class="custom_color"><?= Html::encode($this->title) ?></h1>
-        <p class="">
-            <?= Html::a('ایجاد کسب و کار جدید', ['create'], ['class' => 'btn custom_background_color rounded-pill text-white']) ?>
+<div class="city-index card material-card">
+    <div class="card-header d-flex justify-content-between">
+        <h2><?= Html::encode($this->title) ?></h2>
+        <p>
+            <?= Html::a(Yii::t('app', 'Create Businesses'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
         </p>
     </div>
-    <?= $this->render('_search', ['model' => $searchModel]); ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'class' => 'yii\grid\SerialColumn'
-            ],
-            'id',
-            'name',
-            'website',
-            'telegram',
-            'instagram',
-            'whatsapp',
-//            'statistics',
-//            'services',
-//            'investors',
-            'status',
-            [
-                'class' => ActionColumn::class,
-                'urlCreator' => function ($action, Businesses $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                },
-            ]
-        ],
-    ]); ?>
+    <?php Pjax::begin(); ?>
+    <div class="card-body">
+        <?=  $this->render('_search', ['model' => $searchModel]); ?>
 
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'name',
+                'business_color',
+                'business_en_name',
+                'description_brief',
+                'description:ntext',
+                'website',
+                'telegram',
+                'instagram',
+                'whatsapp',
+                'status',
+                [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, Businesses $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                    }
+                ],
+            ],
+        ]); ?>
+    </div>
+    <?php Pjax::end(); ?>
 
 </div>

@@ -2,18 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\BranchesGallery;
-use common\models\BranchesGallerySearch;
+use common\models\MentorServices;
+use common\models\MentorServicesSearch;
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BranchesGalleryController implements the CRUD actions for BranchesGallery model.
+ * MentorServicesController implements the CRUD actions for MentorServices model.
  */
-class BranchesGalleryController extends Controller
+class MentorServicesController extends Controller
 {
     /**
      * @inheritDoc
@@ -23,17 +22,8 @@ class BranchesGalleryController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -43,13 +33,13 @@ class BranchesGalleryController extends Controller
     }
 
     /**
-     * Lists all BranchesGallery models.
+     * Lists all MentorServices models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new BranchesGallerySearch();
+        $searchModel = new MentorServicesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -59,7 +49,7 @@ class BranchesGalleryController extends Controller
     }
 
     /**
-     * Displays a single BranchesGallery model.
+     * Displays a single MentorServices model.
      * @param int $id ایدی
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -72,29 +62,29 @@ class BranchesGalleryController extends Controller
     }
 
     /**
-     * Creates a new BranchesGallery model.
+     * Creates a new MentorServices model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($id)
+    public function actionCreate()
     {
-        $model = new BranchesGallery(['scenario' => BranchesGallery::SCENARIO_CREATE]);
+        $model = new MentorServices();
+
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) &&  $model->validate()) {
-                $model->branche_id=$id;
-                $model->save(false);
-                return $this->redirect(['branches/view', 'id' => $id]);
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing BranchesGallery model.
+     * Updates an existing MentorServices model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ایدی
      * @return string|\yii\web\Response
@@ -103,9 +93,9 @@ class BranchesGalleryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = BranchesGallery::SCENARIO_UPDATE;
-        if ($this->request->isPost && $model->load($this->request->post())  && $model->validate() && $model->save()) {
-            return $this->redirect(['branches/view', 'id' => $model->branche->id]);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -114,7 +104,7 @@ class BranchesGalleryController extends Controller
     }
 
     /**
-     * Deletes an existing BranchesGallery model.
+     * Deletes an existing MentorServices model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ایدی
      * @return \yii\web\Response
@@ -122,32 +112,24 @@ class BranchesGalleryController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        if ($model->canDelete() && $model->softDelete()) {
-            $this->flash('success', Yii::t('app', 'Item Deleted'));
-        } else {
-            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
-        }
-        return $this->redirect(['branches/view', 'id' => $model->branche->id]);
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the BranchesGallery model based on its primary key value.
+     * Finds the MentorServices model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ایدی
-     * @return BranchesGallery the loaded model
+     * @return MentorServices the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BranchesGallery::findOne(['id' => $id])) !== null) {
+        if (($model = MentorServices::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-    private function flash($type, $message)
-    {
-        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

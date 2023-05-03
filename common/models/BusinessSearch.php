@@ -4,28 +4,26 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Business;
+use common\models\Businesses;
 
 /**
- * BusinessSearch represents the model behind the search form of `backend\models\Business`.
+ * BusinessSearch represents the model behind the search form of `common\models\Businesses`.
  */
-class BusinessSearch extends Business
+class BusinessSearch extends Businesses
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function rules()
     {
         return [
-            [['id', 'user_id', 'city_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
-            [['title', 'logo', 'wallpaper', 'short_description', 'success_story'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [[ 'name', 'business_logo', 'business_color', 'business_en_name', 'description_brief', 'description', 'website', 'telegram', 'instagram', 'whatsapp', 'pic_main_desktop', 'pic_main_mobile', 'pic_small1_desktop', 'pic_small1_mobile', 'pic_small2_desktop', 'pic_small2_mobile', 'statistics', 'services', 'investors'], 'safe'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function scenarios(): array
+    public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
@@ -40,7 +38,7 @@ class BusinessSearch extends Business
      */
     public function search($params)
     {
-        $query = Business::find();
+        $query = Businesses::find();
 
         // add conditions that should always apply here
 
@@ -52,28 +50,31 @@ class BusinessSearch extends Business
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            $query->where('0=1');
+            // $query->where('0=1');
             return $dataProvider;
         }
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'city_id' => $this->city_id,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
+            'created_by' => $this->created_by,
+            'created_at' => $this->created_at,
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'logo', $this->logo])
-            ->andFilterWhere(['like', 'wallpaper', $this->wallpaper])
-            ->andFilterWhere(['like', 'short_description', $this->short_description])
-            ->andFilterWhere(['like', 'success_story', $this->success_story]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'business_color', $this->business_color])
+            ->andFilterWhere(['like', 'business_en_name', $this->business_en_name])
+            ->andFilterWhere(['like', 'description_brief', $this->description_brief])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'website', $this->website])
+            ->andFilterWhere(['like', 'telegram', $this->telegram])
+            ->andFilterWhere(['like', 'instagram', $this->instagram])
+            ->andFilterWhere(['like', 'whatsapp', $this->whatsapp])
+            ->andFilterWhere(['like', 'investors', $this->investors]);
 
         return $dataProvider;
     }

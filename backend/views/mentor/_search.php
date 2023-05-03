@@ -18,9 +18,9 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
     <div class="row">
-<!--        <div class="col-md-3">-->
-<!--            --><?php //= $form->field($model, 'resume') ?>
-<!--        </div>-->
+        <div class="col-md-3">
+            <?= $form->field($model, 'name') ?>
+        </div>
 <!--        <div class="col-md-3">-->
 <!--            --><?php //=  $form->field($model, 'instagram') ?>
 <!--        </div>-->

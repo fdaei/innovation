@@ -105,3 +105,16 @@ function viewMap() {
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 }
+$(document).ready(function() {
+    // Reload pjax container when a tab is shown
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+        var target = $(e.target).attr("http://backend.ince.local/businesses/get-block"); // Get the target tab
+        var pjaxContainer = $(target + ' .yii2-pjax-container'); // Get the pjax container inside the tab
+        if (pjaxContainer.length) {
+            $.pjax.reload({container: pjaxContainer.attr('id'), timeout: 10000});
+        }
+    });
+});
+
+

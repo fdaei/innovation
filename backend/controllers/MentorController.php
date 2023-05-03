@@ -147,7 +147,7 @@ class MentorController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->canDelete() && $model->softDelete()) {
+        if ($model->canDelete() && $model->deleted()) {
             $this->flash('success', Yii::t('app', 'Item Deleted'));
         } else {
             $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
