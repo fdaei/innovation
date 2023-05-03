@@ -40,6 +40,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_at
  * @property int|null $deleted_at
  * @property BusinessesStory[] $businessesStory
+ * @property BusinessesInvestors[] $businessesInvestors
  */
 class Businesses extends \yii\db\ActiveRecord
 {
