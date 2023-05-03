@@ -298,7 +298,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="row">
 
-                <?php foreach ($story as $i => $item): ?>
+                <?php foreach ($model->businessesStory as $i => $item): ?>
                     <div class="col-sm-6 row p-5">
                         <div class="col-9 row">
                             <div class="col-sm-6">
@@ -314,8 +314,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <img style="width: 100px; height: 100px;" src="<?= $item->getUploadUrl('picture')?>" >
                         </div>
                         <div class="col-12">
-                            <label for="phone"> text:</label>
-                            <p><?= $item->texts ?></p>
+                            <label> text:</label>
+                            <?php foreach ($item->texts as  $ite): ?>
+                            <p><?= $ite ?></p>
+                            <?php endforeach; ?>
                             <div class="card-footer m-0">
                                 <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
                                     [
