@@ -3,7 +3,6 @@
 namespace common\models;
 
 use common\behaviors\CdnUploadImageBehavior;
-use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
@@ -40,6 +39,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_by
  * @property int $created_at
  * @property int|null $deleted_at
+ * @property BusinessesStory[] $businessesStory
  */
 class Businesses extends \yii\db\ActiveRecord
 {
@@ -59,12 +59,12 @@ class Businesses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description','site_name'], 'string'],
+            [['description', 'site_name'], 'string'],
             [['statistics', 'services', 'investors'], 'safe'],
             [['status'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
-            [['picture_desktop','pic_main_mobile','pic_small1_desktop','pic_small1_mobile','pic_small2_desktop','pic_small2_mobile'], 'image','extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
-            [[  'name','business_color', 'business_en_name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp'], 'string', 'max' => 255],
+            [['picture_desktop', 'pic_main_mobile', 'pic_small1_desktop', 'pic_small1_mobile', 'pic_small2_desktop', 'pic_small2_mobile'], 'image', 'extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
+            [['name', 'business_color', 'business_en_name', 'description_brief', 'website', 'telegram', 'instagram', 'whatsapp'], 'string', 'max' => 255],
         ];
     }
 
@@ -104,10 +104,12 @@ class Businesses extends \yii\db\ActiveRecord
             'deleted_at' => 'Deleted At',
         ];
     }
+
     public function getBusinessesStory()
     {
         return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id']);
     }
+
     public function getBusinessesInvestors()
     {
         return $this->hasMany(BusinessesInvestors::class, ['businesses_id' => 'id']);
@@ -118,6 +120,7 @@ class Businesses extends \yii\db\ActiveRecord
         $query = new BusinessesQuery(get_called_class());
         return $query->active();
     }
+
     public function behaviors()
     {
         return [
@@ -181,7 +184,7 @@ class Businesses extends \yii\db\ActiveRecord
                 'basePath' => "@inceRoot/businesses",
                 'path' => "@inceRoot/businesses",
                 'url' => "@cdnWeb/businesses"
-            ],[
+            ], [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_main_desktop',
                 'scenarios' => [self::SCENARIO_DEFAULT],
@@ -194,7 +197,7 @@ class Businesses extends \yii\db\ActiveRecord
                 'basePath' => "@inceRoot/businesses",
                 'path' => "@inceRoot/businesses",
                 'url' => "@cdnWeb/businesses"
-            ],[
+            ], [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_main_mobile',
                 'scenarios' => [self::SCENARIO_DEFAULT],
@@ -207,7 +210,7 @@ class Businesses extends \yii\db\ActiveRecord
                 'basePath' => "@inceRoot/businesses",
                 'path' => "@inceRoot/businesses",
                 'url' => "@cdnWeb/businesses"
-            ],[
+            ], [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'picture_mobile',
                 'scenarios' => [self::SCENARIO_DEFAULT],
@@ -220,7 +223,7 @@ class Businesses extends \yii\db\ActiveRecord
                 'basePath' => "@inceRoot/businesses",
                 'path' => "@inceRoot/businesses",
                 'url' => "@cdnWeb/businesses"
-            ],[
+            ], [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small1_desktop',
                 'scenarios' => [self::SCENARIO_DEFAULT],
@@ -233,7 +236,7 @@ class Businesses extends \yii\db\ActiveRecord
                 'basePath' => "@inceRoot/businesses",
                 'path' => "@inceRoot/businesses",
                 'url' => "@cdnWeb/businesses"
-            ],[
+            ], [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small1_mobile',
                 'scenarios' => [self::SCENARIO_DEFAULT],
@@ -246,7 +249,7 @@ class Businesses extends \yii\db\ActiveRecord
                 'basePath' => "@inceRoot/businesses",
                 'path' => "@inceRoot/businesses",
                 'url' => "@cdnWeb/businesses"
-            ],[
+            ], [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small2_desktop',
                 'scenarios' => [self::SCENARIO_DEFAULT],
@@ -259,7 +262,7 @@ class Businesses extends \yii\db\ActiveRecord
                 'basePath' => "@inceRoot/businesses",
                 'path' => "@inceRoot/businesses",
                 'url' => "@cdnWeb/businesses"
-            ],[
+            ], [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small2_mobile',
                 'scenarios' => [self::SCENARIO_DEFAULT],
@@ -280,5 +283,4 @@ class Businesses extends \yii\db\ActiveRecord
     {
         return true;
     }
-
 }
