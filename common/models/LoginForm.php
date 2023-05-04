@@ -146,7 +146,7 @@ class LoginForm extends Model
             'number' => Yii::t('app', 'Mobile Number'),
             'code' => Yii::t('app', 'Verify Code'),
             'rememberMe' => Yii::t('app', 'RememberMe'),
-            'captcha' => Yii::t('front', 'Captcha'),
+            'captcha' => Yii::t('app', 'Captcha'),
             'password' => Yii::t('app', 'Password'),
             'password_repeat' => Yii::t('app', 'Password Repeat')
         ];
