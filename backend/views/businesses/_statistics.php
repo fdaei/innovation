@@ -20,7 +20,7 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                 'widgetContainer' => 'dynamicform_wrapper1',
                 'widgetBody' => '.container-items-statistics',
                 'widgetItem' => '.item-statistics',
-                'limit' => 4,
+                'limit' => 20,
                 'min' => 1,
                 'insertButton' => '.add-item-statistics',
                 'deleteButton' => '.remove-item-statistics',

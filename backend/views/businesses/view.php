@@ -315,9 +315,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-12">
                             <label> text:</label>
+                            <?php if($item->texts): ?>
                             <?php foreach ($item->texts as  $ite): ?>
-                            <p><?= $ite ?></p>
+                            <p><?= $ite['title'] ?></p>
                             <?php endforeach; ?>
+                            <?php endif; ?>
                             <div class="card-footer m-0">
                                 <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
                                     [

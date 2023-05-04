@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use backend\models\BusinessesServices;
+use backend\models\BusinessStoryText;
 use common\models\BusinessesStory;
 use common\models\BusinessesStorySearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,8 +26,17 @@ class BusinessesStoryController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -70,18 +82,20 @@ class BusinessesStoryController extends Controller
     public function actionCreate($id)
     {
         $model = new BusinessesStory();
+        $businessesText = [new BusinessStoryText()];
         $model->businesses_id=$id;
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate() && $model->save(false)) {
-
+            if ($model->load($this->request->post()) && $model->validate()) {
+                $model->texts=BusinessStoryText::handelData();
+                $model->save();
               return $this->redirect(Url::to(['businesses/view', 'id' => $id]));
             }
         } else {
             $model->loadDefaultValues();
         }
-
         return $this->renderAjax('create', [
             'model' => $model,
+            'businessesText' =>$businessesText,
         ]);
     }
 
