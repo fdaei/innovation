@@ -21,7 +21,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $updated_by
  * @property int $deleted_at
  *
- * @property Business $business
+ * @property Businesses $business
  * @property User $createdBy
  * @property User $updatedBy
  *
@@ -50,7 +50,7 @@ class BusinessTimeline extends \yii\db\ActiveRecord
             [['business_id', 'year', 'status'], 'required'],
             [['business_id', 'status'], 'integer'],
             [['year'], 'unique'],
-            [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
+            [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Businesses::class, 'targetAttribute' => ['business_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -75,13 +75,13 @@ class BusinessTimeline extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Business]].
+     * Gets query for [[Businesses]].
      *
      * @return \yii\db\ActiveQuery|BusinessQuery
      */
     public function getBusiness()
     {
-        return $this->hasOne(Business::class, ['id' => 'business_id']);
+        return $this->hasOne(Businesses::class, ['id' => 'business_id']);
     }
 
     /**

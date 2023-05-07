@@ -24,7 +24,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $updated_by
  * @property int $deleted_at
  *
- * @property Business $business
+ * @property Businesses $business
  * @property User $createdBy
  * @property User $updatedBy
  *
@@ -64,7 +64,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
             ['tablet_image', 'image', 'minWidth' => 1023, 'maxWidth' => 1023, 'minHeight' => 990, 'maxHeight' => 990, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-            [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
+            [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Businesses::class, 'targetAttribute' => ['business_id' => 'id']],
         ];
     }
 
@@ -107,7 +107,7 @@ class BusinessGallery extends \yii\db\ActiveRecord
      */
     public function getBusiness()
     {
-        return $this->hasOne(Business::class, ['id' => 'business_id']);
+        return $this->hasOne(Businesses::class, ['id' => 'business_id']);
     }
 
     /**

@@ -24,7 +24,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $updated_by
  * @property int $deleted_at
  *
- * @property Business $business
+ * @property Businesses $business
  * @mixin CdnUploadImageBehavior
  * @mixin SoftDeleteBehavior
  */
@@ -52,10 +52,10 @@ class BusinessMember extends \yii\db\ActiveRecord
         return [
             [['business_id','first_name','last_name','position','status',"image"],'required', 'on' => [self::SCENARIO_CREATE]],
             [['business_id','first_name','last_name','position','status'],'required','on' => [self::SCENARIO_UPDATE]],
-            ['image', 'image', 'minWidth' => 268, 'maxWidth' => 268, 'minHeight' => 248, 'maxHeight' => 248, 'extensions' => 'jpg, gif, png', 'maxSize' => 648 * 348 * 2],
+            ['image', 'image', 'minWidth' => 268, 'maxWidth' => 268, 'minHeight' => 248, 'maxHeight' => 248, 'extensions' => 'jpg, gif, png', 'maxSize' => 648 * 348 * 2, 'enableClientValidation' => false],
             [['business_id'], 'integer'],
             [['first_name', 'last_name', 'position'], 'string', 'max' => 64],
-            [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Business::class, 'targetAttribute' => ['business_id' => 'id']],
+            [['business_id'], 'exist', 'skipOnError' => true, 'targetClass' => Businesses::class, 'targetAttribute' => ['business_id' => 'id']],
         ];
     }
 
@@ -97,7 +97,7 @@ class BusinessMember extends \yii\db\ActiveRecord
      */
     public function getBusiness()
     {
-        return $this->hasOne(Business::class, ['id' => 'business_id']);
+        return $this->hasOne(Businesses::class, ['id' => 'business_id']);
     }
 
     /**
