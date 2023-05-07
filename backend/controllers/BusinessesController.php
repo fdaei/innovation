@@ -8,6 +8,7 @@ use backend\models\BusinessesStatistics;
 use common\models\Businesses;
 use common\models\BusinessesStory;
 use common\models\BusinessSearch;
+use common\models\BusinessTimeline;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -77,9 +78,14 @@ class BusinessesController extends Controller
         return $this->render('view', [
             'model' => $model,
             'story' => $model->businessesStory,
-            'investors'=>$investors
+            'gallery' => $model->businessGalleries,
+            'members' => $model->businessMembers,
+            'timeline' => $model->getBusinessTimelines()->orderBy([BusinessTimeline::tableName() . '.year' => SORT_ASC])->all(),
+            'timelineitems' => $model->businessTimeLineItems,
+            'stat' => $model->businessStates,
         ]);
     }
+
 
     /**
      * Creates a new Businesses model.
