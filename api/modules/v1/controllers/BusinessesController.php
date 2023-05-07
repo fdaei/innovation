@@ -2,19 +2,9 @@
 
 namespace api\modules\v1\controllers;
 
-use common\models\CareerApply;
-use common\models\MentorsAdviceRequest;
-use common\models\OrgUnitSearch;
-use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
-use filsh\yii2\oauth2server\models\OauthAccessTokens;
-use Yii;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
-use yii\web\HttpException;
 
 /**
  * CareerApply controller

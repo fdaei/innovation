@@ -25,7 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $updated_by
  * @property int $deleted_at
  *  *
- * @property Business $business
+ * @property Businesses $business
  * @property User $createdBy
  * @property User $updatedBy
  * @mixin CdnUploadImageBehavior
@@ -97,7 +97,7 @@ class BusinessStat extends \yii\db\ActiveRecord
      */
     public function getBusiness()
     {
-        return $this->hasOne(Business::class, ['id' => 'business_id']);
+        return $this->hasOne(Businesses::class, ['id' => 'business_id']);
     }
 
 

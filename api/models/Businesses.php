@@ -2,12 +2,6 @@
 
 namespace api\models;
 
-use common\behaviors\CdnUploadImageBehavior;
-use yii\base\Model;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
-use yii2tech\ar\softdelete\SoftDeleteBehavior;
-
 class Businesses extends \common\models\Businesses
 {
     public function fields()
@@ -33,6 +27,19 @@ class Businesses extends \common\models\Businesses
             'telegram',
             'instagram',
             'whatsapp',
+            'shortDescription' => 'short_description',
+            'successStory' => 'success_story',
+            'investorDescription' => 'investor_description',
+            'slug',
+            'wallpaper' => function (self $model) {
+                return $model->getUploadUrl('wallpaper');
+            },
+            'mobileWallpaper' => function (self $model) {
+                return $model->getUploadUrl('mobile_wallpaper');
+            },
+            'tabletWallpaper' => function (self $model) {
+                return $model->getUploadUrl('tablet_wallpaper');
+            },
             'pic_main_desktop' => function (self $model) {
                 return $model->getUploadUrl('pic_main_desktop');
             },
@@ -51,15 +58,7 @@ class Businesses extends \common\models\Businesses
             'pic_small2_mobile' => function (self $model) {
                 return $model->getUploadUrl('pic_small2_mobile');
             },
-            'statistics',
             'services',
-            'investors',
-            'investors' => function (self $model) {
-                return $model->businessesInvestors;
-            },
-            'business_story' => function (self $model) {
-                return $model->businessesStory;
-            },
         ];
     }
 }

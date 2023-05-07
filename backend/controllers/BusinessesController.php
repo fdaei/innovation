@@ -3,11 +3,10 @@
 namespace backend\controllers;
 
 use backend\models\BusinessesServices;
-use backend\models\BusinessesSponsors;
 use backend\models\BusinessesStatistics;
 use common\models\Businesses;
-use common\models\BusinessesStory;
 use common\models\BusinessSearch;
+use common\models\BusinessTimeline;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,7 +27,7 @@ class BusinessesController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -67,7 +66,11 @@ class BusinessesController extends Controller
         return $this->render('view', [
             'model' => $model,
             'story' => $model->businessesStory,
-            'investors'=>$investors
+            'gallery' => $model->businessGalleries,
+            'members' => $model->businessMembers,
+            'timeline' => $model->getBusinessTimelines()->orderBy([BusinessTimeline::tableName() . '.year' => SORT_ASC])->all(),
+            'timelineitems' => $model->businessTimeLineItems,
+            'stat' => $model->businessStates,
         ]);
     }
 
@@ -94,6 +97,7 @@ class BusinessesController extends Controller
             'model' => $model,
         ]);
     }
+
     /**
      * Updates an existing Businesses model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -113,6 +117,7 @@ class BusinessesController extends Controller
             'model' => $model,
         ]);
     }
+
     public function actionCreateStatistics($id)
     {
         $model = $this->findModel($id);
@@ -151,6 +156,7 @@ class BusinessesController extends Controller
             'form' => $form,
         ]);
     }
+
     public function actionUpdateStatistics($id)
     {
         $model = $this->findModel($id);
@@ -170,13 +176,14 @@ class BusinessesController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
+
         return $this->renderAjax('_statistics', [
             'model' => $model,
             'businessesStatistics' => BusinessesStatistics::loadDefaultValue($model->statistics),
             'form' => $form,
         ]);
-
     }
+
     public function actionCreateServices($id)
     {
         $model = $this->findModel($id);
@@ -214,6 +221,7 @@ class BusinessesController extends Controller
             'form' => $form,
         ]);
     }
+
     public function actionUpdateServices($id)
     {
         $model = $this->findModel($id);
@@ -240,6 +248,7 @@ class BusinessesController extends Controller
         ]);
 
     }
+
     public function actionPicCreate($id)
     {
         $model = $this->findModel($id);
@@ -269,6 +278,7 @@ class BusinessesController extends Controller
             'model' => $model,
         ]);
     }
+
     /**
      * Deletes an existing Businesses model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -302,6 +312,7 @@ class BusinessesController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
     public function flash($type, $message)
     {
         Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);

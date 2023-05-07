@@ -16,12 +16,12 @@ use yii\widgets\Pjax;
 /** @var View $this */
 /** @var Businesses $model */
 /** @var BusinessGallery[] $gallery */
-/** @var BusinessMember[] $members */
-/** @var BusinessTimeline[] $timeline */
-/** @var BusinessStat[] $stat */
+/** @var BusinessMember $members */
+/** @var BusinessTimeline $timeline */
+/** @var BusinessStat $stat */
 /** @var BusinessTimelineItem $timelineitems */
 
-$this->title = $model->name;
+$this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Businesses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -638,58 +638,40 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endif; ?>
             </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_main_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_main_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_mobile') ?>">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class=" card my-3">
-                        <label class="card-header">والپیپر</label>
-                        <img src="<?= $model->getUploadUrl('wallpaper') ?>">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class=" card my-3">
-                        <label class="card-header">والپیپر موبایل</label>
-                        <img src="<?= $model->getUploadUrl('mobile_wallpaper') ?>">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class=" card my-3">
-                        <label class="card-header">والپیپر تبلت</label>
-                        <img src="<?= $model->getUploadUrl('tablet_wallpaper') ?>">
                     </div>
                 </div>
             </div>
