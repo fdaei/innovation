@@ -1,17 +1,16 @@
 <?php
 
-use backend\models\EventHeadlines;
+use backend\models\EventTimes;
 use common\models\Businesses;
-use common\models\BusinessStat;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
 /** @var ActiveForm $form */
 /** @var Businesses $model */
-/** @var EventHeadlines[] $EventHeadlines */
+/** @var EventTimes[] $EventTimes */
 
-$form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
+$form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
 ?>
 <div class="card card-body">
     <div class='col-md-12 kohl' style="">
@@ -24,7 +23,7 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                 'min' => 1, // 0 or 1 (default 1)
                 'insertButton' => '.add-item_time', // css class
                 'deleteButton' => '.remove-item_time', // css class
-                'model' => $EventHeadlines[0],
+                'model' => $EventTimes[0],
                 'formId' => 'event_form',
                 'formFields' => [
                     'start',
@@ -32,11 +31,11 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                 ],
             ]); ?>
             <div class="container-items-time"><!-- widgetContainer -->
-                <?php foreach ($EventHeadlines as $i => $time): ?>
-                    <div class="item-time panel panel-default col-md-8" style="padding-right: 0px"><!-- widgetBody -->
-                        <div class="panel-heading">
+                <?php foreach ($EventTimes as $i => $time): ?>
+                    <div class="item-time panel panel-default " style="padding-right: 0px"><!-- widgetBody -->
+                        <div>
                             <div class="pull-right">
-                                <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>
+                                    <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -66,3 +65,17 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
 </div>
 <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?> <!-- Add a submit button -->
 <?php ActiveForm::end(); // End the ActiveForm ?>
+
+<?php
+$script = <<< JS
+    
+        jalaliDatepicker.startWatch({
+            time: true,
+            hasSecond: false,
+            zIndex:2000,
+        })
+    
+JS;
+
+$this->registerJs($script, \yii\web\View::POS_END)
+?>

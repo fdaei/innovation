@@ -84,10 +84,10 @@ class EventHallController extends Controller
     public function actionCreate()
     {
         $model = new EventHall();
-
-
         if ($this->request->isPost) {
+
             if ($model->load($this->request->post()) && $model->validate()) {
+                $model->branche_id =1;
                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }

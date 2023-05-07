@@ -109,13 +109,15 @@ class BusinessesStoryController extends Controller
     public function actionUpdate($id,$model_id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->texts=BusinessStoryText::handelData();
+            $model->save();
           return $this->redirect(Url::to(['businesses/view', 'id' => $model_id]));
         }
 
         return $this->renderAjax('update', [
             'model' => $model,
+            'businessesText' => BusinessStoryText::loadDefaultValue($model->texts),
         ]);
     }
 

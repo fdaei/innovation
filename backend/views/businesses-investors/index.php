@@ -1,10 +1,10 @@
 <?php
 
 use common\models\BusinessesInvestors;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var backend\models\BusinessesInvestorsSearch $searchModel */
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, BusinessesInvestors $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

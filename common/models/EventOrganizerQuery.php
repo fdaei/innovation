@@ -9,10 +9,10 @@ namespace common\models;
  */
 class EventOrganizerQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function active()
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->onCondition(['=', 'deleted_at',  0]);
+    }
 
     /**
      * {@inheritdoc}

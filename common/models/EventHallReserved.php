@@ -44,11 +44,8 @@ class EventHallReserved extends \yii\db\ActiveRecord
     {
         return [
             [['timestamp_start', 'timestamp_end'], 'required'],
-            [['event_hall_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at'], 'integer'],
+            [['event_hall_id'], 'integer'],
             [['timestamp_start', 'timestamp_end'], 'safe'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-            [['event_hall_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['event_hall_id' => 'id']],
         ];
     }
 

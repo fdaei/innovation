@@ -1,5 +1,6 @@
 <?php
 
+use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -23,24 +24,34 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'organizer_name',
-            'organizer_avatar',
-            'organizer_picture',
-            'organizer_title_brief',
-            'organizer_instagram',
-            'organizer_telegram',
-            'organizer_linkedin',
-            'updated_at',
-            'updated_by',
-            'created_at',
-            'created_by',
-            'deleted_at',
-        ],
-    ]) ?>
-
+    <div class="row">
+        <div class="col-6 d-flex justify-content-center">
+            <img width="25%" height="70%" src="<?= $model->getUploadUrl('organizer_avatar') ?>">
+        </div>
+        <div class="col-6 d-flex justify-content-center">
+            <img width="25%" height="70%" src="<?= $model->getUploadUrl('organizer_picture') ?>">
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>organizer_name</th>
+            <th>organizer_title_brief</th>
+            <th>organizer_instagram</th>
+            <th>organizer_telegram</th>
+            <th>organizer_linkedin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><?= $model->organizer_name ?></td>
+            <td><?= $model->organizer_title_brief ?></td>
+            <td><?= $model->organizer_instagram ?></td>
+            <td><?= $model->organizer_telegram ?></td>
+            <td><?= $model->organizer_linkedin ?></td>
+            <td class="float-right">
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

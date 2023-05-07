@@ -49,10 +49,10 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                             ?>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelStatistics, "[{$i}]title")->textInput(['class' => 'custom_input_search', 'maxlength' => true]) ?>
+                                    <?= $form->field($modelStatistics, "[{$i}]title")->textInput(['class' => '', 'maxlength' => true]) ?>
                                 </div>
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelStatistics, "[{$i}]description")->textarea(['class' => 'custom_input_search', 'rows' => 6, 'maxlength' => true]) ?>
+                                    <?= $form->field($modelStatistics, "[{$i}]description")->textarea(['class' => '', 'rows' => 6, 'maxlength' => true]) ?>
                                 </div>
                             </div>
                         </div>

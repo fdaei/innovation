@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row justify-content-center">
-        <div class='col-md-8'>
+        <div class='col-md-3'>
             <?=
             $form->field($model, 'branche_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Branches::find()->all(), 'id', 'title'),
@@ -26,23 +26,22 @@ use yii\widgets\ActiveForm;
             ]);
             ?>
         </div>
-        <div class='col-md-8'>
+        <div class='col-md-3'>
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class='col-md-8'>
+        <div class='col-md-3'>
             <?= $form->field($model, 'capacity')->textInput() ?>
         </div>
-        <div class='col-md-8'>
-            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-        </div>
-        <div class='col-md-8'>
-            <?= $form->field($model, 'rules')->textarea(['rows' => 6]) ?>
-        </div>
-        <div class='col-md-8'>
+        <div class='col-md-3'>
             <?= $form->field($model, 'specifications')->textInput() ?>
         </div>
-
-        <span class='col-md-8'>
+        <div class='col-md-6'>
+            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        </div>
+        <div class='col-md-6'>
+            <?= $form->field($model, 'rules')->textarea(['rows' => 6]) ?>
+        </div>
+        <span class='col-md-12'>
                  <p class="card-title border-bottom m-2 pb-3">
                 <div id="map" style="width: 100%;height: 400px;"></div>
             </p>

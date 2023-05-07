@@ -50,15 +50,12 @@ class EventHall extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['branche_id', 'name', 'longitude', 'latitude', 'capacity', 'specifications'], 'required'],
-            [['branche_id', 'capacity', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
+            [[ 'name', 'longitude', 'latitude', 'capacity', 'specifications'], 'required'],
+            [[ 'capacity'], 'integer'],
             [['longitude', 'latitude'], 'number'],
             [['description', 'rules'], 'string'],
             [['specifications'], 'safe'],
             [['name'], 'string', 'max' => 255],
-            [['branche_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branches::class, 'targetAttribute' => ['branche_id' => 'id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -77,11 +74,6 @@ class EventHall extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'rules' => Yii::t('app', 'Rules'),
             'specifications' => Yii::t('app', 'Specifications'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
     }
 

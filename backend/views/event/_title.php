@@ -1,3 +1,17 @@
+<?php
+
+use backend\models\EventHeadlines;
+use common\models\Businesses;
+use wbraganca\dynamicform\DynamicFormWidget;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+
+/** @var ActiveForm $form */
+/** @var Businesses $model */
+/** @var EventHeadlines[] $EventHeadlines */
+
+$form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
+?>
 <div class="card card-body">
     <div class='col-md-12 kohl' style="">
         <div class="panel-body ">
@@ -9,7 +23,7 @@
                 'min' => 1, // 0 or 1 (default 1)
                 'insertButton' => '.add-item-headline', // css class
                 'deleteButton' => '.remove-item-headline', // css class
-                'model' => $eventHeadlines[0],
+                'model' => $EventHeadlines[0],
                 'formId' => 'event_form',
                 'formFields' => [
                     'title',
@@ -17,35 +31,39 @@
                 ],
             ]); ?>
             <div class="container-items-headline"><!-- widgetContainer -->
-                <?php foreach ($eventHeadlines as $i => $modelAddress): ?>
-                    <div class="item-headline panel panel-default col-md-8" style="padding-right: 0px"><!-- widgetBody -->
+                <div class="pull-right my-2">
+                    <button type="button" class="add-item-headline btn btn-success btn-xs">سرفصل جدید</button>
+                </div>
+                <?php foreach ($EventHeadlines as $i => $head): ?>
+                    <div class="item-headline panel panel-default " style="padding-right: 0px"><!-- widgetBody -->
                         <div class="panel-heading">
-                            <div class="pull-right">
-                                <button type="button" class="remove-item-headline btn btn-danger btn-xs">حذف</button>
-                            </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">
                             <?php
                             // necessary for update action.
-                            if (! $modelAddress->isNewRecord) {
-                                echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                            if (! $head->isNewRecord) {
+                                echo Html::activeHiddenInput($head, "[{$i}]id");
                             }
                             ?>
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
+                                <div class="col-sm-6">
+                                    <?= $form->field($head, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                 </div>
-                                <div class="col-sm-4">
-                                    <?= $form->field($modelAddress, "[{$i}]description")->textarea(['maxlength' => true]) ?>
+                                <div class="col-sm-6">
+                                    <?= $form->field($head, "[{$i}]description")->textarea(['maxlength' => true]) ?>
+                                </div>
+                                <div class="col-sm-12">
+                                    <button type="button" class="remove-item-headline btn btn-danger btn-xs">حذف</button>
                                 </div>
                             </div><!-- .row -->
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
-            <button type="button" class="add-item-headline btn btn-success btn-xs">سرفصل جدید</button>
             <?php DynamicFormWidget::end(); ?>
         </div>
     </div>
 </div>
+<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?> <!-- Add a submit button -->
+<?php ActiveForm::end(); // End the ActiveForm ?>

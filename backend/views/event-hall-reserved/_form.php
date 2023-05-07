@@ -31,8 +31,16 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
-<script>
-    jalaliDatepicker.startWatch({
-        time: true,
-    })
-</script>
+<?php
+$script = <<< JS
+    
+        jalaliDatepicker.startWatch({
+            time: true,
+            hasSecond: false,
+            zIndex:2000,
+        })
+    
+JS;
+
+$this->registerJs($script, \yii\web\View::POS_END)
+?>

@@ -15,15 +15,12 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <div class="col-3">
+        <?= $form->field($model, 'organizer_name') ?>
+    </div>
 
-    <?= $form->field($model, 'organizer_name') ?>
 
-    <?= $form->field($model, 'organizer_avatar') ?>
-
-    <?= $form->field($model, 'organizer_picture') ?>
-
-    <?= $form->field($model, 'organizer_title_brief') ?>
+<!--    --><?php //= $form->field($model, 'organizer_title_brief') ?>
 
     <?php // echo $form->field($model, 'organizer_instagram') ?>
 
@@ -31,15 +28,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'organizer_linkedin') ?>
 
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'deleted_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

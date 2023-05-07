@@ -163,6 +163,12 @@ $menu_items = [
                 'url' => ['/hitech-proposal/']
             ],
             [
+                'group' => 'hitech',
+                'label' => Yii::t('app', 'Logs'),
+                'icon' => 'fas fa-check-square',
+                'url' => ['/log/']
+            ],
+            [
                 'group' => 'Settings',
                 'label' => 'تنظیمات',
                 'icon' => 'fas fa-cogs',

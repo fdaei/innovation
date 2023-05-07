@@ -9,20 +9,24 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="event-sponsors-form">
+<div class="">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-
+    <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'telegram')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'whatsapp')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'telegram')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'whatsapp')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
         'options' => [
