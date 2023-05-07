@@ -43,6 +43,7 @@ class MentorSearch extends Mentor
     public function search($params)
     {
         $query = Mentor::find();
+        $query->where('id != 1'); // id 1 for request mentor and must not show
 
         // add conditions that should always apply here
 
