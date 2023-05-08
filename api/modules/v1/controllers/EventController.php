@@ -2,22 +2,13 @@
 
 namespace api\modules\v1\controllers;
 
-use common\models\CareerApply;
 use common\models\EventOrganizer;
-use common\models\MentorsAdviceRequest;
-use common\models\OrgUnitSearch;
-use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
-use filsh\yii2\oauth2server\models\OauthAccessTokens;
-use Yii;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
-use yii\web\HttpException;
 use yii\data\ActiveDataProvider;
 use api\models\Event;
+
 /**
  * CareerApply controller
  */
@@ -53,12 +44,23 @@ class EventController extends ActiveController
         $actions = parent::actions();
         // disable the "delete" and "create" actions
         unset($actions['create'], $actions['delete'], $actions['update']);
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
         return $actions;
+    }
+
+    public function prepareDataProvider()
+    {
+        $provider = new \yii\data\ActiveDataProvider([
+            'query' => Event::find()->where(['status'=>Event::STATUS_ACTIVE])
+        ]);
+
+        return $provider;
     }
 
     public function actionLastEvent(){
         return new ActiveDataProvider([
-            'query' => Event::find()->orderBy('id DESC')->limit(3),
+            'query' => Event::find()->where(['status'=>Event::STATUS_HELD])->orderBy('id DESC')->limit(3),
         ]);
     }
 
@@ -72,7 +74,7 @@ class EventController extends ActiveController
     // need to fix
     public function actionSimilarEvent(){
         return new ActiveDataProvider([
-            'query' => Event::find()->orderBy('id DESC')->limit(3),
+            'query' => Event::find()->where(['status'=>Event::STATUS_ACTIVE])->orderBy('id DESC')->limit(3),
         ]);
     }
 }

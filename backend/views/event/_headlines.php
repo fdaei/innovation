@@ -1,3 +1,16 @@
+<?php
+
+use backend\models\MentorRecords;
+use common\models\Businesses;
+use wbraganca\dynamicform\DynamicFormWidget;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
+
+?>
+
+<?php
+$form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
+?>
 <div class="card card-body">
     <div class='col-md-12 kohl' style="">
         <div class="panel-body ">
@@ -5,7 +18,7 @@
                 'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                 'widgetBody' => '.container-items-headline', // required: css class selector
                 'widgetItem' => '.item-headline', // required: css class
-                'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                'limit' => 20, // the maximum times, an element can be cloned (default 999)
                 'min' => 1, // 0 or 1 (default 1)
                 'insertButton' => '.add-item-headline', // css class
                 'deleteButton' => '.remove-item-headline', // css class
@@ -49,3 +62,6 @@
         </div>
     </div>
 </div>
+<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?> <!-- Add a submit button -->
+
+<?php ActiveForm::end(); // End the ActiveForm ?>
