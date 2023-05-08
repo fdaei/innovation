@@ -28,6 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card material-card">
     <div class="p-4">
         <?php $this->beginBlock('Business'); ?>
+        <div class="card-header my-2 text-right">
+            <div>
+                <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-info  ']) ?>
+            </div>
+        </div>
         <div class="row">
             <div class="col-4">
                 <div class="pl-2 m-2 shadow-sm border border- border-1">
@@ -35,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </h5>
                     <div class="text-center">
                         <div class="ml-auto">
-                            <p class="p-2"><span class="font-normal"><?= $model->name ?></span></p>
+                            <p class="p-2"></p>
                         </div>
                     </div>
                 </div>
@@ -122,6 +127,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-10 row">
                 <div class="col-3">
+                    <label for="phone"> name:</label>
+                    <p><?= $model->name ?></p>
+                </div>
+                <div class="col-3">
                     <label for="phone"> telegram:</label>
                     <p><?= $model->telegram ?></p>
                 </div>
@@ -151,7 +160,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p><?= $model->description ?></p>
             </div>
         </div>
-        <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-info btn-rounded']) ?>
         <?php $this->endBlock(); ?>
 
         <?php $this->beginBlock('Galleries'); ?>
@@ -554,7 +562,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-12">
                             <label> text:</label>
                             <?php foreach ($item->texts as $ite): ?>
-                                <p><?= $ite ?></p>
+                                <p><?= $ite['title'] ?></p>
                             <?php endforeach; ?>
                             <div class="card-footer m-0">
                                 <?= Html::a(Html::tag('span', Yii::t('app', 'Delete'), ['class' => "btn btn-outline-danger ml-1 rounded-3"]), 'javascript:void(0)',
@@ -638,58 +646,70 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endif; ?>
             </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_main_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_main_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر</label>
                         <img src="<?= $model->getUploadUrl('wallpaper') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر موبایل</label>
                         <img src="<?= $model->getUploadUrl('mobile_wallpaper') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر تبلت</label>
                         <img src="<?= $model->getUploadUrl('tablet_wallpaper') ?>">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class=" card my-3">
+                        <label class="card-header">picture_desktop</label>
+                        <img src="<?= $model->getUploadUrl('picture_desktop') ?>">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class=" card my-3">
+                        <label class="card-header">picture_mobile</label>
+                        <img src="<?= $model->getUploadUrl('picture_mobile') ?>">
                     </div>
                 </div>
             </div>

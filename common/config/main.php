@@ -48,7 +48,7 @@ return [
         ],
         'i18n' => [
             'translations' => [
-                'app*' => [
+                'common' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages',
                     'sourceLanguage' => 'en-US',

@@ -110,20 +110,7 @@ $menu_items = [
                         'label' => Yii::t('app', 'EventHall'),
                         'icon' => 'fas fa-user',
                         'url' => ['/event-hall/']
-                    ],
-                    [
-                        'group' => 'EventHallPriceList',
-                        'label' => Yii::t('app', 'EventHallPriceList'),
-                        'icon' => 'fas fa-user',
-                        'url' => ['/event-hall-price-list/']
-                    ],
-                    [
-                        'group' => 'EventHallReserved',
-                        'label' => Yii::t('app', 'EventHallReserved'),
-                        'icon' => 'fas fa-user',
-                        'url' => ['/event-hall-reserved/']
-                    ],
-
+                    ]
                 ]
             ],
             [

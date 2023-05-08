@@ -1,6 +1,11 @@
 <?php
 
+use common\models\Business;
+use common\models\City;
+use common\models\User;
 use kartik\file\FileInput;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -14,7 +19,13 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-sm-3">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model,'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model,'slug')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model,'site_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-3">
             <?= $form->field($model, 'business_color')->textInput(['maxlength' => true]) ?>
@@ -37,8 +48,20 @@ use yii\widgets\ActiveForm;
         <div class="col-sm-3">
             <?= $form->field($model, 'whatsapp')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-12">
+        <div class="col-md-3">
+            <?= $form->field($model, 'status')->dropDownList(Business::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+        </div>
+        <div class="col-sm-6">
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'investor_description')->textarea(['rows' => 6]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'success_story')->textarea(['rows' => 6]) ?>
         </div>
         <div class='col-md-12'>
             <?= $form->field($model, "business_logo")->label(false)->widget(FileInput::class, [
@@ -62,10 +85,11 @@ use yii\widgets\ActiveForm;
                 ]
             ]) ?>
         </div>
+
         <div class="form-group m-2">
             <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
 
-</div>
+
