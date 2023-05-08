@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <h4 class="small"><?= Yii::t('app', 'branche_id') ?></h4>
                                         </td>
                                         <td>
-                                            <h4 class="small"><?= $model->branche->title ?></h4>
+<!--                                            <h4 class="small">--><?php //= $model->branche ?><!--</h4>-->
                                         </td>
                                     </tr>
                                     <tr>

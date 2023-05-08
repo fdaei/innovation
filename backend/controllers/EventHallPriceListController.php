@@ -107,7 +107,7 @@ class EventHallPriceListController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['event-hall/view', 'id' => $model->event_hall_id]);
         }
 
         return $this->render('update', [

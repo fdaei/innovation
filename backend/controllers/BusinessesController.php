@@ -8,6 +8,7 @@ use common\models\Businesses;
 use common\models\BusinessSearch;
 use common\models\BusinessTimeline;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,15 @@ class BusinessesController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
@@ -73,6 +83,7 @@ class BusinessesController extends Controller
             'stat' => $model->businessStates,
         ]);
     }
+
 
     /**
      * Creates a new Businesses model.

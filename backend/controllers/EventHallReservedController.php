@@ -82,16 +82,9 @@ class EventHallReservedController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $str=$this->request->post()["EventHallReserved"]['timestamp_start'];
-                $array=explode(' ',$str);
-                var_dump(idate('h.i',strtotime("04:04:07")));
-                die();
-                $time=idate("U",$array[0])+idate("U",$array[1]);
                 $model->event_hall_id=$id;
-                $model->timestamp_start=idate("U",);
-                $model->timestamp_end=idate("U", $this->request->post()["EventHallReserved"]['timestamp_end'][0]);
+                $end=$this->request->post()["EventHallReserved"]['timestamp_end'];
                 $model->save(false);
-                var_dump($model->getErrors());
-                die();
                 return $this->redirect(['event-hall/view', 'id' => $id]);
             }
         } else {

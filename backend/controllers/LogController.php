@@ -2,18 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\OrgUnit;
-use common\models\OrgUnitSearch;
-use Yii;
-use yii\filters\AccessControl;
+use common\models\Log;
+use backend\models\LogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OrgUnitController implements the CRUD actions for OrgUnit model.
+ * LogController implements the CRUD actions for Log model.
  */
-class OrgUnitController extends Controller
+class LogController extends Controller
 {
     /**
      * @inheritDoc
@@ -23,17 +21,8 @@ class OrgUnitController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['@'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -43,13 +32,13 @@ class OrgUnitController extends Controller
     }
 
     /**
-     * Lists all OrgUnit models.
+     * Lists all Log models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new OrgUnitSearch();
+        $searchModel = new LogSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -59,8 +48,8 @@ class OrgUnitController extends Controller
     }
 
     /**
-     * Displays a single OrgUnit model.
-     * @param int $id ایدی
+     * Displays a single Log model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -72,17 +61,16 @@ class OrgUnitController extends Controller
     }
 
     /**
-     * Creates a new OrgUnit model.
+     * Creates a new Log model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new OrgUnit();
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                $model->save();
+        $model = new Log();
 
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -95,9 +83,9 @@ class OrgUnitController extends Controller
     }
 
     /**
-     * Updates an existing OrgUnit model.
+     * Updates an existing Log model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ایدی
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -115,43 +103,32 @@ class OrgUnitController extends Controller
     }
 
     /**
-     * Deletes an existing OrgUnit model.
+     * Deletes an existing Log model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ایدی
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->canDelete() && $model->softDelete()) {
-            $this->flash('success', Yii::t('app', 'Item Deleted'));
-        } else {
-            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
-        }
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-
     /**
-     * Finds the OrgUnit model based on its primary key value.
+     * Finds the Log model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ایدی
-     * @return OrgUnit the loaded model
+     * @param int $id ID
+     * @return Log the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = OrgUnit::findOne(['id' => $id])) !== null) {
+        if (($model = Log::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-    private function flash($type, $message)
-    {
-        Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
     }
 }

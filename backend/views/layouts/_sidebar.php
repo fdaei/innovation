@@ -110,20 +110,7 @@ $menu_items = [
                         'label' => Yii::t('app', 'EventHall'),
                         'icon' => 'fas fa-user',
                         'url' => ['/event-hall/']
-                    ],
-                    [
-                        'group' => 'EventHallPriceList',
-                        'label' => Yii::t('app', 'EventHallPriceList'),
-                        'icon' => 'fas fa-user',
-                        'url' => ['/event-hall-price-list/']
-                    ],
-                    [
-                        'group' => 'EventHallReserved',
-                        'label' => Yii::t('app', 'EventHallReserved'),
-                        'icon' => 'fas fa-user',
-                        'url' => ['/event-hall-reserved/']
-                    ],
-
+                    ]
                 ]
             ],
             [
@@ -161,6 +148,12 @@ $menu_items = [
                 'label' => Yii::t('app', 'Hitech Proposal'),
                 'icon' => 'fas fa-check-square',
                 'url' => ['/hitech-proposal/']
+            ],
+            [
+                'group' => 'hitech',
+                'label' => Yii::t('app', 'Logs'),
+                'icon' => 'fas fa-check-square',
+                'url' => ['/log/']
             ],
             [
                 'group' => 'Settings',

@@ -5,7 +5,7 @@
                 'widgetContainer' => 'dynamicform_wrapper1', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                 'widgetBody' => '.container-items-sponsors', // required: css class selector
                 'widgetItem' => '.item-sponsors', // required: css class
-                'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                'limit' => 20, // the maximum times, an element can be cloned (default 999)
                 'min' => 1, // 0 or 1 (default 1)
                 'insertButton' => '.add-item-sponsors', // css class
                 'deleteButton' => '.remove-item-sponsors', // css class

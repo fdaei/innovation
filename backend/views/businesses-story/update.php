@@ -1,9 +1,11 @@
 <?php
 
+use backend\models\BusinessStoryText;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\BusinessesStory $model */
+/** @var BusinessStoryText $businessesText */
 
 $this->title = Yii::t('app', 'Update Businesses Story: {name}', [
     'name' => $model->title,
@@ -18,6 +20,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'businessesText'=>$businessesText
     ]) ?>
 
 </div>

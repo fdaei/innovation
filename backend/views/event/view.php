@@ -1,6 +1,5 @@
 <?php
 
-
 use common\models\Business;
 use common\models\BusinessesInvestors;
 use common\models\BusinessesStory;
@@ -22,9 +21,6 @@ use yii\widgets\Pjax;
 /** @var BusinessMember $$headlines */
 /** @var BusinessStat $stat */
 /** @var BusinessesInvestors $investors */
-
-
-
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Businesses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -165,7 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
-                            'class' => "btn btn-outline-success float-right ",
+                            'class' => "btn btn-outline-success float-right mx-1",
                             'data-size' => 'modal-xl',
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
@@ -216,16 +212,64 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
-        <?php $this->beginBlock('investors'); ?>
-        <?php Pjax::begin(['id' => 'p-jax-Event-investors', 'enablePushState' => false]); ?>
-        <?php Pjax::end(); ?>
-        <?php $this->endBlock(); ?>
-        <?php $this->beginBlock('story'); ?>
-        <?php Pjax::begin(['id' => 'p-jax-Event-$headlines', 'enablePushState' => false]); ?>
-        <?php Pjax::end(); ?>
-        <?php $this->endBlock(); ?>
-        <?php $this->beginBlock('gallery'); ?>
-        <?php Pjax::begin(['id' => 'p-jax-Event-gallery', 'enablePushState' => false]); ?>
+        <?php $this->beginBlock('time'); ?>
+        <?php Pjax::begin(['id' => 'p-jax-Event-time', 'enablePushState' => false]); ?>
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="float-left"> تایم </h3>
+                    <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-success float-right mx-1",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/event/create-time','id'=>$model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-Event-headlines',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
+                    <?php if($model->headlines): ?>
+                        <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                            [
+                                'data-pjax' => '0',
+                                'class' => "btn btn-outline-info float-right ",
+                                'data-size' => 'modal-xl',
+                                'data-title' => Yii::t('app', 'update'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#modal-pjax',
+                                'data-url' => Url::to(['/event/update-time','id'=>$model->id]),
+                                'data-handle-form-submit' => 1,
+                                'data-show-loading' => 0,
+                                'data-reload-pjax-container' => 'p-jax-Event-headlines',
+                                'data-reload-pjax-container-on-show' => 0
+                            ]) ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>time start</th>
+                    <th>time end</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <?php if($model->event_times): ?>
+                    <?php foreach ($model->event_times as $i => $item): ?>
+                    <tr>
+                        <td><?= $item["start"] ?></td>
+                        <td><?= $item["end"] ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
         <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php echo Tabs::Widget([

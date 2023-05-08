@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\EventOrganizer;
 use common\models\EventOrganizerSearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -121,7 +122,13 @@ class EventOrganizerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model->canDelete() && $model->softDelete()) {
+            $this->flash('success', Yii::t('app', 'Item Deleted'));
+        } else {
+            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
+        }
 
         return $this->redirect(['index']);
     }
@@ -140,5 +147,9 @@ class EventOrganizerController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    private function flash(string $string, string $t)
+    {
+        Yii::$app->getSession()->setFlash($string == 'error' ? 'danger' : $string, $t);
     }
 }

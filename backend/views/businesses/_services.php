@@ -17,7 +17,7 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
             'widgetContainer' => 'dynamicform_wrapper1',
             'widgetBody' => '.container-items-statistics',
             'widgetItem' => '.item-statistics',
-            'limit' => 4,
+            'limit' => 20,
             'min' => 1,
             'insertButton' => '.add-item-statistics',
             'deleteButton' => '.remove-item-statistics',
@@ -46,10 +46,10 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                         ?>
                         <div class="row">
                             <div class="col-sm-6">
-                                <?= $form->field($modelServices, "[{$i}]title")->textInput(['class' => 'custom_input_search', 'maxlength' => true]) ?>
+                                <?= $form->field($modelServices, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($modelServices, "[{$i}]description")->textarea(['class' => 'custom_input_search', 'rows' => 6, 'maxlength' => true]) ?>
+                                <?= $form->field($modelServices, "[{$i}]description")->textarea(['class' => '', 'rows' => 6, 'maxlength' => true]) ?>
                             </div>
                         </div>
                     </div>

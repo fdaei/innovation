@@ -42,9 +42,13 @@ return [
         ]
     ],
     'components' => [
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => 'mongodb://developer:password@localhost:27017/mydatabase',
+        ],
         'i18n' => [
             'translations' => [
-                'app*' => [
+                'common' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages',
                     'sourceLanguage' => 'en-US',

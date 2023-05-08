@@ -57,7 +57,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Businesses extends \yii\db\ActiveRecord
 {
+
     /**
+     *
      * {@inheritdoc}
      */
     public static function tableName()
@@ -73,6 +75,7 @@ class Businesses extends \yii\db\ActiveRecord
         return [
             [['description','site_name'], 'string'],
             [['services'], 'safe'],
+            [['site_name','slug'], 'string', 'max' => 255],
             [['short_description', 'success_story', 'investor_description'], 'string', 'max' => 512],
             [['status'], 'required'],
             [['status', 'updated_at', 'updated_by', 'created_by', 'created_at', 'deleted_at'], 'integer'],
@@ -94,6 +97,7 @@ class Businesses extends \yii\db\ActiveRecord
             'picture_desktop' => 'Picture Desktop',
             'picture_mobile' => 'Picture Mobile',
             'name' => 'Name',
+            'site_name'=>'Site Name',
             'business_logo' => 'Business Logo',
             'business_color' => 'Business Color',
             'business_en_name' => 'Business En Name',
@@ -272,10 +276,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -286,10 +290,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -300,10 +304,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_main_desktop',
@@ -313,10 +317,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_main_mobile',
@@ -326,10 +330,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'picture_mobile',
@@ -339,10 +343,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small1_desktop',
@@ -352,10 +356,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small1_mobile',
@@ -365,10 +369,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small2_desktop',
@@ -378,10 +382,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'pic_small2_mobile',
@@ -391,10 +395,10 @@ class Businesses extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -404,11 +408,11 @@ class Businesses extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -418,11 +422,11 @@ class Businesses extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -431,11 +435,11 @@ class Businesses extends \yii\db\ActiveRecord
                 'instanceByName' => false,
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/business",
-                'basePath' => "@inceRoot/business",
-                'path' => "@inceRoot/business",
-                'url' => "@cdnWeb/business"
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/businesses",
+                'basePath' => "@inceRoot/businesses",
+                'path' => "@inceRoot/businesses",
+                'url' => "@cdnWeb/businesses"
             ],
         ];
     }

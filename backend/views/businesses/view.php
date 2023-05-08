@@ -28,102 +28,30 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card material-card">
     <div class="p-4">
         <?php $this->beginBlock('Business'); ?>
+        <div class="card-header my-2 text-right">
+            <div>
+                <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-primary  ']) ?>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">عنوان</span>
-                    </h5>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <p class="p-2"><span class="font-normal"><?= $model->name ?></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <span class="btn waves-effect waves-light btn-sm btn-info">لوگو</span>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <img class=" p-2 img-fluid " style="width: 62px;height: 65px;border-radius: 28%;"
-                                 src=<?= $model->getUploadUrl('business_logo') ?>>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">slug</span>
-                    </h5>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <p class="p-2"><span class="font-normal"><?= $model->slug ?></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">لینک</span>
-                    </h5>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <p class="p-2 text-wrap"><span class="font-normal"><?= $model->website ?></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">توضیحات اعضای سرمایه گذاران</span>
-                    </h5>
-                    <div class="text-left">
-                        <div class="ml-auto">
-                            <p class="p-2 ">
-                                <span class="font-normal">
-                                    <?= $model->investor_description ?>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">توضیحات کوتاه</span>
-                    </h5>
-                    <div class="text-left">
-                        <div class="ml-auto">
-                            <p class="p-2 ">
-                                <span class="font-normal">
-                                       <?= $model->short_description ?>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">داستان موفقیت ها </span>
-                    </h5>
-                    <div class="text-left">
-                        <div class="ml-auto">
-                            <p class="p-2 ">
-                                <span class="font-normal">
-                                       <?= $model->success_story ?>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-10 row">
                 <div class="col-3">
+                    <label for="phone"> name:</label>
+                    <p><?= $model->name ?></p>
+                </div>
+                <div class="col-3">
+                    <label for="phone"> slug:</label>
+                    <p> <?= $model->slug ?></p>
+                </div>
+                <div class="col-3">
                     <label for="phone"> telegram:</label>
                     <p><?= $model->telegram ?></p>
+                </div>
+                <div class="col-3">
+                    <label for="phone"> website:</label>
+                    <p><?= $model->website ?></p>
                 </div>
                 <div class="col-3">
                     <label for="address">instagram:</label>
@@ -142,6 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <p><?= $model->business_en_name ?></p>
                 </div>
             </div>
+            <div class="col-2">
+                <img class=" p-2 img-fluid "
+                     src=<?= $model->getUploadUrl('business_logo') ?>>
+            </div>
             <div class="col-12">
                 <label for="address">Description Brief:</label>
                 <p><?= $model->description_brief ?></p>
@@ -150,8 +82,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 <label for="address">description:</label>
                 <p><?= $model->description ?></p>
             </div>
+            <div class="col-12">
+                <label for="address">investor_description:</label>
+                <p><?= $model->investor_description ?></p>
+            </div>
+            <div class="col-12">
+                <label for="address">short_description:</label>
+                <p><?= $model->short_description ?></p>
+            </div>
+            <div class="col-12">
+                <label for="address">short_description:</label>
+                <p><?= $model->success_story ?></p>
+            </div>
         </div>
-        <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-info btn-rounded']) ?>
         <?php $this->endBlock(); ?>
 
         <?php $this->beginBlock('Galleries'); ?>
@@ -638,58 +581,70 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endif; ?>
             </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_main_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_main_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_desktop') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_mobile') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر</label>
                         <img src="<?= $model->getUploadUrl('wallpaper') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر موبایل</label>
                         <img src="<?= $model->getUploadUrl('mobile_wallpaper') ?>">
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر تبلت</label>
                         <img src="<?= $model->getUploadUrl('tablet_wallpaper') ?>">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class=" card my-3">
+                        <label class="card-header">picture_desktop</label>
+                        <img src="<?= $model->getUploadUrl('picture_desktop') ?>">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class=" card my-3">
+                        <label class="card-header">picture_mobile</label>
+                        <img src="<?= $model->getUploadUrl('picture_mobile') ?>">
                     </div>
                 </div>
             </div>

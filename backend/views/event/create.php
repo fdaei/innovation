@@ -10,9 +10,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-create material-card bg-white">
-    <div class="card-header kohl">
-        <h3><?= Html::encode($this->title) ?></h3>
-    </div>
     <div class="card-body">
         <?= $this->render('_form', [
             'model' => $model,

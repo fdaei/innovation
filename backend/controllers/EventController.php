@@ -107,7 +107,6 @@ class EventController extends Controller
         $model = $this->findModel($id);
         $form = new ActiveForm();
         $MentorRecords = [new EventHeadlines()];
-
         if ($this->request->isPost) {
             $newData = EventHeadlines::headLineHandler($model->headlines);
             $newModels = [];
@@ -132,13 +131,13 @@ class EventController extends Controller
                 }
             }
         }
-
         return $this->renderAjax('_headlines', [
             'model' => $model,
             'eventHeadlines' => $MentorRecords,
             'form' => $form,
         ]);
     }
+
     public function actionUpdateHeadlines($id)
     {
         $model = $this->findModel($id);

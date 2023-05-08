@@ -29,12 +29,23 @@ return [
               ],
               //'fixHistory' => true
         ],
+          'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+              'migrationNamespaces' => [
+                  'yii\log\migrations',
+              ],
+              //'migrationPath' => null
+        ],
     ],
     'components' => [
         'log' => [
             'targets' => [
                 [
                     'class' => \yii\log\FileTarget::class,
+                    'levels' => ['error', 'warning'],
+                ],
+                [
+                    'class' => \yii\log\DbTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
             ],
