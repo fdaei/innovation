@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var common\models\MentorSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Mentors');
+$this->title = 'مشاوران';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mentor-index card material-card">
