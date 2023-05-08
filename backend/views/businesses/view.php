@@ -34,95 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">عنوان</span>
-                    </h5>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <p class="p-2"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <span class="btn waves-effect waves-light btn-sm btn-info">لوگو</span>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <img class=" p-2 img-fluid " style="width: 62px;height: 65px;border-radius: 28%;"
-                                 src=<?= $model->getUploadUrl('business_logo') ?>>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">slug</span>
-                    </h5>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <p class="p-2"><span class="font-normal"><?= $model->slug ?></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">لینک</span>
-                    </h5>
-                    <div class="text-center">
-                        <div class="ml-auto">
-                            <p class="p-2 text-wrap"><span class="font-normal"><?= $model->website ?></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">توضیحات اعضای سرمایه گذاران</span>
-                    </h5>
-                    <div class="text-left">
-                        <div class="ml-auto">
-                            <p class="p-2 ">
-                                <span class="font-normal">
-                                    <?= $model->investor_description ?>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">توضیحات کوتاه</span>
-                    </h5>
-                    <div class="text-left">
-                        <div class="ml-auto">
-                            <p class="p-2 ">
-                                <span class="font-normal">
-                                       <?= $model->short_description ?>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="pl-2 m-2 shadow-sm border border- border-1">
-                    <h5 class="card-title text-uppercase"><span class="btn waves-effect waves-light btn-sm btn-info">داستان موفقیت ها </span>
-                    </h5>
-                    <div class="text-left">
-                        <div class="ml-auto">
-                            <p class="p-2 ">
-                                <span class="font-normal">
-                                       <?= $model->success_story ?>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-10 row">
@@ -131,8 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <p><?= $model->name ?></p>
                 </div>
                 <div class="col-3">
+                    <label for="phone"> slug:</label>
+                    <p> <?= $model->slug ?></p>
+                </div>
+                <div class="col-3">
                     <label for="phone"> telegram:</label>
                     <p><?= $model->telegram ?></p>
+                </div>
+                <div class="col-3">
+                    <label for="phone"> website:</label>
+                    <p><?= $model->website ?></p>
                 </div>
                 <div class="col-3">
                     <label for="address">instagram:</label>
@@ -151,6 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <p><?= $model->business_en_name ?></p>
                 </div>
             </div>
+            <div class="col-2">
+                <img class=" p-2 img-fluid "
+                     src=<?= $model->getUploadUrl('business_logo') ?>>
+            </div>
             <div class="col-12">
                 <label for="address">Description Brief:</label>
                 <p><?= $model->description_brief ?></p>
@@ -158,6 +81,18 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-12">
                 <label for="address">description:</label>
                 <p><?= $model->description ?></p>
+            </div>
+            <div class="col-12">
+                <label for="address">investor_description:</label>
+                <p><?= $model->investor_description ?></p>
+            </div>
+            <div class="col-12">
+                <label for="address">short_description:</label>
+                <p><?= $model->short_description ?></p>
+            </div>
+            <div class="col-12">
+                <label for="address">short_description:</label>
+                <p><?= $model->success_story ?></p>
             </div>
         </div>
         <?php $this->endBlock(); ?>
