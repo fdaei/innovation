@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\HitechRequireSkills;
 use common\models\Hitech;
 use common\models\HitechSearch;
 use yii\web\Controller;
@@ -69,7 +70,10 @@ class HitechController extends Controller
     {
         $model = new Hitech();
         $model->status = Hitech::STATUS_ACTIVE;
+        $HitechRequireSkills = [new HitechRequireSkills()];
+
         if ($this->request->isPost) {
+            $model->required_skills  =  HitechRequireSkills::handelData();
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -79,6 +83,7 @@ class HitechController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'HitechRequireSkills' => $HitechRequireSkills
         ]);
     }
 
@@ -93,12 +98,16 @@ class HitechController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
+            $model->required_skills  =  HitechRequireSkills::handelData();
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'HitechRequireSkills' => HitechRequireSkills::loadDefaultValue($model->required_skills)
+
         ]);
     }
 
