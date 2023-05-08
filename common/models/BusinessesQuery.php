@@ -9,11 +9,6 @@ namespace common\models;
  */
 class BusinessesQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * {@inheritdoc}
      * @return Businesses[]|array
@@ -35,5 +30,10 @@ class BusinessesQuery extends \yii\db\ActiveQuery
     public function active()
     {
         return $this->onCondition(['=', 'deleted_at', 0]);
+    }
+
+    public function bySlug($slug)
+    {
+        return $this->andWhere(Businesses::tableName() . '.slug=:slug', [':slug' => $slug]);
     }
 }
