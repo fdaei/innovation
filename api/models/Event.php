@@ -32,6 +32,7 @@ class Event extends \common\models\Event
             'address',
             'longitude',
             'latitude',
+            'status'
         ];
     }
 }
