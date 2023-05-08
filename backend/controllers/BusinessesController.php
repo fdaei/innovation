@@ -7,6 +7,7 @@ use backend\models\BusinessesStatistics;
 use common\models\Businesses;
 use common\models\BusinessSearch;
 use common\models\BusinessTimeline;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -14,11 +15,14 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 
+
+
 /**
  * BusinessesController implements the CRUD actions for Businesses model.
  */
 class BusinessesController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -287,6 +291,27 @@ class BusinessesController extends Controller
         }
         return $this->renderAjax('_picture', [
             'model' => $model,
+        ]);
+    }
+    public function actionPictureUpdate($id,$filed)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->validate()) {
+                $model->save(false);
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('_pic', [
+            'model' => $model,
+            'filed'=>$filed
         ]);
     }
 

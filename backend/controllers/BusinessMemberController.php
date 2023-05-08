@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\BusinessMember;
 use common\models\BusinessMemberSearch;
 use common\traits\AjaxValidationTrait;
+
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

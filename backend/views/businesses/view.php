@@ -540,111 +540,248 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card ">
             <div class="card-header">
                 <h3 class="float-left"> سایر تصاویر کسب و کار </h3>
-                <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
-                    [
-                        'data-pjax' => '0',
-                        'class' => "btn btn-outline-success float-right ",
-                        'data-size' => 'modal-xl',
-                        'data-title' => Yii::t('app', 'create'),
-                        'data-toggle' => 'modal',
-                        'data-target' => '#modal-pjax',
-                        'data-url' => Url::to(['/businesses/pic-create', 'id' => $model->id]),
-                        'data-handle-form-submit' => 1,
-                        'data-show-loading' => 0,
-                        'data-reload-pjax-container' => 'p-jax-business-other-images',
-                        'data-reload-pjax-container-on-show' => 0
-                    ]) ?>
-                <?php if (
-                    $model->wallpaper ||
-                    $model->mobile_wallpaper ||
-                    $model->tablet_wallpaper ||
-                    $model->pic_main_desktop ||
-                    $model->pic_main_mobile ||
-                    $model->pic_small1_desktop ||
-                    $model->pic_small1_mobile ||
-                    $model->pic_small2_desktop ||
-                    $model->pic_small2_mobile): ?>
-                    <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
-                        [
-                            'data-pjax' => '0',
-                            'class' => "btn btn-outline-info float-right ",
-                            'data-size' => 'modal-xl',
-                            'data-title' => Yii::t('app', 'create'),
-                            'data-toggle' => 'modal',
-                            'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/businesses/pic-update', 'id' => $model->id]),
-                            'data-handle-form-submit' => 1,
-                            'data-show-loading' => 0,
-                            'data-reload-pjax-container' => 'p-jax-business-other-images',
-                            'data-reload-pjax-container-on-show' => 0
-                        ]) ?>
-                <?php endif; ?>
             </div>
             <div class="row">
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_main_desktop') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'pic_main_desktop']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس اصلی در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_main_mobile') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'pic_main_mobile']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_desktop') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'pic_small1_desktop']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small1_mobile') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'pic_small1_mobile']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در دسکتاپ</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_desktop') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'pic_small2_desktop']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">عکس کوچیک دیگر در موبایل</label>
                         <img src="<?= $model->getUploadUrl('pic_small2_mobile') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'pic_small2_mobile']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر</label>
                         <img src="<?= $model->getUploadUrl('wallpaper') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'wallpaper']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر موبایل</label>
                         <img src="<?= $model->getUploadUrl('mobile_wallpaper') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'mobile_wallpaper']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">والپیپر تبلت</label>
                         <img src="<?= $model->getUploadUrl('tablet_wallpaper') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'tablet_wallpaper']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">picture_desktop</label>
                         <img src="<?= $model->getUploadUrl('picture_desktop') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'picture_desktop']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class=" card my-3">
                         <label class="card-header">picture_mobile</label>
                         <img src="<?= $model->getUploadUrl('picture_mobile') ?>">
+                        <div class="card-footer">
+                            <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                                [
+                                    'data-pjax' => '0',
+                                    'class' => "btn btn-outline-info float-right ",
+                                    'data-size' => 'modal-xl',
+                                    'data-title' => Yii::t('app', 'create'),
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#modal-pjax',
+                                    'data-url' => Url::to(['/businesses/picture-update', 'id' => $model->id,'filed'=> 'picture_mobile']),
+                                    'data-handle-form-submit' => 1,
+                                    'data-show-loading' => 0,
+                                    'data-reload-pjax-container' => 'p-jax-business-other-images',
+                                    'data-reload-pjax-container-on-show' => 0
+                                ]) ?>
+                        </div>
                     </div>
                 </div>
             </div>
