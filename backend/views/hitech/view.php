@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'required_skills',
+//            'required_skills',
             'minimum_budget',
             'maximum_budget',
             'status',

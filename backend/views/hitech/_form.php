@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use wbraganca\dynamicform\DynamicFormWidget;
 
 /** @var yii\web\View $this */
 /** @var common\models\Hitech $model */
@@ -10,13 +11,62 @@ use yii\widgets\ActiveForm;
 
 <div class="card card-body">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'hitech_form']); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'required_skills')->textInput() ?>
+    <div class="row bg-white p-3 rounded my-3">
+        <div class="card card-body">
+            <?php DynamicFormWidget::begin([
+                'widgetContainer' => 'dynamicform_wrapper1', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                'widgetBody' => '.container-items-required_skills', // required: css class selector
+                'widgetItem' => '.item-required_skills', // required: css class
+                'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                'min' => 1, // 0 or 1 (default 1)
+                'insertButton' => '.add-item-required_skills', // css class
+                'deleteButton' => '.remove-item-required_skills', // css class
+                'model' => $HitechRequireSkills[0],
+                'formId' => 'hitech_form',
+                'formFields' => [
+                    'title',
+                    'description'
+                ],
+            ]); ?>
+            <div class="container-items-required_skills"><!-- widgetContainer -->
+                <div>
+                    <h2 class="mb-4">اضافه کردن مهارت جدید</h2>
+                    <button type="button" class="add-item-required_skills btn  btn-xs float-right rounded-pill custom_background_color text-white">آمار جدید</button>
+                </div>
+                <?php foreach ($HitechRequireSkills as $i => $modelAddress): ?>
+                    <div class="item-required_skills panel panel-default" style="padding-right: 0px"><!-- widgetBody -->
+                        <div class="panel-body">
+                            <?php
+                            // necessary for update action.
+                            if (!$modelAddress->isNewRecord) {
+                                echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                            }
+                            ?>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search','maxlength' => true]) ?>
+                                </div>
+                            </div><!-- .row -->
+                        </div>
+                        <div class="">
+                            <div class="">
+                                <button type="button" class="remove-item-required_skills btn  btn-xs float-right rounded-pill custom_background_color2 text-white">حذف</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <?php DynamicFormWidget::end(); ?>
+        </div>
+    </div>
+
 
     <?= $form->field($model, 'minimum_budget')->textInput() ?>
 
