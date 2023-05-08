@@ -39,6 +39,7 @@ return [
                     'class' => \yii\log\DbTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
+
             ],
         ],
         'errorHandler' => [

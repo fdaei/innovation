@@ -11,7 +11,7 @@ class MentorQuery extends \yii\db\ActiveQuery
 {
     public function active()
     {
-        return $this->where(['deleted_at'=> 0]);
+        return $this->where(['deleted_at'=> 0,'status'=>Mentor::STATUS_ACTIVE]);
     }
 
     /**

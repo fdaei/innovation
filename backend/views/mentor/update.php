@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Mentor $model */
 
-$this->title = Yii::t('app', 'Update Mentor: {name}', [
+$this->title = Yii::t('app', 'ویرایش: {name}', [
     'name' => $model->name,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Mentors'), 'url' => ['index']];

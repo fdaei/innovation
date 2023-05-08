@@ -60,7 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="card-footer">
-                <button class="btn btn-info"> ویرایش</button>
+                <?= Html::a('ویرایش', ['update', 'id' => $model->id],
+                    ['class' => 'btn btn-outline-info btn-rounded']) ?>
             </div>
         </div>
 

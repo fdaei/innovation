@@ -73,7 +73,7 @@ $menu_items = [
                 'items' => [
                     [
                         'group' => 'Mentor',
-                        'label' => Yii::t('app', 'MentorApplying'),
+                        'label' =>  'مشاوران',
                         'icon' => 'fas fa-user',
                         'url' => ['/mentor/']
                     ],

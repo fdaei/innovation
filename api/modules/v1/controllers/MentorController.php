@@ -64,6 +64,7 @@ class MentorController extends ActiveController
     public function actionIndex()
     {
         $searchModel = new MentorSearch();
+        $searchModel->status = Mentor::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
         return $dataProvider;
     }
