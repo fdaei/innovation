@@ -40,6 +40,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
 class Mentor extends \yii\db\ActiveRecord
 {
     public $resume_file;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
 
     public static function tableName()
     {
@@ -144,6 +147,21 @@ class Mentor extends \yii\db\ActiveRecord
         return $this->hasMany(MentorServices::class, ['mentor_id' => 'id']);
     }
 
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+            ]
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
+    }
 
     public function behaviors()
     {
