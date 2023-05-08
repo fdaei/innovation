@@ -68,6 +68,9 @@ use wbraganca\dynamicform\DynamicFormWidget;
             <?= $form->field($model, 'activity_description')->textarea(['rows' => 6]) ?>
         </div>
 
+        <div class="col-md-8">
+            <?= $form->field($model, 'status')->dropDownList(\common\models\Mentor::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+        </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">
         <div class="col-md-10 d-flex justify-content-end">
