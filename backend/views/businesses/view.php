@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $this->beginBlock('Business'); ?>
         <div class="card-header my-2 text-right">
             <div>
-                <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-info  ']) ?>
+                <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-primary  ']) ?>
             </div>
         </div>
         <div class="row">
