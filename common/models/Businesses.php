@@ -135,6 +135,10 @@ class Businesses extends \yii\db\ActiveRecord
         return $this->hasMany(BusinessesStory::class, ['businesses_id' => 'id']);
     }
 
+    public function getbusinessesInvestorsNew()
+    {
+        return $this->hasMany(BusinessesInvestors::class, ['businesses_id' => 'id']);
+    }
     public function getBusinessesInvestors()
     {
         return $this->hasMany(BusinessMember::class, ['business_id' => 'id']);

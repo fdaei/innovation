@@ -59,6 +59,11 @@ class Businesses extends \common\models\Businesses
                 return $model->getUploadUrl('pic_small2_mobile');
             },
             'services',
+            'businessesStory',
+            'investors' => function (self $model) {
+                return $model->businessesInvestorsNew;
+            },
+
         ];
     }
 }
