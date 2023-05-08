@@ -34,12 +34,18 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_at
  * @property int $created_by
  * @property int $deleted_at
+ * @property int $status
  *
  * @property User $createdBy
  * @property User $updatedBy
  */
 class Event extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
+    const STATUS_HELD = 3;
+
 
     public static function tableName()
     {
@@ -52,7 +58,7 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_organizer_id','title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude','evand_link','title_brief'], 'required'],
+            [['event_organizer_id','title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude','evand_link','title_brief', 'status'], 'required'],
             [['description', 'address','evand_link'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -183,5 +189,21 @@ class Event extends \yii\db\ActiveRecord
 
     public static function getOrganizerList(){
         return EventOrganizer::find()->all();
+    }
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+                self::STATUS_HELD => Yii::t('app', 'HELD'),
+            ]
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
     }
 }

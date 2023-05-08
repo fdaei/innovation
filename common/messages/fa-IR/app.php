@@ -63,6 +63,7 @@ return [
     'Galleries' => 'گالری',
     'ID' => 'آیدی',
     'INACTIVE' => 'غیرفعال',
+    "HELD" => "برگذار شده",
     'Icon' => 'آیکون',
     'Image' => 'تصویر',
     'Immediate' => 'فوری',
