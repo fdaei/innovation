@@ -49,7 +49,7 @@ $form = ActiveForm::begin(['id' => 'businesses_form']); // Start the ActiveForm
                                 <?= $form->field($modelServices, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($modelServices, "[{$i}]description")->textarea(['class' => '', 'rows' => 6, 'maxlength' => true]) ?>
+                                <?= $form->field($modelServices, "[{$i}]description")->textarea(['rows' => 6, 'maxlength' => true]) ?>
                             </div>
                         </div>
                     </div>

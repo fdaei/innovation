@@ -18,7 +18,7 @@ use yii\web\View;
 
 <div class="business-timeline-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'business-timeline-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <?= $form->field($model, 'status')->dropDownList(
