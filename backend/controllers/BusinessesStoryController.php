@@ -6,6 +6,7 @@ use backend\models\BusinessesServices;
 use backend\models\BusinessStoryText;
 use common\models\BusinessesStory;
 use common\models\BusinessesStorySearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -18,6 +19,7 @@ use yii\filters\VerbFilter;
  */
 class BusinessesStoryController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -88,11 +90,15 @@ class BusinessesStoryController extends Controller
             if ($model->load($this->request->post()) && $model->validate()) {
                 $model->texts=BusinessStoryText::handelData();
                 $model->save();
-              return $this->redirect(Url::to(['businesses/view', 'id' => $id]));
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         } else {
             $model->loadDefaultValues();
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('create', [
             'model' => $model,
             'businessesText' =>$businessesText,
@@ -112,9 +118,12 @@ class BusinessesStoryController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->texts=BusinessStoryText::handelData();
             $model->save();
-          return $this->redirect(Url::to(['businesses/view', 'id' => $model_id]));
+            return $this->asJson([
+                'success' => true,
+                'msg' => Yii::t("app", 'Success')
+            ]);
         }
-
+        $this->performAjaxValidation($model);
         return $this->renderAjax('update', [
             'model' => $model,
             'businessesText' => BusinessStoryText::loadDefaultValue($model->texts),

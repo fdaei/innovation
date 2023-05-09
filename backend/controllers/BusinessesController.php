@@ -160,11 +160,14 @@ class BusinessesController extends Controller
                     $model->statistics = $newData;
                 }
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->asJson([
+                        'success' => true,
+                        'msg' => Yii::t("app", 'Success')
+                    ]);
                 }
             }
         }
-
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_statistics', [
             'model' => $model,
             'businessesStatistics' => $businessesStatistics,
@@ -188,10 +191,13 @@ class BusinessesController extends Controller
             // Validate all models
             $isValid = BusinessesStatistics::validateMultiple($newModels);
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         }
-
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_statistics', [
             'model' => $model,
             'businessesStatistics' => BusinessesStatistics::loadDefaultValue($model->statistics),
@@ -226,10 +232,14 @@ class BusinessesController extends Controller
                 }
 
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->asJson([
+                        'success' => true,
+                        'msg' => Yii::t("app", 'Success')
+                    ]);
                 }
             }
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_services', [
             'model' => $model,
             'BusinessesServices' => $BusinessesServices,
@@ -250,12 +260,15 @@ class BusinessesController extends Controller
 
                 $newModels[] = $newModel;
             }
-            // Validate all models
             $isValid = BusinessesServices::validateMultiple($newModels);
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_services', [
             'model' => $model,
             'BusinessesServices' => BusinessesServices::loadDefaultValue($model->services),
