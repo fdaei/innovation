@@ -43,6 +43,7 @@ class FreelancerController extends ActiveController
     public function actionIndex()
     {
         $searchModel = new FreelancerSearch();
+        $searchModel->status = Freelancer::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $dataProvider;

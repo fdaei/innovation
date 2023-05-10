@@ -39,6 +39,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Freelancer extends \yii\db\ActiveRecord
 {
+    const STATUS_PENDING = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
     /**
      * {@inheritdoc}
      */
