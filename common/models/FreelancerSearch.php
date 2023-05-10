@@ -2,10 +2,12 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use yii\base\Model;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\data\ActiveDataProvider;
-use common\models\Freelancer;
-
+use api\models\Freelancer;
 /**
  * FreelancerSearch represents the model behind the search form of `common\models\Freelancer`.
  */

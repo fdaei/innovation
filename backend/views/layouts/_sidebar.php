@@ -144,6 +144,12 @@ $menu_items = [
                 'icon' => 'fas fa-check-square',
                 'url' => ['/notification/']
             ],
+            [
+                'group' => 'freelancer',
+                'label' => Yii::t('app', 'freelancer'),
+                'icon' => 'fas fa-check-square',
+                'url' => ['/freelancer/']
+            ],
         ],
     ]
 ];

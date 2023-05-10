@@ -14,7 +14,7 @@ use yii\rest\ActiveController;
  */
 class FreelancerController extends ActiveController
 {
-    public $modelClass = "api\models\Freelancer";
+    public $modelClass = 'api\models\Freelancer';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',

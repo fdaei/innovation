@@ -143,11 +143,66 @@ class Freelancer extends \yii\db\ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => false,
-                'cdnPath' => "@cdnRoot/freelancer",
-                'basePath' => "@inceRoot/freelancer",
-                'path' => "@inceRoot/freelancer",
-                'url' => "@cdnWeb/freelancer"
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
+            ],
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'header_picture_desktop',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'header_picture_mobile',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
+            ],[
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'freelancer_picture',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                //'placeholder' => "/assets/images/default.jpg",
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/events",
+                'basePath' => "@inceRoot/events",
+                'path' => "@inceRoot/events",
+                'url' => "@cdnWeb/events"
             ],
         ];
+    }
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+                self::STATUS_PENDING => Yii::t('app', 'PENDING'),
+            ]
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
     }
 }
