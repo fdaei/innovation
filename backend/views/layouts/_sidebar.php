@@ -156,6 +156,12 @@ $menu_items = [
                 'url' => ['/log/']
             ],
             [
+                'group' => 'freelancer',
+                'label' => Yii::t('app', 'freelancer'),
+                'icon' => 'fas fa-check-square',
+                'url' => ['/freelancer/']
+            ],
+            [
                 'group' => 'Settings',
                 'label' => 'تنظیمات',
                 'icon' => 'fas fa-cogs',

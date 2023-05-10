@@ -14,7 +14,7 @@ use yii\rest\ActiveController;
  */
 class FreelancerController extends ActiveController
 {
-    public $modelClass = "api\models\Freelancer";
+    public $modelClass = 'api\models\Freelancer';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -43,6 +43,7 @@ class FreelancerController extends ActiveController
     public function actionIndex()
     {
         $searchModel = new FreelancerSearch();
+        $searchModel->status = Freelancer::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $dataProvider;
