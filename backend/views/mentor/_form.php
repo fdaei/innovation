@@ -18,7 +18,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
     <?php $form = ActiveForm::begin(['id'=>'mentor_form']); ?>
     <div class="row justify-content-center">
-
         <div class='col-md-3'>
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
@@ -64,7 +63,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
             <?= $form->field($model, 'consultation_online_status')->textInput(['maxlength' => true]) ?>
         </div>
         <div class='col-md-12'>
-            <?= $form->field($model, 'telegram')->fileInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'activity_description')->textarea(['rows' => 6]) ?>
         </div>
 

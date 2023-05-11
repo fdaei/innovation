@@ -43,7 +43,7 @@ class Mentor extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
-
+    const SCENARIO_FORM = 'form';
     public static function tableName()
     {
         return '{{%mentor}}';
@@ -55,13 +55,19 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'name', 'activity_field', 'activity_description'], 'required'],
-            [['activity_description','resume_file'], 'string'],
+            [['name', 'activity_field', 'activity_description','telegram'], 'required','on' => [self::SCENARIO_FORM]],
+            [['activity_description','telegram'], 'string'],
             [[ 'services', 'records'], 'safe'],
-            [['status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['picture','picture_mentor'], 'image','extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
+            ['video', 'file','enableClientValidation' => false],
         ];
+    }
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description','telegram'];
+        return $scenarios;
     }
 
     /**

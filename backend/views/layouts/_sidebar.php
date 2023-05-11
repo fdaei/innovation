@@ -5,138 +5,138 @@ use common\components\Menu;
 $menu_items = [];
 $menu_items = [
     [
-        'group' => 'site',
-        'label' => 'سایت',
-        'icon' => 'fas fa-desktop-alt',
+        'group' => 'Business',
+        'label' => Yii::t('app', 'Business'),
+        'icon' => 'fas fa-building',
+        'url' => ['/businesses']
+    ],
+    [
+        'group' => 'location',
+        'label' => 'موقعیت مکانی',
+        'icon' => 'fas fa-map',
         'level' => "first-level",
         'encode' => false,
         'items' => [
             [
-                'group' => 'Business',
-                'label' => Yii::t('app', 'Business'),
-                'icon' => 'fas fa-building',
-                'url' => ['/businesses']
+                'group' => 'City',
+                'label' => Yii::t('app', 'City'),
+                'icon' => 'fas fa-map-marker-alt',
+                'url' => ['/city/']
             ],
             [
-                'group' => 'location',
-                'label' => 'موقعیت مکانی',
-                'icon' => 'fas fa-map',
-                'level' => "first-level",
-                'encode' => false,
-                'items' => [
-                [
-                    'group' => 'City',
-                    'label' => Yii::t('app', 'City'),
-                    'icon' => 'fas fa-map-marker-alt',
-                    'url' => ['/city/']
-                ],
-                [
-                        'group' => 'Province',
-                        'label' => Yii::t('app', 'Province'),
-                        'icon' => 'fas fa-map-marked-alt',
-                        'url' => ['/province/']],
-                ]
-            ],
+                'group' => 'Province',
+                'label' => Yii::t('app', 'Province'),
+                'icon' => 'fas fa-map-marked-alt',
+                'url' => ['/province/']],
+        ]
+    ],
+    [
+        'group' => 'CareerApply',
+        'label' => 'موقعیت شغلی',
+        'icon' => 'fas fa-star',
+        'level' => "first-level",
+        'encode' => false,
+        'items' => [
             [
                 'group' => 'CareerApply',
-                'label' => 'موقعیت شغلی',
-                'icon' => 'fas fa-star',
-                'level' => "first-level",
-                'encode' => false,
-                'items' => [
-                    [
-                        'group' => 'CareerApply',
-                        'label' => Yii::t('app', 'CareerApply'),
-                        'icon' => 'fas fa-address-card',
-                        'url' => ['/career-apply/']
-                    ],
-                    [
-                        'group' => 'JobPosition',
-                        'label' => Yii::t('app', 'JobPosition'),
-                        'icon' => 'fas fa-clipboard',
-                        'url' => ['/job-position/']
-                    ],
-                    [
-                        'group' => 'OrgUnit',
-                        'label' => Yii::t('app', 'OrgUnit'),
-                        'icon' => 'fas fa-folder-open',
-                        'url' => ['/org-unit/']
-                    ],
-                ]
+                'label' => Yii::t('app', 'CareerApply'),
+                'icon' => 'fas fa-address-card',
+                'url' => ['/career-apply/']
+            ],
+            [
+                'group' => 'JobPosition',
+                'label' => Yii::t('app', 'JobPosition'),
+                'icon' => 'fas fa-clipboard',
+                'url' => ['/job-position/']
+            ],
+            [
+                'group' => 'OrgUnit',
+                'label' => Yii::t('app', 'OrgUnit'),
+                'icon' => 'fas fa-folder-open',
+                'url' => ['/org-unit/']
+            ],
+        ]
+    ],
+    [
+        'group' => 'Mentor',
+        'label' => 'مشاوره',
+        'icon' => 'fas fa-star',
+        'level' => "first-level",
+        'encode' => false,
+        'items' => [
+            [
+                'group' => 'Mentor',
+                'label' => 'مشاوران',
+                'icon' => 'fas fa-user',
+                'url' => ['/mentor/']
             ],
             [
                 'group' => 'Mentor',
-                'label' => 'مشاوره',
-                'icon' => 'fas fa-star',
-                'level' => "first-level",
-                'encode' => false,
-                'items' => [
-                    [
-                        'group' => 'Mentor',
-                        'label' =>  'مشاوران',
-                        'icon' => 'fas fa-user',
-                        'url' => ['/mentor/']
-                    ],
-                    [
-                        'group' => 'Mentor',
-                        'label' => Yii::t('app', 'mentors-advice-request'),
-                        'icon' => 'fas fa-user',
-                        'url' => ['/mentors-advice-request/']
-                    ],
-
-                ]
+                'label' => Yii::t('app', 'mentors-advice-request'),
+                'icon' => 'fas fa-user',
+                'url' => ['/mentors-advice-request/']
             ],
+
+        ]
+    ],
+    [
+        'group' => 'Events',
+        'label' => 'رویداد',
+        'icon' => 'fas fa-star',
+        'level' => "first-level",
+        'encode' => false,
+        'items' => [
             [
                 'group' => 'Events',
-                'label' => 'رویداد',
-                'icon' => 'fas fa-star',
-                'level' => "first-level",
-                'encode' => false,
-                'items' => [
-                    [
-                        'group' => 'Events',
-                        'label' => Yii::t('app', 'Events'),
-                        'icon' => 'fas fa-user',
-                        'url' => ['/event/']
-                    ],
-                    [
-                        'group' => 'event-teachers',
-                        'label' => 'برگذار کنندگان',
-                        'icon' => 'fas fa-user',
-                        'url' => ['event-organizer/']
-                    ],
-                    [
-                        'group' => 'EventHall',
-                        'label' => Yii::t('app', 'EventHall'),
-                        'icon' => 'fas fa-user',
-                        'url' => ['/event-hall/']
-                    ]
-                ]
+                'label' => Yii::t('app', 'Events'),
+                'icon' => 'fas fa-user',
+                'url' => ['/event/']
             ],
             [
-                'group' => 'Activity',
-                'label' => Yii::t('app', 'Activity'),
-                'icon' => 'fas fa-grip-lines',
-                'url' => ['/activity/']
+                'group' => 'event-teachers',
+                'label' => 'برگذار کنندگان',
+                'icon' => 'fas fa-user',
+                'url' => ['event-organizer/']
             ],
             [
-                'group' => 'Status',
-                'label' => Yii::t('app', 'Status'),
-                'icon' => 'fas fa-server',
-                'url' => ['/statuses/']
-            ],
-            [
-                'group' => 'Branches',
-                'label' => Yii::t('app', 'Branches'),
-                'icon' => 'fas fa-city',
-                'url' => ['/branches/']
-            ],
-            [
-                'group' => 'Notification',
-                'label' => Yii::t('app', 'Notification'),
-                'icon' => 'fas fa-check-square',
-                'url' => ['/notification/']
-            ],
+                'group' => 'EventHall',
+                'label' => Yii::t('app', 'EventHall'),
+                'icon' => 'fas fa-user',
+                'url' => ['/event-hall/']
+            ]
+        ]
+    ],
+    [
+        'group' => 'Activity',
+        'label' => Yii::t('app', 'Activity'),
+        'icon' => 'fas fa-grip-lines',
+        'url' => ['/activity/']
+    ],
+    [
+        'group' => 'Status',
+        'label' => Yii::t('app', 'Status'),
+        'icon' => 'fas fa-server',
+        'url' => ['/statuses/']
+    ],
+    [
+        'group' => 'Branches',
+        'label' => Yii::t('app', 'Branches'),
+        'icon' => 'fas fa-city',
+        'url' => ['/branches/']
+    ],
+    [
+        'group' => 'Notification',
+        'label' => Yii::t('app', 'Notification'),
+        'icon' => 'fas fa-check-square',
+        'url' => ['/notification/']
+    ],
+    [
+        'group' => 'hitech',
+        'label' => 'هایتک',
+        'icon' => 'fas fa-star',
+        'level' => "first-level",
+        'encode' => false,
+        'items' => [
             [
                 'group' => 'hitech',
                 'label' => Yii::t('app', 'Hitech'),
@@ -155,29 +155,29 @@ $menu_items = [
                 'icon' => 'fas fa-check-square',
                 'url' => ['/log/']
             ],
+        ]
+    ],
+    [
+        'group' => 'Settings',
+        'label' => 'تنظیمات',
+        'icon' => 'fas fa-cogs',
+        'level' => "first-level",
+        'encode' => false,
+        'items' => [
             [
                 'group' => 'Settings',
-                'label' => 'تنظیمات',
+                'label' => Yii::t('app', 'Manage Settings'),
                 'icon' => 'fas fa-cogs',
-                'level' => "first-level",
-                'encode' => false,
-                'items' => [
-                    [
-                        'group' => 'Settings',
-                        'label' => Yii::t('app', 'Manage Settings'),
-                        'icon' => 'fas fa-cogs',
-                        'url' => ['/moresettings/default/index']
-                    ],
-                    [
-                        'group' => 'Settings',
-                        'label' => Yii::t('app', 'Settings'),
-                        'icon' => 'fas fa-cogs',
-                        'url' => ['/site/setting']
-                    ],
-                ]
+                'url' => ['/moresettings/default/index']
             ],
-        ],
-    ]
+            [
+                'group' => 'Settings',
+                'label' => Yii::t('app', 'Settings'),
+                'icon' => 'fas fa-cogs',
+                'url' => ['/site/setting']
+            ],
+        ]
+    ],
 ];
 ?>
     <aside class="left-sidebar">

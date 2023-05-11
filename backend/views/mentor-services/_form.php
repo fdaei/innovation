@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="mentor-services-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'mentor_service_form']); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

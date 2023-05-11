@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use common\models\EventSponsors;
 use common\models\EventSponsorsSearch;
+use common\traits\AjaxValidationTrait;
+use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -15,6 +17,7 @@ use yii\filters\VerbFilter;
  */
 class EventSponsorsController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -82,12 +85,15 @@ class EventSponsorsController extends Controller
         $model->event_id=$id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(Url::to(['event/view', 'id' => $id]));
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         } else {
             $model->loadDefaultValues();
         }
-
+        $this->performAjaxValidation($model);
         return $this->renderAjax('create', [
             'model' => $model,
         ]);
@@ -100,14 +106,16 @@ class EventSponsorsController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id,$model_id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(Url::to(['event/view', 'id' => $model_id]));
+            return $this->asJson([
+                'success' => true,
+                'msg' => Yii::t("app", 'Success')
+            ]);
         }
-
+        $this->performAjaxValidation($model);
         return $this->renderAjax('update', [
             'model' => $model,
         ]);
@@ -122,9 +130,17 @@ class EventSponsorsController extends Controller
      */
     public function actionDelete($id,$model_id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(Url::to(['event/view', 'id' => $model_id]));
+        if ($this->findModel($id)->delete()) {
+            return $this->asJson([
+                'status' => true,
+                'message' => Yii::t("app", "Item Deleted")
+            ]);
+        } else {
+            return $this->asJson([
+                'status' => false,
+                'message' => Yii::t("app", "Error In delete Info")
+            ]);
+        }
     }
 
     /**

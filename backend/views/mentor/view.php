@@ -26,35 +26,35 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-body row">
                 <div class="col-12 row">
                     <div class="col-3">
-                        <label for="name">Name:</label>
+                        <label><?= Yii::t('app', 'name')?> :</label>
                         <p><?= $model->name ?></p>
                     </div>
                     <div class="col-3">
-                        <label for="email">activity_field:</label>
+                        <label><?= Yii::t('app', 'activity_field')?> :</label>
                         <p><?= $model->activity_field ?></p>
                     </div>
                     <div class="col-3">
-                        <label for="phone"> instagram:</label>
+                        <label><?= Yii::t('app', 'instagram')?> :</label>
                         <p><?= $model->instagram ?></p>
                     </div>
                     <div class="col-3">
-                        <label for="address">linkedin:</label>
+                        <label><?= Yii::t('app', 'linkedin')?> :</label>
                         <p><?= $model->linkedin ?></p>
                     </div>
                     <div class="col-3">
-                        <label for="address">twitter:</label>
+                        <label><?= Yii::t('app', 'twitter')?> :</label>
                         <p><?= $model->twitter ?></p>
                     </div>
                     <div class="col-3">
-                        <label for="address">whatsapp:</label>
+                        <label><?= Yii::t('app', 'whatsapp')?> :</label>
                         <p><?= $model->whatsapp ?></p>
                     </div>
                     <div class="col-3">
-                        <label for="phone"> telegram:</label>
+                        <label><?= Yii::t('app', 'telegram')?> :</label>
                         <p><?= $model->telegram ?></p>
                     </div>
                     <div class="col-3">
-                        <label for="address">activity_description:</label>
+                        <label><?= Yii::t('app', 'activity_description')?> :</label>
                         <p><?= $model->activity_description ?></p>
                     </div>
                 </div>
@@ -92,10 +92,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>picture</th>
-                    <th>title</th>
-                    <th>Description</th>
-                    <th class="float-right mx-5">action</th>
+                    <th><?= Yii::t('app', 'picture')?></th>
+                    <th><?= Yii::t('app', 'title')?></th>
+                    <th><?= Yii::t('app', 'Description')?></th>
+                    <th><?= Yii::t('app', 'action')?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'title' => Yii::t('yii', 'delete'),
                                     'aria-label' => Yii::t('yii', 'delete'),
-                                    'data-reload-pjax-container' => 'p-jax-business-member',
+                                    'data-reload-pjax-container' => 'p-jax-mentor-services',
                                     'data-pjax' => '0',
                                     'data-url' => Url::to(['/mentor-services/delete', 'id' => $item->id, 'model_id' => $model->id]),
                                     'class' => " p-jax-btn",
@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-url' => Url::to(['/mentor-services/update', 'id' => $item->id, 'model_id' => $model->id]),
                                     'data-handle-form-submit' => 1,
                                     'data-show-loading' => 0,
-                                    'data-reload-pjax-container' => 'p-jax-business-Statistics',
+                                    'data-reload-pjax-container' => 'p-jax-mentor-services',
                                     'data-reload-pjax-container-on-show' => 0
                                 ]) ?>
                         </td>
@@ -142,15 +142,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('records'); ?>
-        <?php Pjax::begin(['id' => 'p-jax-mentor-records', 'enablePushState' => false]); ?>
+        <?php Pjax::begin(['id' => 'p-jax-mentor-records','enablePushState' => false]); ?>
         <div class="card">
             <div class="card-header">
                 <div>
-                    <h3 class="float-left">سابقه ها</h3>
+                    <h3 class="float-left">رکورد ها</h3>
                     <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
-                            'class' => "btn btn-outline-success float-right ",
+                            'class' => "btn btn-outline-success float-right ml-1",
                             'data-size' => 'modal-xl',
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
@@ -170,7 +170,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'data-title' => Yii::t('app', 'update'),
                                 'data-toggle' => 'modal',
                                 'data-target' => '#modal-pjax',
-                                'data-url' => Url::to(['/mentor/update-records','id'=>$model->id]),
+                                'data-url' => Url::to(['/mentor/update-records','id' => $model->id]),
                                 'data-handle-form-submit' => 1,
                                 'data-show-loading' => 0,
                                 'data-reload-pjax-container' => 'p-jax-mentor-records',
@@ -183,9 +183,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>year</th>
-                    <th>title</th>
-                    <th>description</th>
+                    <th>سال</th>
+                    <th>عنوان</th>
+                    <th>توضیحات</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -226,7 +226,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
-                            'class' => "btn btn-outline-info float-right ",
+                            'class' => "btn btn-outline-info float-right mx-1",
                             'data-size' => 'modal-xl',
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',

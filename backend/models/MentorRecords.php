@@ -10,7 +10,6 @@ class MentorRecords extends Model
     public $year;
     public $title;
     public $description;
-
     public function rules()
     {
         return [
@@ -18,7 +17,6 @@ class MentorRecords extends Model
             [['year','title','description'],'string'],
         ];
     }
-
     public function attributeLabels()
     {
         return [
@@ -27,9 +25,8 @@ class MentorRecords extends Model
             'description' => 'توضیح سابقه',
         ];
     }
-
     public static function handelData($defaultData = []){
-        $postData = \common\models\Model::createMultiple(self::className());
+        $postData = \common\models\Model::createMultiple(self::class);
         Model::loadMultiple($postData, Yii::$app->request->post());
         $headlinesJson = [];
         foreach ($postData as $index => $eachData) {

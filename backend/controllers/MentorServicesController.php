@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\MentorServices;
 use common\models\MentorServicesSearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -16,6 +17,7 @@ use yii\filters\VerbFilter;
  */
 class MentorServicesController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -77,18 +79,21 @@ class MentorServicesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($id)
+    public function actionCreate($id): \yii\web\Response|string
     {
         $model = new MentorServices();
         $model->mentor_id=$id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(Url::to(['mentor/view', 'id' => $id]));
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         } else {
             $model->loadDefaultValues();
         }
-
+        $this->performAjaxValidation($model);
         return $this->renderAjax('create', [
             'model' => $model,
         ]);
@@ -105,8 +110,12 @@ class MentorServicesController extends Controller
     {
         $model = $this->findModel($id);
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(Url::to(['mentor/view', 'id' => $model_id]));
+            return $this->asJson([
+                'success' => true,
+                'msg' => Yii::t("app", 'Success')
+            ]);
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('update', [
             'model' => $model,
         ]);
@@ -121,9 +130,17 @@ class MentorServicesController extends Controller
      */
     public function actionDelete($id,$model_id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(Url::to(['mentor/view', 'id' => $model_id]));
+        if ($this->findModel($id)->delete()) {
+            return $this->asJson([
+                'status' => true,
+                'message' => Yii::t("app", "Item Deleted")
+            ]);
+        } else {
+            return $this->asJson([
+                'status' => false,
+                'message' => Yii::t("app", "Error In delete Info")
+            ]);
+        }
     }
 
     /**

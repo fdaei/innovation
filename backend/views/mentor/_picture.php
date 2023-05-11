@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="businesses-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' =>'mentor-pic']); ?>
     <div class="row">
         <div class='col-md-12'>
             <?= $form->field($model, "picture_mentor")->label(false)->widget(FileInput::class, [
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
                     'browseLabel' => Yii::t('app', 'Choose a file ...'),
                     'previewFileType' => 'image',
                     'initialPreviewAsData' => true,
-                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_main_desktop")) ? $model->getUploadUrl("pic_main_desktop") : false,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture_mentor")) ? $model->getUploadUrl("picture_mentor") : false,
                     'initialPreviewFileType' => 'image',
                 ]
             ]) ?>
@@ -52,7 +52,7 @@ use yii\widgets\ActiveForm;
                     'browseLabel' => Yii::t('app', 'Choose a file ...'),
                     'previewFileType' => 'image',
                     'initialPreviewAsData' => true,
-                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_main_mobile")) ? $model->getUploadUrl("pic_main_mobile") : false,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
                     'initialPreviewFileType' => 'image',
                 ]
             ]) ?>
@@ -74,7 +74,7 @@ use yii\widgets\ActiveForm;
                     'browseLabel' => Yii::t('app', 'Choose a file ...'),
                     'previewFileType' => 'image',
                     'initialPreviewAsData' => true,
-                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("pic_small1_desktop")) ? $model->getUploadUrl("pic_small1_desktop") : false,
+                    'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("video")) ? $model->getUploadUrl("video") : false,
                     'initialPreviewFileType' => 'image',
                 ]
             ]) ?>

@@ -2,12 +2,10 @@
 
 namespace backend\controllers;
 
-use backend\models\EventHeadlines;
 use backend\models\MentorRecords;
-use common\models\MentorServices;
 use common\models\Mentor;
 use common\models\MentorSearch;
-use common\models\Model;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -20,6 +18,7 @@ use yii\widgets\ActiveForm;
  */
 class MentorController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -56,7 +55,6 @@ class MentorController extends Controller
     {
         $searchModel = new MentorSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -84,40 +82,33 @@ class MentorController extends Controller
     public function actionCreate()
     {
         $model = new Mentor();
-        $mentorRecords = [new MentorRecords()];
-        $mentorServices = [new MentorServices()];
-
+        $model->scenario = 'form';
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
-
-                $model->records  = MentorRecords::handelData();
-                if($model->save()){
-                    MentorServices::handelData($model->id);
-                }
-
+               $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-            print_r($model->errors); die;
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
-            'mentorServices' => $mentorServices,
-            'mentorRecords'  => $mentorRecords
         ]);
     }
     public function actionPicCreate($id)
     {
         $model = $this->findModel($id);
-
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             if ($model->validate() && $model->save(false) ) {
-                return $this->redirect(['view', 'id' => $id]);
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_picture', [
             'model' => $model,
         ]);
@@ -126,13 +117,16 @@ class MentorController extends Controller
     public function actionPicUpdate($id)
     {
         $model = $this->findModel($id);
-
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             if ($model->validate() && $model->save(false) ) {
-                return $this->redirect(['view', 'id' => $id]);
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_picture', [
             'model' => $model,
         ]);
@@ -142,43 +136,40 @@ class MentorController extends Controller
         $model = $this->findModel($id);
         $form = new ActiveForm();
         $MentorRecords = [new MentorRecords()];
-
         if ($this->request->isPost) {
             $newData = MentorRecords::handelData();
             $newModels = [];
-
             foreach ($newData as $item) {
                 $newModel = new MentorRecords();
                 $newModel->attributes = $item;
                 $newModels[] = $newModel;
             }
 
-            // Validate all models
             $isValid = MentorRecords::validateMultiple($newModels);
-
             if ($isValid) {
                 if($model->records){
                     $model->records = array_merge($model->records, $newData);
                 }else {
                     $model->records = $newData;
                 }
-                if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->save(false)) {
+                    return $this->asJson([
+                        'success' => true,
+                        'msg' => Yii::t("app", 'Success')
+                    ]);
                 }
             }
         }
-
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_records', [
             'model' => $model,
             'MentorRecords' => $MentorRecords,
-            'form' => $form,
         ]);
     }
     public function actionUpdateRecords($id)
     {
         $model = $this->findModel($id);
         $form = new ActiveForm();
-
         if ($this->request->isPost) {
             $model->records  =  MentorRecords::handelData();
             foreach ( $model->records  as $item) {
@@ -188,10 +179,14 @@ class MentorController extends Controller
             }
             // Validate all models
             $isValid = MentorRecords::validateMultiple($newModels);
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+            if($model->save(false)){
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_records', [
             'model' => $model,
             'MentorRecords' => MentorRecords::loadDefaultValue($model->records),
@@ -216,9 +211,7 @@ class MentorController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model,
-            'mentorRecords'  => MentorRecords::loadDefaultValue($model->records),
-            'mentorServices' => !empty($model->mentorServices) ? $model->mentorServices :  [new MentorServices()],
+            'model' => $model
         ]);
     }
 

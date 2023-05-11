@@ -77,9 +77,7 @@ class MentorSearch extends Mentor
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'picture', $this->picture])
-            ->andFilterWhere(['like', 'video', $this->video])
-            ->andFilterWhere(['like', 'instagram', $this->instagram])
+        $query->andFilterWhere(['like', 'instagram', $this->instagram])
             ->andFilterWhere(['like', 'linkedin', $this->linkedin])
             ->andFilterWhere(['like', 'twitter', $this->twitter])
             ->andFilterWhere(['like', 'whatsapp', $this->whatsapp])

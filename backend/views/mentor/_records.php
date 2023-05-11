@@ -1,72 +1,66 @@
 <?php
-
-use backend\models\MentorRecords;
-use common\models\Businesses;
-use wbraganca\dynamicform\DynamicFormWidget;
-use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-
-/** @var ActiveForm $form */
-/** @var Businesses $model */
-/** @var MentorRecords[] $MentorRecords */
-
-$form = ActiveForm::begin(['id' => 'mentor_form']); // Start the ActiveForm
+use yii\widgets\ActiveForm;
+use wbraganca\dynamicform\DynamicFormWidget;
+/** @var \backend\models\MentorRecords $MentorRecords */
 ?>
 
-    <div class="row bg-white p-3 rounded my-3">
-        <div class="card card-body">
-            <?php
-            DynamicFormWidget::begin([
-                'widgetContainer' => 'dynamicform_wrapper1',
-                'widgetBody' => '.container-items-statistics',
-                'widgetItem' => '.item-statistics',
-                'limit' => 20,
-                'min' => 1,
-                'insertButton' => '.add-item-statistics',
-                'deleteButton' => '.remove-item-statistics',
+<div class="mentor-form">
+    <?php $form = ActiveForm::begin(['id' => 'mentor-records']); ?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        <div class="panel-body">
+            <?php DynamicFormWidget::begin([
+                'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                'widgetBody' => '.container-items', // required: css class selector
+                'widgetItem' => '.item', // required: css class
+                'limit' => 20, // the maximum times, an element can be cloned (default 999)
+                'min' => 1, // 0 or 1 (default 1)
+                'insertButton' => '.add-item', // css class
+                'deleteButton' => '.remove-item', // css class
                 'model' => $MentorRecords[0],
-                'formId' => 'mentor_form',
+                'formId' => 'mentor-records',
                 'formFields' => [
                     'title',
-                    'description'
+                    'year',
+                    'description',
                 ],
             ]); ?>
-            <div class="container-items-statistics">
+            <div class="container-items"><!-- widgetContainer -->
                 <div>
-                    <h2 class="mb-4">اضافه کردن آمار</h2>
-                    <button type="button"
-                            class="add-item-statistics btn  btn-xs float-right rounded-pill custom_background_color text-white">
-                        آمار جدید
+                    <h2 class="mb-4">اضافه کردن رکورد</h2>
+                    <button type="button" class="add-item btn btn-success btn-xs">add</button>
+                    رکورد جدید
                     </button>
                 </div>
                 <?php foreach ($MentorRecords as $i => $record): ?>
-                    <div class="item-statistics panel panel-default" style="padding-right: 0px">
+                    <div class="item panel panel-default"><!-- widgetBody -->
+                        <div class="panel-heading">
+                            <h3 class="panel-title pull-left">records</h3>
+                            <div class="pull-right">
+
+                                <button type="button" class="remove-item btn btn-danger btn-xs">remove</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                         <div class="panel-body">
                             <?php
-                            if (!$record->isNewRecord) {
+                            // necessary for update action.
+                            if (! $record->isNewRecord) {
                                 echo Html::activeHiddenInput($record, "[{$i}]id");
                             }
                             ?>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <?= $form->field($record, "[{$i}]year")->textInput([ 'maxlength' => true]) ?>
+                                <div class="col-sm-4">
+                                    <?= $form->field($record, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                 </div>
-                                <div class="col-sm-6">
-                                    <?= $form->field($record, "[{$i}]title")->textInput([ 'maxlength' => true]) ?>
+                                <div class="col-sm-4">
+                                    <?= $form->field($record, "[{$i}]year")->textInput(['maxlength' => true]) ?>
                                 </div>
-                                <div class="col-sm-12">
-                                    <?= $form->field($record, "[{$i}]description")->textarea(['rows' => 6, 'maxlength' => true]) ?>
+                                <div class="col-sm-4">
+                                    <?= $form->field($record, "[{$i}]description")->textInput(['maxlength' => true]) ?>
                                 </div>
                             </div>
-                        </div>
-                        <div class="">
-                            <div class="">
-                                <button type="button"
-                                        class="remove-item-statistics btn  btn-xs float-right rounded-pill btn-danger text-white">
-                                    حذف
-                                </button>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -74,5 +68,8 @@ $form = ActiveForm::begin(['id' => 'mentor_form']); // Start the ActiveForm
             <?php DynamicFormWidget::end(); ?>
         </div>
     </div>
-<?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?> <!-- Add a submit button -->
-<?php ActiveForm::end(); // End the ActiveForm ?>
+        <div class="form-group">
+            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?> <!-- Add a submit button -->
+        </div>
+        <?php ActiveForm::end(); ?>
+</div>

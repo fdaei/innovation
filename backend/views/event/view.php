@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     [
                                         'title' => Yii::t('yii', 'delete'),
                                         'aria-label' => Yii::t('yii', 'delete'),
-                                        'data-reload-pjax-container' => 'p-jax-Event-member',
+                                        'data-reload-pjax-container' => 'p-jax-Event-sponsors',
                                         'data-pjax' => '0',
                                         'data-url' => Url::to(['/event-sponsors/delete','id'=>$item->id, 'model_id'=>$model->id]),
                                         'class' => " p-jax-btn",
@@ -142,10 +142,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'data-title' => Yii::t('app', 'update'),
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
-                                        'data-url' => Url::to(['/event-sponsors/update','id'=>$item->id, 'model_id'=>$model->id]),
+                                        'data-url' => Url::to(['/event-sponsors/update','id'=>$item->id]),
                                         'data-handle-form-submit' => 1,
                                         'data-show-loading' => 0,
-                                        'data-reload-pjax-container' => 'p-jax-Event-Statistics',
+                                        'data-reload-pjax-container' => 'p-jax-Event-sponsors',
                                         'data-reload-pjax-container-on-show' => 0
                                     ]) ?>
                             </div>
