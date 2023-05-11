@@ -1,6 +1,5 @@
 <?php
 
-
 use common\models\Business;
 use common\models\BusinessesInvestors;
 use common\models\BusinessesStory;
@@ -22,9 +21,6 @@ use yii\widgets\Pjax;
 /** @var BusinessMember $$headlines */
 /** @var BusinessStat $stat */
 /** @var BusinessesInvestors $investors */
-
-
-
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Businesses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -157,11 +153,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php Pjax::end(); ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('headlines'); ?>
-        <?php Pjax::begin(['id' => 'p-jax-Event-headlines', 'enablePushState' => false]); ?>
+        <?php Pjax::begin(['id' => 'p-jax-mentor-records', 'enablePushState' => false]); ?>
         <div class="card">
             <div class="card-header">
                 <div>
-                    <h3 class="float-left">سرمایه گذاران </h3>
+                    <h3 class="float-left">سرفصل ها</h3>
                     <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
                         [
                             'data-pjax' => '0',
@@ -170,27 +166,27 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/event/create-head','id'=>$model->id]),
+                            'data-url' => Url::to(['/event/create-headlines','id'=>$model->id]),
                             'data-handle-form-submit' => 1,
                             'data-show-loading' => 0,
-                            'data-reload-pjax-container' => 'p-jax-Event-headlines',
+                            'data-reload-pjax-container' => 'p-jax-mentor-records',
                             'data-reload-pjax-container-on-show' => 0
                         ]) ?>
                     <?php if($model->headlines): ?>
-                    <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
-                        [
-                            'data-pjax' => '0',
-                            'class' => "btn btn-outline-info float-right ",
-                            'data-size' => 'modal-xl',
-                            'data-title' => Yii::t('app', 'update'),
-                            'data-toggle' => 'modal',
-                            'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/event/update-head','id'=>$model->id]),
-                            'data-handle-form-submit' => 1,
-                            'data-show-loading' => 0,
-                            'data-reload-pjax-container' => 'p-jax-Event-headlines',
-                            'data-reload-pjax-container-on-show' => 0
-                        ]) ?>
+                        <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                            [
+                                'data-pjax' => '0',
+                                'class' => "btn btn-outline-info float-right ",
+                                'data-size' => 'modal-xl',
+                                'data-title' => Yii::t('app', 'update'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#modal-pjax',
+                                'data-url' => Url::to(['/event/update-headlines','id'=>$model->id]),
+                                'data-handle-form-submit' => 1,
+                                'data-show-loading' => 0,
+                                'data-reload-pjax-container' => 'p-jax-mentor-records',
+                                'data-reload-pjax-container-on-show' => 0
+                            ]) ?>
                     <?php endif; ?>
                 </div>
             </div>
@@ -200,7 +196,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>#</th>
                     <th>title</th>
                     <th>description</th>
-
                 </tr>
                 </thead>
                 <tbody>
@@ -285,17 +280,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     'active' => true,
                 ],
                 [
-                    'label' => Yii::t('app', 'Sponsors'),
-                    'content' => $this->blocks['Sponsors'],
-                ],
-                [
                     'label' => Yii::t('app', 'headlines'),
                     'content' => $this->blocks['headlines'],
                 ],
-                [
-                    'label' => Yii::t('app', 'time'),
-                    'content' => $this->blocks['time'],
-                ],
+//                [
+//                    'label' => Yii::t('app', 'Sponsors'),
+//                    'content' => $this->blocks['Sponsors'],
+//                ],
+//
+//                [
+//                    'label' => Yii::t('app', 'investors'),
+//                    'content' => $this->blocks['investors'],
+//                ],
+//                [
+//                    'label' => Yii::t('app', 'story'),
+//                    'content' => $this->blocks['story'],
+//                ],
+//                [
+//                    'label' => Yii::t('app', 'gallery'),
+//                    'content' => $this->blocks['gallery'],
+//                ],
 
             ]
         ]); ?>

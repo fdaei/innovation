@@ -100,13 +100,15 @@ class EventController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionCreateHead($id)
+
+
+    public function actionCreateHeadlines($id)
     {
         $model = $this->findModel($id);
         $form = new ActiveForm();
-        $EventHeadlines = [new EventHeadlines()];
+        $MentorRecords = [new EventHeadlines()];
         if ($this->request->isPost) {
-            $newData = EventHeadlines::handelData();
+            $newData = EventHeadlines::headLineHandler($model->headlines);
             $newModels = [];
 
             foreach ($newData as $item) {
@@ -124,86 +126,25 @@ class EventController extends Controller
                 }else {
                     $model->headlines = $newData;
                 }
-
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
         }
-        return $this->renderAjax('_title', [
+        return $this->renderAjax('_headlines', [
             'model' => $model,
-            'EventHeadlines' => $EventHeadlines,
+            'eventHeadlines' => $MentorRecords,
             'form' => $form,
         ]);
     }
-    public function actionCreateTime($id)
-    {
-        $model = $this->findModel($id);
-        $form = new ActiveForm();
-        $EventTimes = [new EventTimes()];
-        if ($this->request->isPost) {
-            $newData = EventTimes::handelData();
-            $newModels = [];
 
-            foreach ($newData as $item) {
-                $newModel = new EventTimes();
-                $newModel->attributes = $item;
-                $newModels[] = $newModel;
-            }
-
-            // Validate all models
-            $isValid = EventTimes::validateMultiple($newModels);
-
-            if ($isValid) {
-                if($model->event_times){
-                    $model->event_times = array_merge($model->event_times, $newData);
-                }else {
-                    $model->event_times = $newData;
-                }
-
-                if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            }
-        }
-        return $this->renderAjax('_time', [
-            'model' => $model,
-            'EventTimes' => $EventTimes,
-            'form' => $form,
-        ]);
-    }
-    public function actionUpdateTime($id)
+    public function actionUpdateHeadlines($id)
     {
         $model = $this->findModel($id);
         $form = new ActiveForm();
 
         if ($this->request->isPost) {
-            $model->event_times  =  EventTimes::handelData();
-            foreach ( $model->event_times  as $item) {
-                $newModel = new EventTimes();
-                $newModel->attributes = $item;
-                $newModels[] = $newModel;
-            }
-            // Validate all models
-            $isValid = EventTimes::validateMultiple($newModels);
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        }
-        return $this->renderAjax('_time', [
-            'model' => $model,
-            'EventTimes' => EventTimes::loadDefaultValue($model->event_times),
-            'form' => $form,
-        ]);
-
-    }
-    public function actionUpdateHead($id)
-    {
-        $model = $this->findModel($id);
-        $form = new ActiveForm();
-
-        if ($this->request->isPost) {
-            $model->headlines  =  EventHeadlines::handelData();
+            $model->headlines  =  EventHeadlines::headLineHandler($model->headlines);
             foreach ( $model->headlines  as $item) {
                 $newModel = new EventHeadlines();
                 $newModel->attributes = $item;
@@ -215,14 +156,13 @@ class EventController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-        return $this->renderAjax('_title', [
+        return $this->renderAjax('_headlines', [
             'model' => $model,
-            'EventHeadlines' => EventHeadlines::loadDefaultValue($model->headlines),
+            'eventHeadlines' => EventHeadlines::loadDefaultValue($model->headlines),
             'form' => $form,
         ]);
 
     }
-
 
     /**
      * Updates an existing Event model.
@@ -237,8 +177,8 @@ class EventController extends Controller
 
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $model->headlines   =  EventHeadlines::headLineHandler($model->headlines);
-            $model->event_times =  EventTimes::eventTimesHandler();
+//            $model->headlines   =  EventHeadlines::headLineHandler($model->headlines);
+//            $model->event_times =  EventTimes::eventTimesHandler();
             EventSponsors::handelData($model->id,$model->eventSponsorsInfo);
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);

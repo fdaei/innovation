@@ -896,10 +896,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => Yii::t('app', 'services'),
                     'content' => $this->blocks['services'],
                 ],
-                [
-                    'label' => Yii::t('app', 'stories'),
-                    'content' => $this->blocks['story'],
-                ],
+//                [
+//                    'label' => Yii::t('app', 'stories'),
+//                    'content' => $this->blocks['story'],
+//                ],
             ]
         ]); ?>
     </div>

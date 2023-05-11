@@ -50,7 +50,7 @@ class BusinessMember extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id','first_name','last_name','position','status',"image"],'required', 'on' => [self::SCENARIO_CREATE]],
+            [['business_id','first_name','last_name','position','status', 'image'],'required', 'on' => [self::SCENARIO_CREATE]],
             [['business_id','first_name','last_name','position','status'],'required','on' => [self::SCENARIO_UPDATE]],
             ['image', 'image', 'minWidth' => 268, 'maxWidth' => 268, 'minHeight' => 248, 'maxHeight' => 248, 'extensions' => 'jpg, gif, png', 'maxSize' => 648 * 348 * 2, 'enableClientValidation' => false],
             [['business_id'], 'integer'],
@@ -170,7 +170,7 @@ class BusinessMember extends \yii\db\ActiveRecord
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/business",
                 'basePath' => "@inceRoot/business",
                 'path' => "@inceRoot/business",

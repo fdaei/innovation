@@ -33,8 +33,8 @@ class EventHeadlines extends Model
     }
 
 
-    public static function handelData($headlines = []){
-        $eventHeadlines = \common\models\Model::createMultiple(EventHeadlines::class);
+    public static function headLineHandler($headlines = []){
+        $eventHeadlines = \common\models\Model::createMultiple(EventHeadlines::classname());
         Model::loadMultiple($eventHeadlines, Yii::$app->request->post());
         $headlinesJson = [];
         foreach ($eventHeadlines as $index => $eventHeadline) {

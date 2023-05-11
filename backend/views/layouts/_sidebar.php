@@ -165,6 +165,12 @@ $menu_items = [
         'encode' => false,
         'items' => [
             [
+                'group' => 'freelancer',
+                'label' => Yii::t('app', 'freelancer'),
+                'icon' => 'fas fa-check-square',
+                'url' => ['/freelancer/']
+            ],
+            [
                 'group' => 'Settings',
                 'label' => Yii::t('app', 'Manage Settings'),
                 'icon' => 'fas fa-cogs',

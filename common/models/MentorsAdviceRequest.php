@@ -31,6 +31,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class MentorsAdviceRequest extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
     /**
      * {@inheritdoc}
      */
@@ -142,20 +145,6 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
-            ],
-            [
-                'class' => CdnUploadImageBehavior::class,
-                'attribute' => 'file',
-                'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
-                'deleteBasePathOnDelete' => false,
-                'createThumbsOnSave' => false,
-                'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/MentorsAdviceRequest",
-                'basePath' => "@inceRoot/MentorsAdviceRequest",
-                'path' => "@inceRoot/MentorsAdviceRequest",
-                'url' => "@cdnWeb/MentorsAdviceRequest"
             ],
         ];
     }
