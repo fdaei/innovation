@@ -16,11 +16,11 @@ use yii\widgets\ActiveForm;
 <div class="card">
     <?php $form = ActiveForm::begin(); ?>
     <div class="card-body">
-        <div class="row justify-content-center">
-            <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-6">
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <?= $form->field($model, 'center_id')->widget(Select2::class, [
                     'data' => ArrayHelper::map(City::find()->all(), 'id', 'name'),
                     'size' => Select2::MEDIUM,
@@ -31,16 +31,12 @@ use yii\widgets\ActiveForm;
                 ]);
                 ?>
             </div>
-            <div class="col-sm-8">
-                <?= $form->field($model, 'status')->dropDownList(Province::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
-            </div>
         </div>
-        <div class="form-group mb-0 card-footer d-flex justify-content-between">
-            <div class="col-md-10 d-flex justify-content-end">
-                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
-            </div>
-        </div>
-        <?php ActiveForm::end(); ?>
-
     </div>
+    <div class="form-group card-footer">
+        <div >
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
 </div>

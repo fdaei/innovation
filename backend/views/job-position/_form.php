@@ -18,10 +18,10 @@ use yii\web\View;
     <?php $form = ActiveForm::begin(); ?>
     <div class="card-body">
         <div class="row justify-content-center">
-            <div class="col-sm-8">
+            <div class="col-sm-4">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-4">
                 <?= $form->field($model, 'org_unit_id')->widget(Select2::class, [
                     'data' => ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
                     'size' => Select2::MEDIUM,
@@ -32,14 +32,13 @@ use yii\web\View;
                 ]);
                 ?>
             </div>
-            <div class="col-sm-8">
-                <?= $form->field($model, 'status')->dropDownList(JobPosition::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+            <div class="col-sm-4">
+                <?= $form->field($model, 'immediate')->checkbox() ?>
             </div>
-
-            <div class="col-sm-8">
+            <div class="col-sm-12">
                 <?= $form->field($model, 'description')->textarea(['rows' => '4']) ?>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-12">
                 <?= FroalaEditorWidget::widget([
                     'model' => $model,
                     'attribute' => 'requirements',
@@ -55,14 +54,11 @@ use yii\web\View;
                 ]);
                 ?>
             </div>
-            <div class="col-sm-8 mt-2">
-                <?= $form->field($model, 'immediate')->checkbox() ?>
-            </div>
         </div>
         <hr>
-        <div class="form-group mb-0 card-footer d-flex justify-content-between">
-            <div class="col-md-10 d-flex justify-content-end">
-                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
+        <div class="form-group card-footer">
+            <div>
+                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     </div>

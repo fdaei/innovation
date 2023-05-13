@@ -16,16 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mentors-advice-request-index card material-card">
     <div class="card-header d-flex justify-content-between">
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Mentors Advice Request'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
-
-    </p>
     </div>
     <?php Pjax::begin(); ?>
     <div class="card-body">
     <?= $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -35,12 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'mentor_id',
             'description:ntext',
-            'date_advice',
-            'type',
-            'file',
-            'status',
+            'name',
+            'mobile',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, MentorsAdviceRequest $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
@@ -49,5 +41,4 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
     </div>
     <?php Pjax::end(); ?>
-
 </div>

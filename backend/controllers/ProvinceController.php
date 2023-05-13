@@ -81,7 +81,9 @@ class ProvinceController extends Controller
         $model = new Province();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post()) && $model->validate()) {
+                $model->status=1;
+                $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

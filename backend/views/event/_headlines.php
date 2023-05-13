@@ -31,7 +31,7 @@ $form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
             ]); ?>
             <div class="container-items-headline"><!-- widgetContainer -->
                 <?php foreach ($eventHeadlines as $i => $modelAddress): ?>
-                    <div class="item-headline panel panel-default col-md-8" style="padding-right: 0px"><!-- widgetBody -->
+                    <div class="item-headline panel panel-default" style="padding-right: 0px"><!-- widgetBody -->
                         <div class="panel-heading">
                             <div class="pull-right">
                                 <button type="button" class="remove-item-headline btn btn-danger btn-xs">حذف</button>

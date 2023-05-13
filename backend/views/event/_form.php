@@ -41,9 +41,6 @@ use kartik\file\FileInput;
             <div class='col-md-6 '>
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
             </div>
-            <div class="col-md-8">
-                <?= $form->field($model, 'status')->dropDownList(\common\models\Event::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
-            </div>
             <div class='col-md-6 '>
                 <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
                     'options' => [

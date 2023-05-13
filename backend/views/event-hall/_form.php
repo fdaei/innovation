@@ -49,9 +49,9 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'latitude')->textInput(['style' => 'display: none'])->label(false) ?>
         </span>
     </div>
-    <div class="form-group mb-0 card-footer d-flex justify-content-between">
-        <div class="col-md-10 d-flex justify-content-end">
-            <button type="submit" class="btn btn-info btn-rounded">ثبت</button>
+    <div class="form-group card-footer ">
+        <div>
+            <button type="submit" class="btn btn-primary">ثبت</button>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

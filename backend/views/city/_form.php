@@ -15,11 +15,11 @@ use yii\widgets\ActiveForm;
 <div class="card">
     <?php $form = ActiveForm::begin(); ?>
     <div class="card-body">
-        <div class="row justify-content-center">
-            <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-3">
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-3">
                 <?= $form->field($model, 'province_id')->widget(Select2::class, [
                     'data' => ArrayHelper::map(Province::find()->all(), 'id', 'name'),
                     'size' => Select2::MEDIUM,
@@ -30,23 +30,18 @@ use yii\widgets\ActiveForm;
                 ]);
                 ?>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-3">
                 <?= $form->field($model, 'latitude')->textInput() ?>
             </div>
-            <div class='col-md-8'>
+            <div class='col-sm-3'>
                 <?= $form->field($model, 'longitude')->textInput() ?>
 
             </div>
-            <div class='col-md-8'>
-                <?= $form->field($model, 'status')->dropDownList(City::itemAlias('Status'),['prompt'=>Yii::t('app','Select Status')]) ?>
-            </div>
         </div>
-        <div class="form-group mb-0 card-footer d-flex justify-content-between">
-            <div class="col-md-10 d-flex justify-content-end">
-                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
-            </div>
-        </div>
-        <?php ActiveForm::end(); ?>
 
     </div>
+    <div class="card-footer">
+        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+    </div>
+    <?php ActiveForm::end(); ?>
 </div>

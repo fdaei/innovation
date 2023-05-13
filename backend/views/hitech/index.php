@@ -3,8 +3,8 @@
 use common\models\Hitech;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var common\models\HitechSearch $searchModel */
@@ -14,16 +14,19 @@ $this->title = 'هایتک';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card card-body">
+    <div class="card-header d-flex justify-content-between">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('هایتک جدید', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        <p>
+            <?= Html::a(Yii::t('app', 'هایتک جدید'), ['create'], ['class' => 'btn btn-primary ']) ?>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        </p>
+
+    </div>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -34,11 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'minimum_budget',
             //'maximum_budget',
             //'status',
-            //'updated_by',
-            //'updated_at',
-            //'created_at',
-            //'created_by',
-            //'deleted_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Hitech $model, $key, $index, $column) {

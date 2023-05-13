@@ -17,15 +17,12 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
-    <div class="row"><div class="col-md-3">    <?= $form->field($model, 'id') ?>
+<!--    <div class="row"><div class="col-md-3">    --><?php //= $form->field($model, 'id') ?>
 
-</div><div class="col-md-3">    <?= $form->field($model, 'user_id') ?>
+<!--</div>-->
+<div class="col-md-3">    <?= $form->field($model, 'user_id') ?>
 
-</div><div class="col-md-3">    <?= $form->field($model, 'mentor_id') ?>
-
-</div><div class="col-md-3">    <?= $form->field($model, 'description') ?>
-
-</div><div class="col-md-3">    <?= $form->field($model, 'date_advice') ?>
+<div class="col-md-3">    <?php //= $form->field($model, 'date_advice') ?>
 
 </div><div class="col-md-3">    <?php // echo $form->field($model, 'type') ?>
 
@@ -44,8 +41,8 @@ use yii\widgets\ActiveForm;
 </div><div class="col-md-3">    <?php // echo $form->field($model, 'created_by') ?>
 
 </div>    </div>    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-info btn-rounded']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-info btn-rounded']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary ']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-primary ']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

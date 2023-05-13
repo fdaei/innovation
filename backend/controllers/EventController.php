@@ -6,6 +6,7 @@ use backend\assets\Datapicker;
 use common\models\EventSponsors;
 use common\models\Event;
 use common\models\EventSearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -22,6 +23,7 @@ use yii\widgets\ActiveForm;
  */
 class EventController extends Controller
 {
+    use AjaxValidationTrait;
     /**
      * @inheritDoc
      */
@@ -127,13 +129,84 @@ class EventController extends Controller
                     $model->headlines = $newData;
                 }
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->asJson([
+                        'success' => true,
+                        'msg' => Yii::t("app", 'Success')
+                    ]);
                 }
             }
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_headlines', [
             'model' => $model,
             'eventHeadlines' => $MentorRecords,
+            'form' => $form,
+        ]);
+    }
+    public function actionCreateTime($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+        $EventTimes = [new EventTimes()];
+        if ($this->request->isPost) {
+            $newData = EventTimes::handelData($model->event_times);
+            $newModels = [];
+
+            foreach ($newData as $item) {
+                $newModel = new EventTimes();
+                $newModel->attributes = $item;
+                $newModels[] = $newModel;
+            }
+
+            // Validate all models
+            $isValid = EventTimes::validateMultiple($newModels);
+
+            if ($isValid) {
+                if($model->event_times){
+                    $model->event_times = array_merge($model->event_times, $newData);
+                }else {
+                    $model->event_times = $newData;
+                }
+                if ($model->save()) {
+                    return $this->asJson([
+                        'success' => true,
+                        'msg' => Yii::t("app", 'Success')
+                    ]);
+                }
+            }
+        }
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('_time', [
+            'model' => $model,
+            'EventTimes' => $EventTimes,
+            'form' => $form,
+        ]);
+    }
+    public function actionUpdateTime($id)
+    {
+        $model = $this->findModel($id);
+        $form = new ActiveForm();
+
+        if ($this->request->isPost) {
+            $model->event_times  =  EventTimes::handelData($model->event_times);
+            foreach ( $model->event_times  as $item) {
+                $newModel = new EventTimes();
+                $newModel->attributes = $item;
+                $newModels[] = $newModel;
+            }
+            // Validate all models
+            $isValid = EventTimes::validateMultiple($newModels);
+            if($model->save()){
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            }
+        }
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('_time', [
+            'model' => $model,
+            'EventTimes' => EventTimes::loadDefaultValue($model->headlines),
             'form' => $form,
         ]);
     }
@@ -153,9 +226,13 @@ class EventController extends Controller
             // Validate all models
             $isValid = EventHeadlines::validateMultiple($newModels);
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
             }
         }
+        $this->performAjaxValidation($model);
         return $this->renderAjax('_headlines', [
             'model' => $model,
             'eventHeadlines' => EventHeadlines::loadDefaultValue($model->headlines),
@@ -174,21 +251,12 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-//            $model->headlines   =  EventHeadlines::headLineHandler($model->headlines);
-//            $model->event_times =  EventTimes::eventTimesHandler();
-            EventSponsors::handelData($model->id,$model->eventSponsorsInfo);
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
-            'eventHeadlines' => EventHeadlines::loadDefaultValue($model->headlines),
-            'eventTimes' => EventTimes::loadDefaultValue($model->event_times),
-            'eventSponsors' => !empty($model->eventSponsorsInfo) ? $model->eventSponsorsInfo : [new EventSponsors],
         ]);
     }
 

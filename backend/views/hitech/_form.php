@@ -10,12 +10,23 @@ use wbraganca\dynamicform\DynamicFormWidget;
 ?>
 
 <div class="card card-body">
+    <?php $form = ActiveForm::begin(['id' => 'hitech_form']); ?>
 
-    <?php $form = ActiveForm::begin(['id'=>'hitech_form']); ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'minimum_budget')->textInput() ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'maximum_budget')->textInput() ?>
+        </div>
+        <div class="col-md-12">
+            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
     <div class="row bg-white p-3 rounded my-3">
         <div class="card card-body">
@@ -34,10 +45,12 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     'description'
                 ],
             ]); ?>
-            <div class="container-items-required_skills"><!-- widgetContainer -->
-                <div>
-                    <h2 class="mb-4">اضافه کردن مهارت جدید</h2>
-                    <button type="button" class="add-item-required_skills btn  btn-xs float-right rounded-pill custom_background_color text-white">آمار جدید</button>
+            <div class="container-items-required_skills card"><!-- widgetContainer -->
+                <div class="card-header">
+                    <h3 class="mb-4 d-inline">اضافه کردن مهارت جدید</h3>
+                    <button type="button" class="add-item-required_skills btn  btn-xs float-right  btn-success">
+                     <i class="fa fa-plus"></i>
+                    </button>
                 </div>
                 <?php foreach ($HitechRequireSkills as $i => $modelAddress): ?>
                     <div class="item-required_skills panel panel-default" style="padding-right: 0px"><!-- widgetBody -->
@@ -50,13 +63,16 @@ use wbraganca\dynamicform\DynamicFormWidget;
                             ?>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['class' => 'custom_input_search','maxlength' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                 </div>
                             </div><!-- .row -->
                         </div>
                         <div class="">
-                            <div class="">
-                                <button type="button" class="remove-item-required_skills btn  btn-xs float-right rounded-pill custom_background_color2 text-white">حذف</button>
+                            <div class=" p-4">
+                                <button type="button"
+                                        class="remove-item-required_skills btn   float-right  btn-danger text-white">
+                                  <i class="fa fa-minus"></i>
+                                </button>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -67,10 +83,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
         </div>
     </div>
 
-
-    <?= $form->field($model, 'minimum_budget')->textInput() ?>
-
-    <?= $form->field($model, 'maximum_budget')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('ثبت', ['class' => 'btn btn-success']) ?>

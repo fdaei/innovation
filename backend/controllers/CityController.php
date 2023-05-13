@@ -79,9 +79,11 @@ class CityController extends Controller
     public function actionCreate()
     {
         $model = new City();
+        $model->status=1;
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

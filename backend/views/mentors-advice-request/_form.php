@@ -19,7 +19,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row justify-content-center">
-        <div class='col-md-6'>
+        <div class='col-md-4'>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+        </div>
+        <div class='col-md-4'>
+            <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-4'>
+            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
             <?=
             $form->field($model, 'user_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
@@ -30,38 +40,11 @@ use yii\widgets\ActiveForm;
             ]);
             ?>
         </div>
-        <div class='col-md-6'>
+        <div class="col-md-6">
             <?=
             $form->field($model, 'mentor_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Mentor::find()->all(), 'id', 'name'),
-                'options' => ['placeholder' => Yii::t('app', 'Select Mentor')],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-            ]);
-            ?>
-        </div>
-        <div class='col-md-6'>
-            <label><?=Yii::t('app', 'Date')?></label>
-            <input type="text" id="mentorsadvicerequest-date_advice" class="form-control" name="MentorsAdviceRequest[date_advice]" aria-required="true" data-jdp>
-        </div>
-        <div class='col-md-6'>
-            <?= $form->field($model, 'type')->dropDownList(MentorsAdviceRequest::itemAlias('TYPE'), ['prompt' => Yii::t('app', 'Select TYPE')]) ?>
-        </div>
-        <div class='col-md-6'>
-            <?= $form->field($model, 'file')->widget(FileInput::class, [
-                'name' => 'attachment_3',
-                'options' => ['accept' => 'file/*'],
-            ]); ?>
-        </div>
-        <div class='col-md-6'>
-            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-        </div>
-        <div class='col-md-6'>
-            <?=
-            $form->field($model, 'status')->widget(Select2::class, [
-                'data' => ArrayHelper::map(Statuses::find()->onCondition(['type'=>'mentors-advice-request'])->all(), 'id', 'title_fa'),
-                'options' => ['placeholder' => Yii::t('app', 'Select Status')],
+                'options' => ['placeholder' => Yii::t('app', 'Select user')],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
@@ -69,15 +52,10 @@ use yii\widgets\ActiveForm;
             ?>
         </div>
     </div>
-    <div class="form-group mb-0 card-footer d-flex justify-content-between">
+    <div class="form-group mb-0 card-footer ">
         <div class="col-md-10 d-flex justify-content-end">
-            <button type="submit" class="btn btn-info btn-rounded">ثبت</button>
+            <button type="submit" class="btn btn-success">ثبت</button>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<script>
-    jalaliDatepicker.startWatch({
-        time:true,
-    })
-</script>

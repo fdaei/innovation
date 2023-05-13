@@ -32,27 +32,28 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-10 row">
                     <div class="col-4">
-                        <label for="name">title:</label>
+
+                        <label for="name"> <?= Yii::t('app', 'title') ?>:</label>
                         <p><?= $model->title ?></p>
                     </div>
                     <div class="col-4">
-                        <label for="email">title_brief:</label>
+                        <label for="name"> <?= Yii::t('app', 'title_brief') ?>:</label>
                         <p><?= $model->title_brief ?></p>
                     </div>
                     <div class="col-4">
-                        <label for="phone"> price:</label>
+                        <label for="name"> <?= Yii::t('app', 'price') ?>:</label>
                         <p><?= $model->price ?></p>
                     </div>
                     <div class="col-4">
-                        <label for="address">price_before_discount:</label>
+                        <label for="name"> <?= Yii::t('app', 'price_before_discount') ?>:</label>
                         <p><?= $model->price_before_discount ?></p>
                     </div>
                     <div class="col-4">
-                        <label for="address">evand_link:</label>
+                        <label for="name"> <?= Yii::t('app', 'evand_link') ?>:</label>
                         <p><?= $model->evand_link ?></p>
                     </div>
                     <div class="col-4">
-                        <label for="address">address:</label>
+                        <label for="name"> <?= Yii::t('app', 'address') ?>:</label>
                         <p><?= $model->address ?></p>
                     </div>
                 </div>
@@ -60,12 +61,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <img  style="height: 300px;width: 300px;" src="<?= $model->getUploadUrl('picture') ?>">
                 </div>
                 <div class="col-12">
-                    <label for="address">description:</label>
+                    <label for="name"> <?= Yii::t('app', 'description') ?>:</label>
                     <p><?= $model->description ?></p>
                 </div>
             </div>
         </div>
-            <?= Html::a(Yii::t('app', 'update'), ['/event/update','id'=>$model->id], ['class' => 'btn btn-info btn-rounded']) ?>
+            <?= Html::a(Yii::t('app', 'update'), ['/event/update','id'=>$model->id], ['class' => 'btn btn-primary']) ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('Sponsors'); ?>
         <?php Pjax::begin(['id' => 'p-jax-Event-sponsors', 'enablePushState' => false]); ?>
@@ -93,23 +94,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-sm-6 row p-5">
                         <div class="col-9 row">
                             <div class="col-sm-6">
-                                <label for="email">title:</label>
+                                <label for="name"> <?= Yii::t('app', 'title') ?>:</label>
                                 <p><?= $item->title ?></p>
                             </div>
                             <div class="col-sm-6">
-                                <label for="name">description:</label>
+                                <label for="name"> <?= Yii::t('app', 'description') ?>:</label>
                                 <p><?= $item->description ?></p>
                             </div>
                             <div class="col-sm-6">
-                                <label for="name">instagram:</label>
+                                <label for="name"> <?= Yii::t('app', 'instagram') ?>:</label>
                                 <p><?= $item->instagram ?></p>
                             </div>
                             <div class="col-sm-6">
-                                <label for="name">telegram:</label>
+                                <label for="name"> <?= Yii::t('app', 'telegram') ?>:</label>
                                 <p><?= $item->telegram ?></p>
                             </div>
                             <div class="col-sm-6">
-                                <label for="name">whatsapp:</label>
+                                <label for="name"> <?= Yii::t('app', 'whatsapp') ?>:</label>
                                 <p><?= $item->whatsapp ?></p>
                             </div>
                         </div>
@@ -194,8 +195,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>title</th>
-                    <th>description</th>
+                    <th><?= Yii::t('app', 'title')?> :</th>
+                    <th><?= Yii::t('app', 'description')?> :</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -253,8 +254,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>time start</th>
-                    <th>time end</th>
+                    <th><?= Yii::t('app', 'time start')?> :</th>
+                    <th><?= Yii::t('app', 'time end')?> :</th>
 
                 </tr>
                 </thead>
@@ -283,23 +284,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => Yii::t('app', 'headlines'),
                     'content' => $this->blocks['headlines'],
                 ],
-//                [
-//                    'label' => Yii::t('app', 'Sponsors'),
-//                    'content' => $this->blocks['Sponsors'],
-//                ],
-//
-//                [
-//                    'label' => Yii::t('app', 'investors'),
-//                    'content' => $this->blocks['investors'],
-//                ],
-//                [
-//                    'label' => Yii::t('app', 'story'),
-//                    'content' => $this->blocks['story'],
-//                ],
-//                [
-//                    'label' => Yii::t('app', 'gallery'),
-//                    'content' => $this->blocks['gallery'],
-//                ],
+                [
+                    'label' => Yii::t('app', 'Sponsors'),
+                    'content' => $this->blocks['Sponsors'],
+                ],
+
+                [
+                    'label' => Yii::t('app', 'time'),
+                    'content' => $this->blocks['time'],
+                ],
 
             ]
         ]); ?>

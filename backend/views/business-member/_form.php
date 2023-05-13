@@ -16,19 +16,19 @@ use yii\web\View;
 
     <?php $form = ActiveForm::begin(['id' => 'business-member-form',]); ?>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList(BusinessMember::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
             <?= $form->field($model, "image")->widget(FileInput::class, [
                 'options'             => ['accept' => ['image/png', 'image/jpeg']],
                 'hashVarLoadPosition' => View::POS_READY, //cause of rendering the widget via `renderAjax`

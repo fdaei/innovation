@@ -3,8 +3,8 @@
 use common\models\HitechProposal;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var common\models\HitechProposalSearch $searchModel */
@@ -16,11 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card card-body">
 
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

@@ -149,13 +149,13 @@ $menu_items = [
                 'icon' => 'fas fa-check-square',
                 'url' => ['/hitech-proposal/']
             ],
-            [
-                'group' => 'hitech',
-                'label' => Yii::t('app', 'Logs'),
-                'icon' => 'fas fa-check-square',
-                'url' => ['/log/']
-            ],
         ]
+    ],
+    [
+        'group' => 'log',
+        'label' => Yii::t('app', 'Logs'),
+        'icon' => 'fas fa-check-square',
+        'url' => ['/log/']
     ],
     [
         'group' => 'Settings',

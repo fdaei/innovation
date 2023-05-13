@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-header d-flex justify-content-between">
         <h2><?= Html::encode($this->title) ?></h2>
         <p>
-            <?= Html::a(Yii::t('app', 'Create Businesses'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
+            <?= Html::a(Yii::t('app', 'Create Businesses'), ['create'], ['class' => 'btn btn-primary']) ?>
         </p>
     </div>
     <?php Pjax::begin(); ?>

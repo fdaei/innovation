@@ -17,8 +17,8 @@ class MentorsAdviceRequestSearch extends MentorsAdviceRequest
     public function rules()
     {
         return [
-            [['id', 'user_id', 'mentor_id', 'type', 'status', 'deleted_at', 'updated_by', 'updated_at', 'created_at', 'created_by'], 'integer'],
-            [['description', 'date_advice', 'file'], 'safe'],
+            [['id', 'user_id', 'mentor_id', 'status', 'deleted_at', 'updated_by', 'updated_at', 'created_at', 'created_by'], 'integer'],
+            [['description'], 'safe'],
         ];
     }
 
@@ -61,7 +61,6 @@ class MentorsAdviceRequestSearch extends MentorsAdviceRequest
             'id' => $this->id,
             'user_id' => $this->user_id,
             'mentor_id' => $this->mentor_id,
-            'type' => $this->type,
             'status' => $this->status,
             'deleted_at' => $this->deleted_at,
             'updated_by' => $this->updated_by,
@@ -70,9 +69,7 @@ class MentorsAdviceRequestSearch extends MentorsAdviceRequest
             'created_by' => $this->created_by,
         ]);
 
-        $query->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'date_advice', $this->date_advice])
-            ->andFilterWhere(['like', 'file', $this->file]);
+        $query->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

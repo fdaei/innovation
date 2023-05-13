@@ -32,7 +32,7 @@ $form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
             ]); ?>
             <div class="container-items-time"><!-- widgetContainer -->
                 <?php foreach ($EventTimes as $i => $time): ?>
-                    <div class="item-time panel panel-default " style="padding-right: 0px"><!-- widgetBody -->
+                    <div class="item-time panel panel-default"><!-- widgetBody -->
                         <div>
                             <div class="pull-right">
                                     <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>

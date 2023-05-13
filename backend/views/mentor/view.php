@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $this->beginBlock('mentor'); ?>
         <div class="card">
             <div class="card-header my-3">
-                <h3 class="float-left "> گالرس عکس ها </h3>
+                <h3 class="float-left "> گالری عکس ها </h3>
             </div>
             <div class="card-body row">
                 <div class="col-12 row">
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-footer">
                 <?= Html::a('ویرایش', ['update', 'id' => $model->id],
-                    ['class' => 'btn btn-outline-info btn-rounded']) ?>
+                    ['class' => 'btn btn-outline-primary ']) ?>
             </div>
         </div>
 

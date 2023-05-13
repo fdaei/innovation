@@ -13,8 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card card-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -25,23 +23,30 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'title',
-            'description:ntext',
-//            'required_skills',
-            'minimum_budget',
-            'maximum_budget',
-            'status',
-            'updated_by',
-            'updated_at',
-            'created_at',
-            'created_by',
-            'deleted_at',
-        ],
-    ]) ?>
-
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>title</th>
+            <th>description</th>
+            <th>required_skills</th>
+            <th>minimum_budget</th>
+            <th>maximum_budget</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><?= $model->title ?></td>
+            <td><?= $model->description ?></td>
+            <td>
+                <?php foreach ($model->required_skills as $i => $item): ?>
+                        <span><i class="fa fa-check p-2"></i><?= $item ?></span>
+                <?php endforeach; ?>
+            </td>
+            <td><?= $model->minimum_budget ?></td>
+            <td><?= $model->maximum_budget ?></td>
+            <td class="float-right">
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

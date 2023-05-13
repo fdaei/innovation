@@ -271,7 +271,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <?php foreach ($stat as $i => $item): ?>
-                <div class="col-4 card d-inline">
+                <div class="col-4 card d-inline mt-2">
                     <div class="row mx-1 border border- border-1 shadow-sm">
                         <div class="col-md-4">
                             <img src="<?= $item->getUploadUrl('icon') ?>" class="card-img pt-3">

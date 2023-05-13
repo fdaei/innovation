@@ -15,15 +15,17 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
+    <div class="row">
+        <div class="col-md-3">
     <?= $form->field($model, 'title') ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'description') ?>
+<!--    --><?php //= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'required_skills') ?>
+<!--    --><?php //= $form->field($model, 'required_skills') ?>
 
-    <?= $form->field($model, 'minimum_budget') ?>
+<!--    --><?php //= $form->field($model, 'minimum_budget') ?>
 
     <?php // echo $form->field($model, 'maximum_budget') ?>
 

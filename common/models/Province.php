@@ -48,9 +48,6 @@ class Province extends \yii\db\ActiveRecord
         return [
             [['center_id', 'status'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['name', 'deleted_at'], 'unique'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
