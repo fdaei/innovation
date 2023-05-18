@@ -48,12 +48,12 @@ class BusinessesServices extends Model
     }
 
     public static function handelData($defaultData = []){
-        $postData = \common\models\Model::createMultiple(self::className());
+        $postData = \common\models\Model::createMultiple(self::class);
         Model::loadMultiple($postData, Yii::$app->request->post());
         $headlinesJson = [];
         foreach ($postData as $index => $eachData) {
             if($eachData->validate()){
-                $eachData->imageFile = UploadedFile::getInstanceByName( self::className()."[{$index}][imageFile]");
+                $eachData->imageFile = UploadedFile::getInstanceByName( self::class."[{$index}][imageFile]");
                 $fileName = $eachData->upload();
                 $fileName = ($fileName ? $fileName : (isset($defaultData[$index]['pic']) ? $defaultData[$index]['pic']: ''));
                 $headlinesJson[] = [

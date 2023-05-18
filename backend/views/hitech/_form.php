@@ -1,12 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 
 /** @var yii\web\View $this */
 /** @var common\models\Hitech $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var yii\bootstrap4\ActiveForm $form */
 ?>
 
 <div class="card card-body">

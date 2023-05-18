@@ -1,9 +1,9 @@
 <?php
 use yii\helpers\Html;
 use wbraganca\dynamicform\DynamicFormWidget;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
-/** @var yii\widgets\ActiveForm $form */
+/** @var yii\bootstrap4\ActiveForm $form */
 /** @var \common\models\Businesses $model */
 
 

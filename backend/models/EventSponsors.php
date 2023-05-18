@@ -51,7 +51,7 @@ class EventSponsors extends Model
     }
 
     public static function sponsorsHandler($sponsors = []){
-        $eventSponsors = \common\models\Model::createMultiple(EventSponsors::classname());
+        $eventSponsors = \common\models\Model::createMultiple(EventSponsors::class);
         Model::loadMultiple($eventSponsors, Yii::$app->request->post());
         $headlinesJson = [];
         foreach ($eventSponsors as $index => $eventHeadline) {

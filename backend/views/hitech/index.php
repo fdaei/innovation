@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'maximum_budget',
             //'status',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Hitech $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

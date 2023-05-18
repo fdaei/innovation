@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'name',
                 'capacity',
                 [
-                    'class' => ActionColumn::className(),
+                    'class' => ActionColumn::class,
                     'urlCreator' => function ($action, EventHall $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     }

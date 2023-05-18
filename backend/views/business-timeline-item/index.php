@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_by',
             //'deleted_at',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, BusinessTimelineItem $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

@@ -30,7 +30,7 @@ class HitechRequireSkills extends Model
 
 
     public static function handelData($defaultData = []){
-        $postData = \common\models\Model::createMultiple(self::className());
+        $postData = \common\models\Model::createMultiple(self::class);
         Model::loadMultiple($postData, Yii::$app->request->post());
         $RequireSkills = [];
         foreach ($postData as $index => $eachData) {

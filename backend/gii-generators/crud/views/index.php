@@ -69,7 +69,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 }
 ?>
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, <?= $modelClass ?> $model, $key, $index, $column) {
                     return Url::toRoute([$action, <?= $generator->generateUrlParams() ?>]);
                  }

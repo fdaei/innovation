@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'price_before_discount',
             'address:ntext',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Event $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

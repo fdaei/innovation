@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'status',
                 [
-                    'class' => ActionColumn::className(),
+                    'class' => ActionColumn::class,
                     'urlCreator' => function ($action, BranchesGallery $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     }

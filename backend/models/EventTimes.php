@@ -29,7 +29,7 @@ class EventTimes extends Model
     }
 
     public static function handelData(){
-        $eventTimes = \common\models\Model::createMultiple(EventTimes::classname());
+        $eventTimes = \common\models\Model::createMultiple(EventTimes::class);
         Model::loadMultiple($eventTimes, Yii::$app->request->post());
         $headlinesJson = [];
         foreach ($eventTimes as $eventTime) {

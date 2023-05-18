@@ -4,7 +4,7 @@ use common\models\Activity;
 
 use kartik\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */

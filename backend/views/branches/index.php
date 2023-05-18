@@ -3,10 +3,9 @@
 use common\models\Branches;
 use common\models\Statuses;
 use common\widgets\grid\GridView;
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-
 use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
@@ -17,11 +16,9 @@ $this->title = Yii::t('app', 'Branches');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card material-card">
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header d-flex justify-content-between align-items-center">
         <h1><?= Html::encode($this->title) ?></h1>
-        <button>
-            <?= Html::a(Yii::t('app', 'Create Branches'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
-        </button>
+        <?= Html::a(Yii::t('app', 'Create Branches'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
     </div>
     <?php Pjax::begin(); ?>
     <div class="card-body">
@@ -43,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 [
-                    'class' => ActionColumn::className(),
+                    'class' => ActionColumn::class,
                     'urlCreator' => function ($action, Branches $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     }

@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'picture',
             'description:ntext',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, MentorServices $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
