@@ -2,14 +2,10 @@
 
 namespace common\models;
 
-use backend\models\EventHeadlines;
-use backend\models\EventTimes;
 use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\helpers\ArrayHelper;
-use yii\web\UploadedFile;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -34,15 +30,17 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_at
  * @property int $created_by
  * @property int $deleted_at
-
+ * @property int $status
  *
  * @property User $createdBy
  * @property User $updatedBy
  */
 class Event extends \yii\db\ActiveRecord
 {
-
-
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 2;
+    const STATUS_HELD = 3;
 
     public static function tableName()
     {
@@ -55,11 +53,11 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_organizer_id','title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude','evand_link','title_brief'], 'required'],
-            [['description', 'address','evand_link'], 'string'],
+            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief', 'status'], 'required'],
+            [['description', 'address', 'evand_link'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
-            [['price','longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
+            [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
             }],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -102,10 +100,12 @@ class Event extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
+
     public function normalizeNumber($value)
     {
         return Yii::$app->customHelper->toEn($value);
     }
+
     /**
      * Gets query for [[UpdatedBy]].
      *
@@ -120,6 +120,7 @@ class Event extends \yii\db\ActiveRecord
     {
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
     }
+
     public function getEventSponsorsInfo()
     {
         return $this->hasMany(EventSponsors::class, ['event_id' => 'id']);
@@ -184,7 +185,24 @@ class Event extends \yii\db\ActiveRecord
         return [];
     }
 
-    public static function getOrganizerList(){
+    public static function getOrganizerList()
+    {
         return EventOrganizer::find()->all();
+    }
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+                self::STATUS_HELD => Yii::t('app', 'HELD'),
+            ]
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
     }
 }
