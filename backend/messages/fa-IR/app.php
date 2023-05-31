@@ -29,6 +29,7 @@ return [
     "Mobile"=>"موبایل",
     "Job Position ID"=>"شناسه جایگاه کاری",
     "Immediate"=>"فوری",
+    "Avapardaz link"=>"لینک آوا پرداز",
     "Requirements"=>"شرایط",
     "Org Unit ID"=>"شناسه سازمان",
     "Create Org Unit"=>"ایجاد واحد سازمانی",

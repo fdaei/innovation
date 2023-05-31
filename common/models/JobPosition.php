@@ -17,6 +17,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $org_unit_id
  * @property string $description
  * @property string $requirements
+ * @property string $avapardaz_link
  * @property int $status
  * @property int $created_at
  * @property int $created_by
@@ -52,9 +53,10 @@ class JobPosition extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'org_unit_id', 'description', 'requirements'], 'required'],
+            [['title', 'org_unit_id', 'description', 'requirements', 'avapardaz_link'], 'required'],
             [['org_unit_id', 'status','immediate'], 'integer'],
             [['title'], 'string', 'max' => 128],
+            [['avapardaz_link'], 'string', 'max' => 255],
             [['description', 'requirements'], 'string', 'max' => 1024],
             [['org_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrgUnit::class, 'targetAttribute' => ['org_unit_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -73,6 +75,7 @@ class JobPosition extends \yii\db\ActiveRecord
             'org_unit_id' => Yii::t('app', 'Org Unit ID'),
             'description' => Yii::t('app', 'Description'),
             'immediate' => Yii::t('app', 'Immediate'),
+            'avapardaz_link' => Yii::t('app', 'Avapardaz link'),
             'requirements' => Yii::t('app', 'Requirements'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -212,6 +215,7 @@ class JobPosition extends \yii\db\ActiveRecord
             'description',
             'requirements',
             'immediate',
+            'avapardaz_link'
         ];
     }
 

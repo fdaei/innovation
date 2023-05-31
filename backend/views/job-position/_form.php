@@ -22,6 +22,9 @@ use yii\web\View;
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-sm-4">
+                <?= $form->field($model, 'avapardaz_link')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-3">
                 <?= $form->field($model, 'org_unit_id')->widget(Select2::class, [
                     'data' => ArrayHelper::map(OrgUnit::find()->all(), 'id', 'title'),
                     'size' => Select2::MEDIUM,
@@ -32,7 +35,7 @@ use yii\web\View;
                 ]);
                 ?>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-1">
                 <?= $form->field($model, 'immediate')->checkbox() ?>
             </div>
             <div class="col-sm-12">

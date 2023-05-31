@@ -29,13 +29,13 @@ return [
               ],
               //'fixHistory' => true
         ],
-          'migrate' => [
-            'class' => 'yii\console\controllers\MigrateController',
-              'migrationNamespaces' => [
-                  'yii\log\migrations',
-              ],
-              //'migrationPath' => null
-        ],
+//          'migrate' => [
+//            'class' => 'yii\console\controllers\MigrateController',
+//              'migrationNamespaces' => [
+//                  'yii\log\migrations',
+//              ],
+//              //'migrationPath' => null
+//        ],
     ],
     'components' => [
         'log' => [

@@ -3,17 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m230531_110720_add_avapardarz_linki_and_immediate_to_job_table
+ * Class m230531_110720_add_avapardaz_link_to_job_position_table
  */
-class m230531_110720_add_avapardarz_linki_and_immediate_to_job_table extends Migration
+class m230531_110720_add_avapardaz_link_to_job_position_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->addColumn('{{%job}}', 'immediate', $this->boolean()->defaultValue(false)->after('title'));
-        $this->addColumn('{{%job}}', 'avapardarz_link', $this->string()->after('immediate'));
+        $this->addColumn('{{%job_position}}', 'avapardaz_link', $this->string()->after('immediate'));
     }
 
     /**
@@ -21,7 +20,7 @@ class m230531_110720_add_avapardarz_linki_and_immediate_to_job_table extends Mig
      */
     public function safeDown()
     {
-        echo "m230531_110720_add_avapardarz_linki_and_immediate_to_job_table cannot be reverted.\n";
+        echo "m230531_110720_add_avapardaz_link_to_job_position_table cannot be reverted.\n";
 
         return false;
     }
