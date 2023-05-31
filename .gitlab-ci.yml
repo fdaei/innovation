@@ -5,6 +5,7 @@ stages:
   - build
   - build_nginx
   - deploy
+  - migrate
 
 variables:
   IMAGE_TAG_BASE: registry.ops.mobit.ir/avinox-dev/backendbase:latest
@@ -97,5 +98,41 @@ deploy-dev:
   rules:
     - if: '$CI_COMMIT_MESSAGE =~ /plz dev.build/ || $CI_COMMIT_MESSAGE =~ /plz dev.composer-install/ '
       when: on_success
+    - when: never
+
+migrate_up:
+  stage: migrate
+  script: 
+    - docker exec $(docker ps |  grep "avinox_backend".* | awk '{print $1}' | head -1)  yii migrate --interactive=0
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz migrate-up/'
+      when: on_success
+    - when: never
+
+migrate_down:
+  stage: migrate
+  script: 
+    - docker exec $(docker ps --format '{{.Names}}' |  grep "avinox_backend.*"  | head -1) yii migrate/down --interactive=0
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz migrate-down/ '
+      when: on_success
+    - when: never
+
+migrate_up_dev:
+  stage: migrate
+  script: 
+    - docker exec $(docker ps --format '{{.Names}}' | grep "avinox_dev_backend.*"  | head -1) yii migrate --interactive=0
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz dev.migrate-up/'
+      when: always
+    - when: never
+
+migrate_down_dev:
+  stage: migrate
+  script: 
+    - docker exec $(docker ps --format '{{.Names}}' | grep "avinox_dev_backend.*" | head -1) yii migrate/down --interactive=0
+  rules:
+    - if: '$CI_COMMIT_MESSAGE =~ /plz dev.migrate-down/ '
+      when: always
     - when: never
 
