@@ -67,9 +67,12 @@ use kartik\file\FileInput;
                  <p class="card-title border-bottom">
                 <div id="map" style="width: 100%;height: 400px;"></div>
                 </p>
-            <?= $form->field($model, 'longitude')->textInput(['style' => 'display: none'])->label(false) ?>
+                <?= $form->field($model, 'longitude')->textInput(['style' => 'display: none'])->label(false) ?>
                 <?= $form->field($model, 'latitude')->textInput(['style' => 'display: none'])->label(false) ?>
-        </span>
+            </span>
+            <div class="col-md-8">
+                <?= $form->field($model, 'status')->dropDownList(\common\models\Event::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+            </div>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex ">

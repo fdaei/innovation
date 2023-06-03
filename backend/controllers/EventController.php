@@ -89,6 +89,8 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event();
+        $model->headlines = [];
+        $model->event_times = [];
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
                 if($model->save()){

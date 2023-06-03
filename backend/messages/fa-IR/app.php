@@ -22,6 +22,7 @@ return [
     'DELETED' => "حذف شده",
     "ACTIVE" => "فعال",
     "INACTIVE" => "غیرفعال",
+    "HELD" => "برگذار شده",
     "Select Status" => "انتخاب وضعیت",
     "Email"=>"ایمیل",
     "First Name"=>"نام",
