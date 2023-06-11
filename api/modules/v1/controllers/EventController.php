@@ -52,7 +52,7 @@ class EventController extends ActiveController
     public function prepareDataProvider()
     {
         $provider = new \yii\data\ActiveDataProvider([
-            'query' => Event::find()->where(['status'=>Event::STATUS_ACTIVE])
+            'query' => Event::find()->where(['status'=>Event::STATUS_ACTIVE,'deleted_at'=>0])
         ]);
 
         return $provider;
@@ -60,7 +60,7 @@ class EventController extends ActiveController
 
     public function actionLastEvent(){
         return new ActiveDataProvider([
-            'query' => Event::find()->where(['status'=>Event::STATUS_HELD])->orderBy('id DESC')->limit(3),
+            'query' => Event::find()->where(['status'=>Event::STATUS_HELD,'deleted_at'=>0])->orderBy('id DESC')->limit(3),
         ]);
     }
 
@@ -74,7 +74,7 @@ class EventController extends ActiveController
     // need to fix
     public function actionSimilarEvent(){
         return new ActiveDataProvider([
-            'query' => Event::find()->where(['status'=>Event::STATUS_ACTIVE])->orderBy('id DESC')->limit(3),
+            'query' => Event::find()->where(['status'=>Event::STATUS_ACTIVE,'deleted_at'=>0])->orderBy('id DESC')->limit(3),
         ]);
     }
 }
