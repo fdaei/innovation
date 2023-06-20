@@ -21,21 +21,23 @@ return [
         'fixture' => [
             'class' => \yii\console\controllers\FixtureController::class,
             'namespace' => 'common\fixtures',
-          ],
-          'migration' => [
-            'class' => 'bizley\migration\controllers\MigrationController',
-              'skipMigrations' => [
-                'm140501_075311_add_oauth2_server'
-              ],
-              //'fixHistory' => true
         ],
-//          'migrate' => [
-//            'class' => 'yii\console\controllers\MigrateController',
-//              'migrationNamespaces' => [
-//                  'yii\log\migrations',
-//              ],
-//              //'migrationPath' => null
-//        ],
+        'migration' => [
+            'class' => 'bizley\migration\controllers\MigrationController',
+            'skipMigrations' => [
+                'm140501_075311_add_oauth2_server'
+            ],
+            //'fixHistory' => true
+        ],
+        'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationNamespaces' => [
+
+            ],
+            'migrationPath' => [
+                '@vendor/yiisoft/yii2/log/migrations',
+            ]
+        ],
     ],
     'components' => [
         'log' => [
