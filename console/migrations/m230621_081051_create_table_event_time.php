@@ -21,7 +21,7 @@ class m230621_081051_create_table_event_time extends Migration
             '{{%event_time}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
-                'event_id' => $this->integer()->notNull(),
+                'event_id' => $this->integer()->notNull()->unsigned(),
                 'start_at' => $this->integer()->unsigned(),
                 'end_at' => $this->integer()->unsigned(),
                 'updated_by' => $this->integer()->unsigned(),
@@ -31,6 +31,15 @@ class m230621_081051_create_table_event_time extends Migration
                 'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],
             $tableOptions
+        );
+
+        $this->addForeignKey(
+            'event_time_event_ibfk_1',
+            '{{%event_time}}',
+            ['event_id'],
+            '{{%event}}',
+            ['id'],
+            'CASCADE'
         );
 
 
