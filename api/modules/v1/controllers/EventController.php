@@ -58,9 +58,9 @@ class EventController extends ActiveController
         return $provider;
     }
 
-    public function actionLastEvent(){
+    public function actionLastEvent($status){
         return new ActiveDataProvider([
-            'query' => Event::find()->where(['status'=>Event::STATUS_HELD,'deleted_at'=>0])->orderBy('id DESC')->limit(3),
+            'query' => Event::find()->where(['status'=>$status,'deleted_at'=>0])->orderBy('id DESC'),
         ]);
     }
 
