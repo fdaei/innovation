@@ -33,14 +33,6 @@ class m230621_081051_create_table_event_time extends Migration
             $tableOptions
         );
 
-        $this->addForeignKey(
-            'event_time_ibfk_1',
-            '{{%event_time}}',
-            'event_id',
-            '{{%event}}',
-            'id',
-            'CASCADE'
-        );
 
     }
 
