@@ -52,7 +52,6 @@ return [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages',
                     'sourceLanguage' => 'en-US',
-                    // 'sourceLanguage' => 'fa-IR',
                     'fileMap' => [
                         'app' => 'app.php'
                     ],

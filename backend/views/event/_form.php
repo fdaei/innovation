@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 use kartik\file\FileInput;
+use yii\widgets\MaskedInput;
 
 
 /** @var yii\web\View $this */
@@ -29,12 +30,84 @@ use kartik\file\FileInput;
                 <?= $form->field($model, 'evand_link')->textInput(['maxlength' => true]) ?>
             </div>
             <div class='col-md-4 '>
-                <?= $form->field($model, 'price')->textInput() ?>
+            <?= $form->field($model, 'price')->widget(MaskedInput::class,
+                [
+                    'options' => [
+                        'autocomplete' => 'off',
+                    ],
+                    'clientOptions' => [
+                        'alias' => 'integer',
+                        'groupSeparator' => ',',
+                        'autoGroup' => true,
+                        'removeMaskOnSubmit' => true,
+                        'autoUnmask' => true,
+                    ],
+                ])->label('قیمت (تومان)') ?>
             </div>
             <div class='col-md-4 '>
-                <?= $form->field($model, 'price_before_discount')->textInput() ?>
+                <?= $form->field($model, 'price_before_discount')->widget(MaskedInput::class,
+                    [
+                        'options' => [
+                            'autocomplete' => 'off',
+                        ],
+                        'clientOptions' => [
+                            'alias' => 'integer',
+                            'groupSeparator' => ',',
+                            'autoGroup' => true,
+                            'removeMaskOnSubmit' => true,
+                            'autoUnmask' => true,
+                        ],
+                    ])->label('قیمت قبل از تخفیف (تومان)') ?>
             </div>
-
+            <div class='col-md-12 kohl' style="">
+                <div class="panel-body ">
+                    <?php DynamicFormWidget::begin([
+                        'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                        'widgetBody' => '.container-items-time', // required: css class selector
+                        'widgetItem' => '.item-time', // required: css class
+                        'limit' => 20, // the maximum times, an element can be cloned (default 999)
+                        'min' => 1, // 0 or 1 (default 1)
+                        'insertButton' => '.add-item_time', // css class
+                        'deleteButton' => '.remove-item_time', // css class
+                        'model' => $EventTimes[0],
+                        'formId' => 'event_form',
+                        'formFields' => [
+                            'start',
+                            'end'
+                        ],
+                    ]); ?>
+                    <div class="container-items-time"><!-- widgetContainer -->
+                        <?php foreach ($EventTimes as $i => $time): ?>
+                            <div class="item-time panel panel-default"><!-- widgetBody -->
+                                <div>
+                                    <div class="pull-right">
+                                        <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <?php
+                                    // necessary for update action.
+                                    if (! $time->isNewRecord) {
+                                        echo Html::activeHiddenInput($time, "[{$i}]id");
+                                    }
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <?= $form->field($time, "[{$i}]start")->textInput(['maxlength' => true,'data-jdp'=>true]) ?>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <?= $form->field($time, "[{$i}]end")->textInput(['maxlength' => true,'data-jdp'=>true]) ?>
+                                        </div>
+                                    </div><!-- .row -->
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="add-item_time btn btn-success btn-xs">زمان جدید</button>
+                    <?php DynamicFormWidget::end(); ?>
+                </div>
+            </div>
             <div class='col-md-6 '>
                 <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
             </div>
@@ -70,9 +143,6 @@ use kartik\file\FileInput;
                 <?= $form->field($model, 'longitude')->textInput(['style' => 'display: none'])->label(false) ?>
                 <?= $form->field($model, 'latitude')->textInput(['style' => 'display: none'])->label(false) ?>
             </span>
-            <div class="col-md-8">
-                <?= $form->field($model, 'status')->dropDownList(\common\models\Event::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
-            </div>
         </div>
     </div>
     <div class="form-group mb-0 card-footer d-flex ">

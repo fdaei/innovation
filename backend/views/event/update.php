@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="card-body">
             <?= $this->render('_form', [
                 'model' => $model,
+                'EventTimes' => $EventTimes,
             ]) ?>
         </div>
     </div>

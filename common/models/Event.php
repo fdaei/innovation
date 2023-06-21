@@ -156,9 +156,11 @@ class Event extends \yii\db\ActiveRecord
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [
                     'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED
                 ],
                 'restoreAttributeValues' => [
                     'deleted_at' => 0,
+                    'status' => self::STATUS_ACTIVE
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
