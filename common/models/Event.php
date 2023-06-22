@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+
+use common\models\EventTime;
 use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -119,6 +121,10 @@ class Event extends \yii\db\ActiveRecord
     public function getOrganizerInfo()
     {
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
+    }
+    public function getTime()
+    {
+        return $this->hasOne(EventTime::class, ['event_id' => 'id']);
     }
 
     public function getEventSponsorsInfo()
