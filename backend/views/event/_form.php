@@ -94,10 +94,10 @@ use yii\widgets\MaskedInput;
                                     ?>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]start")->textInput(['maxlength' => true,'data-jdp'=>true]) ?>
+                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true]) ?>
                                         </div>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]end")->textInput(['maxlength' => true,'data-jdp'=>true]) ?>
+                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true]) ?>
                                         </div>
                                     </div><!-- .row -->
                                 </div>
