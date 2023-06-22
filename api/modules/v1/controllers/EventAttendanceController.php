@@ -29,9 +29,6 @@ class EventAttendanceController extends ActiveController
                 ],
                 'optional' => ['create']
             ],
-            'exceptionFilter' => [
-                'class' => ErrorToExceptionFilter::class
-            ],
         ]);
     }
 
@@ -47,16 +44,13 @@ class EventAttendanceController extends ActiveController
 
         $model->status = 1;
         if ($this->request->isPost) {
-
             if ($model->load($this->request->post(),'')) {
-                $model->user_id = Yii::$app->user?->identity?->id;
                 $model->save();
             } else {
                 $model->validate();
             }
         }
 
-//        dd($model->errors);
         return $model;
     }
 
