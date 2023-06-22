@@ -59,9 +59,39 @@ class EventController extends ActiveController
     }
 
     public function actionLastEvent($status){
-        return new ActiveDataProvider([
-            'query' => Event::find()->where(['status'=>$status,'deleted_at'=>0])->orderBy('id DESC'),
-        ]);
+
+        var_dump('aaaaaa');
+        die();
+
+        if($status==1){
+            return new ActiveDataProvider([
+                'query' => Event::find()
+                    ->where(['status'=>Event::STATUS_ACTIVE,'deleted_at'=>0])
+                    ->orderBy('id DESC'),
+            ]);
+        }elseif ($status==2){
+            $time = new \DateTime('UTC');
+            $start_at = clone $time;
+            $end_at = clone $time;
+            $start_at->sub(new \DateInterval('PT' . 30 . 'M'));
+            $end_at->add(new \DateInterval('PT' . 30 . 'M'));
+
+            $dataProvider =  new ActiveDataProvider([
+                'query' => Event::find()
+                    ->where(['status'=>Event::STATUS_ACTIVE,'deleted_at'=>0])
+                    ->joinWith('{{%event-time}}')
+                    ->andWhere(['>','{{%event-time}}.start_at',$start_at->getTimestamp()])
+                    ->andWhere(['<','{{%event-time}}.end_at',$end_at->getTimestamp()])
+                    ->orderBy('id DESC')
+                    ->limit(3),
+            ]);
+
+            return $dataProvider;
+        }elseif ($status==3){
+            return new ActiveDataProvider([
+                'query' => Event::find()->where(['status'=>Event::STATUS_HELD,'deleted_at'=>0])->orderBy('id DESC'),
+            ]);
+        }
     }
 
     // need to fix

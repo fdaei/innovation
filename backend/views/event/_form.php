@@ -10,6 +10,8 @@ use yii\widgets\MaskedInput;
 /** @var yii\web\View $this */
 /** @var common\models\Event $model */
 /** @var yii\bootstrap4\ActiveForm $form */
+/** @var common\models\EventTime $EventTimes */
+
 ?>
 
 
@@ -30,19 +32,19 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'evand_link')->textInput(['maxlength' => true]) ?>
             </div>
             <div class='col-md-4 '>
-            <?= $form->field($model, 'price')->widget(MaskedInput::class,
-                [
-                    'options' => [
-                        'autocomplete' => 'off',
-                    ],
-                    'clientOptions' => [
-                        'alias' => 'integer',
-                        'groupSeparator' => ',',
-                        'autoGroup' => true,
-                        'removeMaskOnSubmit' => true,
-                        'autoUnmask' => true,
-                    ],
-                ])->label('قیمت (تومان)') ?>
+                <?= $form->field($model, 'price')->widget(MaskedInput::class,
+                    [
+                        'options' => [
+                            'autocomplete' => 'off',
+                        ],
+                        'clientOptions' => [
+                            'alias' => 'integer',
+                            'groupSeparator' => ',',
+                            'autoGroup' => true,
+                            'removeMaskOnSubmit' => true,
+                            'autoUnmask' => true,
+                        ],
+                    ])->label('قیمت (تومان)') ?>
             </div>
             <div class='col-md-4 '>
                 <?= $form->field($model, 'price_before_discount')->widget(MaskedInput::class,
@@ -72,8 +74,8 @@ use yii\widgets\MaskedInput;
                         'model' => $EventTimes[0],
                         'formId' => 'event_form',
                         'formFields' => [
-                            'start',
-                            'end'
+                            'start_at',
+                            'end_at'
                         ],
                     ]); ?>
                     <div class="container-items-time"><!-- widgetContainer -->
@@ -81,25 +83,26 @@ use yii\widgets\MaskedInput;
                             <div class="item-time panel panel-default"><!-- widgetBody -->
                                 <div>
                                     <div class="pull-right">
-                                        <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>
+                                        <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف
+                                        </button>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="panel-body">
                                     <?php
                                     // necessary for update action.
-                                    if (! $time->isNewRecord) {
+                                    if (!$time->isNewRecord) {
                                         echo Html::activeHiddenInput($time, "[{$i}]id");
                                     }
                                     ?>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true ,'value'=> $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i',$time->start_at)):"",'data-jdp'=>true]) ?>
                                         </div>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true]) ?>
+                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true ,'value'=> $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i',$time->start_at)):"",'data-jdp'=>true]) ?>
                                         </div>
-                                    </div><!-- .row -->
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>

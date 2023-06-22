@@ -230,11 +230,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 </thead>
                 <tbody>
-                <?php if($model->event_times): ?>
-                    <?php foreach ($model->event_times as $i => $item): ?>
+                <?php if($model->times): ?>
+                    <?php foreach ($model->times as $i => $item): ?>
                     <tr>
-                        <td><?= $item["start"] ?></td>
-                        <td><?= $item["end"] ?></td>
+                        <td><?= yii::$app->pdate->jdate("Y/m/d H:i",$item->start_at) ?></td>
+                        <td><?= yii::$app->pdate->jdate("Y/m/d H:i",$item->end_at) ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

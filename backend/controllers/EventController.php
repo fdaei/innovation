@@ -8,6 +8,7 @@ use common\models\EventSearch;
 use common\models\EventTime;
 use common\models\Model;
 use common\traits\AjaxValidationTrait;
+use common\traits\CoreTrait;
 use Exception;
 use Yii;
 use yii\filters\AccessControl;
@@ -25,7 +26,7 @@ use yii\web\Response;
  */
 class EventController extends Controller
 {
-    use AjaxValidationTrait;
+    use AjaxValidationTrait,CoreTrait;
 
     /**
      * @inheritDoc
@@ -87,6 +88,7 @@ class EventController extends Controller
         ]);
     }
 
+
     /**
      * Creates a new Event model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -98,18 +100,21 @@ class EventController extends Controller
         $model->status=1;
         $modelsEvent = [new EventTime];
         if ($model->load(Yii::$app->request->post())) {
-
             $modelsEvent = Model::createMultiple(EventTime::class);
             Model::loadMultiple($modelsEvent, Yii::$app->request->post());
+
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsEvent) && $valid;
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
                     if ($flag = $model->save(false)) {
-                        foreach ($modelsEvent as $Event ) {
-                            $Event->event_id = $model->id;
-                            if (! ($flag = $Event->save(false))) {
+
+                        foreach ($modelsEvent as $event ) {
+                            $event->start_at= $this->jalaliToTimestamp($event->start_at,"Y/m/d H:i");
+                            $event->end_at=$this->jalaliToTimestamp($event->end_at,"Y/m/d H:i");
+                            $event->event_id = $model->id;
+                            if (! ($flag = $event->save(false))) {
                                 $transaction->rollBack();
                                 break;
                             }
@@ -124,6 +129,11 @@ class EventController extends Controller
                 }
             }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $EventTimes
+        ]);
 
     }
 
@@ -208,8 +218,7 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $EventTimes = $model->time;
-
+        $EventTimes = $model->times;
         if ($model->load(Yii::$app->request->post())) {
 
             $oldIDs = ArrayHelper::map($EventTimes, 'id', 'id');
@@ -226,9 +235,11 @@ class EventController extends Controller
                         if (!empty($deletedIDs)) {
                             EventTime::deleteAll(['id' => $deletedIDs]);
                         }
-                        foreach ($EventTimes as $time) {
-                            $time->event_id = $model->id;
-                            if (!($flag = $time->save(false))) {
+                        foreach ($EventTimes as $event) {
+                            $event->start_at= $this->jalaliToTimestamp($event->start_at,"Y/m/d H:i");
+                            $event->end_at=$this->jalaliToTimestamp($event->end_at,"Y/m/d H:i");
+                            $event->event_id = $model->id;
+                            if (!($flag = $event->save(false))) {
                                 $transaction->rollBack();
                                 break;
                             }

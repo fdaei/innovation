@@ -36,8 +36,9 @@ class Event extends \common\models\Event
             'status' => function (self $model) {
                 $status= $model->status;
                 $expire=true;
-                foreach ($model->event_times as $val) {
-                    if($val['end'] > new Expression('NOW()')){
+                foreach ($model->times as $val) {
+                    $noeDate = new \DateTime('UTC');
+                    if($val->end_at > $noeDate->getTimestamp()){
                         $expire=false;
                     }
                 }

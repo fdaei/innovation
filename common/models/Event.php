@@ -3,6 +3,7 @@
 namespace common\models;
 
 
+use backend\models\EventTimes;
 use common\models\EventTime;
 use common\behaviors\CdnUploadImageBehavior;
 use Yii;
@@ -36,6 +37,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property User $createdBy
  * @property User $updatedBy
+ * @property EventTimes[] $times
  */
 class Event extends \yii\db\ActiveRecord
 {
@@ -43,6 +45,7 @@ class Event extends \yii\db\ActiveRecord
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
     const STATUS_HELD = 3;
+    public $tag_id;
 
     public static function tableName()
     {
@@ -122,9 +125,9 @@ class Event extends \yii\db\ActiveRecord
     {
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
     }
-    public function getTime()
+    public function getTimes()
     {
-        return $this->hasOne(EventTime::class, ['event_id' => 'id']);
+        return $this->hasMany(EventTime::class, ['event_id' => 'id']);
     }
 
     public function getEventSponsorsInfo()

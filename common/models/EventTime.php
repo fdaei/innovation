@@ -40,7 +40,7 @@ class EventTime extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_id', 'start_at', 'end_at', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
+            [['start_at', 'end_at'], 'safe'],
             [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
         ];
     }
