@@ -3,21 +3,22 @@
 namespace backend\controllers;
 
 use backend\assets\Datapicker;
-use common\models\EventSponsors;
 use common\models\Event;
 use common\models\EventSearch;
+use common\models\EventTime;
+use common\models\Model;
 use common\traits\AjaxValidationTrait;
+use Exception;
 use Yii;
-use yii\db\Expression;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\Model;
 use backend\models\EventTimes;
 use backend\models\EventHeadlines;
-use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
+use yii\web\Response;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -93,46 +94,38 @@ class EventController extends Controller
      */
     public function actionCreate()
     {
-        $EventTimes = [new EventTimes()];
-        $model = new Event();
-        $model->headlines = [];
-        $model->event_times = [];
-        $model->status = 2;
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                $newData = EventTimes::handelData($model->event_times);
-                $newModels = [];
+        $model = new Event;
+        $model->status=1;
+        $modelsEvent = [new EventTime];
+        if ($model->load(Yii::$app->request->post())) {
 
-                foreach ($newData as $item) {
-                    $newModel = new EventTimes();
-                    $newModel->attributes = $item;
-                    $newModels[] = $newModel;
-                }
-
-                // Validate all models
-                $isValid = EventTimes::validateMultiple($newModels);
-
-                if ($isValid) {
-                    if ($model->event_times) {
-                        $model->event_times = array_merge($model->event_times, $newData);
-                    } else {
-                        $model->event_times = $newData;
+            $modelsEvent = Model::createMultiple(EventTime::class);
+            Model::loadMultiple($modelsEvent, Yii::$app->request->post());
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($modelsEvent) && $valid;
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($modelsEvent as $Event ) {
+                            $Event->event_id = $model->id;
+                            if (! ($flag = $Event->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
                     }
-                    if ($model->save()) {
+                    if ($flag) {
+                        $transaction->commit();
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
                 }
-
             }
-        } else {
-            $model->loadDefaultValues();
         }
-        return $this->render('create', [
-            'model' => $model,
-            'EventTimes' => $EventTimes,
-        ]);
-    }
 
+    }
 
     public function actionCreateHeadlines($id)
     {
@@ -215,23 +208,45 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
-            $model->event_times = EventTimes::handelData($model->event_times);
-            foreach ($model->event_times as $item) {
-                $newModel = new EventTimes();
-                $newModel->attributes = $item;
-                $newModels[] = $newModel;
-            }
-            // Validate all models
-            $isValid = EventTimes::validateMultiple($newModels);
-            if($isValid){
-                $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+        $EventTimes = $model->time;
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $oldIDs = ArrayHelper::map($EventTimes, 'id', 'id');
+            $EventTimes = Model::createMultiple(EventTime::class, $EventTimes);
+            Model::loadMultiple($EventTimes, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($EventTimes, 'id', 'id')));
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($EventTimes) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (!empty($deletedIDs)) {
+                            EventTime::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($EventTimes as $time) {
+                            $time->event_id = $model->id;
+                            if (!($flag = $time->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
             }
         }
+
         return $this->render('update', [
             'model' => $model,
-            'EventTimes' => EventTimes::loadDefaultValue($model->event_times),
+            'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $EventTimes
         ]);
     }
 
