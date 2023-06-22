@@ -40,3 +40,8 @@ phpunit.phar
 /.vscode
 
 *.drawio
+/backend/config/codeception-local.php
+/backend/web/index-test.php
+/backend/web/.htaccess
+/common/config/codeception-local
+/frontend/web/index-test.php

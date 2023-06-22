@@ -77,4 +77,16 @@ class EventController extends ActiveController
             'query' => Event::find()->where(['status'=>Event::STATUS_ACTIVE,'deleted_at'=>0])->orderBy('id DESC')->limit(3),
         ]);
     }
+
+    public function actionEventsInMoment(){
+
+        $data =  new ActiveDataProvider([
+            'query' => Event::find()
+                ->where(['status'=>Event::STATUS_ACTIVE,'deleted_at'=>0])
+                ->orderBy('id DESC')
+                ->limit(3),
+        ]);
+
+        return $data;
+    }
 }
