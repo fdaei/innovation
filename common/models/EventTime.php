@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\traits\AjaxValidationTrait;
+use common\traits\CoreTrait;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
@@ -26,6 +28,7 @@ class EventTime extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
+    use CoreTrait;
     /**
      * {@inheritdoc}
      */
@@ -40,9 +43,21 @@ class EventTime extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['start_at', 'end_at'], 'safe'],
+            [['start_at', 'end_at'], 'validateEndTime'],
+            [['start_at', 'end_at'], 'required'],
             [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
         ];
+    }
+
+    public function validateEndTime($attribute, $params)
+    {
+        if(isset($this->start_at) and isset($this->end_at)){
+            $start_at = $this->jalaliToTimestamp($this->start_at,"Y/m/d H:i");
+            $end_at = $this->jalaliToTimestamp($this->end_at,"Y/m/d H:i");
+            if ($end_at <= $start_at) {
+                $this->addError($attribute, 'End time must be greater than the start time.');
+            }
+        }
     }
 
     /**
