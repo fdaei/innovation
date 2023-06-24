@@ -54,19 +54,4 @@ class m230621_081051_create_table_event_time extends Migration
 
         return false;
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230621_081051_create_table_event_time cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
