@@ -2,13 +2,6 @@
 
 namespace api\models;
 
-use common\behaviors\CdnUploadImageBehavior;
-use yii\base\Model;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
-use yii2tech\ar\softdelete\SoftDeleteBehavior;
-
 class Event extends \common\models\Event
 {
     public function fields()
@@ -34,18 +27,18 @@ class Event extends \common\models\Event
             'longitude',
             'latitude',
             'status' => function (self $model) {
-                $status= $model->status;
-                $expire=true;
-                foreach ($model->times as $val) {
-                    $noeDate = new \DateTime('UTC');
-                    if($val->end_at > $noeDate->getTimestamp()){
-                        $expire=false;
+                $status = $model->status;
+                $expire = true;
+                foreach ($model->times as $time) {
+                    $nowDate = time();
+                    if ($time->end_at > $nowDate) {
+                        $expire = false;
                     }
                 }
-                $model->status=$expire?3:$status;
+                $model->status = $expire ? self::STATUS_HELD : $status;
                 return [
                     'code' => $model->status,
-                    'name' => \common\models\Event::itemAlias('Status', $model->status),
+                    'title' => Event::itemAlias('Status', $model->status),
                 ];
             },
         ];

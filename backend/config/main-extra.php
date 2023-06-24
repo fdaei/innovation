@@ -1,4 +1,5 @@
 <?php
+
 use common\components\Env;
 use common\components\swagger\SwaggerApi;
 
@@ -28,7 +29,7 @@ $config = [
     ]
 ];
 
-if (1) {
+if (!YII_ENV_PROD) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [

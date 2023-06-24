@@ -2,9 +2,6 @@
 
 namespace common\models;
 
-
-use backend\models\EventTimes;
-use common\models\EventTime;
 use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -37,15 +34,16 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property User $createdBy
  * @property User $updatedBy
- * @property EventTimes[] $times
+ * @property EventTime[] $times
+ *
+ * @mixin SoftDeleteBehavior
  */
 class Event extends \yii\db\ActiveRecord
 {
-    const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
     const STATUS_HELD = 3;
-    public $tag_id;
 
     public static function tableName()
     {
@@ -125,6 +123,7 @@ class Event extends \yii\db\ActiveRecord
     {
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
     }
+
     public function getTimes()
     {
         return $this->hasMany(EventTime::class, ['event_id' => 'id']);
@@ -142,7 +141,7 @@ class Event extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new EventQuery(get_called_class());
-        return $query->active();
+        return $query->notDeleted();
     }
 
     public function canDelete()
@@ -169,7 +168,7 @@ class Event extends \yii\db\ActiveRecord
                 ],
                 'restoreAttributeValues' => [
                     'deleted_at' => 0,
-                    'status' => self::STATUS_ACTIVE
+                    'status' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_HELD]
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
@@ -209,6 +208,11 @@ class Event extends \yii\db\ActiveRecord
                 self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
                 self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
                 self::STATUS_HELD => Yii::t('app', 'HELD'),
+            ],
+            'Filter' => [
+                EventSearch::FILTER_COMING_SOON => Yii::t('app', 'Coming Soon'),
+                EventSearch::FILTER_RUNNING => Yii::t('app', 'Running'),
+                EventSearch::FILTER_PASSED => Yii::t('app', 'Passed'),
             ]
         ];
         if (isset($code))
