@@ -21,13 +21,14 @@ class m230621_081051_create_table_event_time extends Migration
             '{{%event_time}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
-                'event_id' => $this->integer()->notNull()->unsigned(),
-                'start_at' => $this->integer()->unsigned(),
-                'end_at' => $this->integer()->unsigned(),
-                'updated_by' => $this->integer()->unsigned(),
-                'updated_at' => $this->integer()->unsigned(),
-                'created_at' => $this->integer()->unsigned(),
-                'created_by' => $this->integer()->unsigned(),
+                'event_id' => $this->integer()->notNull()->unsigned()->notNull(),
+                'start_at' => $this->integer()->unsigned()->notNull(),
+                'end_at' => $this->integer()->unsigned()->notNull(),
+                'status' => $this->tinyInteger()->defaultValue(1)->notNull(),
+                'updated_by' => $this->integer()->unsigned()->notNull(),
+                'updated_at' => $this->integer()->unsigned()->notNull(),
+                'created_at' => $this->integer()->unsigned()->notNull(),
+                'created_by' => $this->integer()->unsigned()->notNull(),
                 'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],
             $tableOptions
@@ -50,8 +51,6 @@ class m230621_081051_create_table_event_time extends Migration
      */
     public function safeDown()
     {
-        echo "m230621_081051_create_table_event_time cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%event_time}}');
     }
 }
