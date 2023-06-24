@@ -21,17 +21,17 @@ class m230621_091359_create_table_event_attendance extends Migration
             '{{%event_attendance}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
-                'event_id' => $this->integer()->unsigned(),
+                'event_id' => $this->integer()->unsigned()->notNull(),
                 'user_id' => $this->integer()->unsigned(),
-                'first_name' => $this->string(),
-                'last_name' => $this->string(),
-                'mobile' => $this->string(),
-                'email' => $this->string(),
-                'description' => $this->text(),
-                'status' => $this->integer()->notNull(),
+                'first_name' => $this->string(64)->notNull(),
+                'last_name' => $this->string(128)->notNull(),
+                'mobile' => $this->string(11)->notNull(),
+                'email' => $this->string()->null(),
+                'description' => $this->string(512),
+                'status' => $this->tinyInteger()->defaultValue(1)->notNull(),
                 'updated_by' => $this->integer()->unsigned(),
-                'updated_at' => $this->integer()->unsigned(),
-                'created_at' => $this->integer()->unsigned(),
+                'updated_at' => $this->integer()->unsigned()->notNull(),
+                'created_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned(),
                 'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],
@@ -80,23 +80,6 @@ class m230621_091359_create_table_event_attendance extends Migration
      */
     public function safeDown()
     {
-        echo "m230621_091359_create_table_event_attendance cannot be reverted.\n";
-
-        return false;
+       $this->dropTable('{{%event_attendance}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230621_091359_create_table_event_attendance cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

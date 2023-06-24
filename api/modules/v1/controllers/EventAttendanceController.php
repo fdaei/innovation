@@ -4,12 +4,11 @@ namespace api\modules\v1\controllers;
 
 use common\models\EventAttendance;
 use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
-use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
-use Yii;
+
 class EventAttendanceController extends ActiveController
 {
     public $modelClass = "common\models\EventAttendance";
@@ -41,17 +40,9 @@ class EventAttendanceController extends ActiveController
     {
         $model = new EventAttendance;
         $model->loadDefaultValues();
-
-        $model->status = 1;
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post(),'')) {
-                $model->save();
-            } else {
-                $model->validate();
-            }
-        }
+        $model->load($this->request->post(), '');
+        $model->save();
 
         return $model;
     }
-
 }
