@@ -55,6 +55,9 @@ class EventAttendance extends \yii\db\ActiveRecord
         return [
             [['event_id', 'user_id', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['description'], 'string', 'max' => 512],
+            [['first_name'], 'string', 'max' => 64],
+            [['last_name'], 'string', 'max' => 128],
+            [['mobile'], 'string', 'max' => 11],
             [['event_id', 'first_name', 'last_name', 'mobile', 'status'], 'required'],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
             [['email'], 'match', 'pattern' => '/^[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/'],
