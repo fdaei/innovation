@@ -225,4 +225,7 @@ return [
     'Created By'=>'ایجاد شده توسط',
     'Created At'=>'ایجاد شده',
     'Deleted At'=>'حدف شده',
+    'WAITING' => 'انتظار تایید',
+    'CONFIRM' => 'ثبت شده',
+    'REJECT' => 'رد شده',
 ];

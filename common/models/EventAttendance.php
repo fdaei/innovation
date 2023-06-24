@@ -57,6 +57,7 @@ class EventAttendance extends \yii\db\ActiveRecord
             [['description'], 'string', 'max' => 512],
             [['event_id', 'first_name', 'last_name', 'mobile', 'status'], 'required'],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
+            [['email'], 'match', 'pattern' => '/^[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/'],
             [['first_name', 'last_name', 'mobile', 'email'], 'string', 'max' => 255],
             [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -64,6 +65,7 @@ class EventAttendance extends \yii\db\ActiveRecord
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -149,6 +151,22 @@ class EventAttendance extends \yii\db\ActiveRecord
         }
 
         return parent::beforeSave($insert);
+    }
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_WAITING => Yii::t('app', 'WAITING'),
+                self::STATUS_CONFIRM => Yii::t('app', 'CONFIRM'),
+                self::STATUS_REJECT => Yii::t('app', 'REJECT'),
+            ],
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
     }
 
     /**

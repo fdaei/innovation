@@ -28,7 +28,7 @@ class m230621_091359_create_table_event_attendance extends Migration
                 'mobile' => $this->string(11)->notNull(),
                 'email' => $this->string()->null(),
                 'description' => $this->string(512),
-                'status' => $this->tinyInteger()->defaultValue(1)->notNull(),
+                'status' => $this->tinyInteger()->defaultValue(2)->notNull(),
                 'updated_by' => $this->integer()->unsigned(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
@@ -36,6 +36,20 @@ class m230621_091359_create_table_event_attendance extends Migration
                 'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],
             $tableOptions
+        );
+
+        $this->createIndex(
+            'idx-unique-user-event-n1',
+            '{{%event_attendance}}',
+            ['event_id', 'user_id'],
+            true
+        );
+
+        $this->createIndex(
+            'idx-unique-user-event-n2',
+            '{{%event_attendance}}',
+            ['event_id', 'mobile'],
+            true
         );
 
         $this->addForeignKey(
