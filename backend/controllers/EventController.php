@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use backend\assets\Datapicker;
+use backend\models\EventHeadlines;
 use common\models\Event;
 use common\models\EventSearch;
 use common\models\EventTime;
@@ -12,21 +12,18 @@ use common\traits\CoreTrait;
 use Exception;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use backend\models\EventTimes;
-use backend\models\EventHeadlines;
 use yii\widgets\ActiveForm;
-use yii\web\Response;
 
 /**
  * EventController implements the CRUD actions for Event model.
  */
 class EventController extends Controller
 {
-    use AjaxValidationTrait,CoreTrait;
+    use AjaxValidationTrait, CoreTrait;
 
     /**
      * @inheritDoc
@@ -55,7 +52,6 @@ class EventController extends Controller
         );
     }
 
-
     /**
      * Lists all Event models.
      *
@@ -74,20 +70,18 @@ class EventController extends Controller
 
     /**
      * Displays a single Event model.
-     * @param int $id ایدی
+     * @param int $id
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $model=$this->findModel($id);
-
+        $model = $this->findModel($id);
 
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' =>$model,
         ]);
     }
-
 
     /**
      * Creates a new Event model.
@@ -97,8 +91,8 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event;
-        $model->status=1;
         $modelsEvent = [new EventTime];
+
         if ($model->load(Yii::$app->request->post())) {
             $modelsEvent = Model::createMultiple(EventTime::class);
             Model::loadMultiple($modelsEvent, Yii::$app->request->post());
@@ -106,15 +100,14 @@ class EventController extends Controller
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsEvent) && $valid;
             if ($valid) {
-                $transaction = \Yii::$app->db->beginTransaction();
+                $transaction = Yii::$app->db->beginTransaction();
                 try {
                     if ($flag = $model->save(false)) {
-
-                        foreach ($modelsEvent as $event ) {
-                            $event->start_at= $this->jalaliToTimestamp($event->start_at,"Y/m/d H:i");
-                            $event->end_at=$this->jalaliToTimestamp($event->end_at,"Y/m/d H:i");
+                        foreach ($modelsEvent as $event) {
+                            $event->start_at = $this->jalaliToTimestamp($event->start_at, "Y/m/d H:i");
+                            $event->end_at = $this->jalaliToTimestamp($event->end_at, "Y/m/d H:i");
                             $event->event_id = $model->id;
-                            if (! ($flag = $event->save(false))) {
+                            if (!($flag = $event->save(false))) {
                                 $transaction->rollBack();
                                 break;
                             }
@@ -134,7 +127,6 @@ class EventController extends Controller
             'model' => $model,
             'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $EventTimes
         ]);
-
     }
 
     public function actionCreateHeadlines($id)
@@ -236,8 +228,8 @@ class EventController extends Controller
                             EventTime::deleteAll(['id' => $deletedIDs]);
                         }
                         foreach ($EventTimes as $event) {
-                            $event->start_at= $this->jalaliToTimestamp($event->start_at,"Y/m/d H:i");
-                            $event->end_at=$this->jalaliToTimestamp($event->end_at,"Y/m/d H:i");
+                            $event->start_at = $this->jalaliToTimestamp($event->start_at, "Y/m/d H:i");
+                            $event->end_at = $this->jalaliToTimestamp($event->end_at, "Y/m/d H:i");
                             $event->event_id = $model->id;
                             if (!($flag = $event->save(false))) {
                                 $transaction->rollBack();

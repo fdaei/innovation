@@ -1,9 +1,12 @@
 <?php
 
-use yii\helpers\Html;
+use common\models\Event;
+use common\models\EventTime;
+use yii\web\View;
 
-/** @var yii\web\View $this */
-/** @var common\models\Event $model */
+/** @var View $this */
+/** @var Event $model */
+/** @var EventTime[] $EventTimes */
 
 $this->title = Yii::t('app', 'Create Event');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => ['index']];
