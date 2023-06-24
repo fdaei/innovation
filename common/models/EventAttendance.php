@@ -56,6 +56,7 @@ class EventAttendance extends \yii\db\ActiveRecord
             [['event_id', 'user_id', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['description'], 'string', 'max' => 512],
             [['event_id', 'first_name', 'last_name', 'mobile', 'status'], 'required'],
+            [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
             [['first_name', 'last_name', 'mobile', 'email'], 'string', 'max' => 255],
             [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -144,7 +145,7 @@ class EventAttendance extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->user_id = Yii::$app->user?->identity->id;
+            $this->user_id = Yii::$app->user->identity?->id;
         }
 
         return parent::beforeSave($insert);
