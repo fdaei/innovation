@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviors\CdnUploadImageBehavior;
+use common\behaviors\Taggable;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -39,6 +40,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @mixin SoftDeleteBehavior
  * @mixin BlameableBehavior
  * @mixin TimestampBehavior
+ * @mixin Taggable
  *
  */
 class Event extends \yii\db\ActiveRecord

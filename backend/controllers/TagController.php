@@ -4,9 +4,9 @@ namespace backend\controllers;
 
 use common\models\Tag;
 use common\models\TagSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TagController implements the CRUD actions for Tag model.
@@ -116,6 +116,58 @@ class TagController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionList($query, $type = null)
+    {
+        $out = [
+            'results' => [
+                'id' => '',
+                'text' => '',
+                'html' => '',
+                'color' => '',
+                'type' => '',
+            ]
+        ];
+        if (!is_null($query)) {
+            $search_keys = explode(' ', $query);
+            $like_condition = [];
+            $like_condition[0] = 'AND';
+            if (count($search_keys) > 1) {
+                foreach ($search_keys as $key) {
+                    $like_condition[] = ['like', "name", $key];
+                }
+            } else {
+                $like_condition[] = ['like', "name", $query];
+            }
+
+            if ($type) {
+                $like_condition[] = [Tag::tableName() . '.type' => $type];
+            }
+
+            $data = Tag::find()
+                ->andWhere($like_condition)
+                ->limit(10)
+                ->all();
+
+            $arr = [];
+            $i = -1;
+            foreach ($data as $d) {
+                $i++;
+                $arr[$i]['id'] = $d->tag_id;
+                $arr[$i]['color'] = $d->color;
+                $arr[$i]['type'] = $d->type;
+
+                $arr[$i]['text'] = !$d->color ?
+                    '<span class="mx-1 font-medium text-white badge badge-' . Tag::itemAlias('TypeClass', $d->type) . '" title="' . Tag::itemAlias('Type', $d->type) . '">' . $d->name . '</span>'
+                    :
+                    '<span class="mx-1 font-medium text-white" style="background-color:#' . $d->color . ';padding: .20em .5em;border-radius: 2px;font-size: 90%;" title="' . Tag::itemAlias('Type', $d->type) . '">' . $d->name . '</span>';
+                $arr[$i]['html'] = $arr[$i]['text'];
+            }
+            $out['results'] = $arr;
+        }
+
+        return $this->asJson($out);
     }
 
     /**
