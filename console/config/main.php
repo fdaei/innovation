@@ -36,6 +36,7 @@ return [
             ],
             'migrationPath' => [
                 '@vendor/yiisoft/yii2/log/migrations',
+                '@app/migrations'
             ]
         ],
     ],
