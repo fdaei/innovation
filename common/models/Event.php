@@ -37,6 +37,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property EventTime[] $times
  *
  * @mixin SoftDeleteBehavior
+ * @mixin BlameableBehavior
+ * @mixin TimestampBehavior
+ *
  */
 class Event extends \yii\db\ActiveRecord
 {
@@ -56,7 +59,7 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief', 'status'], 'required'],
+            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required'],
             [['description', 'address', 'evand_link'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
