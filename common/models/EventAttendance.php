@@ -164,9 +164,9 @@ class EventAttendance extends \yii\db\ActiveRecord
         $_items = [
             'Status' => [
                 self::STATUS_DELETED => Yii::t('app', 'DELETED'),
-                self::STATUS_WAITING => Yii::t('app', 'WAITING'),
-                self::STATUS_CONFIRM => Yii::t('app', 'CONFIRM'),
-                self::STATUS_REJECT => Yii::t('app', 'REJECT'),
+                self::STATUS_WAITING => Yii::t('app', 'Waiting'),
+                self::STATUS_CONFIRM => Yii::t('app', 'Confirm'),
+                self::STATUS_REJECT => Yii::t('app', 'Reject'),
             ],
         ];
         if (isset($code))
