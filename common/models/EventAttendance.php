@@ -221,10 +221,10 @@ class EventAttendance extends \yii\db\ActiveRecord
             'mobile',
             'description',
             'createdAt' => function (self $model) {
-                return Yii::$app->pdate->jdate('Y/m/d', $model->created_at);
+                return Yii::$app->pdate->jdate('Y/m/d H:i', $model->created_at);
             },
             'updatedAt' => function (self $model) {
-                return Yii::$app->pdate->jdate('Y/m/d', $model->updated_at);
+                return Yii::$app->pdate->jdate('Y/m/d  H:i', $model->updated_at);
             },
         ];
     }
