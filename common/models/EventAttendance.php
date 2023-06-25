@@ -53,22 +53,23 @@ class EventAttendance extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['event_id', 'first_name', 'last_name', 'mobile', 'status'], 'required'],
             [['event_id', 'user_id', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['description'], 'string', 'max' => 512],
             [['first_name'], 'string', 'max' => 64],
             [['last_name'], 'string', 'max' => 128],
             [['mobile'], 'string', 'max' => 11],
-            [['event_id', 'first_name', 'last_name', 'mobile', 'status'], 'required'],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
-            [['email'], 'match', 'pattern' => '/^[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/'],
-            [['first_name', 'last_name', 'mobile', 'email'], 'string', 'max' => 255],
+            [['email'], 'email'],
+            [['email'], 'string', 'max' => 255],
+            [['mobile', 'event_id'], 'unique', 'targetAttributes' => ['event_id', 'mobile']],
+            [['user_id', 'event_id'], 'unique', 'targetAttributes' => ['event_id', 'user_id']],
             [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
-
 
     /**
      * {@inheritdoc}

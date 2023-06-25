@@ -58,15 +58,18 @@ class m230621_091359_create_table_event_attendance extends Migration
             ['event_id'],
             '{{%event}}',
             ['id'],
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
+
         $this->addForeignKey(
             'event_attendance_user_ibfk_1',
             '{{%event_attendance}}',
             ['user_id'],
             '{{%user}}',
             ['id'],
-            'CASCADE'
+            'RESTRICT',
+            'RESTRICT'
         );
 
         $this->addForeignKey(
@@ -78,6 +81,7 @@ class m230621_091359_create_table_event_attendance extends Migration
             'RESTRICT',
             'RESTRICT'
         );
+
         $this->addForeignKey(
             'event_attendance_user_ibfk_3',
             '{{%event_attendance}}',
