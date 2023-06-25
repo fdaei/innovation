@@ -49,13 +49,17 @@ class EventTime extends \yii\db\ActiveRecord
             [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
         ];
     }
-
+    public function beforeValidate()
+    {
+        $this->start_at = $this->jalaliToTimestamp($this->start_at, "Y/m/d H:i");
+        $this->end_at = $this->jalaliToTimestamp($this->end_at, "Y/m/d H:i");
+        return parent::beforeValidate();
+    }
     public function validateEndTime($attribute, $params)
     {
         if (isset($this->start_at) && isset($this->end_at)) {
-            $start_at = $this->jalaliToTimestamp($this->start_at, "Y/m/d H:i");
-            $end_at = $this->jalaliToTimestamp($this->end_at, "Y/m/d H:i");
-
+            $start_at = $this->start_at;
+            $end_at = $this->end_at;
             if ($end_at <= $start_at) {
                 $this->addError($attribute, 'End time must be greater than the start time.');
             }
