@@ -9,17 +9,16 @@ class Event extends \common\models\Event
         return [
             'id',
             'title',
-            'title_brief',
+            'titleBrief'=>'title_brief',
             'picture' => function (self $model) {
                 return $model->getUploadUrl('picture');
             },
             'organizerInfo',
             'price',
-            'price_before_discount',
-            'evand_link',
+            'priceBeforeDiscount'=>'price_before_discount',
+            'evandlink'=>'evand_link',
             'description',
             'headlines',
-            'event_times',
             'sponsor' => function (self $model) {
                 return $model->eventSponsorsInfo;
             },
@@ -29,7 +28,7 @@ class Event extends \common\models\Event
             'status' => function (self $model) {
                 $status = $model->status;
                 $expire = true;
-                foreach ($model->times as $time) {
+                foreach ($model->event_times as $time) {
                     $nowDate = time();
                     if ($time->end_at > $nowDate) {
                         $expire = false;
