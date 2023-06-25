@@ -45,7 +45,7 @@ class EventSearch extends Event
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $formName = null)
     {
         $query = Event::find();
 
@@ -58,7 +58,7 @@ class EventSearch extends Event
             ]
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -97,7 +97,7 @@ class EventSearch extends Event
                 $thirtyMinutesAfter = strtotime('+30 minutes');
 
                 $query->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`');
-                $query->where(['BETWEEN', '{{%event_time}}.start_at', date('Y-m-d H:i:s', $thirtyMinutesBefore), date('Y-m-d H:i:s', $thirtyMinutesAfter)]);
+                $query->where(['BETWEEN', '{{%event_time}}.start_at',  $thirtyMinutesBefore,  $thirtyMinutesAfter]);
 
                 break;
             case self::FILTER_PASSED:
@@ -108,6 +108,7 @@ class EventSearch extends Event
         }
         $query->distinct = true;
         $query->all();
+
         return $dataProvider;
     }
 }
