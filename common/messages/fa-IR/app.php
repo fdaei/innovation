@@ -280,7 +280,7 @@ return [
     'Profile Pic' => 'تصویر پروفایل',
     'Consulting Fee' => 'هزینه مشاوره ',
     'Consultation Face To Face' => 'مشاوره حضوری',
-    'Consultation Online' => 'مشاوره انلاین',
+    'Consultation Online' => 'مشاوره آنلاین',
     'Waiting' => 'انتظار تایید',
     'Confirm' => 'تایید شده',
     'Reject' => 'رد شده',
