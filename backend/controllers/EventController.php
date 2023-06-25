@@ -79,7 +79,7 @@ class EventController extends Controller
         $model = $this->findModel($id);
 
         return $this->render('view', [
-            'model' =>$model,
+            'model' => $model,
         ]);
     }
 
@@ -98,6 +98,7 @@ class EventController extends Controller
             Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsEventTime) && $valid;
+
             if ($valid) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
@@ -116,6 +117,7 @@ class EventController extends Controller
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
+                    throw $e;
                 }
             }
         }
@@ -166,7 +168,6 @@ class EventController extends Controller
         ]);
     }
 
-
     public function actionUpdateHeadlines($id)
     {
         $model = $this->findModel($id);
@@ -207,7 +208,7 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelsEventTime = $model->times;
+        $modelsEventTime = $model->eventTimes;
         if ($model->load(Yii::$app->request->post())) {
 
             $oldIDs = ArrayHelper::map($modelsEventTime, 'id', 'id');
@@ -216,8 +217,9 @@ class EventController extends Controller
             $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsEventTime, 'id', 'id')));
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsEventTime) && $valid;
+
             if ($valid) {
-                $transaction = \Yii::$app->db->beginTransaction();
+                $transaction = Yii::$app->db->beginTransaction();
                 try {
                     if ($flag = $model->save(false)) {
                         if (!empty($deletedIDs)) {
@@ -237,6 +239,7 @@ class EventController extends Controller
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
+                    throw $e;
                 }
             }
         }

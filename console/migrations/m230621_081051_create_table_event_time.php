@@ -42,8 +42,6 @@ class m230621_081051_create_table_event_time extends Migration
             ['id'],
             'CASCADE'
         );
-
-
     }
 
     /**

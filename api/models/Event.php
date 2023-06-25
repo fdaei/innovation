@@ -28,7 +28,7 @@ class Event extends \common\models\Event
             'status' => function (self $model) {
                 $status = $model->status;
                 $expire = true;
-                foreach ($model->event_times as $time) {
+                foreach ($model->eventTimes as $time) {
                     $nowDate = time();
                     if ($time->end_at > $nowDate) {
                         $expire = false;

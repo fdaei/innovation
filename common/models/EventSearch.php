@@ -88,26 +88,29 @@ class EventSearch extends Event
 
         switch ($this->filter) {
             case self::FILTER_COMING_SOON:
-                $query = Event::find();
-                $query->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`');
-                $query->where(['>','{{%event_time}}.start_at', time()]);
+                $query
+                    ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`')
+                    ->andWhere(['>', '{{%event_time}}.start_at', time()])
+                ->groupBy(Event::tableName() . '.id');
                 break;
             case self::FILTER_RUNNING:
                 $thirtyMinutesBefore = strtotime('-30 minutes');
                 $thirtyMinutesAfter = strtotime('+30 minutes');
 
-                $query->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`');
-                $query->where(['BETWEEN', '{{%event_time}}.start_at',  $thirtyMinutesBefore,  $thirtyMinutesAfter]);
+                $query
+                    ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`')
+                    ->andWhere(['BETWEEN', '{{%event_time}}.start_at', $thirtyMinutesBefore, $thirtyMinutesAfter])
+                ->groupBy(Event::tableName() . '.id');
 
                 break;
             case self::FILTER_PASSED:
-                $query->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`');
-                $query->where(['<','{{%event_time}}.end_at', time()]);
+                $query
+                    ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`')
+                    ->andWhere(['<', '{{%event_time}}.end_at', time()])
+                ->groupBy(Event::tableName() . '.id');
 
                 break;
         }
-        $query->distinct = true;
-        $query->all();
 
         return $dataProvider;
     }
