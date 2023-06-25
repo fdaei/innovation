@@ -142,6 +142,32 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasMany(EventSponsors::class, ['event_id' => 'id']);
     }
 
+    public static function getOrganizerList()
+    {
+        return EventOrganizer::find()->all();
+    }
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+                self::STATUS_HELD => Yii::t('app', 'HELD'),
+            ],
+            'Filter' => [
+                EventSearch::FILTER_COMING_SOON => Yii::t('app', 'Coming Soon'),
+                EventSearch::FILTER_RUNNING => Yii::t('app', 'Running'),
+                EventSearch::FILTER_PASSED => Yii::t('app', 'Passed'),
+            ]
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
+    }
+
     /**
      * {@inheritdoc}
      * @return EventQuery the active query used by this AR class.
@@ -201,31 +227,5 @@ class Event extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return [];
-    }
-
-    public static function getOrganizerList()
-    {
-        return EventOrganizer::find()->all();
-    }
-
-    public static function itemAlias($type, $code = NULL)
-    {
-        $_items = [
-            'Status' => [
-                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
-                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
-                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
-                self::STATUS_HELD => Yii::t('app', 'HELD'),
-            ],
-            'Filter' => [
-                EventSearch::FILTER_COMING_SOON => Yii::t('app', 'Coming Soon'),
-                EventSearch::FILTER_RUNNING => Yii::t('app', 'Running'),
-                EventSearch::FILTER_PASSED => Yii::t('app', 'Passed'),
-            ]
-        ];
-        if (isset($code))
-            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
-        else
-            return isset($_items[$type]) ? $_items[$type] : false;
     }
 }
