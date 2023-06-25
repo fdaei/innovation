@@ -47,20 +47,14 @@ class EventController extends ActiveController
 
     public function actions()
     {
-        $actions = parent::actions();
-        // disable the "delete" and "create" actions
-        unset($actions['create'], $actions['delete'], $actions['update']);
-        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
-
-        return $actions;
+        return [];
     }
 
-    public function prepareDataProvider($status)
+    public function actionIndex()
     {
         $searchModel = new EventSearch();
-        $searchModel->filter = $status;
 
-        return $searchModel->search(Yii::$app->request->queryParams);
+        return $searchModel->search(Yii::$app->request->queryParams, '');
     }
 
     // need to fix
