@@ -91,21 +91,18 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event;
-        $modelsEvent = [new EventTime];
+        $modelsEventTime = [new EventTime];
 
         if ($model->load(Yii::$app->request->post())) {
-            $modelsEvent = Model::createMultiple(EventTime::class);
-            Model::loadMultiple($modelsEvent, Yii::$app->request->post());
-
+            $modelsEventTime = Model::createMultiple(EventTime::class);
+            Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
             $valid = $model->validate();
-            $valid = Model::validateMultiple($modelsEvent) && $valid;
+            $valid = Model::validateMultiple($modelsEventTime) && $valid;
             if ($valid) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
                     if ($flag = $model->save(false)) {
-                        foreach ($modelsEvent as $event) {
-                            $event->start_at = $this->jalaliToTimestamp($event->start_at, "Y/m/d H:i");
-                            $event->end_at = $this->jalaliToTimestamp($event->end_at, "Y/m/d H:i");
+                        foreach ($modelsEventTime as $event) {
                             $event->event_id = $model->id;
                             if (!($flag = $event->save(false))) {
                                 $transaction->rollBack();
@@ -125,7 +122,7 @@ class EventController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $EventTimes
+            'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $modelsEventTime
         ]);
     }
 
@@ -210,16 +207,15 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $EventTimes = $model->times;
+        $modelsEventTime = $model->times;
         if ($model->load(Yii::$app->request->post())) {
 
-            $oldIDs = ArrayHelper::map($EventTimes, 'id', 'id');
-            $EventTimes = Model::createMultiple(EventTime::class, $EventTimes);
-            Model::loadMultiple($EventTimes, Yii::$app->request->post());
-            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($EventTimes, 'id', 'id')));
+            $oldIDs = ArrayHelper::map($modelsEventTime, 'id', 'id');
+            $modelsEventTime = Model::createMultiple(EventTime::class, $modelsEventTime);
+            Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsEventTime, 'id', 'id')));
             $valid = $model->validate();
-            $valid = Model::validateMultiple($EventTimes) && $valid;
-
+            $valid = Model::validateMultiple($modelsEventTime) && $valid;
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
@@ -227,9 +223,7 @@ class EventController extends Controller
                         if (!empty($deletedIDs)) {
                             EventTime::deleteAll(['id' => $deletedIDs]);
                         }
-                        foreach ($EventTimes as $event) {
-                            $event->start_at = $this->jalaliToTimestamp($event->start_at, "Y/m/d H:i");
-                            $event->end_at = $this->jalaliToTimestamp($event->end_at, "Y/m/d H:i");
+                        foreach ($modelsEventTime as $event) {
                             $event->event_id = $model->id;
                             if (!($flag = $event->save(false))) {
                                 $transaction->rollBack();
@@ -249,7 +243,7 @@ class EventController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $EventTimes
+            'EventTimes' => (empty($modelsEventTime)) ? [new EventTime] : $modelsEventTime
         ]);
     }
 
