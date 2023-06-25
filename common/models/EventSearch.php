@@ -88,27 +88,26 @@ class EventSearch extends Event
 
         switch ($this->filter) {
             case self::FILTER_COMING_SOON:
-                $query = Event::find()
-                    ->joinWith('ince_event_time', true)
-                    ->where(['>','event_time.start_at', time()])
-                    ->all();
+                $query = Event::find();
+                $query->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`');
+                $query->where(['>','{{%event_time}}.start_at', time()]);
                 break;
             case self::FILTER_RUNNING:
                 $thirtyMinutesBefore = strtotime('-30 minutes');
                 $thirtyMinutesAfter = strtotime('+30 minutes');
-                $query = Event::find()
-                    ->joinWith('ince_event_time', true)
-                    ->where(['BETWEEN', 'event_time.start_at', date('Y-m-d H:i:s', $thirtyMinutesBefore), date('Y-m-d H:i:s', $thirtyMinutesAfter)])
-                    ->all();
+
+                $query->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`');
+                $query->where(['BETWEEN', '{{%event_time}}.start_at', date('Y-m-d H:i:s', $thirtyMinutesBefore), date('Y-m-d H:i:s', $thirtyMinutesAfter)]);
+
                 break;
             case self::FILTER_PASSED:
-                $query = Event::find()
-                    ->joinWith('ince_event_time', true)
-                    ->where(['<','event_time.end_at', time()])
-                    ->all();
+                $query->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event_time}}.`id`');
+                $query->where(['<','{{%event_time}}.end_at', time()]);
+
                 break;
         }
-
+        $query->distinct = true;
+        $query->all();
         return $dataProvider;
     }
 }

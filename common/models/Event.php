@@ -34,7 +34,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property User $createdBy
  * @property User $updatedBy
- * @property EventTime[] $times
+ * @property EventTime[] $eventTimes
  *
  * @mixin SoftDeleteBehavior
  * @mixin BlameableBehavior
@@ -127,7 +127,12 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
     }
 
-    public function getTimes()
+    /**
+     * Gets query for [[EventTime]].
+     *
+     * @return \yii\db\ActiveQuery|EventTime
+     */
+    public function getEventTimes(): \yii\db\ActiveQuery|EventTime
     {
         return $this->hasMany(EventTime::class, ['event_id' => 'id']);
     }

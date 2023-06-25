@@ -65,6 +65,15 @@ class EventTime extends \yii\db\ActiveRecord
             }
         }
     }
+    /**
+     * Gets query for [[Event]].
+     *
+     * @return \yii\db\ActiveQuery|\yii\db\ActiveQuery
+     */
+    public function getEvent()
+    {
+        return $this->hasOne(Event::class, ['id' => 'event_id']);
+    }
 
     /**
      * {@inheritdoc}
@@ -89,10 +98,6 @@ class EventTime extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEvent()
-    {
-        return $this->hasOne(Event::class, ['id' => 'event_id']);
-    }
 
     public function behaviors()
     {
