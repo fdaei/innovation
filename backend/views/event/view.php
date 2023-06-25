@@ -22,7 +22,7 @@ use yii\widgets\Pjax;
 /** @var BusinessStat $stat */
 /** @var BusinessesInvestors $investors */
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Businesses'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card material-card">

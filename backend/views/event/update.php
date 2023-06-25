@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\Event $model */
+/** @var EventTime[] $EventTimes */
 
 $this->title = Yii::t('app', 'Update Event: {name}', [
     'name' => $model->title,
