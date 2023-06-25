@@ -63,7 +63,9 @@ class EventAttendance extends \yii\db\ActiveRecord
             [['email'], 'email'],
             [['email'], 'string', 'max' => 255],
             [['mobile', 'event_id'], 'unique', 'targetAttribute' => ['event_id', 'mobile']],
-            [['user_id', 'event_id'], 'unique', 'targetAttribute' => ['event_id', 'user_id']],
+            [['user_id', 'event_id'], 'unique', 'targetAttribute' => ['event_id', 'user_id'], 'when' => function (self $model) {
+                return $model->user_id;
+            }],
             [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],

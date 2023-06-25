@@ -217,4 +217,7 @@ return [
     'Short Description' => 'توضیحات کوتاه',
     'Investor Description' =>'سرمایه گذاران',
     'Success Story' =>'داستان موفقیت',
+    'WAITING' => 'انتظار تایید',
+    'CONFIRM' => 'تایید شده',
+    'REJECT' => 'رد شده',
 ] ?>
