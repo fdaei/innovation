@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\components\Env;
+use common\components\MobitApi;
 use filsh\yii2\oauth2server\models\OauthClients;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -242,9 +243,17 @@ class LoginForm extends Model
     public function sendCode()
     {
         $this->setSessions();
+        $otpCode = rand(1000,9999);
+
+        try {
+            $smsResult = MobitApi::sendSmsLogin($this->number,$otpCode);
+        }catch (\Exception){
+            return false;
+        }
+
         $verify = new UserVerify([
             'type' => UserVerify::TYPE_MOBILE_CONFIRMATION,
-            'unhashedCode' => substr($this->number, -4),
+            'unhashedCode' => $otpCode,
             'phone' => $this->number,
             'fail' => 0,
             'expireTime' => $this->validTime,
