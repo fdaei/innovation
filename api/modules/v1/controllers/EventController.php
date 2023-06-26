@@ -13,6 +13,7 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
+use yii\web\HttpException;
 
 /**
  * CareerApply controller
@@ -49,6 +50,41 @@ class EventController extends ActiveController
     {
         return [];
     }
+    /**
+     * @OA\Info(
+     *   version="1.0.0",
+     *   title="Event API",
+     *   @OA\License(name="MIT"),
+     *   @OA\Attachable()
+     * )
+     */
+
+    /**
+     * @OA\Get(
+     *    path="/event/index",
+     *    tags={"Events"},
+     *    summary="Get events based on the filter",
+     *    description="Returns a list of events based on the filter value",
+     *    operationId="getEvents",
+     *    @OA\Parameter(
+     *        name="filter",
+     *        in="query",
+     *        description="Filter value: 1 for comming soon events, 2 for active events, 3 for past events",
+     *        required=true,
+     *        @OA\Schema(
+     *            type="integer",
+     *            enum={1, 2, 3}
+     *        )
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success",
+     *    ),
+     *    @OA\Response(response=400, description="Bad Request")
+     * )
+     * @throws HttpException
+     */
+
 
     public function actionIndex()
     {
