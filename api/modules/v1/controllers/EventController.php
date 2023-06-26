@@ -47,7 +47,13 @@ class EventController extends ActiveController
 
     public function actions()
     {
-        return [];
+        $actions = parent::actions();
+        // disable the "delete" and "create" actions
+        unset($actions['create'], $actions['delete'], $actions['update']);
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
+        return $actions;
+
     }
 
     public function actionIndex()

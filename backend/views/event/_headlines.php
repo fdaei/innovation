@@ -9,7 +9,7 @@ use yii\helpers\Html;
 ?>
 
 <?php
-$form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
+$form = ActiveForm::begin(['id' => 'event_form_headline']); // Start the ActiveForm
 ?>
 <div class="card card-body">
     <div class='col-md-12 kohl' style="">
@@ -23,7 +23,7 @@ $form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
                 'insertButton' => '.add-item-headline', // css class
                 'deleteButton' => '.remove-item-headline', // css class
                 'model' => $eventHeadlines[0],
-                'formId' => 'event_form',
+                'formId' => 'event_form_headline',
                 'formFields' => [
                     'title',
                     'description'
@@ -46,10 +46,10 @@ $form = ActiveForm::begin(['id' => 'event_form']); // Start the ActiveForm
                             }
                             ?>
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <?= $form->field($modelAddress, "[{$i}]title")->textInput(['maxlength' => true]) ?>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <?= $form->field($modelAddress, "[{$i}]description")->textarea(['maxlength' => true]) ?>
                                 </div>
                             </div><!-- .row -->

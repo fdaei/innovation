@@ -91,6 +91,7 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event;
+        $model->scenario = Event::SCENARIO_CREATE;
         $modelsEventTime = [new EventTime];
 
         if ($model->load(Yii::$app->request->post())) {
@@ -208,6 +209,7 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = Event::SCENARIO_UPDATE;
         $modelsEventTime = $model->eventTimes;
         if ($model->load(Yii::$app->request->post())) {
 
@@ -249,6 +251,48 @@ class EventController extends Controller
             'EventTimes' => (empty($modelsEventTime)) ? [new EventTime] : $modelsEventTime
         ]);
     }
+
+    public function actionUpdateTime($id)
+    {
+
+        $model = $this->findModel($id);
+        $modelsEventTime = $model->eventTimes;
+        if (Yii::$app->request->post()) {
+            $oldIDs = ArrayHelper::map($modelsEventTime, 'id', 'id');
+            $modelsEventTime = Model::createMultiple(EventTime::class, $modelsEventTime);
+            Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsEventTime, 'id', 'id')));
+            $valid = Model::validateMultiple($modelsEventTime);
+            if ($valid) {
+                try {
+                    $flag = true;
+                    if (!empty($deletedIDs)) {
+                        EventTime::deleteAll(['id' => $deletedIDs]);
+                    }
+                    foreach ($modelsEventTime as $event) {
+                        $event->event_id = $model->id;
+                        $flag = $event->save(false) && $flag;
+                    }
+                    if ($flag) {
+                        return $this->asJson([
+                            'success' => true,
+                            'msg' => Yii::t("app", 'Success')
+                        ]);
+                    }
+                } catch (Exception $e) {
+                    return $this->asJson([
+                        'success' => false,
+                        'msg' => Yii::t("app", 'fail to update')
+                    ]);
+
+                }
+            }
+        }
+        return $this->renderAjax('_time', [
+            'EventTimes' => (empty($modelsEventTime)) ? [new EventTime] : $modelsEventTime,
+        ]);
+    }
+
 
     /**
      * Deletes an existing Event model.

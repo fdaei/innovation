@@ -207,6 +207,20 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <div>
                     <h3 class="float-left"> تایم </h3>
+                        <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                            [
+                                'data-pjax' => '0',
+                                'class' => "btn btn-outline-info float-right ",
+                                'data-size' => 'modal-xl',
+                                'data-title' => Yii::t('app', 'update'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#modal-pjax',
+                                'data-url' => Url::to(['/event/update-time','id'=>$model->id]),
+                                'data-handle-form-submit' => 1,
+                                'data-show-loading' => 0,
+                                'data-reload-pjax-container' => 'p-jax-Event-time',
+                                'data-reload-pjax-container-on-show' => 0
+                            ]) ?>
                 </div>
             </div>
             <table class="table table-striped">

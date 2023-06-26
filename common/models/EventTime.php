@@ -144,4 +144,5 @@ class EventTime extends \yii\db\ActiveRecord
             ],
         ];
     }
+
 }

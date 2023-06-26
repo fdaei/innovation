@@ -45,10 +45,13 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Event extends \yii\db\ActiveRecord
 {
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
     const STATUS_HELD = 3;
+    const SCENARIO_UPDATE = 'update';
+    const SCENARIO_CREATE = 'create';
 
     public static function tableName()
     {
@@ -61,17 +64,28 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required'],
+            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['description', 'address', 'evand_link'], 'string'],
             [['headlines', 'event_times', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
             }],
+            ['picture','safe','on' => [self::SCENARIO_UPDATE]],
             ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
+    }
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        $scenarios[self::SCENARIO_CREATE] = ['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'];
+        $scenarios[self::SCENARIO_UPDATE] = ['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'];
+
+        return $scenarios;
     }
 
     /**
@@ -227,8 +241,42 @@ class Event extends \yii\db\ActiveRecord
         ];
     }
 
-    public function extraFields()
+    public function fields()
     {
-        return [];
+        return [
+            'id',
+            'title',
+            'titleBrief'=>'title_brief',
+            'picture' => function (self $model) {
+                return $model->getUploadUrl('picture');
+            },
+            'organizerInfo',
+            'price',
+            'priceBeforeDiscount'=>'price_before_discount',
+            'evandlink'=>'evand_link',
+            'description',
+            'headlines',
+            'sponsor' => function (self $model) {
+                return $model->eventSponsorsInfo;
+            },
+            'address',
+            'longitude',
+            'latitude',
+            'status' => function (self $model) {
+                $status = $model->status;
+                $expire = true;
+                foreach ($model->eventTimes as $time) {
+                    $nowDate = time();
+                    if ($time->end_at > $nowDate) {
+                        $expire = false;
+                    }
+                }
+                $model->status = $expire ? self::STATUS_HELD : $status;
+                return [
+                    'code' => $model->status,
+                    'title' => \api\models\Event::itemAlias('Status', $model->status),
+                ];
+            },
+        ];
     }
 }
