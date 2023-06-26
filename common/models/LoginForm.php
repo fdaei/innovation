@@ -247,7 +247,8 @@ class LoginForm extends Model
 
         try {
             $smsResult = MobitApi::sendSmsLogin($this->number,$otpCode);
-        }catch (\Exception){
+        }catch (\Exception $e) {
+            $this->addError('number', 'خطا در ارسال کد تائید.لطفا مجددا سعی نمایید.');
             return false;
         }
 
