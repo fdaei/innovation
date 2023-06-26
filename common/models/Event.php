@@ -36,6 +36,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property EventTime[] $eventTimes
+ * @property EventSponsors[] $eventSponsors
  *
  * @mixin SoftDeleteBehavior
  * @mixin BlameableBehavior
@@ -52,6 +53,9 @@ class Event extends \yii\db\ActiveRecord
     const STATUS_HELD = 3;
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_CREATE = 'create';
+    /**
+     * @var mixed|null
+     */
 
     public static function tableName()
     {
@@ -246,9 +250,6 @@ class Event extends \yii\db\ActiveRecord
             'evandlink' => 'evand_link',
             'description',
             'headlines',
-            'sponsor' => function (self $model) {
-                return $model->eventSponsorsInfo;
-            },
             'address',
             'longitude',
             'latitude',
@@ -267,6 +268,13 @@ class Event extends \yii\db\ActiveRecord
                     'title' => Event::itemAlias('Status', $model->status),
                 ];
             },
+        ];
+    }
+    public function extraFields()
+    {
+        return [
+            'eventTimes' => 'eventTimes',
+            'sponsor' => 'eventSponsorsInfo',
         ];
     }
 }
