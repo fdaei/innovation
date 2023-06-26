@@ -72,20 +72,10 @@ class Event extends \yii\db\ActiveRecord
             [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
             }],
-            ['picture','safe','on' => [self::SCENARIO_UPDATE]],
-            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+//            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
-    }
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-
-        $scenarios[self::SCENARIO_CREATE] = ['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'];
-        $scenarios[self::SCENARIO_UPDATE] = ['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'];
-
-        return $scenarios;
     }
 
     /**
@@ -227,7 +217,7 @@ class Event extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'picture',
-                'scenarios' => [self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -246,14 +236,14 @@ class Event extends \yii\db\ActiveRecord
         return [
             'id',
             'title',
-            'titleBrief'=>'title_brief',
+            'titleBrief' => 'title_brief',
             'picture' => function (self $model) {
                 return $model->getUploadUrl('picture');
             },
             'organizerInfo',
             'price',
-            'priceBeforeDiscount'=>'price_before_discount',
-            'evandlink'=>'evand_link',
+            'priceBeforeDiscount' => 'price_before_discount',
+            'evandlink' => 'evand_link',
             'description',
             'headlines',
             'sponsor' => function (self $model) {
@@ -274,7 +264,7 @@ class Event extends \yii\db\ActiveRecord
                 $model->status = $expire ? self::STATUS_HELD : $status;
                 return [
                     'code' => $model->status,
-                    'title' => \api\models\Event::itemAlias('Status', $model->status),
+                    'title' => Event::itemAlias('Status', $model->status),
                 ];
             },
         ];

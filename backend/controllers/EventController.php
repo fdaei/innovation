@@ -209,7 +209,7 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = Event::SCENARIO_UPDATE;
+
         $modelsEventTime = $model->eventTimes;
         if ($model->load(Yii::$app->request->post())) {
 

@@ -2,7 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
-use api\models\Event;
+use common\models\Event;
 use common\models\EventOrganizer;
 use common\models\EventSearch;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
@@ -19,7 +19,7 @@ use yii\rest\ActiveController;
  */
 class EventController extends ActiveController
 {
-    public $modelClass = "api\models\Event";
+    public $modelClass = "common\models\Event";
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -47,13 +47,7 @@ class EventController extends ActiveController
 
     public function actions()
     {
-        $actions = parent::actions();
-        // disable the "delete" and "create" actions
-        unset($actions['create'], $actions['delete'], $actions['update']);
-        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
-
-        return $actions;
-
+        return [];
     }
 
     public function actionIndex()
