@@ -158,6 +158,12 @@ $menu_items = [
         'url' => ['/log/']
     ],
     [
+        'group' => 'swagger',
+        'label' => Yii::t('app', 'swagger'),
+        'icon' => 'fas fa-check-square',
+        'url' => ['/swagger']
+    ],
+    [
         'group' => 'Settings',
         'label' => 'تنظیمات',
         'icon' => 'fas fa-cogs',
