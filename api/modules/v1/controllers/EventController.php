@@ -69,11 +69,20 @@ class EventController extends ActiveController
      *    @OA\Parameter(
      *        name="filter",
      *        in="query",
-     *        description="Filter value: 1 for comming soon events, 2 for active events, 3 for past events",
+     *        description="Filter value: 1 for upcoming events, 2 for active events, 3 for past events",
      *        required=true,
      *        @OA\Schema(
      *            type="integer",
      *            enum={1, 2, 3}
+     *        )
+     *    ),
+     *    @OA\Parameter(
+     *        name="expand",
+     *        in="query",
+     *        description="Expands: sponsor, eventTimes",
+     *        required=false,
+     *        @OA\Schema(
+     *            type="string"
      *        )
      *    ),
      *    @OA\Response(
@@ -84,6 +93,7 @@ class EventController extends ActiveController
      * )
      * @throws HttpException
      */
+
 
 
     public function actionIndex()
