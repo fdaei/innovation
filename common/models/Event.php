@@ -52,6 +52,8 @@ class Event extends \yii\db\ActiveRecord
     const STATUS_HELD = 3;
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_CREATE = 'create';
+    public $tag_ids;
+
     /**
      * @var mixed|null
      */
@@ -203,6 +205,10 @@ class Event extends \yii\db\ActiveRecord
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
+            'taggable' => [
+                'class' => Taggable::class,
+                'classAttribute' => self::class,
+            ],
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [
@@ -232,6 +238,17 @@ class Event extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+    public function getTagIds()
+    {
+        return $this->tag_ids;
+    }
+
+    public function setTagIds($tagIds)
+    {
+        $this->tag_ids = $tagIds;
+    }
+
 
     public function fields()
     {
@@ -265,6 +282,9 @@ class Event extends \yii\db\ActiveRecord
                     'code' => $model->status,
                     'title' => Event::itemAlias('Status', $model->status),
                 ];
+            },
+            'tagIds' => function (self $model) {
+                return $model->tagIds;
             },
         ];
     }
