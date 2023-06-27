@@ -21,7 +21,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $description
  * @property string $headlines
  * @property string $evand_link
- * @property string $event_times
  * @property string $address
  * @property float $longitude
  * @property float $latitude
@@ -40,13 +39,13 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @mixin SoftDeleteBehavior
  * @mixin BlameableBehavior
+ * @mixin CdnUploadImageBehavior
  * @mixin TimestampBehavior
  * @mixin Taggable
  *
  */
 class Event extends \yii\db\ActiveRecord
 {
-
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
@@ -71,12 +70,12 @@ class Event extends \yii\db\ActiveRecord
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['description', 'address', 'evand_link'], 'string'],
-            [['headlines', 'event_times', 'sponsors'], 'safe'],
+            [['headlines', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
             }],
-//            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -95,7 +94,6 @@ class Event extends \yii\db\ActiveRecord
             'price_before_discount' => Yii::t('app', 'Price Before Discount'),
             'description' => Yii::t('app', 'Description'),
             'headlines' => Yii::t('app', 'Headlines'),
-            'event_times' => Yii::t('app', 'Event Times'),
             'address' => Yii::t('app', 'Address'),
             'longitude' => Yii::t('app', 'Longitude'),
             'latitude' => Yii::t('app', 'Latitude'),
@@ -247,7 +245,7 @@ class Event extends \yii\db\ActiveRecord
             'organizerInfo',
             'price',
             'priceBeforeDiscount' => 'price_before_discount',
-            'evandlink' => 'evand_link',
+            'evandLink' => 'evand_link',
             'description',
             'headlines',
             'address',
@@ -273,8 +271,8 @@ class Event extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return [
-            'eventTimes' => 'eventTimes',
-            'sponsor' => 'eventSponsorsInfo',
+            'eventTimes',
+            'sponsors' => 'eventSponsorsInfo',
         ];
     }
 }

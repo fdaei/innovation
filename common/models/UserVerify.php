@@ -126,7 +126,6 @@ class UserVerify extends \yii\db\ActiveRecord
         return $this->expireTime ?: self::EXPIRATION_TIME;
     }
 
-
     /**
      * @return bool Whether token has expired.
      */
@@ -161,7 +160,7 @@ class UserVerify extends \yii\db\ActiveRecord
             Yii::$app->session->set('hashCode', $this->unhashedCode);
             $this->setAttribute('created', time());
             $this->setAttribute('code', Yii::$app->security->generatePasswordHash($this->unhashedCode));
-            $this->ip = YII_ENV == 'test' ? '8558949449' : Yii::$app->request->getUserIP();
+            $this->ip = Yii::$app->request->getUserIP();
             return true;
         }
         return false;

@@ -24,7 +24,7 @@ class EventSearch extends Event
         return [
             [['id', 'updated_at', 'updated_by', 'created_at', 'created_by', 'deleted_at', 'filter'], 'integer'],
             ['filter', 'in', 'range' => array_keys(self::itemAlias('Filter'))],
-            [['title', 'description', 'headlines', 'event_times', 'address', 'sponsors'], 'safe'],
+            [['title', 'description', 'headlines', 'address', 'sponsors'], 'safe'],
             [['price', 'price_before_discount', 'longitude', 'latitude'], 'number'],
         ];
     }
@@ -83,7 +83,6 @@ class EventSearch extends Event
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'headlines', $this->headlines])
-            ->andFilterWhere(['like', 'event_times', $this->event_times])
             ->andFilterWhere(['like', 'address', $this->address]);
 
         switch ($this->filter) {
@@ -97,7 +96,7 @@ class EventSearch extends Event
                 $query
                     ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event}}.`id`')
                     ->andWhere(['<=', '{{%event_time}}.start_at', time()])
-                    ->andWhere(['>=', '{{%event_time}}.end_at', time()])
+                    ->andWhere(['>', '{{%event_time}}.end_at', time()])
                     ->groupBy(Event::tableName() . '.id');
 
                 break;
@@ -109,7 +108,7 @@ class EventSearch extends Event
 
                 break;
         }
-//        dd($query->createCommand()->rawSql);
+
         return $dataProvider;
     }
 }

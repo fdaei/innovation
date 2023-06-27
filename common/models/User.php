@@ -2,10 +2,8 @@
 
 namespace common\models;
 
-use filsh\yii2\oauth2server\models\OauthAccessTokens;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -39,7 +37,7 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     /**
      * @var mixed|null
      */
-    public  $password;
+    public $password;
     /**
      * @var mixed|null
      */
@@ -93,6 +91,7 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -218,10 +217,12 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
+
     public function getPassword(): string
     {
         return '';
     }
+
     /**
      * Generates "remember me" authentication key
      */
@@ -260,16 +261,20 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
      * @param string $verifyCode verify code to validate
      * @return bool if verify code provided is valid for current user
      */
-    public function validateVerifyCode($verifyCode,$username)
+    public function validateVerifyCode($verifyCode, $username)
     {
         $valid = false;
         $mobileToken = UserVerify::find()
-            ->Where([
+            ->andWhere([
                 'phone' => $username,
-            ])->one();
+                'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
+            ])
+            ->orderBy(['id' => SORT_DESC])
+            ->limit(1)
+            ->one();
 
         if ($mobileToken instanceof UserVerify) {
-            $valid = ( !$mobileToken->isExpired &&  Yii::$app->security->validatePassword($verifyCode, $mobileToken->code));
+            $valid = (!$mobileToken->isExpired && Yii::$app->security->validatePassword($verifyCode, $mobileToken->code));
             $mobileToken->delete();
         }
         return $valid;
@@ -284,11 +289,12 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
         if (empty($user)) {
             return false;
         }
+
         if (($password = json_decode($password, true))) {
             $type = $password['type'] ?? null;
             $value = $password['value'] ?? 'null';
             if ($type == 'verifyCode') {
-                return $user->validateVerifyCode($value,$username);
+                return $user->validateVerifyCode($value, $username);
             } elseif ($type == 'authKey') {
                 return $user->validateAuthKey($value);
             } else {
@@ -306,11 +312,12 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     public function getUserDetails($username)
     {
         $user = self::findByUsername($username);
-       return ['user_id' => $user->id];
+        return ['user_id' => $user->id];
     }
+
     public function fields()
     {
-        return['username'];
+        return ['username'];
     }
 
 }
