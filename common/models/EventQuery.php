@@ -2,18 +2,17 @@
 
 namespace common\models;
 
+use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
+
 /**
  * This is the ActiveQuery class for [[Event]].
  *
  * @see Event
+ *
+ * @mixin SoftDeleteQueryBehavior
  */
 class EventQuery extends \yii\db\ActiveQuery
 {
-    public function active()
-    {
-        return $this->where(['deleted_at'=> 0]);
-    }
-
     /**
      * {@inheritdoc}
      * @return Event[]|array
@@ -30,5 +29,14 @@ class EventQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'softDelete' => [
+                'class' => SoftDeleteQueryBehavior::class,
+            ],
+        ];
     }
 }

@@ -28,8 +28,6 @@ AdminAsset::register($this);
     <link rel="shortcut icon" href="<?= Yii::getAlias('@web') . '/img/favicon-back.png'; ?>"/>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-<!--    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">-->
-<!--    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>-->
 </head>
 <body>
 <?php $this->beginBody(); ?>
@@ -211,9 +209,9 @@ AdminAsset::register($this);
     <?= $this->render('_customizer') ?>
     <?= $this->render('_footer') ?>
 </div>
-
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
+
 

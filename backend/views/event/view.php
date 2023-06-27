@@ -1,28 +1,16 @@
 <?php
 
-use common\models\Business;
-use common\models\BusinessesInvestors;
-use common\models\BusinessesStory;
-use common\models\BusinessGallery;
-use common\models\BusinessMember;
-use common\models\BusinessStat;
-use common\widgets\grid\GridView;
+use common\models\Event;
 use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
-use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 
 /** @var View $this */
-/** @var Business $model */
-/** @var BusinessesStory $story */
-/** @var BusinessGallery $gallery */
-/** @var BusinessMember $$headlines */
-/** @var BusinessStat $stat */
-/** @var BusinessesInvestors $investors */
+/** @var Event $model */
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Businesses'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card material-card">
@@ -58,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <div class="col-2">
-                    <img  style="height: 300px;width: 300px;" src="<?= $model->getUploadUrl('picture') ?>">
+                    <img style="height: 300px;width: 300px;" src="<?= $model->getUploadUrl('picture') ?>">
                 </div>
                 <div class="col-12">
                     <label for="name"> <?= Yii::t('app', 'description') ?>:</label>
@@ -66,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-            <?= Html::a(Yii::t('app', 'update'), ['/event/update','id'=>$model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'update'), ['/event/update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('Sponsors'); ?>
         <?php Pjax::begin(['id' => 'p-jax-Event-sponsors', 'enablePushState' => false]); ?>
@@ -81,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'data-title' => Yii::t('app', 'create'),
                         'data-toggle' => 'modal',
                         'data-target' => '#modal-pjax',
-                        'data-url' => Url::to(['/event-sponsors/create','id'=>$model->id]),
+                        'data-url' => Url::to(['/event-sponsors/create', 'id' => $model->id]),
                         'data-handle-form-submit' => 1,
                         'data-show-loading' => 0,
                         'data-reload-pjax-container' => 'p-jax-Event-sponsors',
@@ -115,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                         <div class="col-2 m-2">
-                            <img style="width: 100px; height: 100px;" src="<?= $item->getUploadUrl('picture')?>" >
+                            <img style="width: 100px; height: 100px;" src="<?= $item->getUploadUrl('picture') ?>">
                         </div>
                         <div class="col-12">
                             <div class="card-footer m-0">
@@ -125,12 +113,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'aria-label' => Yii::t('yii', 'delete'),
                                         'data-reload-pjax-container' => 'p-jax-Event-sponsors',
                                         'data-pjax' => '0',
-                                        'data-url' => Url::to(['/event-sponsors/delete','id'=>$item->id, 'model_id'=>$model->id]),
+                                        'data-url' => Url::to(['/event-sponsors/delete', 'id' => $item->id, 'model_id' => $model->id]),
                                         'class' => " p-jax-btn",
                                         'data-title' => Yii::t('yii', 'delete'),
                                         'data-toggle' => 'tooltip',
                                         'data-method' => ''
-                                    ]);?>
+                                    ]); ?>
                                 <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                                     [
                                         'data-pjax' => '0',
@@ -139,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'data-title' => Yii::t('app', 'update'),
                                         'data-toggle' => 'modal',
                                         'data-target' => '#modal-pjax',
-                                        'data-url' => Url::to(['/event-sponsors/update','id'=>$item->id]),
+                                        'data-url' => Url::to(['/event-sponsors/update', 'id' => $item->id]),
                                         'data-handle-form-submit' => 1,
                                         'data-show-loading' => 0,
                                         'data-reload-pjax-container' => 'p-jax-Event-sponsors',
@@ -167,13 +155,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/event/create-headlines','id'=>$model->id]),
+                            'data-url' => Url::to(['/event/create-headlines', 'id' => $model->id]),
                             'data-handle-form-submit' => 1,
                             'data-show-loading' => 0,
                             'data-reload-pjax-container' => 'p-jax-mentor-records',
                             'data-reload-pjax-container-on-show' => 0
                         ]) ?>
-                    <?php if($model->headlines): ?>
+                    <?php if ($model->headlines): ?>
                         <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                             [
                                 'data-pjax' => '0',
@@ -182,7 +170,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'data-title' => Yii::t('app', 'update'),
                                 'data-toggle' => 'modal',
                                 'data-target' => '#modal-pjax',
-                                'data-url' => Url::to(['/event/update-headlines','id'=>$model->id]),
+                                'data-url' => Url::to(['/event/update-headlines', 'id' => $model->id]),
                                 'data-handle-form-submit' => 1,
                                 'data-show-loading' => 0,
                                 'data-reload-pjax-container' => 'p-jax-mentor-records',
@@ -195,12 +183,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th><?= Yii::t('app', 'title')?> :</th>
-                    <th><?= Yii::t('app', 'description')?> :</th>
+                    <th><?= Yii::t('app', 'title') ?> :</th>
+                    <th><?= Yii::t('app', 'description') ?> :</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php if($model->headlines): ?>
+                <?php if ($model->headlines): ?>
                     <?php foreach ($model->headlines as $i => $item): ?>
                         <td><?= $i ?></td>
                         <td><?= $item['title'] ?></td>
@@ -219,21 +207,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <div>
                     <h3 class="float-left"> تایم </h3>
-                    <?= Html::a(Yii::t('app', 'create'), "javascript:void(0)",
-                        [
-                            'data-pjax' => '0',
-                            'class' => "btn btn-outline-success float-right mx-1",
-                            'data-size' => 'modal-xl',
-                            'data-title' => Yii::t('app', 'create'),
-                            'data-toggle' => 'modal',
-                            'data-target' => '#modal-pjax',
-                            'data-url' => Url::to(['/event/create-time','id'=>$model->id]),
-                            'data-handle-form-submit' => 1,
-                            'data-show-loading' => 0,
-                            'data-reload-pjax-container' => 'p-jax-Event-headlines',
-                            'data-reload-pjax-container-on-show' => 0
-                        ]) ?>
-                    <?php if($model->headlines): ?>
                         <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                             [
                                 'data-pjax' => '0',
@@ -245,27 +218,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'data-url' => Url::to(['/event/update-time','id'=>$model->id]),
                                 'data-handle-form-submit' => 1,
                                 'data-show-loading' => 0,
-                                'data-reload-pjax-container' => 'p-jax-Event-headlines',
+                                'data-reload-pjax-container' => 'p-jax-Event-time',
                                 'data-reload-pjax-container-on-show' => 0
                             ]) ?>
-                    <?php endif; ?>
                 </div>
             </div>
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th><?= Yii::t('app', 'time start')?> :</th>
-                    <th><?= Yii::t('app', 'time end')?> :</th>
+                    <th><?= Yii::t('app', 'time start') ?> :</th>
+                    <th><?= Yii::t('app', 'time end') ?> :</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                <?php if($model->event_times): ?>
-                    <?php foreach ($model->event_times as $i => $item): ?>
-                    <tr>
-                        <td><?= $item["start"] ?></td>
-                        <td><?= $item["end"] ?></td>
-                    </tr>
+                <?php if ($model->eventTimes): ?>
+                    <?php foreach ($model->eventTimes as $i => $eventTime): ?>
+                        <tr>
+                            <td><?= yii::$app->pdate->jdate("Y/m/d H:i", $eventTime->start_at) ?></td>
+                            <td><?= yii::$app->pdate->jdate("Y/m/d H:i", $eventTime->end_at) ?></td>
+                        </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
                 </tbody>
@@ -293,7 +265,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => Yii::t('app', 'time'),
                     'content' => $this->blocks['time'],
                 ],
-
             ]
         ]); ?>
     </div>

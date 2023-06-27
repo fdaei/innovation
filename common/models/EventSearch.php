@@ -4,20 +4,26 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Event;
 
 /**
  * EventSearch represents the model behind the search form of `common\models\Event`.
  */
 class EventSearch extends Event
 {
+    const FILTER_COMING_SOON = 1;
+    const FILTER_RUNNING = 2;
+    const FILTER_PASSED = 3;
+
+    public $filter;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'updated_at', 'updated_by', 'created_at', 'created_by', 'deleted_at'], 'integer'],
+            [['id', 'updated_at', 'updated_by', 'created_at', 'created_by', 'deleted_at', 'filter'], 'integer'],
+            ['filter', 'in', 'range' => array_keys(self::itemAlias('Filter'))],
             [['title', 'description', 'headlines', 'event_times', 'address', 'sponsors'], 'safe'],
             [['price', 'price_before_discount', 'longitude', 'latitude'], 'number'],
         ];
@@ -39,7 +45,7 @@ class EventSearch extends Event
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $formName = null)
     {
         $query = Event::find();
 
@@ -47,13 +53,16 @@ class EventSearch extends Event
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC]
+            ]
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -76,6 +85,30 @@ class EventSearch extends Event
             ->andFilterWhere(['like', 'headlines', $this->headlines])
             ->andFilterWhere(['like', 'event_times', $this->event_times])
             ->andFilterWhere(['like', 'address', $this->address]);
+
+        switch ($this->filter) {
+            case self::FILTER_COMING_SOON:
+                $query
+                    ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event}}.`id`')
+                    ->andWhere(['>', '{{%event_time}}.start_at', time()])
+                    ->groupBy(Event::tableName() . '.id');
+                break;
+            case self::FILTER_RUNNING:
+                $query
+                    ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event}}.`id`')
+                    ->andWhere(['<=', '{{%event_time}}.start_at', time()])
+                    ->andWhere(['>', '{{%event_time}}.end_at', time()])
+                    ->groupBy(Event::tableName() . '.id');
+
+                break;
+            case self::FILTER_PASSED:
+                $query
+                    ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event}}.`id`')
+                    ->andWhere(['<', '{{%event_time}}.end_at', time()])
+                    ->groupBy(Event::tableName() . '.id');
+
+                break;
+        }
 
         return $dataProvider;
     }
