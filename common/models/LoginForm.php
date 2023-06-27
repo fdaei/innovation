@@ -218,7 +218,7 @@ class LoginForm extends Model
                 ->andWhere([
                     'phone' => $this->number,
                     'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
-                ])->orderBy(['id'=>SORT_DESC])->one();
+                ])->orderBy(['id' => SORT_DESC])->one();
             if ($model === null || !Yii::$app->security->validatePassword($this->code, $model->code)) {
                 $this->addError($attribute, 'کد وارد شده اشتباه است.');
             } else {
@@ -243,17 +243,18 @@ class LoginForm extends Model
     public function sendCode()
     {
         $this->setSessions();
-        $otpCode = rand(1000,9999);
+        $otpCode = rand(1000, 9999);
 
         try {
-            $smsResult = MobitApi::sendSmsLogin($this->number,$otpCode);
-            if ($smsResult !== true){
+            $smsResult = MobitApi::sendSmsLogin($this->number, $otpCode);
+            if ($smsResult !== true) {
                 $apiErrorMessage = json_decode($smsResult->content);
                 $this->addError('number', $apiErrorMessage->data->message);
                 return false;
             }
-        }catch (\Exception $e) {
-            $this->addError('number', 'خطا در ارسال کد تائید.لطفا مجددا سعی نمایید.');
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage() . PHP_EOL . $e->getTraceAsString(), 'Exception/LoginSendCode');
+            $this->addError('number', 'خطا در ارسال کد تائید. لطفا مجددا سعی نمایید.');
             return false;
         }
 
@@ -264,7 +265,8 @@ class LoginForm extends Model
             'fail' => 0,
             'expireTime' => $this->validTime,
         ]);
-        if (($result = $verify->save()) === true) {
+
+        if ($verify->save()) {
             $this->time_send_code = $verify->created;
             $this->remind_valid_time = $verify->getRemindValidTime();
             return true;
@@ -539,11 +541,11 @@ class LoginForm extends Model
 
     public function setNumber(string $string)
     {
-        $this->number=$string;
+        $this->number = $string;
     }
 
     public function setCode(string $string)
     {
-        $this->code=$string;
+        $this->code = $string;
     }
 }
