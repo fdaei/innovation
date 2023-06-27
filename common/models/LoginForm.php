@@ -218,7 +218,9 @@ class LoginForm extends Model
                 ->andWhere([
                     'phone' => $this->number,
                     'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
-                ])->orderBy(['id' => SORT_DESC])->one();
+                ])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
             if ($model === null || !Yii::$app->security->validatePassword($this->code, $model->code)) {
                 $this->addError($attribute, 'کد وارد شده اشتباه است.');
             } else {
@@ -248,8 +250,7 @@ class LoginForm extends Model
         try {
             $smsResult = MobitApi::sendSmsLogin($this->number, $otpCode);
             if ($smsResult !== true) {
-                $apiErrorMessage = json_decode($smsResult->content);
-                $this->addError('number', $apiErrorMessage->data->message);
+                $this->addError('number', $smsResult);
                 return false;
             }
         } catch (\Exception $e) {

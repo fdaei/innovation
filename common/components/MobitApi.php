@@ -27,6 +27,7 @@ class MobitApi extends Component
         if ($response->isOk) {
             return true;
         }
-        return $response;
+        $responseMessage = json_decode($response->content);
+        return $responseMessage->data->message;
     }
 }
