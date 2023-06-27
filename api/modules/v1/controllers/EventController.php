@@ -39,7 +39,7 @@ class EventController extends ActiveController
                     ['class' => HttpBearerAuth::class],
                     ['class' => QueryParamAuth::class, 'tokenParam' => 'accessToken'],
                 ],
-                'optional' => ['index', 'last-event', 'best-organizer', 'similar-event']
+                'optional' => ['index', 'view', 'best-organizer', 'similar-event']
             ],
             'exceptionFilter' => [
                 'class' => ErrorToExceptionFilter::class
