@@ -74,7 +74,6 @@ class SecurityController extends ActiveController
      */
     public function actionValidateLogin()
     {
-
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_VALIDATE_CODE_API]);
         $model->load(Yii::$app->request->post(), '');
         if ($model->validate()) {
