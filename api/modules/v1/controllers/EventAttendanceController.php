@@ -101,7 +101,7 @@ class EventAttendanceController extends ActiveController
      *                     @OA\Property(
      *                         property="id",
      *                         type="integer",
-     *                         description="id of mentors-advice-requests"
+     *                         description="id"
      *                     ),
      *                      @OA\Property(
      *                         property="eventId",
@@ -145,7 +145,7 @@ class EventAttendanceController extends ActiveController
      *          name="event_id",
      *          in="query",
      *          required=true,
-     *          description="The event ID specific to this event",
+     *          description="The event ID",
      *          @OA\Schema(
      *              type="string"
      *          ),
@@ -177,7 +177,6 @@ class EventAttendanceController extends ActiveController
      *              type="string"
      *          ),
      *    ),
-
      *    @OA\Parameter(
      *          name="email",
      *          in="query",
