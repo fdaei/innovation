@@ -50,6 +50,7 @@ class EventController extends ActiveController
     {
         return [];
     }
+
     /**
      * @OA\Info(
      *   version="1.0.0",
