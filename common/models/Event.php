@@ -40,6 +40,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @mixin SoftDeleteBehavior
  * @mixin BlameableBehavior
+ * @mixin CdnUploadImageBehavior
  * @mixin TimestampBehavior
  * @mixin Taggable
  *
@@ -76,7 +77,7 @@ class Event extends \yii\db\ActiveRecord
             [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
             }],
-//            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -247,7 +248,7 @@ class Event extends \yii\db\ActiveRecord
             'organizerInfo',
             'price',
             'priceBeforeDiscount' => 'price_before_discount',
-            'evandlink' => 'evand_link',
+            'evandLink' => 'evand_link',
             'description',
             'headlines',
             'address',
@@ -273,8 +274,8 @@ class Event extends \yii\db\ActiveRecord
     public function extraFields()
     {
         return [
-            'eventTimes' => 'eventTimes',
-            'sponsor' => 'eventSponsorsInfo',
+            'eventTimes',
+            'sponsors' => 'eventSponsorsInfo',
         ];
     }
 }

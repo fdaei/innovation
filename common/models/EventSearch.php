@@ -97,7 +97,7 @@ class EventSearch extends Event
                 $query
                     ->innerJoin('{{%event_time}}', '{{%event_time}}.`event_id` = {{%event}}.`id`')
                     ->andWhere(['<=', '{{%event_time}}.start_at', time()])
-                    ->andWhere(['>=', '{{%event_time}}.end_at', time()])
+                    ->andWhere(['>', '{{%event_time}}.end_at', time()])
                     ->groupBy(Event::tableName() . '.id');
 
                 break;
@@ -109,7 +109,7 @@ class EventSearch extends Event
 
                 break;
         }
-//        dd($query->createCommand()->rawSql);
+
         return $dataProvider;
     }
 }

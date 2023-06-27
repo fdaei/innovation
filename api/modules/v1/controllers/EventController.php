@@ -38,7 +38,7 @@ class EventController extends ActiveController
                     ['class' => HttpBearerAuth::class],
                     ['class' => QueryParamAuth::class, 'tokenParam' => 'accessToken'],
                 ],
-                'optional' => ['index', 'last-event', 'best-organizer', 'similar-event']
+                'optional' => ['index', 'best-organizer', 'similar-event']
             ],
             'exceptionFilter' => [
                 'class' => ErrorToExceptionFilter::class
@@ -79,7 +79,7 @@ class EventController extends ActiveController
      *    @OA\Parameter(
      *        name="expand",
      *        in="query",
-     *        description="Expands: sponsor, eventTimes",
+     *        description="Expands: sponsors, eventTimes",
      *        required=false,
      *        @OA\Schema(
      *            type="string"
@@ -93,9 +93,6 @@ class EventController extends ActiveController
      * )
      * @throws HttpException
      */
-
-
-
     public function actionIndex()
     {
         $searchModel = new EventSearch();
