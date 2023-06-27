@@ -265,9 +265,13 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     {
         $valid = false;
         $mobileToken = UserVerify::find()
-            ->Where([
+            ->andWhere([
                 'phone' => $username,
-            ])->one();
+                'type' => UserVerify::TYPE_MOBILE_CONFIRMATION
+            ])
+            ->orderBy(['id' => SORT_DESC])
+            ->limit(1)
+            ->one();
 
         if ($mobileToken instanceof UserVerify) {
             $valid = (!$mobileToken->isExpired && Yii::$app->security->validatePassword($verifyCode, $mobileToken->code));
