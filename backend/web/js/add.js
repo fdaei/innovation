@@ -22,11 +22,6 @@ function removeHeadlines() {
     }
 }
 
-function AddDatepicker() {
-    var childs = document.getElementsByClassName("someInput");
-    var number=childs.length+1;
-    $('<input type="text" id="event-event_times" class="someInput form-control my-2" name="Event[event_times]['+number+']" maxlength="255" aria-required="true" aria-invalid="true" data-jdp>').appendTo('#number-datepicker');
-}
 function removeDatepicker() {
     var childs = document.getElementsByClassName("someInput");
     if(childs.length > 0) {

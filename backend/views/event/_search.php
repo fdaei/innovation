@@ -27,9 +27,6 @@ use yii\bootstrap4\ActiveForm;
         <div class="col-md-3">
             <?= $form->field($model, 'headlines') ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'event_times') ?>
-        </div>
     </div>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary ']) ?>

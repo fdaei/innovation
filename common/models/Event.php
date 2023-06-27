@@ -21,7 +21,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $description
  * @property string $headlines
  * @property string $evand_link
- * @property string $event_times
  * @property string $address
  * @property float $longitude
  * @property float $latitude
@@ -71,7 +70,7 @@ class Event extends \yii\db\ActiveRecord
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['description', 'address', 'evand_link'], 'string'],
-            [['headlines', 'event_times', 'sponsors'], 'safe'],
+            [['headlines', 'sponsors'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
@@ -95,7 +94,6 @@ class Event extends \yii\db\ActiveRecord
             'price_before_discount' => Yii::t('app', 'Price Before Discount'),
             'description' => Yii::t('app', 'Description'),
             'headlines' => Yii::t('app', 'Headlines'),
-            'event_times' => Yii::t('app', 'Event Times'),
             'address' => Yii::t('app', 'Address'),
             'longitude' => Yii::t('app', 'Longitude'),
             'latitude' => Yii::t('app', 'Latitude'),
