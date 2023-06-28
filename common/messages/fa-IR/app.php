@@ -312,4 +312,5 @@ return [
     'header picture mobile' => 'تصویر موبایل',
     'profile picture' => 'تصویر پروفایل',
     'Download the File' => 'دانلود فایل',
+    'Freelancer Categrory' => 'دسته‌بندی فریلنسر‌ها',
 ] ?>

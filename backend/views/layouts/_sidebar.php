@@ -134,7 +134,22 @@ $menu_items = [
         'group' => 'freelancer',
         'label' => Yii::t('app', 'Freelancer'),
         'icon' => 'fas fa-users',
-        'url' => ['/freelancer/']
+        'level' => "first-level",
+        'encode' => false,
+        'items' => [
+            [
+                'group' => 'freelancer',
+                'label' => Yii::t('app', 'Freelancers'),
+                'icon' => 'fas fa-users',
+                'url' => ['/freelancer/'],
+            ],
+            [
+                'group' => 'freelancer',
+                'label' => Yii::t('app', 'Freelancer Categrory'),
+                'icon' => 'fas fa-check-square',
+                'url' => ['/freelancer-category/']
+            ],
+        ]
     ],
     [
         'group' => 'hitech',
