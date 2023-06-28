@@ -80,7 +80,9 @@ class FreelancerController extends Controller
         $model = new Freelancer();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            $model->load($this->request->post());
+            $save = $model->save();
+            if ($save) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -95,7 +97,7 @@ class FreelancerController extends Controller
     /**
      * Updates an existing Freelancer model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ایدی
+     * @param int $id
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */

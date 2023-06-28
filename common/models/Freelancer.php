@@ -42,6 +42,17 @@ class Freelancer extends \yii\db\ActiveRecord
     const STATUS_PENDING = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
+
+    const SEX_MAN = 1;
+    const SEX_WOMAN = 2;
+
+    const MARTIAL_STATUS_SINGEL = 1;
+    const MARTIAL_STATUS_MARRIED = 2;
+
+    const MILITARY_STATUS_DONE = 1;
+    const MILITARY_STATUS_INCLUDED = 2;
+    const MILITARY_STATUS_EXEMPT = 3;
+
     /**
      * {@inheritdoc}
      */
@@ -95,6 +106,10 @@ class Freelancer extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
+            'header_picture_desktop' => Yii::t('app', 'header picture desktop'),
+            'header_picture_mobile' => Yii::t('app', 'header picture mobile'),
+            'freelancer_picture' => Yii::t('app', 'profile picture'),
+            'freelancer_description' => Yii::t('app', 'description'),
         ];
     }
 
@@ -110,6 +125,13 @@ class Freelancer extends \yii\db\ActiveRecord
     public function getFreelancerCategories()
     {
         return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Freelancer::className()]);
+    }
+
+    public function getProvince(){
+        return Province::findOne(['id' => $this->province]);
+    }
+    public function getCity(){
+        return City::findOne(['id' => $this->city]);
     }
 
     public function behaviors()
@@ -198,6 +220,19 @@ class Freelancer extends \yii\db\ActiveRecord
                 self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
                 self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
                 self::STATUS_PENDING => Yii::t('app', 'PENDING'),
+            ],
+            'Sex' => [
+                self::SEX_MAN => Yii::t('app', 'Man'),
+                self::SEX_WOMAN => Yii::t('app', 'Woman'),
+            ],
+            'Marital' => [
+                self::MARTIAL_STATUS_SINGEL => Yii::t('app', 'Single'),
+                self::MARTIAL_STATUS_MARRIED => Yii::t('app', 'Married'),
+            ],
+            'Military' => [
+                self::MILITARY_STATUS_DONE => Yii::t('app', 'Done'),
+                self::MILITARY_STATUS_INCLUDED => Yii::t('app', 'Included'),
+                self::MILITARY_STATUS_EXEMPT => Yii::t('app', 'Exempt'),
             ]
         ];
         if (isset($code))

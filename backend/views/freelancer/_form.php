@@ -3,6 +3,12 @@
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use kartik\file\FileInput;
+use common\models\Freelancer;
+use common\models\Province;
+use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
+use kartik\depdrop\DepDrop;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var common\models\Freelancer $model */
@@ -35,41 +41,78 @@ use kartik\file\FileInput;
                 ]) ?>
             </div>
         </div>
-    </div>
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'sex')->textInput() ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'city')->textInput() ?>
-
-    <?= $form->field($model, 'province')->textInput() ?>
-
-    <?= $form->field($model, 'marital_status')->textInput() ?>
-
-    <?= $form->field($model, 'military_service_status')->textInput() ?>
-
-    <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'experience')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'experience_period')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'record_job')->textInput() ?>
-
-    <?= $form->field($model, 'record_educational')->textInput() ?>
-
-    <?= $form->field($model, 'portfolio')->textInput() ?>
-
-    <?= $form->field($model, 'description_user')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'project_number')->textInput() ?>
-
-    <div class="col-md-8">
-        <?= $form->field($model, 'status')->dropDownList(\common\models\Freelancer::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'sex')->dropDownList(Freelancer::itemAlias('Sex')) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'province')->widget(Select2::class, [
+                'data' => ArrayHelper::map(Province::find()->all(), 'id', 'name'),
+                'size' => Select2::MEDIUM,
+                'options' => ['placeholder' => Yii::t('app', 'Select Province')],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
+        </div>
+        <div class="col-md-6">
+            <?=
+            $form->field($model, 'city')->widget(DepDrop::class, [
+                'options' => ['id' => 'freelancer-city'],
+                'data' => [$model->getCity()->id => $model->getCity()->name],
+                'pluginOptions' => [
+                    'depends' => ['freelancer-province'],
+                    'placeholder' => Yii::t('app', 'Select...'),
+                    'url' => Url::to(['/province/get-cities'])
+                ]
+            ]);
+            ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'marital_status')->dropDownList(Freelancer::itemAlias('Marital')) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'military_service_status')->dropDownList(Freelancer::itemAlias('Military')) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'experience')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'experience_period')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'record_job')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'record_educational')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'portfolio')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'status')->dropDownList(Freelancer::itemAlias('Status')) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'project_number')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'skills')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'description_user')->textarea(['rows' => 6]) ?>
+        </div>
     </div>
 
     <div class="form-group">
