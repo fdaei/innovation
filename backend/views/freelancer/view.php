@@ -41,7 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => $model->getUploadUrl('freelancer_picture'),
                         'format' => ['image',['width'=>'100','height'=>'100']],
                     ],
-                    'freelancer_description:ntext',
                     'name',
                     [
                         'attribute' => 'sex',
@@ -73,7 +72,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'record_job',
                     'record_educational',
                     'portfolio',
-                    'resume_file',
+                    [
+                        'attribute' => 'resume_file',
+                        'format'=>'raw',
+                        'value'=> $model->resume_file ? Html::a(Yii::t('app', 'Download the File'), $model->getUploadUrl('resume_file')): '---',
+                    ],
+                    'freelancer_description:ntext',
                     'description_user:ntext',
                     'project_number',
                     [

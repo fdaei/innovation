@@ -288,6 +288,7 @@ return [
     'Freelancers' => '‌فریلنسرها',
     'Create Freelancer' => 'ایجاد فریلنسر',
     'Description User' => 'توصیحات کاربر',
+    'freelancer description' => 'توصیحات فریلنسر',
     'Resume File' => 'فایل رزومه',
     'Portfolio' => 'نمونه کارها',
     'Record Educational' => '',
@@ -310,4 +311,5 @@ return [
     'header picture desktop' => 'تصویر دسکتاپ',
     'header picture mobile' => 'تصویر موبایل',
     'profile picture' => 'تصویر پروفایل',
+    'Download the File' => 'دانلود فایل',
 ] ?>

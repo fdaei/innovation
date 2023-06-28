@@ -7,7 +7,7 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
-
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "{{%freelancer}}".
  *
@@ -29,6 +29,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string|null $portfolio
  * @property string $resume_file
  * @property string $description_user
+ * @property string $freelancer_description
  * @property int|null $project_number
  * @property int $status
  * @property int $updated_by
@@ -37,11 +38,12 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_by
  * @property int $deleted_at
  */
-class Freelancer extends \yii\db\ActiveRecord
+class Freelancer extends ActiveRecord
 {
     const STATUS_PENDING = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
+    const STATUS_DELETED = 3;
 
     const SEX_MAN = 1;
     const SEX_WOMAN = 2;
@@ -71,6 +73,7 @@ class Freelancer extends \yii\db\ActiveRecord
             [['sex', 'city', 'province', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['record_job', 'record_educational', 'portfolio'], 'safe'],
             [['description_user'], 'string'],
+            [['freelancer_description'], 'string'],
             [['name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period'], 'string', 'max' => 255],
         ];
     }
@@ -109,7 +112,7 @@ class Freelancer extends \yii\db\ActiveRecord
             'header_picture_desktop' => Yii::t('app', 'header picture desktop'),
             'header_picture_mobile' => Yii::t('app', 'header picture mobile'),
             'freelancer_picture' => Yii::t('app', 'profile picture'),
-            'freelancer_description' => Yii::t('app', 'description'),
+            'freelancer_description' => Yii::t('app', 'freelancer description'),
         ];
     }
 
@@ -119,7 +122,8 @@ class Freelancer extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        return new FreelancerQuery(get_called_class());
+        $query = new FreelancerQuery(get_called_class());
+        return $query->notDeleted();
     }
 
     public function getFreelancerCategories()
@@ -142,16 +146,18 @@ class Freelancer extends \yii\db\ActiveRecord
             ],
             [
                 'class' => BlameableBehavior::class,
-                'createdByAttribute' => null,
+                'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [
                     'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED,
                 ],
                 'restoreAttributeValues' => [
                     'deleted_at' => 0,
+                    'status' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_INACTIVE]
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
@@ -161,10 +167,9 @@ class Freelancer extends \yii\db\ActiveRecord
                 'attribute' => 'resume_file',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
-                'transferToCDN' => false,
+                'transferToCDN' => true,
                 'cdnPath' => "@cdnRoot/events",
                 'basePath' => "@inceRoot/events",
                 'path' => "@inceRoot/events",
