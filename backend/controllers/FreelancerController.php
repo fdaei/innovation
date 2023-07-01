@@ -2,6 +2,11 @@
 
 namespace backend\controllers;
 
+use backend\models\EventHeadlines;
+use backend\models\FreelancerPortfolio;
+use backend\models\FreelancerRecordEducational;
+use backend\models\FreelancerRecordJob;
+use backend\models\FreelancerSkills;
 use common\models\Freelancer;
 use common\models\FreelancerSearch;
 use yii\filters\AccessControl;
@@ -78,10 +83,20 @@ class FreelancerController extends Controller
     public function actionCreate()
     {
         $model = new Freelancer();
+        $freelancerSkills = [new FreelancerSkills()];
+        $freelancerRecordJob = [new FreelancerRecordJob()];
+        $freelancerRecordEducational = [new FreelancerRecordEducational()];
+        $freelancerPortfolio = [new FreelancerPortfolio()];
 
         if ($this->request->isPost) {
+            $model->skills = FreelancerSkills::Handler($this->request->post('FreelancerSkills'));
+            $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
+            $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
+            $model->portfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
+
             $model->load($this->request->post());
             $save = $model->save();
+
             if ($save) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -89,8 +104,14 @@ class FreelancerController extends Controller
             $model->loadDefaultValues();
         }
 
+
         return $this->render('create', [
             'model' => $model,
+            'freelancerSkills' => (empty($freelancerSkills)) ? [new FreelancerSkills()] : $freelancerSkills,
+            'freelancerRecordJob' => (empty($freelancerRecordJob)) ? [new FreelancerRecordJob()] : $freelancerRecordJob,
+            'freelancerRecordEducational' => (empty($freelancerRecordEducational)) ? [new FreelancerRecordEducational()] : $freelancerRecordEducational,
+            'freelancerPortfolio' => (empty($freelancerPortfolio)) ? [new FreelancerPortfolio()] : $freelancerPortfolio,
+
         ]);
     }
 
@@ -105,19 +126,32 @@ class FreelancerController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+
+            $model->skills = FreelancerSkills::Handler($this->request->post('FreelancerSkills'));
+            $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
+            $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
+            $model->portfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
+
+
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'freelancerSkills' => FreelancerSkills::loadDefaultValue($model->skills),
+            'freelancerRecordJob' => FreelancerRecordJob::loadDefaultValue($model->record_job),
+            'freelancerRecordEducational' => FreelancerRecordEducational::loadDefaultValue($model->record_educational),
+            'freelancerPortfolio' => FreelancerPortfolio::loadDefaultValue($model->portfolio),
         ]);
     }
 
     /**
      * Deletes an existing Freelancer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ایدی
+     * @param int $id
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -131,7 +165,7 @@ class FreelancerController extends Controller
     /**
      * Finds the Freelancer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ایدی
+     * @param int $id
      * @return Freelancer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */

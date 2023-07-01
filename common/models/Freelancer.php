@@ -45,6 +45,11 @@ class Freelancer extends ActiveRecord
     const STATUS_INACTIVE = 2;
     const STATUS_DELETED = 3;
 
+    const EXPERIENCE_ENTRY = 1;
+    const EXPERIENCE_INTERMEDIATE = 2;
+    const EXPERIENCE_MID_LEVEL= 3;
+    const EXPERIENCE_SENIOR= 4;
+    const EXPERIENCE_TECHNICAL= 5;
     const SEX_MAN = 1;
     const SEX_WOMAN = 2;
 
@@ -69,11 +74,10 @@ class Freelancer extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'experience_period', 'skills',], 'required'],
+            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'experience_period'], 'required'],
             [['sex', 'city', 'province', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['record_job', 'record_educational', 'portfolio'], 'safe'],
-            [['description_user'], 'string'],
-            [['freelancer_description'], 'string'],
+            [['description_user','freelancer_description'], 'string'],
             [['name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period'], 'string', 'max' => 255],
         ];
     }
@@ -222,7 +226,7 @@ class Freelancer extends ActiveRecord
     {
         $_items = [
             'Status' => [
-                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_ACTIVE => Yii::t('app', 'Ready to cooperate'),
                 self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
                 self::STATUS_PENDING => Yii::t('app', 'PENDING'),
             ],
@@ -238,6 +242,13 @@ class Freelancer extends ActiveRecord
                 self::MILITARY_STATUS_DONE => Yii::t('app', 'Done'),
                 self::MILITARY_STATUS_INCLUDED => Yii::t('app', 'Included'),
                 self::MILITARY_STATUS_EXEMPT => Yii::t('app', 'Exempt'),
+            ],
+            'Experience' => [
+                self::EXPERIENCE_ENTRY => Yii::t('app', 'Entry'),
+                self::EXPERIENCE_INTERMEDIATE => Yii::t('app', 'Intermediate'),
+                self::EXPERIENCE_MID_LEVEL => Yii::t('app', 'Mid level'),
+                self::EXPERIENCE_SENIOR => Yii::t('app', 'Senior'),
+                self::EXPERIENCE_TECHNICAL => Yii::t('app', 'Technical'),
             ]
         ];
         if (isset($code))
