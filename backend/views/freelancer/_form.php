@@ -92,8 +92,8 @@ use wbraganca\dynamicform\DynamicFormWidget;
         <div class="col-md-6">
             <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'experience')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'experience')->dropDownList(Freelancer::itemAlias('Experience')) ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'experience_period')->textInput(['maxlength' => true]) ?>
@@ -104,7 +104,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
         <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList(Freelancer::itemAlias('Status')) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'resume_file')->widget(FileInput::class, [
                 'options' => ['accept' => 'application/pdf,image/*'],
                 'pluginOptions' => [

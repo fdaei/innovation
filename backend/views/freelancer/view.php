@@ -66,12 +66,52 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' =>Freelancer::itemAlias('Military',$model->sex)
                     ],
                     'activity_field',
-                    'experience',
+                    [
+                        'attribute' => 'experience',
+                        'label' => 'میزان تجربه',
+                        'value' =>Freelancer::itemAlias('Experience',$model->experience),
+                    ],
                     'experience_period',
-//                    'skills',
-//                    'record_job',
-//                    'record_educational',
-//                    'portfolio',
+                    [
+                        'attribute' => 'skills',
+                        'value' => function ($data) {
+                            $str = '';
+                            foreach ($data->skills as $item){
+                                $str .= $item['title'].' , ';
+                            }
+                            return $str;
+                        },
+                    ],
+                    [
+                        'attribute' => 'record_job',
+                        'value' => function ($data) {
+                            $str = '';
+                            foreach ($data->record_job as $item){
+                                $str .= $item['title'].' , ';
+                            }
+                            return $str;
+                        },
+                    ],
+                    [
+                        'attribute' => 'record_educational',
+                        'value' => function ($data) {
+                            $str = '';
+                            foreach ($data->record_educational as $item){
+                                $str .= $item['title'].' , ';
+                            }
+                            return $str;
+                        },
+                    ],
+                    [
+                        'attribute' => 'portfolio',
+                        'value' => function ($data) {
+                            $str = '';
+                            foreach ($data->portfolio as $item){
+                                $str .= $item['title'].' , ';
+                            }
+                            return $str;
+                        },
+                    ],
                     [
                         'attribute' => 'resume_file',
                         'format'=>'raw',
