@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 
 /**
  * EventSearch represents the model behind the search form of `common\models\Event`.
+ *
  */
 class EventSearch extends Event
 {
@@ -16,6 +17,8 @@ class EventSearch extends Event
 
     public $filter;
 
+    public $tag_ids = [];
+
     /**
      * {@inheritdoc}
      */
@@ -24,7 +27,7 @@ class EventSearch extends Event
         return [
             [['id', 'updated_at', 'updated_by', 'created_at', 'created_by', 'deleted_at', 'filter'], 'integer'],
             ['filter', 'in', 'range' => array_keys(self::itemAlias('Filter'))],
-            [['title', 'description', 'headlines', 'address', 'sponsors'], 'safe'],
+            [['title', 'description', 'headlines', 'address', 'sponsors', 'tag_ids'], 'safe'],
             [['price', 'price_before_discount', 'longitude', 'latitude'], 'number'],
         ];
     }
@@ -107,6 +110,13 @@ class EventSearch extends Event
                     ->groupBy(Event::tableName() . '.id');
 
                 break;
+        }
+
+        if ($this->tag_ids) {
+            $query
+                ->joinWith(['tags'], false)
+                ->andWhere(['IN', Tag::tableName() . '.tag_id', $this->tag_ids])
+                ->groupBy(Event::tableName() . '.id');
         }
 
         return $dataProvider;

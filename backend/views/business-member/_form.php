@@ -46,7 +46,7 @@ use yii\web\View;
                     'initialPreview'         => (!$model->isNewRecord && $model->getUploadUrl('image')) ? $model->getUploadUrl('image') : false,
                     'initialPreviewFileType' => 'image',
                 ]
-            ])->hint('width:268px height:248px');
+            ])->hint('width:283px,height:444px,size:2MB');
             ?>
         </div>
     </div>

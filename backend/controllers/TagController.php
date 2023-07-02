@@ -4,44 +4,64 @@ namespace backend\controllers;
 
 use common\models\Tag;
 use common\models\TagSearch;
+use common\traits\AjaxValidationTrait;
+use Yii;
+use yii\db\Exception;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
-/**
- * TagController implements the CRUD actions for Tag model.
- */
 class TagController extends Controller
 {
+    use AjaxValidationTrait;
+
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
                 ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' =>
+                    [
+                        [
+                            'allow' => true,
+                            'actions' => ['create', 'index', 'update', 'delete', 'list'],
+                            'roles' => ['@'],
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => ['create'],
+                            'roles' => ['@'],
+                        ],
+                        [
+                            'allow' => true,
+                            'actions' => ['list'],
+                            'roles' => ['@'],
+                        ],
+                    ]
             ]
-        );
+        ];
     }
 
     /**
      * Lists all Tag models.
-     *
-     * @return string
+     * @return mixed
      */
     public function actionIndex()
     {
         $searchModel = new TagSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-
-        $dataProvider = $searchModel->search($this->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -49,37 +69,38 @@ class TagController extends Controller
     }
 
     /**
-     * Displays a single Tag model.
-     * @param int $id
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Tag model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * Creates a new Tag model via ajax.
+     * @return mixed
      */
     public function actionCreate()
     {
         $model = new Tag();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $flag = $model->save(false);
+                if ($flag) {
+                    $transaction->commit();
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+
+                    return [
+                        'status' => 'success',
+                        'tag' => ['id' => $model->tag_id, 'name' => $model->name],
+                        'success' => true,
+                        'msg' => Yii::t("app", "Tag created!")
+                    ];
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (Exception $e) {
+                $transaction->rollBack();
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        $this->performAjaxValidation($model);
+
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }
@@ -87,19 +108,37 @@ class TagController extends Controller
     /**
      * Updates an existing Tag model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id
-     * @return string|\yii\web\Response
+     * @param integer $id
+     * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $flag = $model->save(false);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                if ($flag) {
+                    $transaction->commit();
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+
+                    return [
+                        'success' => true,
+                        'msg' => Yii::t("app", "Tag updated!")
+                    ];
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (Exception $e) {
+                $transaction->rollBack();
+            }
         }
 
-        return $this->render('update', [
+        $this->performAjaxValidation($model);
+
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }
@@ -107,22 +146,36 @@ class TagController extends Controller
     /**
      * Deletes an existing Tag model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id
-     * @return \yii\web\Response
+     * @param integer $id
+     * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $result = ['status' => true];
 
-        return $this->redirect(['index']);
+        if ($model->softDelete()) {
+            $result = [
+                'status' => true,
+                'message' => Yii::t("app", "Item Deleted")
+            ];
+        } else {
+            $result = [
+                'status' => false,
+                'message' => Yii::t("app", "Error In Save Info")
+            ];
+        }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $result;
     }
 
     public function actionList($query, $type = null)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $out = [
             'results' => [
-                'id' => '',
+                'id'   => '',
                 'text' => '',
                 'html' => '',
                 'color' => '',
@@ -130,6 +183,7 @@ class TagController extends Controller
             ]
         ];
         if (!is_null($query)) {
+
             $search_keys = explode(' ', $query);
             $like_condition = [];
             $like_condition[0] = 'AND';
@@ -165,24 +219,24 @@ class TagController extends Controller
                 $arr[$i]['html'] = $arr[$i]['text'];
             }
             $out['results'] = $arr;
-        }
 
-        return $this->asJson($out);
+        }
+        return $out;
     }
 
     /**
      * Finds the Tag model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
+     * @param integer $id
      * @return Tag the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tag::findOne(['id' => $id])) !== null) {
+        if (($model = Tag::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

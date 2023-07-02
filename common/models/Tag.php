@@ -8,6 +8,7 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -20,7 +21,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $color
  * @property int $status
  * @property int $deleted
- * @property string $description
+ * @property Json $additional_data
  */
 class Tag extends ActiveRecord
 {
@@ -36,7 +37,7 @@ class Tag extends ActiveRecord
 
     public static function tableName()
     {
-        return '{{' . CoreHelper::getDsnAttribute('dbname', Yii::$app->db->dsn) . '}}.{{%tag}}';
+        return '{{' . CoreHelper::getDsnAttribute('dbname', Yii::$app->db->dsn) . '}}.{{%tags}}';
     }
 
     public function rules()
@@ -51,7 +52,7 @@ class Tag extends ActiveRecord
             [['name', 'type', 'deleted_at'], 'unique', 'targetAttribute' => ['name', 'type', 'deleted_at'], 'message' => 'نوع و نام قبلا گرفته شده است!'],
             ['name', 'string', 'max' => 64],
             ['color', 'string', 'max' => 7],
-            ['description', 'string', 'max' => 255]
+            ['additional_data','safe']
         ];
     }
 
@@ -65,8 +66,7 @@ class Tag extends ActiveRecord
             'frequency' => Yii::t('app', 'Frequency'),
             'status' => Yii::t('app', 'status'),
             'color' => Yii::t('app', 'Color Id'),
-            'deleted_at' => Yii::t('app', 'Deleted At'),
-            'description' => Yii::t('app', 'Description')
+            'deleted_at' => Yii::t('app', 'Deleted At')
         ];
     }
 
@@ -121,11 +121,11 @@ class Tag extends ActiveRecord
      * {@inheritdoc}
      * @return TagQuery the active query used by this AR class.
      */
-//    public static function find()
-//    {
-//        $query = new TagQuery(get_called_class());
-//        return $query->active();
-//    }
+    public static function find()
+    {
+        $query = new TagQuery(get_called_class());
+        return $query->notDeleted();
+    }
 
     public static function itemAlias($type, $code = NULL)
     {
@@ -162,14 +162,6 @@ class Tag extends ActiveRecord
     public function behaviors()
     {
         return [
-            'timestamp' => [
-                'class' => TimestampBehavior::class
-            ],
-            [
-                'class' => BlameableBehavior::class,
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [

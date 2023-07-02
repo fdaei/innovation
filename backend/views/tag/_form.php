@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Tag;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -10,19 +11,13 @@ use yii\widgets\ActiveForm;
 
 <div class="tag-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'type')->textInput() ?>
+    <?php $form = ActiveForm::begin(['id'=>'tag-form']); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'frequency')->textInput() ?>
+    <?= $form->field($model, 'type')->dropDownList(Tag::itemAlias('Type'), ['prompt' => Yii::t('app', 'Select Tags')]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'status')->dropDownList(Tag::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

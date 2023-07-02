@@ -7,6 +7,7 @@ use common\models\Event;
 use common\models\EventSearch;
 use common\models\EventTime;
 use common\models\Model;
+use common\models\Tag;
 use common\traits\AjaxValidationTrait;
 use common\traits\CoreTrait;
 use Exception;
@@ -52,6 +53,30 @@ class EventController extends Controller
         );
     }
 
+    public function actionAddTags($id)
+    {
+        $model = Event::findOne($id);
+        if (!$model) {
+            throw new \yii\web\NotFoundHttpException('The requested event does not exist.');
+        }
+
+        if (Yii::$app->request->isPost) {
+            $tagIds = Yii::$app->request->post('Event')['tagIds'] ?? [];
+            $model->tagIds = $tagIds;
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Tags added successfully.');
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to add tags.');
+            }
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('add_tags', [
+            'model' => $model,
+        ]);
+    }
+
+
     /**
      * Lists all Event models.
      *
@@ -91,8 +116,11 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event;
+        $tag=new Tag();
         $model->scenario = Event::SCENARIO_CREATE;
         $modelsEventTime = [new EventTime];
+        $searchedTags = Tag::find()->all();
+
 
         if ($model->load(Yii::$app->request->post())) {
             $modelsEventTime = Model::createMultiple(EventTime::class);
@@ -125,7 +153,8 @@ class EventController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $modelsEventTime
+            'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $modelsEventTime,
+            'searchedTags' => $searchedTags,
         ]);
     }
 
