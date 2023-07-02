@@ -321,4 +321,5 @@ return [
     'Senior' => 'ارشد',
     'Technical' => 'متخصص',
     'Ready to cooperate' => '‌آماده به همکاری',
+    'Settings' => 'تنظیمات'
 ] ?>
