@@ -97,10 +97,10 @@ class FreelancerController extends Controller
 
             $model->load($this->request->post());
 
-            if ($save = $model->save(false)) {
+            if ($save = $model->save()) {
                 foreach ($freelancerPortfolio as $portfolio) {
                     $portfolio->freelancer_id = $model->id;
-                    $portfolio->save(false);
+                    $portfolio->save();
                 }
             }
 
