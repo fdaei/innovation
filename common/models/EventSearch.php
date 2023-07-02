@@ -111,12 +111,14 @@ class EventSearch extends Event
 
                 break;
         }
+
         if ($this->tag_ids) {
             $query
-                ->joinWith(['tags'],  false)
-                ->andWhere(['IN', '{{%tags}}.`tag_id`', $this->tag_ids])
+                ->joinWith(['tags'], false)
+                ->andWhere(['IN', Tag::tableName() . '.tag_id', $this->tag_ids])
                 ->groupBy(Event::tableName() . '.id');
         }
+
         return $dataProvider;
     }
 }

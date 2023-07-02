@@ -53,7 +53,6 @@ class EventController extends Controller
         );
     }
 
-
     public function actionAddTags($id)
     {
         $model = Event::findOne($id);

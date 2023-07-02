@@ -218,7 +218,7 @@ class Event extends \yii\db\ActiveRecord
             'taggable' => [
                 'class' => Taggable::class,
                 'classAttribute' => self::class,
-
+                'deleteTagsScenario' => self::SCENARIO_DEFAULT
             ],
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::class,

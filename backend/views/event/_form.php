@@ -1,13 +1,12 @@
 <?php
 
 use common\models\Tag;
-use common\widgets\TagsInput;
+use kartik\file\FileInput;
 use kartik\select2\Select2;
+use wbraganca\dynamicform\DynamicFormWidget;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
-use wbraganca\dynamicform\DynamicFormWidget;
-use kartik\file\FileInput;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
@@ -68,38 +67,50 @@ use yii\widgets\MaskedInput;
                     ])->label('قیمت قبل از تخفیف (تومان)') ?>
             </div>
             <div class='col-md-4 mt-4 '>
-
                 <?= $form->field($model, 'tagNames')->widget(Select2::class, [
-                    'options' => ['placeholder' => 'Select tags...', 'multiple' => true],
+                    'initValueText' => ArrayHelper::map($model->tagsArray, 'id', 'name'),
+                    'value' => ArrayHelper::map($model->tagsArray, 'id', 'id'),
+                    'options' => [
+                        'multiple' => true,
+                        'placeholder' => 'یک یا چند برچسب را انتخاب نمایید...',
+                        'dir' => 'rtl',
+                        'data-id' => $model->id,
+                        'data-tags' => ArrayHelper::index(ArrayHelper::toArray(Tag::find()->all(), [
+                            'common\models\Tag' => [
+                                'tag_id',
+                                'type',
+                                'color'
+                            ]
+                        ]), 'tag_id'),
+                        'class' => 'form-control TagInput',
+                        'data-tags-type' => Tag::itemAlias('TypeClass')
+                    ],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'closeOnSelect' => false,
                         'minimumInputLength' => 2,
-                        'theme' => Select2::THEME_BOOTSTRAP,
                         'ajax' => [
-                            'url' => Url::to(['/tag/list', 'type' => null]),
+                            'url' => Yii::$app->urlManager->createAbsoluteUrl(['/tag/list']),
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {query:params.term}; }'),
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
                         'templateResult' => new JsExpression('function (data) { return (data.html != undefined) ? data.text : null; }'),
-                        'templateSelection' => new JsExpression('function (data) {
-            var selectElement = $(data.element).parent();
-            if (selectElement.data("tags")[data.id] != undefined) {
-                var type = selectElement.data("tags")[data.id];
-                var typeClass = $(".TagInput").data("tags-type")[type];
-                var tagHtml = "<span class=\"text-bold badge badge-" + typeClass + "\">" + data.text + "</span>";
-                tagHtml = $(tagHtml).addClass("text-dark");
-                return tagHtml;
-            } else {
-                return data.text;
-            }
-        }'),
-                    ],
-                ])->label(false); ?>
-
-
-
+                        'templateSelection' => new JsExpression('function (data)
+                                    {
+                                        var selectElement = $(data.element).parent();
+                                        if(selectElement != undefined){
+                                            var type = data.type ? data.type : selectElement.data("tags")[data.id].type;
+                                            var color = data.color ? data.color : selectElement.data("tags")[data.id].color;
+                                            var typeClass = $(".TagInput").data("tags-type")[type];
+                                            return color == "" ? 
+                                            "<span class=\"mx-1 font-medium text-dark badge badge-" + typeClass + "\">" + data.text + "</span>"
+                                            :
+                                            "<span class=\"mx-1 font-medium text-dark\" style=\"background-color:#" + color + ";padding: .20em .5em;border-radius: 2px;font-size: 90%;\">" + data.text + "</span>";
+                                        }
+                                    }'),
+                    ]
+                ]); ?>
             </div>
             <div class='col-md-4 '>
                 <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>

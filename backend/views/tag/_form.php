@@ -19,10 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->dropDownList(Tag::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
 
-    <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'additional_data')->textInput(['maxlength' => true]) ?>
-
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

@@ -49,12 +49,9 @@ class EventController extends ActiveController
 
     public function actions()
     {
-        $actions = parent::actions();
-        // disable the "delete" and "create" actions
-        unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
-        return $actions;
-
+        return [];
     }
+
     /**
      * @OA\Get(
      *    path="/event/index",
@@ -163,6 +160,7 @@ class EventController extends ActiveController
 
         return $searchModel->search(Yii::$app->request->queryParams, '');
     }
+
     /**
      * @OA\Get(
      *    path="/event/view",
@@ -223,8 +221,6 @@ class EventController extends ActiveController
      * )
      * @throws NotFoundHttpException
      */
-
-
     public function actionView($id)
     {
         return $this->findModel($id);
@@ -237,6 +233,7 @@ class EventController extends ActiveController
             'query' => EventOrganizer::find()->orderBy('id DESC')->limit(3),
         ]);
     }
+
     protected function findModel($id)
     {
         if (($model = Event::findOne(['id' => $id])) !== null) {
