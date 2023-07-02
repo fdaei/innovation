@@ -63,7 +63,7 @@ class EventController extends ActiveController
      *        name="filter",
      *        in="query",
      *        description="Filter value: 1 for upcoming events, 2 for active events, 3 for past events",
-     *        required=true,
+     *        required=false,
      *        @OA\Schema(
      *            type="integer",
      *            enum={1, 2, 3}
