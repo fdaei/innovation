@@ -97,12 +97,12 @@ class FreelancerPortfolio extends ActiveRecord
     }
 
     public static function Handler($items = []){
-
-        $oldIDs = ArrayHelper::map($items, 'id', 'id');
         $portfolios = Model::createMultiple(FreelancerPortfolio::class, $items);
         $model = Model::loadMultiple($portfolios, Yii::$app->request->post());
-        $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($portfolios, 'id', 'id')));
-
+        if ($items) {
+            $oldIDs = ArrayHelper::map($items, 'id', 'id');
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($portfolios, 'id', 'id')));
+        }
         if (!empty($deletedIDs)) {
             FreelancerPortfolio::deleteAll(['id' => $deletedIDs]);
         }

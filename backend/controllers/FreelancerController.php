@@ -8,15 +8,11 @@ use backend\models\FreelancerRecordJob;
 use backend\models\FreelancerSkills;
 use common\models\Freelancer;
 use common\models\FreelancerSearch;
-use common\models\Model;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
-use yii\widgets\ActiveForm;
-use Yii;
 
 /**
  * FreelancerController implements the CRUD actions for Freelancer model.
@@ -82,7 +78,7 @@ class FreelancerController extends Controller
     /**
      * Creates a new Freelancer model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionCreate()
     {
@@ -97,28 +93,17 @@ class FreelancerController extends Controller
             $model->skills = FreelancerSkills::Handler($this->request->post('FreelancerSkills'));
             $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
+            $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
 
             $model->load($this->request->post());
 
-
-//            $model->portfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
-
-            $freelancerPortfolio = Model::createMultiple(FreelancerPortfolio::class);
-            Model::loadMultiple($freelancerPortfolio, Yii::$app->request->post());
-            $valid = Model::validateMultiple($freelancerPortfolio);
-
-            if ($valid) {
-                if ($flag = $model->save(false)) {
-                    foreach ($freelancerPortfolio as $portfolio) {
-                        $portfolio->freelancer_id = $model->id;
-                        if (!($flag = $portfolio->save(false))) {
-                            break;
-                        }
-                    }
+            if ($save = $model->save(false)) {
+                foreach ($freelancerPortfolio as $portfolio) {
+                    $portfolio->freelancer_id = $model->id;
+                    $portfolio->save(false);
                 }
             }
 
-            $save = $model->save();
             if ($save) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -142,7 +127,7 @@ class FreelancerController extends Controller
      * Updates an existing Freelancer model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
@@ -157,14 +142,10 @@ class FreelancerController extends Controller
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
             $portfolios = FreelancerPortfolio::Handler($portfolios);
 
-            if ($model->load($this->request->post())) {
-                if ($flag = $model->save()) {
-                    foreach ($portfolios as $portfolio) {
-                        $portfolio->freelancer_id = $model->id;
-                        if (!($flag = $portfolio->save(false))) {
-                            break;
-                        }
-                    }
+            if ($model->load($this->request->post()) && $model->save()) {
+                foreach ($portfolios as $portfolio) {
+                    $portfolio->freelancer_id = $model->id;
+                    $portfolio->save(false);
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -183,7 +164,7 @@ class FreelancerController extends Controller
      * Deletes an existing Freelancer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)

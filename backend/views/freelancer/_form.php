@@ -326,7 +326,8 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                             <?= $form->field($portfolio, "[{$i}]link")->textInput() ?>
                                         </div>
                                         <div class="col-sm-2">
-                                            <?= $form->field($portfolio, "[{$i}]image")->widget(FileInput::class, [
+                                            <?=
+                                            $form->field($portfolio, "[{$i}]image")->widget(FileInput::class, [
                                                 'options' => ['accept' => 'image/*'],
                                                 'pluginOptions' => [
                                                     'showPreview' => false,
@@ -334,7 +335,8 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                                     'showRemove' => true,
                                                     'showUpload' => false
                                                 ]
-                                            ])?>
+                                            ])
+                                            ?>
                                         </div>
                                         <div class="col-sm-1 pt-4">
                                             <button type="button" class="remove-item-portfolio btn btn-danger btn-xs mt-1">

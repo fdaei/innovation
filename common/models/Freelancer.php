@@ -77,6 +77,9 @@ class Freelancer extends ActiveRecord
             [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'experience_period'], 'required'],
             [['sex', 'city', 'province', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['record_job', 'record_educational', 'portfolio'], 'safe'],
+            [['email'], 'email'],
+            [['mobile'], 'string', 'max' => 11],
+            [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
             [['description_user','freelancer_description'], 'string'],
             [['name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period'], 'string', 'max' => 255],
         ];
