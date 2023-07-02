@@ -284,5 +284,10 @@ return [
     'Waiting' => 'انتظار تایید',
     'Confirm' => 'تایید شده',
     'Reject' => 'رد شده',
+    'Tags'=>'تگ ها ',
+    'Frequency'=>'تعداد تکرار',
+    'create tag'=>'ایجاد تگ',
+    'Reset'=>'مجدد',
+    'Search'=>'جستجو',
 
 ] ?>

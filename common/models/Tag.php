@@ -26,11 +26,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
 class Tag extends ActiveRecord
 {
     const TYPE_RELATIONAL = 1;
-    const TYPE_OCCASIONAL = 2;
-    const TYPE_SPECIAL = 3;
-    const TYPE_LABEL = 4;
-    const TYPE_USER = 5;
-    const TYPE_INVOICE_UNIQUE = 6;
+    const TYPE_LABEL = 2;
 
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
@@ -75,7 +71,7 @@ class Tag extends ActiveRecord
      */
     public function getTagAssigns()
     {
-        return $this->hasMany(TagAssign::className(), ['tag_id' => 'id']);
+        return $this->hasMany(TagAssign::class, ['tag_id' => 'id']);
     }
 
     public static function frequentlyTags($modelClass, $type)
@@ -110,7 +106,7 @@ class Tag extends ActiveRecord
     {
         $this->status = self::STATUS_DELETED;
         $this->deleted_at = time();
-        if ($this->canDelete() && $this->save()) {
+        if ($this->canDelete() && $this->save(false)) {
             return true;
         } else {
             return false;
@@ -132,20 +128,15 @@ class Tag extends ActiveRecord
         $_items = [
             'Type' => [
                 self::TYPE_RELATIONAL => Yii::t("app", "Relational"),
-                self::TYPE_OCCASIONAL => Yii::t("app", "Occasional"),
-                self::TYPE_SPECIAL => Yii::t("app", "Special"),
                 self::TYPE_LABEL => Yii::t("app", "Label"),
-                self::TYPE_USER => Yii::t("app", "User"),
-                self::TYPE_INVOICE_UNIQUE => Yii::t("app", "Invoice Unique")
+
             ],
             'TypeClass' => [
                 self::TYPE_RELATIONAL => 'info',
-                self::TYPE_OCCASIONAL => 'success',
-                self::TYPE_SPECIAL => 'danger',
                 self::TYPE_LABEL => 'primary',
             ],
             'Status' => [
-                self::STATUS_ACTIVE => Yii::t("app", "Status Active"),
+                self::STATUS_ACTIVE => Yii::t("app", "Active"),
                 self::STATUS_DELETED => Yii::t("app", "Deleted"),
             ],
             'StatusColor' => [

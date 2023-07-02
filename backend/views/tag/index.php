@@ -42,10 +42,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                'type',
+                [
+                    'attribute' => 'type',
+                    'value' => function ($model) {
+
+                        return Tag::itemAlias('Type',$model->type);
+                    },
+                ],
                 'name',
                 'frequency',
-                'status',
+                [
+                    'attribute' => 'status',
+                    'value' => function ($model) {
+
+                        return Tag::itemAlias('Status',$model->status);
+                    },
+                ],
                 [
                     'class' => ActionColumn::class,
                     'template' => ' {update} {delete} ',

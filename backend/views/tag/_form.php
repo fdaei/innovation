@@ -17,8 +17,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type')->dropDownList(Tag::itemAlias('Type'), ['prompt' => Yii::t('app', 'Select Tags')]) ?>
 
-    <?= $form->field($model, 'status')->dropDownList(Tag::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
-
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
