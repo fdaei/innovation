@@ -161,6 +161,7 @@ class EventController extends Controller
     public function actionCreateHeadlines($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = Event::SCENARIO_UPDATE;
         $form = new ActiveForm();
         $MentorRecords = [new EventHeadlines()];
         if ($this->request->isPost) {
