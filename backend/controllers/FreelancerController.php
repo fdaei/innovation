@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use \common\models\FreelancerPortfolio;
+use common\models\FreelancerPortfolio;
 use backend\models\FreelancerRecordEducational;
 use backend\models\FreelancerRecordJob;
 use backend\models\FreelancerSkills;
