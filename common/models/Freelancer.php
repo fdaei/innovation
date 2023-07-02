@@ -38,6 +38,8 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  * @property int $created_by
  * @property int $deleted_at
+ *
+ * @mixin CdnUploadImageBehavior;
  */
 class Freelancer extends ActiveRecord
 {
@@ -187,10 +189,10 @@ class Freelancer extends ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/freelancer/{id}",
+                'basePath' => "@inceRoot/freelancer/{id}",
+                'path' => "@inceRoot/freelancer/{id}",
+                'url' => "@cdnWeb/freelancer/{id}"
             ],
             [
                 'class' => CdnUploadImageBehavior::class,
@@ -200,10 +202,10 @@ class Freelancer extends ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/freelancer/{id}",
+                'basePath' => "@inceRoot/freelancer/{id}",
+                'path' => "@inceRoot/freelancer/{id}",
+                'url' => "@cdnWeb/freelancer/{id}"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'header_picture_mobile',
@@ -213,10 +215,10 @@ class Freelancer extends ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/freelancer/{id}",
+                'basePath' => "@inceRoot/freelancer/{id}",
+                'path' => "@inceRoot/freelancer/{id}",
+                'url' => "@cdnWeb/freelancer/{id}"
             ],[
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'freelancer_picture',
@@ -226,10 +228,10 @@ class Freelancer extends ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/freelancer/{id}",
+                'basePath' => "@inceRoot/freelancer/{id}",
+                'path' => "@inceRoot/freelancer/{id}",
+                'url' => "@cdnWeb/freelancer/{id}"
             ],
         ];
     }

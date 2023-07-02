@@ -6,10 +6,10 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "{{%freelancer_portfolio}}".
@@ -34,6 +34,7 @@ class FreelancerPortfolio extends ActiveRecord
 
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -48,10 +49,11 @@ class FreelancerPortfolio extends ActiveRecord
     public function rules()
     {
         return [
-            [['freelancer_id', 'title', 'updated_at', 'created_at', 'created_by'], 'required'],
+            [['freelancer_id', 'title'], 'required'],
             [['freelancer_id', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
-            [['title', 'image','link'], 'string', 'max' => 128],
+            [['title', 'link'], 'string', 'max' => 128],
             [['description'], 'string', 'max' => 512],
+            ['image', 'image'],
             [['freelancer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Freelancer::class, 'targetAttribute' => ['freelancer_id' => 'id']],
         ];
     }
@@ -96,7 +98,8 @@ class FreelancerPortfolio extends ActiveRecord
         return $query->notDeleted();
     }
 
-    public static function Handler($items = []){
+    public static function Handler($items = [])
+    {
         $portfolios = Model::createMultiple(FreelancerPortfolio::class, $items);
         $model = Model::loadMultiple($portfolios, Yii::$app->request->post());
         if ($items) {
@@ -157,10 +160,10 @@ class FreelancerPortfolio extends ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/events",
-                'basePath' => "@inceRoot/events",
-                'path' => "@inceRoot/events",
-                'url' => "@cdnWeb/events"
+                'cdnPath' => "@cdnRoot/freelancer/{freelancer_id}",
+                'basePath' => "@inceRoot/freelancer/{freelancer_id}",
+                'path' => "@inceRoot/freelancer/{freelancer_id}",
+                'url' => "@cdnWeb/freelancer/{freelancer_id}"
             ],
         ];
     }
