@@ -14,7 +14,11 @@ use wbraganca\dynamicform\DynamicFormWidget;
 /** @var yii\web\View $this */
 /** @var common\models\Freelancer $model */
 /** @var yii\bootstrap4\ActiveForm $form */
-/** @var \backend\models\FreelancerSkills $freelancerSkills */
+/** @var backend\models\FreelancerSkills $freelancerSkills */
+/** @var backend\models\FreelancerRecordJob $freelancerRecordJob */
+/** @var backend\models\FreelancerRecordEducational $freelancerRecordEducational */
+/** @var backend\models\FreelancerPortfolio $freelancerPortfolio */
+
 ?>
 
 <div class="card card-body">
@@ -46,7 +50,9 @@ use wbraganca\dynamicform\DynamicFormWidget;
                 ]
             ]) ?>
         </div>
-
+        <div class="col-sm-12">
+            <hr>
+        </div>
         <div class="col-md-4">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
@@ -134,7 +140,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         'widgetBody' => '.container-items-skill',
                         'widgetItem' => '.item-skill',
                         'limit' => 20,
-                        'min' => 1,
+                        'min' => $freelancerSkills[0]->isNewRecord ? 0 : 1,
                         'insertButton' => '.add-item-skill',
                         'deleteButton' => '.remove-item-skill',
                         'model' => $freelancerSkills[0],
@@ -153,10 +159,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         <?php foreach ($freelancerSkills as $i => $skill): ?>
                         <div class="item-skill panel panel-default" style="padding-right: 0px">
                             <div class="panel-body">
-                                <?php if (!$skill->isNewRecord) {
-                                        echo Html::activeHiddenInput($skill, "[{$i}]id");
-                                    }
-                                ?>
                                 <div class="row">
                                     <div class="col-sm-9">
                                         <?= $form->field($skill, "[{$i}]title")
@@ -185,7 +187,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         'widgetBody' => '.container-items-recordJob',
                         'widgetItem' => '.item-recordJob',
                         'limit' => 20,
-                        'min' => 1,
+                        'min' => $freelancerRecordJob[0]->isNewRecord ? 0 : 1,
                         'insertButton' => '.add-item-recordJob',
                         'deleteButton' => '.remove-item-recordJob',
                         'model' => $freelancerRecordJob[0],
@@ -204,11 +206,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         <?php foreach ($freelancerRecordJob as $i => $item): ?>
                         <div class="item-recordJob panel panel-default" style="padding-right: 0px">
                             <div class="panel-body">
-                                <?php
-                                if (!$item->isNewRecord) {
-                                    echo Html::activeHiddenInput($item, "[{$i}]id");
-                                }
-                                ?>
                                 <div class="row">
                                     <div class="col-sm-9">
                                         <?= $form->field($item, "[{$i}]title")
@@ -238,7 +235,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         'widgetBody' => '.container-items-recordEducational',
                         'widgetItem' => '.item-recordEducational',
                         'limit' => 20,
-                        'min' => 1,
+                        'min' => $freelancerRecordEducational[0]->isNewRecord ? 0 : 1,
                         'insertButton' => '.add-item-recordEducational',
                         'deleteButton' => '.remove-item-recordEducational',
                         'model' => $freelancerRecordEducational[0],
@@ -257,11 +254,6 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         <?php foreach ($freelancerRecordEducational as $i => $itemEducational): ?>
                         <div class="item-recordEducational panel panel-default" style="padding-right: 0px">
                             <div class="panel-body">
-                                <?php
-                                if (!$itemEducational->isNewRecord) {
-                                    echo Html::activeHiddenInput($itemEducational, "[{$i}]id");
-                                }
-                                ?>
                                 <div class="row">
                                     <div class="col-sm-9">
                                         <?= $form->field($itemEducational, "[{$i}]title")
@@ -295,13 +287,16 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         'widgetBody' => '.container-items-portfolio',
                         'widgetItem' => '.item-portfolio',
                         'limit' => 20,
-                        'min' => 1,
+                        'min' => $freelancerPortfolio[0]->isNewRecord ? 0 : 1,
                         'insertButton' => '.add-item-portfolio',
                         'deleteButton' => '.remove-item-portfolio',
                         'model' => $freelancerPortfolio[0],
                         'formId' => 'freelancer_form',
                         'formFields' => [
                             'title',
+                            'description',
+                            'link',
+                            'image',
                         ],
                     ]); ?>
                     <div class="panel-heading">

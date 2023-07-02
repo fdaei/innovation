@@ -45,6 +45,8 @@ class FreelancerSkills extends Model
         for ($i = 0; $i < count($item); $i++) {
             $items[$i] = new FreelancerSkills();
             $items[$i]->attributes = $item[$i];
+            $items[$i]->isNewRecord = false;
+
         }
         if(empty($items)){
             $items = [new FreelancerSkills];

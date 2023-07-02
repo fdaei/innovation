@@ -46,7 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'sex',
                         'value' =>Freelancer::itemAlias('Sex',$model->sex)
                     ],
-
                     'email:email',
                     'mobile',
                     [

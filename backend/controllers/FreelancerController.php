@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use backend\models\EventHeadlines;
 use backend\models\FreelancerPortfolio;
 use backend\models\FreelancerRecordEducational;
 use backend\models\FreelancerRecordJob;

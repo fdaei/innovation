@@ -19,7 +19,7 @@ class FreelancerPortfolio extends Model
     {
         return [
             [['title'],'required'],
-            [['title','description','image','link'],'string'],
+            [['title','description','link'],'string'],
         ];
     }
 
@@ -55,6 +55,7 @@ class FreelancerPortfolio extends Model
         for ($i = 0; $i < count($item); $i++) {
             $items[$i] = new FreelancerPortfolio();
             $items[$i]->attributes = $item[$i];
+            $items[$i]->isNewRecord = false;
         }
         if(empty($items)){
             $items = [new FreelancerPortfolio];
@@ -63,22 +64,23 @@ class FreelancerPortfolio extends Model
 
     }
 
-//    public function behaviors()
-//    {
-//        return [[
-//                'class' => CdnUploadImageBehavior::class,
-//                'attribute' => 'image',
-//                'scenarios' => [self::SCENARIO_DEFAULT],
-//                'instanceByName' => false,
-//                'deleteBasePathOnDelete' => false,
-//                'createThumbsOnSave' => false,
-//                'transferToCDN' => true,
-//                'cdnPath' => "@cdnRoot/events",
-//                'basePath' => "@inceRoot/events",
-//                'path' => "@inceRoot/events",
-//                'url' => "@cdnWeb/events"
-//            ],
-//        ];
-//    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => CdnUploadImageBehavior::class,
+                'attribute' => 'image',
+                'scenarios' => [self::SCENARIO_DEFAULT],
+                'instanceByName' => false,
+                'deleteBasePathOnDelete' => false,
+                'createThumbsOnSave' => false,
+                'transferToCDN' => true,
+                'cdnPath' => "@cdnRoot/freelancer",
+                'basePath' => "@inceRoot/freelancer",
+                'path' => "@inceRoot/freelancer",
+                'url' => "@cdnWeb/freelancer"
+            ],
+        ];
+    }
 
 }
