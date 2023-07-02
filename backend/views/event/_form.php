@@ -66,7 +66,7 @@ use yii\widgets\MaskedInput;
                         ],
                     ])->label('قیمت قبل از تخفیف (تومان)') ?>
             </div>
-            <div class='col-md-4 mt-4 '>
+            <div class='col-md-4'>
                 <?= $form->field($model, 'tagNames')->widget(Select2::class, [
                     'initValueText' => ArrayHelper::map($model->tagsArray, 'id', 'name'),
                     'value' => ArrayHelper::map($model->tagsArray, 'id', 'id'),
@@ -147,7 +147,7 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'longitude')->textInput(['style' => 'display: none'])->label(false) ?>
                 <?= $form->field($model, 'latitude')->textInput(['style' => 'display: none'])->label(false) ?>
             </span>
-            <div class='col-md-12 kohl' style="">
+            <div class='col-md-12'>
                 <div class="panel-body ">
                     <?php DynamicFormWidget::begin([
                         'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -185,10 +185,10 @@ use yii\widgets\MaskedInput;
                                         </div>
                                         <!--                                        --><?php //endif;?>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true, 'value' => $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->start_at)) : "", 'data-jdp' => true]) ?>
+                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true, 'value' => $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->start_at)) : "", 'data-jdp' => true])->label('شروع رویداد') ?>
                                         </div>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true, 'value' => $time->end_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->end_at)) : "", 'data-jdp' => true]) ?>
+                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true, 'value' => $time->end_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->end_at)) : "", 'data-jdp' => true])->label('پایان رویداد') ?>
                                         </div>
                                     </div>
                                 </div>

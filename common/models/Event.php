@@ -92,6 +92,8 @@ class Event extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'title_brief' => Yii::t('app', 'Title Brief'),
+            'event_organizer_id'=>Yii::t('app','Event Organizer'),
+            'evand_link'=>Yii::t('app','Evand link'),
             'price' => Yii::t('app', 'Price'),
             'price_before_discount' => Yii::t('app', 'Price Before Discount'),
             'description' => Yii::t('app', 'Description'),

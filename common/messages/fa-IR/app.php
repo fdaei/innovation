@@ -289,5 +289,13 @@ return [
     'create tag'=>'ایجاد تگ',
     'Reset'=>'مجدد',
     'Search'=>'جستجو',
-
+    'Relational'=>'وابستگی',
+    'Label'=>'برچسب',
+    'Logs'=>'لاگ',
+    'swagger'=>'سوگرا',
+    'Title Brief'=>'توضیح مختصر',
+    'Evand link'=>'لینک ایوند',
+    'Event Organizer'=>'سازمان رویداد',
+    'Start At'=>'شروع',
+    'event_organizer_id'=>'توضیح مختصر',
 ] ?>
