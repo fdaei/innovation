@@ -39,7 +39,7 @@ class EventController extends ActiveController
                     ['class' => HttpBearerAuth::class],
                     ['class' => QueryParamAuth::class, 'tokenParam' => 'accessToken'],
                 ],
-                'optional' => ['index', 'last-event', 'best-organizer', 'similar-event']
+                'optional' => ['index','view', 'best-organizer']
             ],
             'exceptionFilter' => [
                 'class' => ErrorToExceptionFilter::class
@@ -56,21 +56,12 @@ class EventController extends ActiveController
 
     }
     /**
-     * @OA\Info(
-     *   version="1.0.0",
-     *   title="Event API",
-     *   @OA\License(name="MIT"),
-     *   @OA\Attachable()
-     * )
-     */
-
-    /**
      * @OA\Get(
      *    path="/event/index",
      *    tags={"Events"},
-     *    summary="Get events based on the filter",
-     *    description="Returns a list of events based on the filter value",
-     *    operationId="getEvents",
+     *    summary="Get events based on the filter and tags",
+     *    description="Returns a list of events based on the provided filter and tags",
+     *    operationId="getFilteredEvents",
      *    @OA\Parameter(
      *        name="filter",
      *        in="query",
@@ -82,9 +73,19 @@ class EventController extends ActiveController
      *        )
      *    ),
      *    @OA\Parameter(
+     *        name="tag_ids[]",
+     *        in="query",
+     *        description="An array of tag IDs to filter events by",
+     *        required=false,
+     *        @OA\Schema(
+     *            type="array",
+     *            @OA\Items(type="integer")
+     *        )
+     *    ),
+     *    @OA\Parameter(
      *        name="expand",
      *        in="query",
-     *        description="Expands: sponsors, eventTimes",
+     *        description="Expands: eventTimes, sponsors",
      *        required=false,
      *        @OA\Schema(
      *            type="string"
@@ -93,14 +94,69 @@ class EventController extends ActiveController
      *    @OA\Response(
      *        response=200,
      *        description="Success",
+     *        @OA\JsonContent(
+     *            type="object",
+     *            @OA\Property(property="items", type="array",
+     *                @OA\Items(
+     *                    @OA\Property(property="id", type="integer"),
+     *                    @OA\Property(property="title", type="string"),
+     *                    @OA\Property(property="titleBrief", type="string"),
+     *                    @OA\Property(property="picture", type="string", format="url"),
+     *                    @OA\Property(property="organizerInfo", type="object",
+     *                        @OA\Property(property="id", type="integer"),
+     *                        @OA\Property(property="organizer_name", type="string"),
+     *                        @OA\Property(property="organizer_avatar", type="string", format="url"),
+     *                        @OA\Property(property="organizer_picture", type="string", format="url"),
+     *                        @OA\Property(property="organizer_title_brief", type="string"),
+     *                        @OA\Property(property="organizer_instagram", type="string"),
+     *                        @OA\Property(property="organizer_telegram", type="string"),
+     *                        @OA\Property(property="organizer_linkedin", type="string"),
+     *                        @OA\Property(property="updated_at", type="integer"),
+     *                        @OA\Property(property="updated_by", type="integer"),
+     *                        @OA\Property(property="created_at", type="integer"),
+     *                        @OA\Property(property="created_by", type="integer"),
+     *                        @OA\Property(property="deleted_at", type="integer")
+     *                    ),
+     *                    @OA\Property(property="price", type="integer"),
+     *                    @OA\Property(property="priceBeforeDiscount", type="integer"),
+     *                    @OA\Property(property="evandLink", type="string"),
+     *                    @OA\Property(property="description", type="string"),
+     *                    @OA\Property(property="headlines", type="string", nullable=true),
+     *                    @OA\Property(property="address", type="string"),
+     *                    @OA\Property(property="longitude", type="number", format="float"),
+     *                    @OA\Property(property="latitude", type="number", format="float"),
+     *                    @OA\Property(property="status", type="object",
+     *                        @OA\Property(property="code", type="integer"),
+     *                        @OA\Property(property="title", type="string")
+     *                    ),
+     *                    @OA\Property(property="tags", type="array",
+     *                        @OA\Items(
+     *                            @OA\Property(property="id", type="integer"),
+     *                            @OA\Property(property="name", type="string")
+     *                        )
+     *                    ),
+     *                    @OA\Property(property="eventTimes", type="array",
+     *                        @OA\Items(
+     *                            @OA\Property(property="id", type="integer"),
+     *                            @OA\Property(property="start_time", type="string", format="date-time"),
+     *                            @OA\Property(property="end_time", type="string", format="date-time")
+     *                        )
+     *                    ),
+     *                    @OA\Property(property="sponsors", type="array",
+     *                        @OA\Items(
+     *                            @OA\Property(property="id", type="integer"),
+     *                            @OA\Property(property="name", type="string"),
+     *                            @OA\Property(property="logo", type="string", format="url")
+     *                        )
+     *                    )
+     *                )
+     *            )
+     *        )
      *    ),
      *    @OA\Response(response=400, description="Bad Request")
      * )
-     * @throws HttpException
+     * @throws NotFoundHttpException
      */
-
-
-
     public function actionIndex()
     {
         $searchModel = new EventSearch();
@@ -179,14 +235,6 @@ class EventController extends ActiveController
     {
         return new ActiveDataProvider([
             'query' => EventOrganizer::find()->orderBy('id DESC')->limit(3),
-        ]);
-    }
-
-    // need to fix
-    public function actionSimilarEvent()
-    {
-        return new ActiveDataProvider([
-            'query' => Event::find()->where(['status' => Event::STATUS_ACTIVE, 'deleted_at' => 0])->orderBy('id DESC')->limit(3),
         ]);
     }
     protected function findModel($id)
