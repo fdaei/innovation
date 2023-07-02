@@ -11,31 +11,32 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
  * This is the model class for table "{{%event}}".
- *
  * @property int $id
  * @property int $event_organizer_id
  * @property string $title
- * @property string $title_brief
+ * @property string|null $title_brief
  * @property float $price
  * @property float $price_before_discount
- * @property string $description
- * @property string $headlines
+ * @property string $picture
  * @property string $evand_link
+ * @property string|null $event_times
  * @property string $address
  * @property float $longitude
  * @property float $latitude
- * @property string $sponsors
  * @property int $updated_at
  * @property int $updated_by
  * @property int $created_at
  * @property int $created_by
  * @property int $deleted_at
  * @property int $status
+ * @property string|null $headlines
+ * @property string $description
  *
  * @property User $createdBy
- * @property User $updatedBy
+ * @property EventAttendance[] $eventAttendances
  * @property EventTime[] $eventTimes
- * @property EventSponsors[] $eventSponsors
+ * @property User $updatedBy
+ * @property User[] $users
  *
  * @mixin SoftDeleteBehavior
  * @mixin BlameableBehavior
@@ -52,7 +53,6 @@ class Event extends \yii\db\ActiveRecord
     const STATUS_HELD = 3;
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_CREATE = 'create';
-//    public $tag_ids;
 
     /**
      * @var mixed|null
@@ -72,7 +72,7 @@ class Event extends \yii\db\ActiveRecord
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['description', 'address', 'evand_link'], 'string'],
-            [['headlines', 'sponsors'], 'safe'],
+            [['headlines', 'sponsors', 'tagNames'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
@@ -105,6 +105,7 @@ class Event extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
+            'tagNames' => Yii::t('app', 'Tags'),
         ];
     }
 
@@ -136,6 +137,15 @@ class Event extends \yii\db\ActiveRecord
     public function getOrganizerInfo()
     {
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
+    }
+    /**
+     * Gets query for [[EventAttendances]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEventAttendances()
+    {
+        return $this->hasMany(EventAttendance::class, ['event_id' => 'id']);
     }
 
     /**
@@ -205,10 +215,11 @@ class Event extends \yii\db\ActiveRecord
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
-//            'taggable' => [
-//                'class' => Taggable::class,
-//                'classAttribute' => self::class,
-//            ],
+            'taggable' => [
+                'class' => Taggable::class,
+                'classAttribute' => self::class,
+
+            ],
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [
@@ -238,17 +249,6 @@ class Event extends \yii\db\ActiveRecord
             ],
         ];
     }
-
-//    public function getTagIds()
-//    {
-//        return $this->tag_ids;
-//    }
-//
-//    public function setTagIds($tagIds)
-//    {
-//        $this->tag_ids = $tagIds;
-//    }
-
 
     public function fields()
     {
@@ -283,9 +283,9 @@ class Event extends \yii\db\ActiveRecord
                     'title' => Event::itemAlias('Status', $model->status),
                 ];
             },
-//            'tagIds' => function (self $model) {
-//                return $model->tagIds;
-//            },
+            'tags' => function (self $model) {
+                return $model->tagsArray;
+            },
         ];
     }
     public function extraFields()
