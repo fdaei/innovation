@@ -110,6 +110,21 @@ class FreelancerPortfolio extends ActiveRecord
         return $portfolios;
     }
 
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_DELETED => Yii::t('app', 'INACTIVE'),
+            ],
+        ];
+
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
+    }
+
     public function behaviors()
     {
         return [

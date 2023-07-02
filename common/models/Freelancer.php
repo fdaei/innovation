@@ -6,6 +6,7 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 use yii\db\ActiveRecord;
 /**
@@ -147,7 +148,7 @@ class Freelancer extends ActiveRecord
     /**
      * Gets query for [[FreelancerPortfolios]].
      *
-     * @return \yii\db\ActiveQuery|FreelancerPortfolioQuery
+     * @return ActiveQuery|FreelancerPortfolioQuery
      */
     public function getFreelancerPortfolios()
     {
