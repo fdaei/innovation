@@ -10,7 +10,7 @@ use yii\helpers\Html;
 /** @var backend\models\FreelancerPortfolio $freelancerPortfolio */
 
 
-$this->title = 'ویرایش: ' . $model->name;
+$this->title = Yii::t('app','Edit') .' '. $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Freelancers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');

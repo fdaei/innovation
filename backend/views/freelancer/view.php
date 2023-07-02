@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::encode($this->title) ?>
             </h4>
             <div>
-                <?= Html::a('ویرایش', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app','Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
         <div class="card-body">
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     [
                         'attribute' => 'sex',
-                        'value' =>Freelancer::itemAlias('Sex',$model->sex)
+                        'value' => Freelancer::itemAlias('Sex',$model->sex)
                     ],
                     'email:email',
                     'mobile',
@@ -58,17 +58,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'marital_status',
-                        'value' =>Freelancer::itemAlias('Marital',$model->sex)
+                        'value' => Freelancer::itemAlias('Marital',$model->sex)
                     ],
                     [
                         'attribute' => 'military_service_status',
-                        'value' =>Freelancer::itemAlias('Military',$model->sex)
+                        'value' => Freelancer::itemAlias('Military',$model->sex)
                     ],
                     'activity_field',
                     [
                         'attribute' => 'experience',
                         'label' => 'میزان تجربه',
-                        'value' =>Freelancer::itemAlias('Experience',$model->experience),
+                        'value' => Freelancer::itemAlias('Experience',$model->experience),
                     ],
                     'experience_period',
                     [
@@ -101,16 +101,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $str;
                         },
                     ],
-                    [
-                        'attribute' => 'portfolio',
-                        'value' => function ($data) {
-                            $str = '';
-                            foreach ($data->portfolio as $item){
-                                $str .= $item['title'].' , ';
-                            }
-                            return $str;
-                        },
-                    ],
+//                    [
+//                        'attribute' => 'portfolio',
+//                        'value' => function ($data) {
+//                            $str = '';
+//                            foreach ($data->getPO as $item){
+//                                $str .= $item['title'].' , ';
+//                            }
+//                            return $str;
+//                        },
+//                    ],
                     [
                         'attribute' => 'resume_file',
                         'format'=>'raw',

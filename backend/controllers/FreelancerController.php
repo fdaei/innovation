@@ -2,16 +2,21 @@
 
 namespace backend\controllers;
 
-use backend\models\FreelancerPortfolio;
+use \common\models\FreelancerPortfolio;
 use backend\models\FreelancerRecordEducational;
 use backend\models\FreelancerRecordJob;
 use backend\models\FreelancerSkills;
 use common\models\Freelancer;
 use common\models\FreelancerSearch;
+use common\models\Model;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
+use Yii;
 
 /**
  * FreelancerController implements the CRUD actions for Freelancer model.
@@ -63,7 +68,7 @@ class FreelancerController extends Controller
 
     /**
      * Displays a single Freelancer model.
-     * @param int $id ایدی
+     * @param int $id
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -88,14 +93,32 @@ class FreelancerController extends Controller
         $freelancerPortfolio = [new FreelancerPortfolio()];
 
         if ($this->request->isPost) {
+
             $model->skills = FreelancerSkills::Handler($this->request->post('FreelancerSkills'));
             $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
-            $model->portfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
 
             $model->load($this->request->post());
-            $save = $model->save();
 
+
+//            $model->portfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
+
+            $freelancerPortfolio = Model::createMultiple(FreelancerPortfolio::class);
+            Model::loadMultiple($freelancerPortfolio, Yii::$app->request->post());
+            $valid = Model::validateMultiple($freelancerPortfolio);
+
+            if ($valid) {
+                if ($flag = $model->save(false)) {
+                    foreach ($freelancerPortfolio as $portfolio) {
+                        $portfolio->freelancer_id = $model->id;
+                        if (!($flag = $portfolio->save(false))) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $save = $model->save();
             if ($save) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -114,6 +137,7 @@ class FreelancerController extends Controller
         ]);
     }
 
+
     /**
      * Updates an existing Freelancer model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -124,16 +148,24 @@ class FreelancerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $portfolios = FreelancerPortfolio::find()->where(['freelancer_id' => $model->id])->all();
 
         if ($this->request->isPost) {
 
             $model->skills = FreelancerSkills::Handler($this->request->post('FreelancerSkills'));
             $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
-            $model->portfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
+            $portfolios = FreelancerPortfolio::Handler($portfolios);
 
-
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                if ($flag = $model->save()) {
+                    foreach ($portfolios as $portfolio) {
+                        $portfolio->freelancer_id = $model->id;
+                        if (!($flag = $portfolio->save(false))) {
+                            break;
+                        }
+                    }
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -143,7 +175,7 @@ class FreelancerController extends Controller
             'freelancerSkills' => FreelancerSkills::loadDefaultValue($model->skills),
             'freelancerRecordJob' => FreelancerRecordJob::loadDefaultValue($model->record_job),
             'freelancerRecordEducational' => FreelancerRecordEducational::loadDefaultValue($model->record_educational),
-            'freelancerPortfolio' => FreelancerPortfolio::loadDefaultValue($model->portfolio),
+            'freelancerPortfolio' => (empty($portfolios)) ? [new FreelancerPortfolio()] : $portfolios
         ]);
     }
 

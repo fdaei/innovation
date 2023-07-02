@@ -306,21 +306,27 @@ use wbraganca\dynamicform\DynamicFormWidget;
                         </h4>
                     </div>
                     <div class="container-items-portfolio">
-                        <?php foreach ($freelancerPortfolio as $i => $itemEducational): ?>
+                        <?php foreach ($freelancerPortfolio as $i => $portfolio): ?>
                             <div class="item-portfolio panel panel-default" style="padding-right: 0px">
                                 <div class="panel-body">
                                     <div class="row">
+                                        <?php
+                                        // necessary for update action.
+                                        if (! $portfolio->isNewRecord) {
+                                            echo Html::activeHiddenInput($portfolio, "[{$i}]id");
+                                        }
+                                        ?>
                                         <div class="col-sm-3">
-                                            <?= $form->field($itemEducational, "[{$i}]title")->textInput() ?>
+                                            <?= $form->field($portfolio, "[{$i}]title")->textInput() ?>
                                         </div>
                                         <div class="col-sm-3">
-                                            <?= $form->field($itemEducational, "[{$i}]description")->textInput() ?>
+                                            <?= $form->field($portfolio, "[{$i}]description")->textInput() ?>
                                         </div>
                                         <div class="col-sm-3">
-                                            <?= $form->field($itemEducational, "[{$i}]link")->textInput() ?>
+                                            <?= $form->field($portfolio, "[{$i}]link")->textInput() ?>
                                         </div>
                                         <div class="col-sm-2">
-                                            <?= $form->field($itemEducational, "[{$i}]image")->widget(FileInput::class, [
+                                            <?= $form->field($portfolio, "[{$i}]image")->widget(FileInput::class, [
                                                 'options' => ['accept' => 'image/*'],
                                                 'pluginOptions' => [
                                                     'showPreview' => false,

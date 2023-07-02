@@ -141,6 +141,15 @@ class Freelancer extends ActiveRecord
     public function getCity(){
         return City::findOne(['id' => $this->city]);
     }
+    /**
+     * Gets query for [[FreelancerPortfolios]].
+     *
+     * @return \yii\db\ActiveQuery|FreelancerPortfolioQuery
+     */
+    public function getFreelancerPortfolios()
+    {
+        return $this->hasMany(FreelancerPortfolio::class, ['freelancer_id' => 'id'])->inverseOf('freelancer');
+    }
 
     public function behaviors()
     {
@@ -184,7 +193,6 @@ class Freelancer extends ActiveRecord
                 'attribute' => 'header_picture_desktop',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
