@@ -1,9 +1,15 @@
 <?php
 
+use common\models\Tag;
+use common\widgets\TagsInput;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 use kartik\file\FileInput;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
 
 
@@ -11,9 +17,9 @@ use yii\widgets\MaskedInput;
 /** @var common\models\Event $model */
 /** @var yii\bootstrap4\ActiveForm $form */
 /** @var common\models\EventTime $EventTimes */
+/** @var common\models\Tag $searchedTags */
 
 ?>
-
 
 <div class="event-form">
     <?php $form = ActiveForm::begin(['id' => 'event_form']); ?>
@@ -61,10 +67,44 @@ use yii\widgets\MaskedInput;
                         ],
                     ])->label('قیمت قبل از تخفیف (تومان)') ?>
             </div>
-            <div class='col-md-6 '>
+            <div class='col-md-4 mt-4 '>
+
+                <?= $form->field($model, 'tagNames')->widget(Select2::class, [
+                    'options' => ['placeholder' => 'Select tags...', 'multiple' => true],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'closeOnSelect' => false,
+                        'minimumInputLength' => 2,
+                        'theme' => Select2::THEME_BOOTSTRAP,
+                        'ajax' => [
+                            'url' => Url::to(['/tag/list', 'type' => null]),
+                            'dataType' => 'json',
+                            'data' => new JsExpression('function(params) { return {query:params.term}; }'),
+                        ],
+                        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                        'templateResult' => new JsExpression('function (data) { return (data.html != undefined) ? data.text : null; }'),
+                        'templateSelection' => new JsExpression('function (data) {
+            var selectElement = $(data.element).parent();
+            if (selectElement.data("tags")[data.id] != undefined) {
+                var type = selectElement.data("tags")[data.id];
+                var typeClass = $(".TagInput").data("tags-type")[type];
+                var tagHtml = "<span class=\"text-bold badge badge-" + typeClass + "\">" + data.text + "</span>";
+                tagHtml = $(tagHtml).addClass("text-dark");
+                return tagHtml;
+            } else {
+                return data.text;
+            }
+        }'),
+                    ],
+                ])->label(false); ?>
+
+
+
+            </div>
+            <div class='col-md-4 '>
                 <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
             </div>
-            <div class='col-md-6 '>
+            <div class='col-md-4 '>
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
             </div>
             <div class='col-md-6 '>
@@ -87,7 +127,7 @@ use yii\widgets\MaskedInput;
                         'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
                         'initialPreviewFileType' => 'image',
                     ]
-                ]) ?>
+                ])->hint("Width:1180px,Height:504,Size:2Mb") ?>
             </div>
             <span class='col-md-6'>
                  <p class="card-title border-bottom">
@@ -129,14 +169,15 @@ use yii\widgets\MaskedInput;
                                     ?>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
-                                            <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>
+                                            <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف
+                                            </button>
                                         </div>
-<!--                                        --><?php //endif;?>
+                                        <!--                                        --><?php //endif;?>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true ,'value'=> $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i',$time->start_at)):"",'data-jdp'=>true]) ?>
+                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true, 'value' => $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->start_at)) : "", 'data-jdp' => true]) ?>
                                         </div>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true ,'value'=> $time->end_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i',$time->end_at)):"",'data-jdp'=>true]) ?>
+                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true, 'value' => $time->end_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->end_at)) : "", 'data-jdp' => true]) ?>
                                         </div>
                                     </div>
                                 </div>

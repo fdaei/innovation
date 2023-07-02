@@ -19,8 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="m-4">
             <div class="row">
                 <div class="col-10 row">
+                    <div class="col-12 ">
+                        <?php foreach ($model->tagsArray as $tag ): ?>
+                            <span class="text-muted">#<?= $tag['name'] ?></span>
+                        <?php endforeach; ?>
+                    </div>
                     <div class="col-4">
-
                         <label for="name"> <?= Yii::t('app', 'title') ?>:</label>
                         <p><?= $model->title ?></p>
                     </div>
