@@ -74,6 +74,5 @@ class m230702_055247_create_table_freelancer_portfolio extends Migration
     public function safeDown()
     {
         $this->dropTable('{{%freelancer_portfolio}}');
-
     }
 }
