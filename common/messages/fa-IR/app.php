@@ -298,4 +298,9 @@ return [
     'Event Organizer'=>'سازمان رویداد',
     'Start At'=>'شروع',
     'event_organizer_id'=>'توضیح مختصر',
+    'Log Time'=>'زمان',
+    'Category'=>'دسته بندی',
+    'Level'=>'سطح',
+    'Prefix'=>'پیشوند',
+    'Message'=>'پیام',
 ] ?>
