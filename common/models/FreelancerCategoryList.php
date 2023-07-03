@@ -96,7 +96,6 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
                 'attribute' => 'picture',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
