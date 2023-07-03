@@ -67,6 +67,7 @@ class LogSearch extends Log
         $query->andFilterWhere(['like', 'category', $this->category])
             ->andFilterWhere(['like', 'prefix', $this->prefix])
             ->andFilterWhere(['like', 'message', $this->message]);
+        $query->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }
