@@ -15,17 +15,20 @@ use yii\bootstrap4\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'level') ?>
-
-    <?= $form->field($model, 'category') ?>
-
+<!--    --><?php //= $form->field($model, 'id') ?>
+<!---->
+<!--    --><?php //= $form->field($model, 'level') ?>
+<!---->
+<!--    --><?php //= $form->field($model, 'category') ?>
+    <div class="row">
+        <div class="col-md-3">
     <?= $form->field($model, 'log_time') ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'prefix') ?>
-
-    <?php // echo $form->field($model, 'message') ?>
+<!--    --><?php //= $form->field($model, 'prefix') ?>
+<!---->
+<!--    --><?php //// echo $form->field($model, 'message') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

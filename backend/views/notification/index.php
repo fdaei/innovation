@@ -4,7 +4,7 @@ use common\models\Notification;
 use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
+use common\widgets\grid\ActionColumn;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var common\models\NotificationSearch $searchModel */
