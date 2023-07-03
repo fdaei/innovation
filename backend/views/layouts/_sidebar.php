@@ -159,7 +159,7 @@ $menu_items = [
     ],
     [
         'group' => 'swagger',
-        'label' => Yii::t('app', 'swagger'),
+        'label' => 'مستندات API',
         'icon' => 'fas fa-check-square',
         'url' => ['/swagger'],
         'encode' => false,
