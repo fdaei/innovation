@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\models\Freelancer;
-
+use common\models\FreelancerPortfolio;
 /** @var yii\web\View $this */
 /** @var common\models\Freelancer $model */
 
@@ -101,16 +101,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $str;
                         },
                     ],
-//                    [
-//                        'attribute' => 'portfolio',
-//                        'value' => function ($data) {
-//                            $str = '';
-//                            foreach ($data->getPO as $item){
-//                                $str .= $item['title'].' , ';
-//                            }
-//                            return $str;
-//                        },
-//                    ],
+                    [
+                        'attribute' => 'portfolio',
+                        'value' => function ($data) {
+                            $str = '';
+                            $portfolio = FreelancerPortfolio::find()->andWhere(['freelancer_id' => $data->id])->all();
+                            foreach ($portfolio as $item){
+                                $str .= $item['title'].' , ';
+                            }
+                            return $str;
+                        },
+                    ],
                     [
                         'attribute' => 'resume_file',
                         'format'=>'raw',

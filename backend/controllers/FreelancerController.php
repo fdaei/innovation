@@ -141,11 +141,13 @@ class FreelancerController extends Controller
             $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
             $portfolios = FreelancerPortfolio::Handler($portfolios);
-
             if ($model->load($this->request->post()) && $model->save()) {
-                foreach ($portfolios as $portfolio) {
+                foreach ($portfolios as $index => $portfolio) {
                     $portfolio->freelancer_id = $model->id;
-                    $portfolio->save(false);
+                    $portfolio->instanceNames = [
+                        'image' => "FreelancerPortfolio[{$index}][image]"
+                    ];
+                    $portfolio->save();
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
             }

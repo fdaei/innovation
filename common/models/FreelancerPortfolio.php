@@ -51,10 +51,13 @@ class FreelancerPortfolio extends ActiveRecord
         return [
             [['freelancer_id', 'title'], 'required'],
             [['freelancer_id', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
-            [['title', 'link'], 'string', 'max' => 128],
+            [['title', 'link'], 'string', 'max' => 32],
             [['description'], 'string', 'max' => 512],
-            ['image', 'image'],
+            ['image', 'file'],
+            ['link', 'url'],
             [['freelancer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Freelancer::class, 'targetAttribute' => ['freelancer_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -110,6 +113,7 @@ class FreelancerPortfolio extends ActiveRecord
             FreelancerPortfolio::deleteAll(['id' => $deletedIDs]);
         }
 
+//        dd($model,$portfolios);
         return $portfolios;
     }
 
@@ -156,7 +160,7 @@ class FreelancerPortfolio extends ActiveRecord
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'image',
                 'scenarios' => [self::SCENARIO_DEFAULT],
-                'instanceByName' => false,
+                'instanceByName' => true,
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,

@@ -77,14 +77,16 @@ class Freelancer extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'experience_period'], 'required'],
-            [['sex', 'city', 'province', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
+            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience','updated_by', 'created_at', 'created_by'], 'required'],
+            [['sex', 'city', 'province', 'experience_period', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['record_job', 'record_educational', 'portfolio'], 'safe'],
             [['email'], 'email'],
             [['mobile'], 'string', 'max' => 11],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
             [['description_user','freelancer_description'], 'string'],
             [['name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period'], 'string', 'max' => 255],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -111,7 +113,7 @@ class Freelancer extends ActiveRecord
             'record_educational' => Yii::t('app', 'Record Educational'),
             'portfolio' => Yii::t('app', 'Portfolio'),
             'resume_file' => Yii::t('app', 'Resume File'),
-            'description_user' => Yii::t('app', 'Description User'),
+            'description_user' => Yii::t('app', 'Further Details'),
             'project_number' => Yii::t('app', 'Project Number'),
             'status' => Yii::t('app', 'Status'),
             'updated_by' => Yii::t('app', 'Updated By'),
