@@ -6,6 +6,7 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -13,15 +14,20 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property int $id
  * @property string $title
- * @property string $brief_description
- * @property string $picture
+ * @property string|null $brief_description
+ * @property string|null $picture
  * @property int $status
- * @property int|null $updated_by
+ * @property string $model_class
+ * @property int $updated_by
  * @property int|null $updated_at
  * @property int $created_at
  * @property int $deleted_at
+ * @property int $created_by
+ *
+ * @property User $createdBy
+ * @property User $updatedBy
  */
-class FreelancerCategoryList extends \yii\db\ActiveRecord
+class FreelancerCategoryList extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -37,9 +43,11 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'brief_description', 'status'], 'required'],
-            [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at'], 'integer'],
-            [['title', 'brief_description', 'picture'], 'string', 'max' => 255],
+            [['title', 'model_class'], 'required'],
+            [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at', 'created_by'], 'integer'],
+            [['title', 'brief_description', 'picture', 'model_class'], 'string', 'max' => 255],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -54,11 +62,33 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
             'brief_description' => Yii::t('app', 'Brief Description'),
             'picture' => Yii::t('app', 'Picture'),
             'status' => Yii::t('app', 'Status'),
+            'model_class' => Yii::t('app', 'Model Class'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_at' => Yii::t('app', 'Created At'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
+            'created_by' => Yii::t('app', 'Created By'),
         ];
+    }
+
+    /**
+     * Gets query for [[CreatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by'])->inverseOf('freelancerCategoryLists');
+    }
+
+    /**
+     * Gets query for [[UpdatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by'])->inverseOf('freelancerCategoryLists0');
     }
 
     /**
@@ -67,7 +97,9 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        return new FreelancerCategoryListQuery(get_called_class());
+        $query = new FreelancerCategoryListQuery(get_called_class());
+        return $query->notDeleted();
+
     }
     public function behaviors()
     {
@@ -96,14 +128,13 @@ class FreelancerCategoryList extends \yii\db\ActiveRecord
                 'attribute' => 'picture',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/freelancer",
-                'basePath' => "@inceRoot/freelancer",
-                'path' => "@inceRoot/freelancer",
-                'url' => "@cdnWeb/freelancer"
+                'cdnPath' => "@cdnRoot/freelancerCategoryList",
+                'basePath' => "@inceRoot/freelancerCategoryList",
+                'path' => "@inceRoot/freelancerCategoryList",
+                'url' => "@cdnWeb/freelancerCategoryList"
             ],
 
         ];
