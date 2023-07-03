@@ -8,6 +8,7 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -20,23 +21,19 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string $color
  * @property int $status
  * @property int $deleted
- * @property string $description
+ * @property Json $additional_data
  */
 class Tag extends ActiveRecord
 {
     const TYPE_RELATIONAL = 1;
-    const TYPE_OCCASIONAL = 2;
-    const TYPE_SPECIAL = 3;
-    const TYPE_LABEL = 4;
-    const TYPE_USER = 5;
-    const TYPE_INVOICE_UNIQUE = 6;
+    const TYPE_LABEL = 2;
 
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
 
     public static function tableName()
     {
-        return '{{' . CoreHelper::getDsnAttribute('dbname', Yii::$app->db->dsn) . '}}.{{%tag}}';
+        return '{{' . CoreHelper::getDsnAttribute('dbname', Yii::$app->db->dsn) . '}}.{{%tags}}';
     }
 
     public function rules()
@@ -51,7 +48,7 @@ class Tag extends ActiveRecord
             [['name', 'type', 'deleted_at'], 'unique', 'targetAttribute' => ['name', 'type', 'deleted_at'], 'message' => 'نوع و نام قبلا گرفته شده است!'],
             ['name', 'string', 'max' => 64],
             ['color', 'string', 'max' => 7],
-            ['description', 'string', 'max' => 255]
+            ['additional_data','safe']
         ];
     }
 
@@ -65,8 +62,7 @@ class Tag extends ActiveRecord
             'frequency' => Yii::t('app', 'Frequency'),
             'status' => Yii::t('app', 'status'),
             'color' => Yii::t('app', 'Color Id'),
-            'deleted_at' => Yii::t('app', 'Deleted At'),
-            'description' => Yii::t('app', 'Description')
+            'deleted_at' => Yii::t('app', 'Deleted At')
         ];
     }
 
@@ -75,7 +71,7 @@ class Tag extends ActiveRecord
      */
     public function getTagAssigns()
     {
-        return $this->hasMany(TagAssign::className(), ['tag_id' => 'id']);
+        return $this->hasMany(TagAssign::class, ['tag_id' => 'id']);
     }
 
     public static function frequentlyTags($modelClass, $type)
@@ -110,7 +106,7 @@ class Tag extends ActiveRecord
     {
         $this->status = self::STATUS_DELETED;
         $this->deleted_at = time();
-        if ($this->canDelete() && $this->save()) {
+        if ($this->canDelete() && $this->save(false)) {
             return true;
         } else {
             return false;
@@ -121,31 +117,26 @@ class Tag extends ActiveRecord
      * {@inheritdoc}
      * @return TagQuery the active query used by this AR class.
      */
-//    public static function find()
-//    {
-//        $query = new TagQuery(get_called_class());
-//        return $query->active();
-//    }
+    public static function find()
+    {
+        $query = new TagQuery(get_called_class());
+        return $query->notDeleted();
+    }
 
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
             'Type' => [
                 self::TYPE_RELATIONAL => Yii::t("app", "Relational"),
-                self::TYPE_OCCASIONAL => Yii::t("app", "Occasional"),
-                self::TYPE_SPECIAL => Yii::t("app", "Special"),
                 self::TYPE_LABEL => Yii::t("app", "Label"),
-                self::TYPE_USER => Yii::t("app", "User"),
-                self::TYPE_INVOICE_UNIQUE => Yii::t("app", "Invoice Unique")
+
             ],
             'TypeClass' => [
                 self::TYPE_RELATIONAL => 'info',
-                self::TYPE_OCCASIONAL => 'success',
-                self::TYPE_SPECIAL => 'danger',
                 self::TYPE_LABEL => 'primary',
             ],
             'Status' => [
-                self::STATUS_ACTIVE => Yii::t("app", "Status Active"),
+                self::STATUS_ACTIVE => Yii::t("app", "Active"),
                 self::STATUS_DELETED => Yii::t("app", "Deleted"),
             ],
             'StatusColor' => [
@@ -162,14 +153,6 @@ class Tag extends ActiveRecord
     public function behaviors()
     {
         return [
-            'timestamp' => [
-                'class' => TimestampBehavior::class
-            ],
-            [
-                'class' => BlameableBehavior::class,
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [

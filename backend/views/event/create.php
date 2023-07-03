@@ -7,6 +7,7 @@ use yii\web\View;
 /** @var View $this */
 /** @var Event $model */
 /** @var EventTime[] $EventTimes */
+/** @var common\models\Tag $searchedTags */
 
 $this->title = Yii::t('app', 'Create Event');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Events'), 'url' => ['index']];
@@ -17,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $this->render('_form', [
             'model' => $model,
             'EventTimes' => $EventTimes,
+            'searchedTags' => $searchedTags,
         ]) ?>
     </div>
 </div>

@@ -1,9 +1,14 @@
 <?php
 
-use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
-use wbraganca\dynamicform\DynamicFormWidget;
+use common\models\Tag;
 use kartik\file\FileInput;
+use kartik\select2\Select2;
+use wbraganca\dynamicform\DynamicFormWidget;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
 
 
@@ -11,9 +16,9 @@ use yii\widgets\MaskedInput;
 /** @var common\models\Event $model */
 /** @var yii\bootstrap4\ActiveForm $form */
 /** @var common\models\EventTime $EventTimes */
+/** @var common\models\Tag $searchedTags */
 
 ?>
-
 
 <div class="event-form">
     <?php $form = ActiveForm::begin(['id' => 'event_form']); ?>
@@ -61,10 +66,56 @@ use yii\widgets\MaskedInput;
                         ],
                     ])->label('قیمت قبل از تخفیف (تومان)') ?>
             </div>
-            <div class='col-md-6 '>
+            <div class='col-md-4'>
+                <?= $form->field($model, 'tagNames')->widget(Select2::class, [
+                    'initValueText' => ArrayHelper::map($model->tagsArray, 'id', 'name'),
+                    'value' => ArrayHelper::map($model->tagsArray, 'id', 'id'),
+                    'options' => [
+                        'multiple' => true,
+                        'placeholder' => 'یک یا چند برچسب را انتخاب نمایید...',
+                        'dir' => 'rtl',
+                        'data-id' => $model->id,
+                        'data-tags' => ArrayHelper::index(ArrayHelper::toArray(Tag::find()->all(), [
+                            'common\models\Tag' => [
+                                'tag_id',
+                                'type',
+                                'color'
+                            ]
+                        ]), 'tag_id'),
+                        'class' => 'form-control TagInput',
+                        'data-tags-type' => Tag::itemAlias('TypeClass')
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'closeOnSelect' => false,
+                        'minimumInputLength' => 2,
+                        'ajax' => [
+                            'url' => Yii::$app->urlManager->createAbsoluteUrl(['/tag/list']),
+                            'dataType' => 'json',
+                            'data' => new JsExpression('function(params) { return {query:params.term}; }'),
+                        ],
+                        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                        'templateResult' => new JsExpression('function (data) { return (data.html != undefined) ? data.text : null; }'),
+                        'templateSelection' => new JsExpression('function (data)
+                                    {
+                                        var selectElement = $(data.element).parent();
+                                        if(selectElement != undefined){
+                                            var type = data.type ? data.type : selectElement.data("tags")[data.id].type;
+                                            var color = data.color ? data.color : selectElement.data("tags")[data.id].color;
+                                            var typeClass = $(".TagInput").data("tags-type")[type];
+                                            return color == "" ? 
+                                            "<span class=\"mx-1 font-medium text-dark badge badge-" + typeClass + "\">" + data.text + "</span>"
+                                            :
+                                            "<span class=\"mx-1 font-medium text-dark\" style=\"background-color:#" + color + ";padding: .20em .5em;border-radius: 2px;font-size: 90%;\">" + data.text + "</span>";
+                                        }
+                                    }'),
+                    ]
+                ]); ?>
+            </div>
+            <div class='col-md-4 '>
                 <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
             </div>
-            <div class='col-md-6 '>
+            <div class='col-md-4 '>
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
             </div>
             <div class='col-md-6 '>
@@ -87,7 +138,7 @@ use yii\widgets\MaskedInput;
                         'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
                         'initialPreviewFileType' => 'image',
                     ]
-                ]) ?>
+                ])->hint("Width:1180px,Height:504,Size:2Mb") ?>
             </div>
             <span class='col-md-6'>
                  <p class="card-title border-bottom">
@@ -96,7 +147,7 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'longitude')->textInput(['style' => 'display: none'])->label(false) ?>
                 <?= $form->field($model, 'latitude')->textInput(['style' => 'display: none'])->label(false) ?>
             </span>
-            <div class='col-md-12 kohl' style="">
+            <div class='col-md-12'>
                 <div class="panel-body ">
                     <?php DynamicFormWidget::begin([
                         'widgetContainer' => 'dynamicform_wrapper2', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -129,14 +180,15 @@ use yii\widgets\MaskedInput;
                                     ?>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
-                                            <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف</button>
+                                            <button type="button" class="remove-item_time btn btn-danger btn-xs">حذف
+                                            </button>
                                         </div>
-<!--                                        --><?php //endif;?>
+                                        <!--                                        --><?php //endif;?>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true ,'value'=> $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i',$time->start_at)):"",'data-jdp'=>true]) ?>
+                                            <?= $form->field($time, "[{$i}]start_at")->textInput(['maxlength' => true, 'value' => $time->start_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->start_at)) : "", 'data-jdp' => true])->label('شروع رویداد') ?>
                                         </div>
                                         <div class="col-sm-6">
-                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true ,'value'=> $time->end_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i',$time->end_at)):"",'data-jdp'=>true]) ?>
+                                            <?= $form->field($time, "[{$i}]end_at")->textInput(['maxlength' => true, 'value' => $time->end_at ? Yii::$app->pdate->tr_num(Yii::$app->pdate->jdate('Y/m/d H:i', $time->end_at)) : "", 'data-jdp' => true])->label('پایان رویداد') ?>
                                         </div>
                                     </div>
                                 </div>

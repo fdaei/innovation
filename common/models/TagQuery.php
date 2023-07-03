@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
+
 /**
  * This is the ActiveQuery class for [[Tag]].
  *
@@ -9,6 +11,14 @@ namespace common\models;
  */
 class TagQuery extends \yii\db\ActiveQuery
 {
+    public function behaviors()
+    {
+        return [
+            'softDelete' => [
+                'class' => SoftDeleteQueryBehavior::class,
+            ],
+        ];
+    }
     /**
      * {@inheritdoc}
      * @return Tag[]|array

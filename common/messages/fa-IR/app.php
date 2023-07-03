@@ -284,5 +284,17 @@ return [
     'Waiting' => 'انتظار تایید',
     'Confirm' => 'تایید شده',
     'Reject' => 'رد شده',
+    'Tags'=>'تگ ها ',
+    'Frequency'=>'تعداد تکرار',
+    'create tag'=>'ایجاد تگ',
+    'Relational'=>'وابستگی',
+    'Label'=>'برچسب',
+    'Logs'=>'لاگ',
+    'swagger'=>'سوگرا',
+    'Title Brief'=>'توضیح مختصر',
+    'Evand link'=>'لینک ایوند',
+    'Event Organizer'=>'سازمان رویداد',
+    'Start At'=>'شروع',
+    'event_organizer_id'=>'توضیح مختصر',
     'Settings' => 'تنظیمات'
-] ?>
+]; ?>

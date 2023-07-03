@@ -16,7 +16,7 @@ class Module extends \yii\base\Module
      *          url="http://api.ince.local/v1"
      *     ),
      *     @OA\Server(
-     *          url="http://api.avapardaz.vc/v1"
+     *          url="https://api.avapardaz.vc/v1"
      *     ),
      *     @OA\Info(
      *         version="1.0",

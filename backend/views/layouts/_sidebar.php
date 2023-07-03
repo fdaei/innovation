@@ -113,10 +113,10 @@ $menu_items = [
         'url' => ['/activity/']
     ],
     [
-        'group' => 'Status',
-        'label' => Yii::t('app', 'Status'),
+        'group' => 'Tags',
+        'label' => Yii::t('app', 'Tags'),
         'icon' => 'fas fa-server',
-        'url' => ['/statuses/']
+        'url' => ['/tag/index']
     ],
     [
         'group' => 'Branches',
@@ -159,9 +159,11 @@ $menu_items = [
     ],
     [
         'group' => 'swagger',
-        'label' => Yii::t('app', 'swagger'),
+        'label' => 'مستندات API',
         'icon' => 'fas fa-check-square',
-        'url' => ['/swagger']
+        'url' => ['/swagger'],
+        'encode' => false,
+        'template' => '<a class="sidebar-link" href="{url}" target="_blank">{icon} {label}</a>',
     ],
     [
         'group' => 'Settings',

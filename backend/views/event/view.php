@@ -18,9 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $this->beginBlock('Event'); ?>
         <div class="m-4">
             <div class="row">
-                <div class="col-10 row">
+                <div class="col-7 row">
+                    <div class="col-12 ">
+                        <?php foreach ($model->tagsArray as $tag ): ?>
+                            <span class="text-muted">#<?= $tag['name'] ?></span>
+                        <?php endforeach; ?>
+                    </div>
                     <div class="col-4">
-
                         <label for="name"> <?= Yii::t('app', 'title') ?>:</label>
                         <p><?= $model->title ?></p>
                     </div>
@@ -45,8 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p><?= $model->address ?></p>
                     </div>
                 </div>
-                <div class="col-2">
-                    <img style="height: 300px;width: 300px;" src="<?= $model->getUploadUrl('picture') ?>">
+                <div class="col-5">
+                    <img style="height: 300px;width: 650px;" src="<?= $model->getUploadUrl('picture') ?>">
                 </div>
                 <div class="col-12">
                     <label for="name"> <?= Yii::t('app', 'description') ?>:</label>
