@@ -287,8 +287,6 @@ return [
     'Tags'=>'تگ ها ',
     'Frequency'=>'تعداد تکرار',
     'create tag'=>'ایجاد تگ',
-    'Reset'=>'مجدد',
-    'Search'=>'جستجو',
     'Relational'=>'وابستگی',
     'Label'=>'برچسب',
     'Logs'=>'لاگ',
@@ -298,4 +296,5 @@ return [
     'Event Organizer'=>'سازمان رویداد',
     'Start At'=>'شروع',
     'event_organizer_id'=>'توضیح مختصر',
-] ?>
+    'Settings' => 'تنظیمات'
+]; ?>

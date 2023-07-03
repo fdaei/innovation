@@ -4,7 +4,7 @@ use sadi01\moresettings\widgets\SettingsWidget;
 
 /* @var $this yii\web\View */
 
-$this->title = Yii::t('common', 'Settings');
+$this->title = Yii::t('app', 'Settings');
 ?>
 <div id="settings" class="site-settings">
     <div class="accordion" id="accordionSettings">
@@ -15,7 +15,7 @@ $this->title = Yii::t('common', 'Settings');
                  aria-expanded="false"
                  aria-controls="collapse-CDN">
                 <div class="text-left text-white text-bold">
-                    <?= Yii::t('common', 'CDN') ?>
+                    <?= Yii::t('app', 'CDN') ?>
                 </div>
             </div>
             <div id="collapse-CDN" class="collapse card-body bg-light"
