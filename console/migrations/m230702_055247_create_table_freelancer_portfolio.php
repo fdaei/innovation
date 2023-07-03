@@ -27,10 +27,10 @@ class m230702_055247_create_table_freelancer_portfolio extends Migration
                 'description' => $this->string(512),
                 'image' => $this->string(128),
                 'status' => $this->tinyInteger()->defaultValue(1)->notNull(),
-                'updated_by' => $this->integer()->unsigned(),
-                'updated_at' => $this->integer()->unsigned()->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
+                'updated_at' => $this->integer()->unsigned()->notNull(),
                 'created_by' => $this->integer()->unsigned()->notNull(),
+                'updated_by' => $this->integer()->unsigned(),
                 'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],
             $tableOptions
@@ -45,6 +45,27 @@ class m230702_055247_create_table_freelancer_portfolio extends Migration
             'RESTRICT',
             'RESTRICT'
         );
+
+        $this->addForeignKey(
+            'freelancer_portfolio_user_ibfk_1',
+            '{{%freelancer_portfolio}}',
+            ['created_by'],
+            '{{%user}}',
+            ['id'],
+            'RESTRICT',
+            'RESTRICT'
+        );
+
+        $this->addForeignKey(
+            'freelancer_portfolio_user_ibfk_2',
+            '{{%freelancer_portfolio}}',
+            ['updated_by'],
+            '{{%user}}',
+            ['id'],
+            'RESTRICT',
+            'RESTRICT'
+        );
+
     }
 
     /**
