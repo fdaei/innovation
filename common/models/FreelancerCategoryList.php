@@ -25,6 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_by
  *
  * @property User $createdBy
+ * @property FreelancerCategories[] $freelancerCategories
  * @property User $updatedBy
  */
 class FreelancerCategoryList extends ActiveRecord
@@ -101,6 +102,17 @@ class FreelancerCategoryList extends ActiveRecord
         return $query->notDeleted();
 
     }
+
+    /**
+     * Gets query for [[FreelancerCategories]].
+     *
+     * @return \yii\db\ActiveQuery|FreelancerCategoriesQuery
+     */
+    public function getFreelancerCategories()
+    {
+        return $this->hasMany(FreelancerCategories::class, ['categories_id' => 'id'])->inverseOf('categories');
+    }
+
     public function behaviors()
     {
         return [

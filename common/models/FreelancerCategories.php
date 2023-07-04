@@ -116,7 +116,7 @@ class FreelancerCategories extends ActiveRecord
                 'restoreAttributeValues' => [
                     'deleted_at' => 0,
                 ],
-                'replaceRegularDelete' => false, // mutate native `delete()` method
+                'replaceRegularDelete' => false,
                 'invokeDeleteEvents' => false
             ],
         ];

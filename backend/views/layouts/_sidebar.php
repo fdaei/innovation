@@ -147,7 +147,7 @@ $menu_items = [
                 'group' => 'freelancer',
                 'label' => Yii::t('app', 'Freelancer Categrory'),
                 'icon' => 'fas fa-check-square',
-                'url' => ['/freelancer-category/']
+                'url' => ['/freelancer-category-list/']
             ],
         ]
     ],

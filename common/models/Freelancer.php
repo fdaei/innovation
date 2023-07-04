@@ -63,6 +63,7 @@ class Freelancer extends ActiveRecord
     const MILITARY_STATUS_INCLUDED = 2;
     const MILITARY_STATUS_EXEMPT = 3;
 
+    public $categories_list = [];
     /**
      * {@inheritdoc}
      */
@@ -77,7 +78,7 @@ class Freelancer extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience','updated_by', 'created_at', 'created_by'], 'required'],
+            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience'], 'required'],
             [['sex', 'city', 'province', 'experience_period', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['record_job', 'record_educational', 'portfolio'], 'safe'],
             [['email'], 'email'],

@@ -10,6 +10,7 @@ use kartik\select2\Select2;
 use kartik\depdrop\DepDrop;
 use yii\helpers\Url;
 use wbraganca\dynamicform\DynamicFormWidget;
+use common\models\FreelancerCategoryList;
 
 /** @var yii\web\View $this */
 /** @var common\models\Freelancer $model */
@@ -129,6 +130,18 @@ use wbraganca\dynamicform\DynamicFormWidget;
         </div>
 
         <div class="col-sm-12">
+            <?= $form->field($model, 'categories_list')
+                ->widget(Select2::class, [
+                    'data' => ArrayHelper::map(FreelancerCategoryList::find()->all(), 'id', 'title'),
+                    'options' => ['placeholder' => 'Select a state ...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'multiple' => true
+                    ],
+                ]); ?>
+        </div>
+
+        <div class="col-sm-12">
             <hr>
         </div>
 
@@ -152,26 +165,27 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     <div class="panel-heading">
                         <h4>
                             <?= Yii::t('app', 'Skills') ?>
-                            <button type="button" class="add-item-skill btn btn-success p-1"><span class="fa fa-plus"> افزودن</button>
+                            <button type="button" class="add-item-skill btn btn-success p-1"><span class="fa fa-plus"> افزودن
+                            </button>
                         </h4>
                     </div>
                     <div class="container-items-skill">
                         <?php foreach ($freelancerSkills as $i => $skill): ?>
-                        <div class="item-skill panel panel-default" style="padding-right: 0px">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <?= $form->field($skill, "[{$i}]title")
-                                            ->label(false)
-                                            ->textInput() ?>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button type="button" class="remove-item-skill btn btn-danger btn-xs">حذف
-                                        </button>
+                            <div class="item-skill panel panel-default" style="padding-right: 0px">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <?= $form->field($skill, "[{$i}]title")
+                                                ->label(false)
+                                                ->textInput() ?>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="button" class="remove-item-skill btn btn-danger btn-xs">حذف
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <?php endforeach; ?>
                     </div>
                     <?php DynamicFormWidget::end(); ?>
@@ -199,27 +213,28 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     <div class="panel-heading">
                         <h4>
                             <?= Yii::t('app', 'Record Job') ?>
-                            <button type="button" class="add-item-recordJob btn btn-success p-1"><span class="fa fa-plus"> افزودن</button>
+                            <button type="button" class="add-item-recordJob btn btn-success p-1"><span
+                                    class="fa fa-plus"> افزودن</button>
                         </h4>
                     </div>
                     <div class="container-items-recordJob">
                         <?php foreach ($freelancerRecordJob as $i => $item): ?>
-                        <div class="item-recordJob panel panel-default" style="padding-right: 0px">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <?= $form->field($item, "[{$i}]title")
-                                            ->label(false)
-                                            ->textInput() ?>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button type="button" class="remove-item-recordJob btn btn-danger btn-xs">
-                                            حذف
-                                        </button>
+                            <div class="item-recordJob panel panel-default" style="padding-right: 0px">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <?= $form->field($item, "[{$i}]title")
+                                                ->label(false)
+                                                ->textInput() ?>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="button" class="remove-item-recordJob btn btn-danger btn-xs">
+                                                حذف
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <?php endforeach; ?>
                     </div>
                     <?php DynamicFormWidget::end(); ?>
@@ -247,27 +262,29 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     <div class="panel-heading">
                         <h4>
                             <?= Yii::t('app', 'Record Educational') ?>
-                            <button type="button" class="add-item-recordEducational btn btn-success p-1"><span class="fa fa-plus"> افزودن</button>
+                            <button type="button" class="add-item-recordEducational btn btn-success p-1"><span
+                                    class="fa fa-plus"> افزودن</button>
                         </h4>
                     </div>
                     <div class="container-items-recordEducational">
                         <?php foreach ($freelancerRecordEducational as $i => $itemEducational): ?>
-                        <div class="item-recordEducational panel panel-default" style="padding-right: 0px">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <?= $form->field($itemEducational, "[{$i}]title")
-                                            ->label(false)
-                                            ->textInput() ?>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button type="button" class="remove-item-recordEducational btn btn-danger btn-xs">
-                                            حذف
-                                        </button>
+                            <div class="item-recordEducational panel panel-default" style="padding-right: 0px">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <?= $form->field($itemEducational, "[{$i}]title")
+                                                ->label(false)
+                                                ->textInput() ?>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button type="button"
+                                                    class="remove-item-recordEducational btn btn-danger btn-xs">
+                                                حذف
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <?php endforeach; ?>
                     </div>
                     <?php DynamicFormWidget::end(); ?>
@@ -302,7 +319,8 @@ use wbraganca\dynamicform\DynamicFormWidget;
                     <div class="panel-heading">
                         <h4>
                             <?= Yii::t('app', 'Portfolio') ?>
-                            <button type="button" class="add-item-portfolio btn btn-success p-1"><span class="fa fa-plus"> افزودن</button>
+                            <button type="button" class="add-item-portfolio btn btn-success p-1"><span
+                                    class="fa fa-plus"> افزودن</button>
                         </h4>
                     </div>
                     <div class="container-items-portfolio">
@@ -311,7 +329,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                 <div class="panel-body">
                                     <div class="row">
                                         <?php
-                                        if (! $portfolio->isNewRecord) {
+                                        if (!$portfolio->isNewRecord) {
                                             echo Html::activeHiddenInput($portfolio, "[{$i}]id");
                                         }
                                         ?>
@@ -336,7 +354,8 @@ use wbraganca\dynamicform\DynamicFormWidget;
                                             ]) ?>
                                         </div>
                                         <div class="col-sm-1 pt-4">
-                                            <button type="button" class="remove-item-portfolio btn btn-danger btn-xs mt-1">
+                                            <button type="button"
+                                                    class="remove-item-portfolio btn btn-danger btn-xs mt-1">
                                                 حذف
                                             </button>
                                         </div>
