@@ -2,17 +2,16 @@
 
 namespace common\models;
 
+use yii\db\ActiveQuery;
+use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
+
 /**
  * This is the ActiveQuery class for [[FreelancerCategories]].
  *
  * @see FreelancerCategories
  */
-class FreelancerCategoriesQuery extends \yii\db\ActiveQuery
+class FreelancerCategoriesQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
 
     /**
      * {@inheritdoc}
@@ -30,5 +29,14 @@ class FreelancerCategoriesQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'softDelete' => [
+                'class' => SoftDeleteQueryBehavior::class,
+            ],
+        ];
     }
 }
