@@ -5,16 +5,17 @@ namespace common\models;
 use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
 
 /**
- * This is the ActiveQuery class for [[Freelancer]].
+ * This is the ActiveQuery class for [[FreelancerPortfolio]].
  *
- * @see Freelancer
+ * @see FreelancerPortfolio
  * @mixin SoftDeleteQueryBehavior
  */
-class FreelancerQuery extends \yii\db\ActiveQuery
+class FreelancerPortfolioQuery extends \yii\db\ActiveQuery
 {
+
     /**
      * {@inheritdoc}
-     * @return Freelancer[]|array
+     * @return FreelancerPortfolio[]|array
      */
     public function all($db = null)
     {
@@ -23,12 +24,13 @@ class FreelancerQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Freelancer|array|null
+     * @return FreelancerPortfolio|array|null
      */
     public function one($db = null)
     {
         return parent::one($db);
     }
+
     public function behaviors()
     {
         return [

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\City;
 use common\models\Province;
 use common\models\ProvinceSearch;
 use yii\filters\AccessControl;
@@ -9,7 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
-
+use yii\web\Response;
 /**
  * ProvinceController implements the CRUD actions for Province model.
  */
@@ -153,5 +154,25 @@ class ProvinceController extends Controller
     private function flash($type, $message)
     {
         Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
+    }
+
+    public function actionGetCities(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $province_id = $parents[0];
+                $province = Province::findOne(['id' => $province_id]);
+                if (!$province){
+                    return ['output'=>[], 'selected'=>''];
+                }
+                foreach ($province->cities as $item){
+                    $out[] = ['id'=>$item->id, 'name'=>$item->name];
+                }
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'', 'selected'=>''];
     }
 }
