@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use api\models\FreelancerCategoryList;
+use common\models\FreelancerCategories;
 use common\models\FreelancerPortfolio;
 use backend\models\FreelancerRecordEducational;
 use backend\models\FreelancerRecordJob;
@@ -9,6 +11,7 @@ use backend\models\FreelancerSkills;
 use common\models\Freelancer;
 use common\models\FreelancerSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -94,6 +97,7 @@ class FreelancerController extends Controller
             $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
             $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
+//            $freelancerCat = FreelancerCategories::Handler($this->request->post('Freelancer')['categories_list']);
 
             $model->load($this->request->post());
 
@@ -102,6 +106,18 @@ class FreelancerController extends Controller
                     $portfolio->freelancer_id = $model->id;
                     $portfolio->save();
                 }
+
+                $model->categories_list = $this->request->post('Freelancer')['categories_list'];
+                foreach ($model->categories_list as $cat) {
+                    $categories = new FreelancerCategories();
+                    $categories->categories_id = $cat;
+                    $categories->freelancer_id = $model->id;
+                    $categories->model_class = $model::class;
+                    $categories->save();
+                }
+
+
+
             }
 
             if ($save) {
@@ -110,7 +126,6 @@ class FreelancerController extends Controller
         } else {
             $model->loadDefaultValues();
         }
-
 
         return $this->render('create', [
             'model' => $model,
@@ -135,6 +150,13 @@ class FreelancerController extends Controller
         $model = $this->findModel($id);
         $portfolios = FreelancerPortfolio::find()->where(['freelancer_id' => $model->id])->all();
 
+        $categoriesChecked = FreelancerCategoryList::find()
+            ->innerJoin('{{%freelancer_categories}}', '{{%freelancer_categories}}.`categories_id` = {{%freelancer_category_list}}.`id`')
+            ->where(['{{%freelancer_categories}}.freelancer_id' => $model->id])
+            ->asArray()
+            ->all();
+        $model->categories_list = ArrayHelper::map($categoriesChecked, 'id','id');
+
         if ($this->request->isPost) {
 
             $model->skills = FreelancerSkills::Handler($this->request->post('FreelancerSkills'));
@@ -142,6 +164,7 @@ class FreelancerController extends Controller
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
             $portfolios = FreelancerPortfolio::Handler($portfolios);
             if ($model->load($this->request->post()) && $model->save()) {
+//              -- insert new portfolio
                 foreach ($portfolios as $index => $portfolio) {
                     $portfolio->freelancer_id = $model->id;
                     $portfolio->instanceNames = [
@@ -149,6 +172,26 @@ class FreelancerController extends Controller
                     ];
                     $portfolio->save();
                 }
+//              -- End insert new portfolio
+//              -- remove and insert categories
+                $newCkeck = $model->categories_list = $this->request->post('Freelancer')['categories_list'];
+                // convert to int
+                $newCkeck = $newCkeck ? array_map('intval', $newCkeck) : [];
+                $checkedIds = [];
+                foreach ($categoriesChecked as $item){ $checkedIds[] = $item['id'];}
+                // diff
+                $remove = array_diff($checkedIds,$newCkeck);
+                $new = array_diff($newCkeck,$checkedIds);
+                FreelancerCategories::deleteAll(['categories_id' => $remove , 'freelancer_id' => $model->id]);
+                foreach ($new as $item){
+                    $categories = new FreelancerCategories();
+                    $categories->categories_id = $item;
+                    $categories->freelancer_id = $model->id;
+                    $categories->model_class = $model::class;
+                    $categories->save();
+                }
+//              -- End  remove and insert categories
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
