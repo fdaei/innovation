@@ -187,7 +187,6 @@ class FreelancerController extends Controller
                     $categories = new FreelancerCategories();
                     $categories->categories_id = $item;
                     $categories->freelancer_id = $model->id;
-                    $categories->model_class = $model::class;
                     $categories->save();
                 }
 //              -- End  remove and insert categories

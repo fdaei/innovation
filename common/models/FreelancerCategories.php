@@ -15,7 +15,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $id
  * @property int $freelancer_id
  * @property int $categories_id
- * @property string|null $model_class
  * @property int $created_at
  * @property int|null $updated_at
  * @property int $created_by
@@ -43,7 +42,6 @@ class FreelancerCategories extends ActiveRecord
         return [
             [['freelancer_id', 'categories_id'], 'required'],
             [['freelancer_id', 'categories_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
-            [['model_class'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -58,7 +56,6 @@ class FreelancerCategories extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'freelancer_id' => Yii::t('app', 'Freelancer ID'),
             'categories_id' => Yii::t('app', 'Categories ID'),
-            'model_class' => Yii::t('app', 'Model Class'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),

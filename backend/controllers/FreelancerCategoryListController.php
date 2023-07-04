@@ -80,7 +80,6 @@ class FreelancerCategoryListController extends Controller
         $model = new FreelancerCategoryList();
 
         if ($this->request->isPost) {
-            $model->model_class = FreelancerCategoryList::class;
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

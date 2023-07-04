@@ -17,7 +17,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string|null $brief_description
  * @property string|null $picture
  * @property int $status
- * @property string $model_class
  * @property int $updated_by
  * @property int|null $updated_at
  * @property int $created_at
@@ -44,9 +43,9 @@ class FreelancerCategoryList extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'model_class'], 'required'],
+            [['title'], 'required'],
             [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at', 'created_by'], 'integer'],
-            [['title', 'brief_description', 'picture', 'model_class'], 'string', 'max' => 255],
+            [['title', 'brief_description', 'picture'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -63,7 +62,6 @@ class FreelancerCategoryList extends ActiveRecord
             'brief_description' => Yii::t('app', 'Brief Description'),
             'picture' => Yii::t('app', 'Picture'),
             'status' => Yii::t('app', 'Status'),
-            'model_class' => Yii::t('app', 'Model Class'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_at' => Yii::t('app', 'Created At'),
