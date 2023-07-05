@@ -296,8 +296,7 @@ return [
     'Title Brief'=>'توضیح مختصر',
     'Evand link'=>'لینک ایوند',
     'Event Organizer'=>'سازمان رویداد',
-    'Start At'=>'شروع',
-    'event_organizer_id'=>'توضیح مختصر',
+    'Settings' => 'تنظیمات'
     'Log Time'=>'زمان',
     'Category'=>'دسته بندی',
     'Level'=>'سطح',
