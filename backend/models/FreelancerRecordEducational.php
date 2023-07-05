@@ -28,8 +28,9 @@ class FreelancerRecordEducational extends Model
 
 
     public static function Handler($items = []){
-        $items = \common\models\Model::createMultiple(FreelancerRecordEducational::class);
-        Model::loadMultiple($items, Yii::$app->request->post());
+        $data['FreelancerRecordEducational'] = $items;
+        $items = \common\models\Model::createMultiple(FreelancerRecordEducational::class,[],$items);
+        Model::loadMultiple($items, $data);
         $itemJson = [];
         foreach ($items as $index => $item) {
             if($item->validate()){
