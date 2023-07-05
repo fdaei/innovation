@@ -6,6 +6,7 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
@@ -45,7 +46,8 @@ class FreelancerCategoryList extends ActiveRecord
         return [
             [['title'], 'required'],
             [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at', 'created_by'], 'integer'],
-            [['title', 'brief_description'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 128],
+            [['brief_description'], 'string', 'max' => 255],
             ['picture', 'image','extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -74,7 +76,7 @@ class FreelancerCategoryList extends ActiveRecord
     /**
      * Gets query for [[CreatedBy]].
      *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     * @return ActiveQuery|ActiveQuery
      */
     public function getCreatedBy()
     {
@@ -84,7 +86,7 @@ class FreelancerCategoryList extends ActiveRecord
     /**
      * Gets query for [[UpdatedBy]].
      *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     * @return ActiveQuery|ActiveQuery
      */
     public function getUpdatedBy()
     {
@@ -105,7 +107,7 @@ class FreelancerCategoryList extends ActiveRecord
     /**
      * Gets query for [[FreelancerCategories]].
      *
-     * @return \yii\db\ActiveQuery|FreelancerCategoriesQuery
+     * @return ActiveQuery|FreelancerCategoriesQuery
      */
     public function getFreelancerCategories()
     {

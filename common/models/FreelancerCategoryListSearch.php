@@ -51,7 +51,6 @@ class FreelancerCategoryListSearch extends FreelancerCategoryList
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
              $query->where('0=1');
             return $dataProvider;
         }
@@ -66,9 +65,7 @@ class FreelancerCategoryListSearch extends FreelancerCategoryList
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'brief_description', $this->brief_description])
-            ->andFilterWhere(['like', 'picture', $this->picture]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
     }

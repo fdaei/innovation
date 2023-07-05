@@ -321,5 +321,8 @@ return [
     'Senior' => 'ارشد',
     'Technical' => 'متخصص',
     'Ready to cooperate' => '‌آماده به همکاری',
-    'Settings' => 'تنظیمات'
+    'Settings' => 'تنظیمات',
+    'Freelancer Category Lists' => 'دسته‌بندی فریلنسرها',
+    'Create Freelancer Category List' => 'ایجاد دسته‌بندی فریلنسر',
+    'Further Details' => 'توضیحات تکمیلی'
 ] ?>

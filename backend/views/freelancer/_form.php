@@ -131,6 +131,7 @@ use common\models\FreelancerCategoryList;
 
         <div class="col-sm-12">
             <?= $form->field($model, 'categories_list')
+                ->label(Yii::t('app', 'Freelancer Category Lists'))
                 ->widget(Select2::class, [
                     'data' => ArrayHelper::map(FreelancerCategoryList::find()->all(), 'id', 'title'),
                     'options' => ['placeholder' => 'Select a state ...'],
