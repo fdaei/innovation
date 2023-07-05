@@ -296,7 +296,7 @@ return [
     'Title Brief'=>'توضیح مختصر',
     'Evand link'=>'لینک ایوند',
     'Event Organizer'=>'سازمان رویداد',
-    'Settings' => 'تنظیمات'
+    'Settings' => 'تنظیمات',
     'Log Time'=>'زمان',
     'Category'=>'دسته بندی',
     'Level'=>'سطح',
