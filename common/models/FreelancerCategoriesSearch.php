@@ -18,7 +18,6 @@ class FreelancerCategoriesSearch extends FreelancerCategories
     {
         return [
             [['id', 'freelancer_id', 'categories_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
-            [['model_class'], 'safe'],
         ];
     }
 
@@ -52,7 +51,7 @@ class FreelancerCategoriesSearch extends FreelancerCategories
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+             $query->where('0=1');
             return $dataProvider;
         }
 
@@ -67,8 +66,6 @@ class FreelancerCategoriesSearch extends FreelancerCategories
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
-
-        $query->andFilterWhere(['like', 'model_class', $this->model_class]);
 
         return $dataProvider;
     }

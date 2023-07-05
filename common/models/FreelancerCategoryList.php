@@ -45,7 +45,8 @@ class FreelancerCategoryList extends ActiveRecord
         return [
             [['title'], 'required'],
             [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at', 'created_by'], 'integer'],
-            [['title', 'brief_description', 'picture'], 'string', 'max' => 255],
+            [['title', 'brief_description'], 'string', 'max' => 255],
+            ['picture', 'image','extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];

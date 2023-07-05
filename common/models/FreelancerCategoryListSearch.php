@@ -18,7 +18,7 @@ class FreelancerCategoryListSearch extends FreelancerCategoryList
     {
         return [
             [['id', 'status', 'updated_by', 'updated_at', 'created_at', 'deleted_at'], 'integer'],
-            [['title', 'brief_description', 'picture', 'model_class'], 'safe'],
+            [['title', 'brief_description', 'picture'], 'safe'],
         ];
     }
 
@@ -52,7 +52,7 @@ class FreelancerCategoryListSearch extends FreelancerCategoryList
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+             $query->where('0=1');
             return $dataProvider;
         }
 
@@ -68,8 +68,7 @@ class FreelancerCategoryListSearch extends FreelancerCategoryList
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'brief_description', $this->brief_description])
-            ->andFilterWhere(['like', 'picture', $this->picture])
-            ->andFilterWhere(['like', 'model_class', $this->model_class]);
+            ->andFilterWhere(['like', 'picture', $this->picture]);
 
         return $dataProvider;
     }
