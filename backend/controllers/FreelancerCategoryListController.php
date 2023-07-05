@@ -121,7 +121,8 @@ class FreelancerCategoryListController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->softDelete();
 
         return $this->redirect(['index']);
     }

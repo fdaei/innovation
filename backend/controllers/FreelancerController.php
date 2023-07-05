@@ -97,7 +97,6 @@ class FreelancerController extends Controller
             $model->record_job = FreelancerRecordJob::Handler($this->request->post('FreelancerRecordJob'));
             $model->record_educational = FreelancerRecordEducational::Handler($this->request->post('FreelancerRecordEducational'));
             $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
-//            $freelancerCat = FreelancerCategories::Handler($this->request->post('Freelancer')['categories_list']);
 
             $model->load($this->request->post());
 
@@ -172,19 +171,20 @@ class FreelancerController extends Controller
                     $portfolio->save();
                 }
 //              -- End insert new portfolio
+
 //              -- remove and insert categories
-                $newCkeck = $model->categories_list = $this->request->post('Freelancer')['categories_list'];
-                // convert to int
-                $newCkeck = $newCkeck ? array_map('intval', $newCkeck) : [];
-                $checkedIds = [];
-                foreach ($categoriesChecked as $item){ $checkedIds[] = $item['id'];}
+                $postNewCategory = $model->categories_list = $this->request->post('Freelancer')['categories_list'];
+                // array item convert to int
+                $postNewCategory = $postNewCategory ? array_map('intval', $postNewCategory) : [];
+                $checkedCategoryIds = [];
+                foreach ($categoriesChecked as $item){ $checkedCategoryIds[] = $item['id'];}
                 // diff
-                $remove = array_diff($checkedIds,$newCkeck);
-                $new = array_diff($newCkeck,$checkedIds);
-                FreelancerCategories::deleteAll(['categories_id' => $remove , 'freelancer_id' => $model->id]);
-                foreach ($new as $item){
+                $removeCategory = array_diff($checkedCategoryIds,$postNewCategory);
+                $newCategory = array_diff($postNewCategory,$checkedCategoryIds);
+                FreelancerCategories::deleteAll(['categories_id' => $removeCategory , 'freelancer_id' => $model->id]);
+                foreach ($newCategory as $catItem){
                     $categories = new FreelancerCategories();
-                    $categories->categories_id = $item;
+                    $categories->categories_id = $catItem;
                     $categories->freelancer_id = $model->id;
                     $categories->save();
                 }
@@ -212,7 +212,8 @@ class FreelancerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->softDelete();
 
         return $this->redirect(['index']);
     }
