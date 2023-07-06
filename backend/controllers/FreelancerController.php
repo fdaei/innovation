@@ -107,11 +107,13 @@ class FreelancerController extends Controller
                 }
 
                 $model->categories_list = $this->request->post('Freelancer')['categories_list'];
-                foreach ($model->categories_list as $cat) {
-                    $categories = new FreelancerCategories();
-                    $categories->categories_id = $cat;
-                    $categories->freelancer_id = $model->id;
-                    $categories->save();
+                if ($model->categories_list){
+                    foreach ($model->categories_list as $cat) {
+                        $categories = new FreelancerCategories();
+                        $categories->categories_id = $cat;
+                        $categories->freelancer_id = $model->id;
+                        $categories->save();
+                    }
                 }
 
 

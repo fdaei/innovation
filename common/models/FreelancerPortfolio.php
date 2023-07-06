@@ -113,7 +113,6 @@ class FreelancerPortfolio extends ActiveRecord
             FreelancerPortfolio::deleteAll(['id' => $deletedIDs]);
         }
 
-//        dd($model,$portfolios);
         return $portfolios;
     }
 

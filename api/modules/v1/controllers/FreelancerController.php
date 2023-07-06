@@ -7,7 +7,9 @@ use backend\models\FreelancerRecordEducational;
 use backend\models\FreelancerRecordJob;
 use backend\models\FreelancerSkills;
 use common\models\Freelancer;
+use common\models\FreelancerPortfolio;
 use common\models\FreelancerSearch;
+use common\models\Model;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 
@@ -122,6 +124,19 @@ class FreelancerController extends ActiveController
 
                 $model->status = 1;
                 $model->save();
+
+                $portfolio = json_decode($this->request->post('portfolio'), true);
+                $portfolios = null;
+                if ($portfolio) {
+                    $data['FreelancerPortfolio'] = $portfolio;
+                    $portfolios = Model::createMultiple(FreelancerPortfolio::class,[], $portfolio);
+                    Model::loadMultiple($portfolios, $data);
+                }
+                foreach ($portfolios as $portfolio) {
+                    $portfolio->freelancer_id = $model->id;
+                    $portfolio->save();
+                }
+
             } else {
                 $model->validate();
             }
