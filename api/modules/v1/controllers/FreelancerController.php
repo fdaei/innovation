@@ -9,7 +9,6 @@ use backend\models\FreelancerSkills;
 use common\models\Freelancer;
 use common\models\FreelancerPortfolio;
 use common\models\FreelancerSearch;
-use common\models\Model;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 

@@ -53,7 +53,7 @@ class FreelancerPortfolio extends ActiveRecord
             [['freelancer_id', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
             [['title', 'link'], 'string', 'max' => 32],
             [['description'], 'string', 'max' => 512],
-            ['image', 'file'],
+            ['image', 'image','extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
             ['link', 'url'],
             [['freelancer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Freelancer::class, 'targetAttribute' => ['freelancer_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],

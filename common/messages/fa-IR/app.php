@@ -324,5 +324,6 @@ return [
     'Settings' => 'تنظیمات',
     'Freelancer Category Lists' => 'دسته‌بندی فریلنسرها',
     'Create Freelancer Category List' => 'ایجاد دسته‌بندی فریلنسر',
-    'Further Details' => 'توضیحات تکمیلی'
+    'Further Details' => 'توضیحات تکمیلی',
+    'Edit' => 'ویرایش',
 ] ?>
