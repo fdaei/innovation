@@ -8,6 +8,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
+use yii\web\Response;
 
 /**
  * FreelancerCategoryListController implements the CRUD actions for FreelancerCategoryList model.
@@ -32,7 +34,7 @@ class FreelancerCategoryListController extends Controller
                     ],
                 ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -73,7 +75,7 @@ class FreelancerCategoryListController extends Controller
     /**
      * Creates a new FreelancerCategoryList model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|Response
      */
     public function actionCreate()
     {
@@ -96,7 +98,7 @@ class FreelancerCategoryListController extends Controller
      * Updates an existing FreelancerCategoryList model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
@@ -115,8 +117,8 @@ class FreelancerCategoryListController extends Controller
     /**
      * Deletes an existing FreelancerCategoryList model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id شناسه
-     * @return \yii\web\Response
+     * @param int $id
+     * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)

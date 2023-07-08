@@ -29,17 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'header_picture_desktop',
                         'value' => $model->getUploadUrl('header_picture_desktop'),
-                        'format' => ['image',['width'=>'100','height'=>'100']],
+                        'format' => $model->header_picture_desktop ? ['image',['width'=>'100','height'=>'100']] : null,
                     ],
                     [
                         'attribute' => 'header_picture_mobile',
                         'value' => $model->getUploadUrl('header_picture_mobile'),
-                        'format' => ['image',['width'=>'100','height'=>'100']],
+                        'format' => $model->header_picture_mobile ? ['image',['width'=>'100','height'=>'100']] : null,
                     ],
                     [
                         'attribute' => 'freelancer_picture',
                         'value' => $model->getUploadUrl('freelancer_picture'),
-                        'format' => ['image',['width'=>'100','height'=>'100']],
+                        'format' => $model->freelancer_picture ? ['image',['width'=>'100','height'=>'100']] : null,
                     ],
                     'name',
                     [
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'activity_field',
                     [
                         'attribute' => 'experience',
-                        'label' => 'میزان تجربه',
+                        'label' => Yii::t('app','Experience'),
                         'value' => Freelancer::itemAlias('Experience',$model->experience),
                     ],
                     'experience_period',
@@ -105,8 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'portfolio',
                         'value' => function ($data) {
                             $str = '';
-                            $portfolio = FreelancerPortfolio::find()->andWhere(['freelancer_id' => $data->id])->all();
-                            foreach ($portfolio as $item){
+                            $portfolios = FreelancerPortfolio::find()->andWhere(['freelancer_id' => $data->id])->all();
+                            foreach ($portfolios as $item){
                                 $str .= $item['title'].' , ';
                             }
                             return $str;
@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'description_user:ntext',
                     'project_number',
                     [
-                        'label' => 'وضعیت',
+                        'label' => Yii::t('app','status'),
                         'value' =>Freelancer::itemAlias('Status',$model->status),
                     ],
 

@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'picture',
                         'value' => $model->getUploadUrl('picture'),
-                        'format' => ['image',['width'=>'100','height'=>'100']],
+                        'format' => $model->picture ? ['image',['width'=>'100','height'=>'100']] : null,
                     ],
                 ],
             ]) ?>

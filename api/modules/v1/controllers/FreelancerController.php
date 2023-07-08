@@ -166,7 +166,7 @@ class FreelancerController extends ActiveController
     public function actionCategoryList()
     {
         return new ActiveDataProvider([
-            'query' => FreelancerCategoryList::find()->where(['model_class' => Freelancer::className()])
+            'query' => FreelancerCategoryList::find()
         ]);
 
     }
