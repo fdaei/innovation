@@ -109,6 +109,7 @@ class FreelancerController extends ActiveController
                 $model->header_picture_desktop = UploadedFile::getInstanceByName('header_picture_desktop');
                 $model->freelancer_picture = UploadedFile::getInstanceByName('freelancer_picture');
 
+                // --skills
                 $skills = json_decode($this->request->post('skills'), true);
                 if ($skills) {
                     $newSkills = array_map(function ($item) {
@@ -116,7 +117,7 @@ class FreelancerController extends ActiveController
                     }, $skills);
                     $model->skills = FreelancerSkills::Handler($newSkills);
                 }
-
+                // -- record job
                 $recordJob = json_decode($this->request->post('record_job'), true);
                 if ($recordJob) {
                     $newRecordJob = array_map(function ($item) {
@@ -124,7 +125,7 @@ class FreelancerController extends ActiveController
                     }, $recordJob);
                     $model->record_job = FreelancerRecordJob::Handler($newRecordJob);
                 }
-
+                // -- record educational
                 $recordEducational = json_decode($this->request->post('record_educational'), true);
                 if ($recordEducational) {
                     $newRecordEducational = array_map(function ($item) {
@@ -133,7 +134,7 @@ class FreelancerController extends ActiveController
                     $model->record_educational = FreelancerRecordEducational::Handler($newRecordEducational);
                 }
 
-                $model->status = 1;
+                $model->status = $model::STATUS_PENDING;
                 $model->save();
 
                 $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));

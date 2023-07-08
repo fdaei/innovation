@@ -44,8 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 'title',
                 'brief_description',
-                'picture',
-                'status',
                 [
                     'class' => ActionColumn::class,
                     'urlCreator' => function ($action, FreelancerCategoryList $model, $key, $index, $column) {
