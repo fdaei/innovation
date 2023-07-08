@@ -68,6 +68,8 @@ class FreelancerController extends ActiveController
      *             @OA\Property(property="skills", type="string", example="['php','react']"),
      *             @OA\Property(property="record_job", type="string", example="['php','react']"),
      *             @OA\Property(property="record_educational", type="string", example="['php','react']"),
+     *             @OA\Property(property="portfolio", type="string",
+     *               example="[{'title':'title','description':'description','link':'https://avinox.ir','image':''}]"),
      *        )
      *     ),
      *    @OA\Parameter(name="name",in="query",required=true),
@@ -125,15 +127,12 @@ class FreelancerController extends ActiveController
                 $model->status = 1;
                 $model->save();
 
-                $portfolio = json_decode($this->request->post('portfolio'), true);
-                $portfolios = null;
-                if ($portfolio) {
-                    $data['FreelancerPortfolio'] = $portfolio;
-                    $portfolios = Model::createMultiple(FreelancerPortfolio::class,[], $portfolio);
-                    Model::loadMultiple($portfolios, $data);
-                }
-                foreach ($portfolios as $portfolio) {
+                $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
+                foreach ($freelancerPortfolio as $index => $portfolio) {
                     $portfolio->freelancer_id = $model->id;
+                    $portfolio->instanceNames = [
+                        'image' => "FreelancerPortfolio[{$index}][image]"
+                    ];
                     $portfolio->save();
                 }
 
