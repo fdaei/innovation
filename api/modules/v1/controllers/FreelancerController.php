@@ -11,6 +11,7 @@ use common\models\FreelancerPortfolio;
 use common\models\FreelancerSearch;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
+use yii\web\UploadedFile;
 
 /**
  * CareerApply controller
@@ -74,6 +75,10 @@ class FreelancerController extends ActiveController
      *    @OA\Parameter(name="name",in="query",required=true),
      *    @OA\Parameter(name="mobile",in="query",required=true),
      *    @OA\Parameter(name="email",in="query",required=true),
+     *    @OA\Parameter(name="header_picture_mobile",in="query",@OA\Schema(type="file")),
+     *    @OA\Parameter(name="header_picture_desktop",in="query",@OA\Schema(type="file")),
+     *    @OA\Parameter(name="freelancer_picture",in="query",@OA\Schema(type="file")),
+     *    @OA\Parameter(name="resume_file",in="query",@OA\Schema(type="file")),
      *    @OA\Parameter(name="sex",in="query",required=true,@OA\Schema(type="integer",enum={1, 2})),
      *    @OA\Parameter(name="city",in="query",required=true,@OA\Schema(type="integer",enum={1, 2})),
      *    @OA\Parameter(name="province",in="query",required=true,@OA\Schema(type="integer",enum={1, 2})),
@@ -98,6 +103,11 @@ class FreelancerController extends ActiveController
         $model->loadDefaultValues();
         if ($this->request->isPost) {
             if ($model->load($this->request->post(), '')) {
+
+                $model->resume_file = UploadedFile::getInstanceByName('resume_file');
+                $model->header_picture_mobile = UploadedFile::getInstanceByName('header_picture_mobile');
+                $model->header_picture_desktop = UploadedFile::getInstanceByName('header_picture_desktop');
+                $model->freelancer_picture = UploadedFile::getInstanceByName('freelancer_picture');
 
                 $skills = json_decode($this->request->post('skills'), true);
                 if ($skills) {

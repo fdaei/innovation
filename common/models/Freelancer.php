@@ -13,6 +13,9 @@ use yii\db\ActiveRecord;
  * This is the model class for table "{{%freelancer}}".
  *
  * @property int $id
+ * @property string|null $header_picture_desktop
+ * @property string|null $header_picture_mobile
+ * @property string|null $freelancer_picture
  * @property string $name
  * @property int|null $sex
  * @property string $email
@@ -25,18 +28,18 @@ use yii\db\ActiveRecord;
  * @property string $experience
  * @property string $experience_period
  * @property string $skills
- * @property string $record_job
- * @property string $record_educational
+ * @property string|null $record_job
+ * @property string|null $record_educational
  * @property string|null $portfolio
- * @property string $resume_file
+ * @property string|null $resume_file
  * @property string $description_user
- * @property string $freelancer_description
+ * @property string|null $freelancer_description
  * @property int|null $project_number
  * @property int $status
- * @property int $updated_by
+ * @property int|null $updated_by
  * @property int $updated_at
  * @property int $created_at
- * @property int $created_by
+ * @property int|null $created_by
  * @property int $deleted_at
  *
  * @mixin CdnUploadImageBehavior;
