@@ -287,6 +287,8 @@ return [
     'Tags'=>'تگ ها ',
     'Frequency'=>'تعداد تکرار',
     'create tag'=>'ایجاد تگ',
+    'Reset'=>'مجدد',
+    'Search'=>'جستجو',
     'Relational'=>'وابستگی',
     'Label'=>'برچسب',
     'Logs'=>'لاگ',
@@ -294,7 +296,10 @@ return [
     'Title Brief'=>'توضیح مختصر',
     'Evand link'=>'لینک ایوند',
     'Event Organizer'=>'سازمان رویداد',
-    'Start At'=>'شروع',
-    'event_organizer_id'=>'توضیح مختصر',
-    'Settings' => 'تنظیمات'
-]; ?>
+    'Settings' => 'تنظیمات',
+    'Log Time'=>'زمان',
+    'Category'=>'دسته بندی',
+    'Level'=>'سطح',
+    'Prefix'=>'پیشوند',
+    'Message'=>'پیام',
+] ?>

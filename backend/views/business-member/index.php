@@ -3,8 +3,8 @@
 use common\models\BusinessMember;
 use common\models\BusinessMemberSearch;
 use yii\data\ActiveDataProvider;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;

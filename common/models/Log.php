@@ -43,12 +43,14 @@ class Log extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'level' => 'Level',
-            'category' => 'Category',
-            'log_time' => 'Log Time',
-            'prefix' => 'Prefix',
-            'message' => 'Message',
+            'id' => Yii::t('app','ID'),
+            'level' => Yii::t('app','Level'),
+            'category' => Yii::t('app','Category'),
+            'log_time' => Yii::t('app','Log Time'),
+            'prefix' =>Yii::t('app', 'Prefix'),
+            'message' => Yii::t('app','Message'),
         ];
     }
+
+
 }

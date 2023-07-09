@@ -3,8 +3,8 @@
 use common\models\Freelancer;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var common\models\FreelancerSearch $searchModel */

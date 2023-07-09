@@ -3,7 +3,7 @@
 use common\models\Branches;
 use common\models\Statuses;
 use common\widgets\grid\GridView;
-use yii\grid\ActionColumn;
+use common\widgets\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
