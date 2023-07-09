@@ -80,6 +80,16 @@ class EventController extends ActiveController
      *        )
      *    ),
      *    @OA\Parameter(
+     *        name="except[]",
+     *        in="query",
+     *        description="ID of the events you do not want to be displayed",
+     *        required=false,
+     *        @OA\Schema(
+     *                  type="array",
+     *            @OA\Items(type="integer")
+     *        )
+     *    ),
+     *    @OA\Parameter(
      *        name="expand",
      *        in="query",
      *        description="Expands: eventTimes, sponsors",

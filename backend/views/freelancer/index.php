@@ -1,15 +1,18 @@
 <?php
 
 use common\models\Freelancer;
+use common\models\FreelancerSearch;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use yii\web\View;
 use yii\widgets\Pjax;
+use common\widgets\grid\ActionColumn;
+use common\widgets\grid\GridView;
 
-/** @var yii\web\View $this */
-/** @var common\models\FreelancerSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var View $this */
+/** @var FreelancerSearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'Freelancers');
 $this->params['breadcrumbs'][] = $this->title;

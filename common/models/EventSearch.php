@@ -16,6 +16,7 @@ class EventSearch extends Event
     const FILTER_PASSED = 3;
 
     public $filter;
+    public $except=[];
 
     public $tag_ids = [];
 
@@ -27,7 +28,7 @@ class EventSearch extends Event
         return [
             [['id', 'updated_at', 'updated_by', 'created_at', 'created_by', 'deleted_at', 'filter'], 'integer'],
             ['filter', 'in', 'range' => array_keys(self::itemAlias('Filter'))],
-            [['title', 'description', 'headlines', 'address', 'sponsors', 'tag_ids'], 'safe'],
+            [['title', 'description', 'headlines', 'address', 'sponsors', 'tag_ids','except'], 'safe'],
             [['price', 'price_before_discount', 'longitude', 'latitude'], 'number'],
         ];
     }
@@ -117,6 +118,10 @@ class EventSearch extends Event
                 ->joinWith(['tags'], false)
                 ->andWhere(['IN', Tag::tableName() . '.tag_id', $this->tag_ids])
                 ->groupBy(Event::tableName() . '.id');
+        }
+
+        if($this->except){
+            $query->andWhere(['NOT IN','id',$this->except]);
         }
 
         return $dataProvider;
