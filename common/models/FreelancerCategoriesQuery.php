@@ -9,6 +9,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * This is the ActiveQuery class for [[FreelancerCategories]].
  *
  * @see FreelancerCategories
+ * @mixin SoftDeleteQueryBehavior
  */
 class FreelancerCategoriesQuery extends ActiveQuery
 {

@@ -145,7 +145,7 @@ class Freelancer extends ActiveRecord
 
     public function getFreelancerCategories()
     {
-        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Freelancer::className()]);
+        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id']);
     }
 
     public function getProvince(){
