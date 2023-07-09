@@ -14,7 +14,7 @@ use yii\rest\ActiveController;
 use yii\web\UploadedFile;
 
 /**
- * CareerApply controller
+ * FreelancerController
  */
 class FreelancerController extends ActiveController
 {
@@ -30,18 +30,13 @@ class FreelancerController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['rateLimiter']['enableRateLimitHeaders'] = false;
-        return $behaviors;
 
+        return $behaviors;
     }
 
     public function actions()
     {
-
-        $actions = parent::actions();
-        // disable the "delete" and "create" actions
-        unset($actions['delete'], $actions['update'], $actions['index'], $actions['create']);
-        return $actions;
+        return [];
     }
 
     /**
@@ -72,7 +67,7 @@ class FreelancerController extends ActiveController
      *               example="[{'title':'title','description':'description','link':'https://avinox.ir','image':''}]"),
      *        )
      *     ),
-     *    @OA\Parameter(name="name",in="query",required=true),
+     *    @OA\Parameter(name="name",in="path",required=true),
      *    @OA\Parameter(name="mobile",in="query",required=true),
      *    @OA\Parameter(name="email",in="query",required=true),
      *    @OA\Parameter(name="header_picture_mobile",in="query",@OA\Schema(type="file")),
@@ -98,7 +93,6 @@ class FreelancerController extends ActiveController
      */
     public function actionCreate()
     {
-
         $model = new Freelancer();
         $model->loadDefaultValues();
         if ($this->request->isPost) {
@@ -153,7 +147,6 @@ class FreelancerController extends ActiveController
         return $model;
     }
 
-
     public function actionIndex()
     {
         $searchModel = new FreelancerSearch();
@@ -163,12 +156,10 @@ class FreelancerController extends ActiveController
         return $dataProvider;
     }
 
-
     public function actionCategoryList()
     {
         return new ActiveDataProvider([
             'query' => FreelancerCategoryList::find()
         ]);
-
     }
 }

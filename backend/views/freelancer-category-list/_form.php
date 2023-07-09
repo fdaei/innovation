@@ -1,12 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use kartik\file\FileInput;
+use yii\web\View;
 
-/** @var yii\web\View $this */
+/** @var View $this */
 /** @var common\models\FreelancerCategoryList $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var ActiveForm $form */
 ?>
 
 <div class="card card-body">

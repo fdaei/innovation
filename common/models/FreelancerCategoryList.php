@@ -144,12 +144,11 @@ class FreelancerCategoryList extends ActiveRecord
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,
-                'cdnPath' => "@cdnRoot/freelancerCategoryList",
-                'basePath' => "@inceRoot/freelancerCategoryList",
-                'path' => "@inceRoot/freelancerCategoryList",
-                'url' => "@cdnWeb/freelancerCategoryList"
+                'cdnPath' => "@cdnRoot/FreelancerCategoryList",
+                'basePath' => "@inceRoot/temp-uploads/FreelancerCategoryList",
+                'path' => "@inceRoot/temp-uploads/FreelancerCategoryList",
+                'url' => "@cdnWeb/FreelancerCategoryList"
             ],
-
         ];
     }
 }
