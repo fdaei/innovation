@@ -24,6 +24,8 @@ class m230703_113549_update_table_freelancer_categories extends Migration
 
         $this->dropColumn('{{%freelancer_categories}}','model_class');
 
+        Yii::$app->db->createCommand('SET foreign_key_checks = 0')->execute();
+
         $this->addForeignKey(
             'freelancer_categories_ibfk_1',
             '{{%freelancer_categories}}',
@@ -63,7 +65,7 @@ class m230703_113549_update_table_freelancer_categories extends Migration
             'RESTRICT',
             'RESTRICT'
         );
-
+        Yii::$app->db->createCommand('SET foreign_key_checks = 1')->execute();
     }
 
     /**
