@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Logs'), 'url' => ['i
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="log-view bg-white p-3 text-right">
+<div class="log-view bg-white p-3 text-right dir-ltr">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
