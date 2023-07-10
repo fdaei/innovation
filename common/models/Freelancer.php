@@ -56,6 +56,7 @@ class Freelancer extends ActiveRecord
     const EXPERIENCE_MID_LEVEL= 3;
     const EXPERIENCE_SENIOR= 4;
     const EXPERIENCE_TECHNICAL= 5;
+
     const SEX_MAN = 1;
     const SEX_WOMAN = 2;
 
@@ -65,6 +66,8 @@ class Freelancer extends ActiveRecord
     const MILITARY_STATUS_DONE = 1;
     const MILITARY_STATUS_INCLUDED = 2;
     const MILITARY_STATUS_EXEMPT = 3;
+
+    const SCENARIO_API = 'api';
 
     public $categories_list = [];
     /**
@@ -83,11 +86,12 @@ class Freelancer extends ActiveRecord
         return [
             [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience'], 'required'],
             [['sex', 'city', 'province', 'experience_period', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
-            [['record_job', 'record_educational', 'portfolio','resume_file','header_picture_desktop','header_picture_mobile','freelancer_picture'], 'safe'],
+            [['record_job', 'record_educational','skills', 'portfolio','resume_file','header_picture_desktop','header_picture_mobile','freelancer_picture'], 'safe'],
             [['email'], 'email'],
             [['mobile'], 'string', 'max' => 11],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
             [['description_user','freelancer_description'], 'string'],
+            ['status', 'default', 'value' => self::STATUS_PENDING, 'on' => self::SCENARIO_API],
             [['header_picture_desktop','header_picture_mobile','freelancer_picture'], 'image','extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
             [['name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],

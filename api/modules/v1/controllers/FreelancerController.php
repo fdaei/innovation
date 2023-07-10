@@ -95,6 +95,8 @@ class FreelancerController extends ActiveController
     {
         $model = new Freelancer();
         $model->loadDefaultValues();
+        $model->scenario = $model::SCENARIO_API;
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post(), '')) {
 
@@ -102,33 +104,6 @@ class FreelancerController extends ActiveController
                 $model->header_picture_mobile = UploadedFile::getInstanceByName('header_picture_mobile');
                 $model->header_picture_desktop = UploadedFile::getInstanceByName('header_picture_desktop');
                 $model->freelancer_picture = UploadedFile::getInstanceByName('freelancer_picture');
-
-                // --skills
-                $skills = json_decode($this->request->post('skills'), true);
-                if ($skills) {
-                    $newSkills = array_map(function ($item) {
-                        return ['title' => $item];
-                    }, $skills);
-                    $model->skills = FreelancerSkills::Handler($newSkills);
-                }
-                // -- record job
-                $recordJob = json_decode($this->request->post('record_job'), true);
-                if ($recordJob) {
-                    $newRecordJob = array_map(function ($item) {
-                        return ['title' => $item];
-                    }, $recordJob);
-                    $model->record_job = FreelancerRecordJob::Handler($newRecordJob);
-                }
-                // -- record educational
-                $recordEducational = json_decode($this->request->post('record_educational'), true);
-                if ($recordEducational) {
-                    $newRecordEducational = array_map(function ($item) {
-                        return ['title' => $item];
-                    }, $recordEducational);
-                    $model->record_educational = FreelancerRecordEducational::Handler($newRecordEducational);
-                }
-
-                $model->status = $model::STATUS_PENDING;
                 $model->save();
 
                 $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
