@@ -11,11 +11,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Logs'), 'url' => ['i
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="log-view bg-white p-3">
+<div class="log-view bg-white p-3 text-right">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p class="text-right">
+    <p>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger ',
             'data' => [
@@ -30,10 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'level',
             'category',
-            'log_time',
+            [
+                'attribute' => 'log_time',
+                'value' => function ($model) {
+
+                    return Yii::$app->pdate->jdate('Y/m/d H:i', $model->log_time);
+                },
+            ],
             'prefix:ntext',
             'message:ntext',
         ],
     ]) ?>
-
 </div>

@@ -15,20 +15,21 @@ use yii\bootstrap4\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-<!--    --><?php //= $form->field($model, 'id') ?>
-<!---->
-<!--    --><?php //= $form->field($model, 'level') ?>
-<!---->
-<!--    --><?php //= $form->field($model, 'category') ?>
+    <!--    --><?php //= $form->field($model, 'id') ?>
+    <!---->
+    <!--    --><?php //= $form->field($model, 'level') ?>
     <div class="row">
         <div class="col-md-3">
-    <?= $form->field($model, 'log_time') ?>
+            <?= $form->field($model, "log_time")->textInput(['maxlength' => true,'data-jdp' => true])?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'category') ?>
         </div>
     </div>
 
-<!--    --><?php //= $form->field($model, 'prefix') ?>
-<!---->
-<!--    --><?php //// echo $form->field($model, 'message') ?>
+    <!--    --><?php //= $form->field($model, 'prefix') ?>
+    <!---->
+    <!--    --><?php //// echo $form->field($model, 'message') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
@@ -38,3 +39,16 @@ use yii\bootstrap4\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php
+$script = <<< JS
+    
+        jalaliDatepicker.startWatch({
+            time: true,
+            hasSecond: false,
+        })
+    
+JS;
+
+$this->registerJs($script, \yii\web\View::POS_END)
+?>
+

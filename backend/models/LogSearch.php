@@ -2,8 +2,11 @@
 
 namespace backend\models;
 
+use common\traits\CoreTrait;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\behaviors\TimestampBehavior;
 use common\models\Log;
 
 /**
@@ -11,6 +14,8 @@ use common\models\Log;
  */
 class LogSearch extends Log
 {
+    use CoreTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +24,7 @@ class LogSearch extends Log
         return [
             [['id', 'level'], 'integer'],
             [['category', 'prefix', 'message'], 'safe'],
-            [['log_time'], 'number'],
+            [['log_time'], 'safe'],
         ];
     }
 
@@ -60,14 +65,13 @@ class LogSearch extends Log
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'level' => $this->level,
-            'log_time' => $this->log_time,
+            'level' => $this->level
         ]);
-
         $query->andFilterWhere(['like', 'category', $this->category])
             ->andFilterWhere(['like', 'prefix', $this->prefix])
-            ->andFilterWhere(['like', 'message', $this->message]);
-        $query->orderBy(['id'=>SORT_DESC]);
+            ->andFilterWhere(['like', 'message', $this->message])
+            ->andFilterWhere(['between', 'log_time', $this->jalaliToTimestamp($this->log_time, "Y/m/d H:i"),$this->jalaliToTimestamp($this->log_time, "Y/m/d H:i")+60]);
+        $query->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

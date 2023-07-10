@@ -37,6 +37,7 @@ class Log extends \yii\db\ActiveRecord
         ];
     }
 
+
     /**
      * {@inheritdoc}
      */
