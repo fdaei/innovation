@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     [
                         'attribute' => 'sex',
-                        'value' => Freelancer::itemAlias('Sex',$model->sex)
+                        'value' => $model->sex ? Freelancer::itemAlias('Sex',$model->sex) : '--',
                     ],
                     'email:email',
                     'mobile',
@@ -58,11 +58,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'marital_status',
-                        'value' => Freelancer::itemAlias('Marital',$model->sex)
+                        'value' => $model->sex ? Freelancer::itemAlias('Marital',$model->sex) : ''
                     ],
                     [
                         'attribute' => 'military_service_status',
-                        'value' => Freelancer::itemAlias('Military',$model->sex)
+                        'value' => $model->marital_status ? Freelancer::itemAlias('Military',$model->marital_status) : ''
                     ],
                     'activity_field',
                     [
@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'project_number',
                     [
                         'label' => Yii::t('app','status'),
-                        'value' =>Freelancer::itemAlias('Status',$model->status),
+                        'value' => Freelancer::itemAlias('Status',$model->status),
                     ],
 
                 ],
