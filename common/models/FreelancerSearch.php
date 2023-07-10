@@ -20,7 +20,7 @@ class FreelancerSearch extends \api\models\Freelancer
     {
         return [
             [['id', 'sex', 'city', 'province', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
-            [['header_picture_desktop', 'header_picture_mobile', 'freelancer_picture', 'freelancer_description', 'name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period', 'skills', 'record_job', 'record_educational', 'portfolio', 'resume_file', 'description_user', 'categories'], 'safe'],
+            [['header_picture_desktop', 'header_picture_mobile', 'freelancer_picture', 'freelancer_description', 'name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period', 'skills', 'record_job', 'record_educational',  'resume_file', 'description_user', 'categories'], 'safe'],
         ];
     }
 
@@ -95,7 +95,6 @@ class FreelancerSearch extends \api\models\Freelancer
             ->andFilterWhere(['like', 'skills', $this->skills])
             ->andFilterWhere(['like', 'record_job', $this->record_job])
             ->andFilterWhere(['like', 'record_educational', $this->record_educational])
-            ->andFilterWhere(['like', 'portfolio', $this->portfolio])
             ->andFilterWhere(['like', 'resume_file', $this->resume_file])
             ->andFilterWhere(['like', 'description_user', $this->description_user]);
 

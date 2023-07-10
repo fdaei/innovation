@@ -6,7 +6,7 @@ class m230507_113554_create_table_ince_business_timeline_item extends Migration
 {
     public function safeUp()
     {
-        if ($this->db->getTableSchema('{{%business_timeline_item}}', true) === null) {
+        if ($this->db->getTableSchema('{{%business_timeline_item}}', false) === null) {
             $tableOptions = null;
             if ($this->db->driverName === 'mysql') {
                 $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
@@ -42,6 +42,8 @@ class m230507_113554_create_table_ince_business_timeline_item extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('{{%business_timeline_item}}');
+        if ($this->db->getTableSchema('{{%business_timeline_item}}', true) !== null) {
+            $this->dropTable('{{%business_timeline_item}}');
+        }
     }
 }

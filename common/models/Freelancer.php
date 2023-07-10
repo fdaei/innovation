@@ -30,7 +30,6 @@ use yii\db\ActiveRecord;
  * @property string $skills
  * @property string|null $record_job
  * @property string|null $record_educational
- * @property string|null $portfolio
  * @property string|null $resume_file
  * @property string $description_user
  * @property string|null $freelancer_description
@@ -86,7 +85,7 @@ class Freelancer extends ActiveRecord
         return [
             [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience'], 'required'],
             [['sex', 'city', 'province', 'experience_period', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
-            [['record_job', 'record_educational','skills', 'portfolio','resume_file','header_picture_desktop','header_picture_mobile','freelancer_picture'], 'safe'],
+            [['record_job', 'record_educational','skills','resume_file','header_picture_desktop','header_picture_mobile','freelancer_picture'], 'safe'],
             [['email'], 'email'],
             [['mobile'], 'string', 'max' => 11],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
@@ -120,7 +119,6 @@ class Freelancer extends ActiveRecord
             'skills' => Yii::t('app', 'Skills'),
             'record_job' => Yii::t('app', 'Record Job'),
             'record_educational' => Yii::t('app', 'Record Educational'),
-            'portfolio' => Yii::t('app', 'Portfolio'),
             'resume_file' => Yii::t('app', 'Resume File'),
             'description_user' => Yii::t('app', 'Further Details'),
             'project_number' => Yii::t('app', 'Project Number'),
