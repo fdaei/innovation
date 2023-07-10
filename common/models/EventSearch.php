@@ -28,7 +28,13 @@ class EventSearch extends Event
         return [
             [['id', 'updated_at', 'updated_by', 'created_at', 'created_by', 'deleted_at', 'filter'], 'integer'],
             ['filter', 'in', 'range' => array_keys(self::itemAlias('Filter'))],
-            [['title', 'description', 'headlines', 'address', 'sponsors', 'tag_ids','except'], 'safe'],
+            [['title', 'description', 'headlines', 'address', 'sponsors'], 'safe'],
+            [['tag_ids'], 'filter', 'filter' => function ($value) {
+                return is_array($value) ? array_map('intval', $value) : [];
+            }],
+            [['except'], 'filter', 'filter' => function ($value) {
+                return is_array($value) ? array_map('intval', $value) : [];
+            }],
             [['price', 'price_before_discount', 'longitude', 'latitude'], 'number'],
         ];
     }
