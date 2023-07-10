@@ -40,9 +40,7 @@ class m230430_234332_create_table_hitech_proposal extends Migration
      */
     public function safeDown()
     {
-        echo "m230430_234332_create_table_hitech_proposal cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%hitech_proposal}}');
     }
 
     /*

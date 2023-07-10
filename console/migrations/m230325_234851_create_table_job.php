@@ -48,9 +48,8 @@ class m230325_234851_create_table_job extends Migration
      */
     public function safeDown()
     {
-        echo "m230325_234851_create_table_job cannot be reverted.\n";
+        $this->dropTable('{{%job}}');
 
-        return false;
     }
 
     /*

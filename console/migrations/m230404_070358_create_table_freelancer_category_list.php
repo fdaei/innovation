@@ -42,9 +42,8 @@ class m230404_070358_create_table_freelancer_category_list extends Migration
      */
     public function safeDown()
     {
-        echo "m230404_070358_create_table_freelancer_category_list cannot be reverted.\n";
+        $this->dropTable('{{%freelancer_category_list}}');
 
-        return false;
     }
 
     /*

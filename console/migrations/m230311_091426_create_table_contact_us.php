@@ -43,9 +43,8 @@ class m230311_091426_create_table_contact_us extends Migration
      */
     public function safeDown()
     {
-        echo "m230311_091426_create_table_contact_us cannot be reverted.\n";
+        $this->dropTable('{{%contact_us}}');
 
-        return false;
     }
 
     /*

@@ -20,9 +20,7 @@ class m230311_091002_create_table_job_resume extends Migration
      */
     public function safeDown()
     {
-        echo "m230311_091002_create_table_job_resume cannot be reverted.\n";
 
-        return false;
     }
 
     /*

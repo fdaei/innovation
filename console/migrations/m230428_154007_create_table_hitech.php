@@ -45,9 +45,8 @@ class m230428_154007_create_table_hitech extends Migration
      */
     public function safeDown()
     {
-        echo "m230428_154007_create_table_hitech cannot be reverted.\n";
+        $this->dropTable('{{%hitech}}');
 
-        return false;
     }
 
     /*

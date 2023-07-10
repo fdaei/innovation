@@ -35,9 +35,7 @@ class m230428_140651_create_table_businesses_investors extends Migration
      */
     public function safeDown()
     {
-        echo "m230428_140651_create_table_businesses_investors cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%businesses_investors}}');
     }
 
     /*

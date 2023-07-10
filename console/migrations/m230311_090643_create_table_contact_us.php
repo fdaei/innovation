@@ -20,9 +20,7 @@ class m230311_090643_create_table_contact_us extends Migration
      */
     public function safeDown()
     {
-        echo "m230311_090643_create_table_contact_us cannot be reverted.\n";
 
-        return false;
     }
 
     /*

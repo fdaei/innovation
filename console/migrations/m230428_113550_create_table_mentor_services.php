@@ -35,9 +35,7 @@ class m230428_113550_create_table_mentor_services extends Migration
      */
     public function safeDown()
     {
-        echo "m230428_113550_create_table_mentor_services cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%mentor_services}}');
     }
 
     /*

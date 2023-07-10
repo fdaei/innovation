@@ -62,9 +62,7 @@ class m230311_091420_create_table_freelancer extends Migration
      */
     public function safeDown()
     {
-        echo "m230311_091420_create_table_freelancer cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%freelancer}}');
     }
 
     /*

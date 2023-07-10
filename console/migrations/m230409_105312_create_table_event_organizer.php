@@ -48,9 +48,8 @@ class m230409_105312_create_table_event_organizer extends Migration
      */
     public function safeDown()
     {
-        echo "m230409_105312_create_table_event_organizer cannot be reverted.\n";
+        $this->dropTable('{{%event_organizer}}');
 
-        return false;
     }
 
     /*
