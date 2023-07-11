@@ -7,11 +7,11 @@ use common\models\Freelancer;
 use common\models\FreelancerPortfolio;
 use common\models\FreelancerSearch;
 use filsh\yii2\oauth2server\filters\ErrorToExceptionFilter;
+use Yii;
 use yii\data\ActiveDataProvider;
 use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
-use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 use yii\web\UploadedFile;
 
@@ -31,18 +31,23 @@ class FreelancerController extends ActiveController
      */
     public function behaviors()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
+        $behaviors = parent::behaviors();
+        $action = Yii::$app->controller->action->id;
+
+        if ($action === 'create') {
+            $behaviors['authenticator'] = [
                 'class' => CompositeAuth::class,
                 'authMethods' => [
                     ['class' => HttpBearerAuth::class],
-                    ['class' => QueryParamAuth::class, 'tokenParam' => 'accessToken'],
-                ]
-            ],
-            'exceptionFilter' => [
-                'class' => ErrorToExceptionFilter::class
-            ],
-        ]);
+                    ['class' => QueryParamAuth::class, 'tokenParam' => 'accessToken']
+                ],
+            ];
+        }
+        $behaviors['exceptionFilter'] = [
+            'class' => ErrorToExceptionFilter::class,
+        ];
+
+        return $behaviors;
     }
 
     public function actions()
