@@ -57,7 +57,7 @@ class FreelancerController extends ActiveController
 
     /**
      * @OA\Post(
-     *     path="v1/freelancer/create",
+     *     path="/freelancer/create",
      *     summary="freelancer create",
      *     tags={"Freelancer"},
      *     @OA\RequestBody(
