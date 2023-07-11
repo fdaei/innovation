@@ -76,11 +76,23 @@ class FreelancerController extends ActiveController
      *             @OA\Property(property="description_user", type="string", example="description..."),
      *             @OA\Property(property="sex", type="integer", example="1"),
      *             @OA\Property(property="project_number", type="integer", example="36"),
-     *             @OA\Property(property="skills", type="string", example="['php','react']"),
-     *             @OA\Property(property="record_job", type="string", example="['php','react']"),
-     *             @OA\Property(property="record_educational", type="string", example="['php','react']"),
-     *             @OA\Property(property="portfolio", type="string",
-     *               example="[{'title':'title','description':'description','link':'https://avinox.ir','image':''}]"),
+     *             @OA\Property(property="skills", type="array",
+     *                 @OA\Items(@OA\Property(property="title", type="string"),)
+     *              ),
+     *             @OA\Property(property="record_job", type="array",
+     *                 @OA\Items(@OA\Property(property="title", type="string"),)
+     *              ),
+     *             @OA\Property(property="record_educational", type="array",
+     *                 @OA\Items(@OA\Property(property="title", type="string"),)
+     *              ),
+     *             @OA\Property(property="portfolio", type="array",
+     *                 @OA\Items(
+     *                    @OA\Property(property="title", type="string"),
+     *                    @OA\Property(property="description", type="string"),
+     *                    @OA\Property(property="link", type="string"),
+     *                    @OA\Property(property="image", type="file"),
+     *                  )
+     *              ),
      *        )
      *     ),
      *    @OA\Parameter(name="name",in="path",required=true),
@@ -100,9 +112,25 @@ class FreelancerController extends ActiveController
      *    @OA\Parameter(name="experience_period",in="query",required=true),
      *    @OA\Parameter(name="description_user",in="query",required=true),
      *    @OA\Parameter(name="project_number",in="query",required=true),
-     *    @OA\Parameter(name="skills",in="query",required=true),
-     *    @OA\Parameter(name="record_job",in="query",required=true),
-     *    @OA\Parameter(name="record_educational",in="query",required=true),
+     *    @OA\Parameter(name="skills[]",in="query",description="skills",required=false,
+     *        @OA\Schema(type="array",@OA\Items(type="string"))
+     *    ),
+     *    @OA\Parameter(name="record_job[]",in="query",description="record job",required=false,
+     *        @OA\Schema(type="array",@OA\Items(type="string"))
+     *    ),
+     *    @OA\Parameter(name="record_educational[]",in="query",description="record educational",required=false,
+     *        @OA\Schema(type="array",@OA\Items(type="string"))
+     *    ),
+     *    @OA\Parameter(name="portfolio[]",in="query",description="portfolio",required=false,
+     *        @OA\Schema(type="array",
+     *          @OA\Items(
+     *              @OA\Property(property="title", type="string"),
+     *              @OA\Property(property="description", type="string"),
+     *              @OA\Property(property="link", type="string"),
+     *              @OA\Property(property="image", type="file"),
+     *          ),
+     *        )
+     *    ),
      *
      *    @OA\Response(response=200, description="Successful operation")
      * )
