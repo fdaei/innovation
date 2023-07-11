@@ -11,6 +11,7 @@ use kartik\depdrop\DepDrop;
 use yii\helpers\Url;
 use wbraganca\dynamicform\DynamicFormWidget;
 use common\models\FreelancerCategoryList;
+use yii\db\Query;
 
 /** @var yii\web\View $this */
 /** @var common\models\Freelancer $model */
@@ -69,10 +70,27 @@ use common\models\FreelancerCategoryList;
                 <div class="col-md-4">
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <?php
+                    $query = (new Query())
+                        ->select(['{{%user}}.id', '{{%profile}}.name'])
+                        ->from('{{%user}}')
+                        ->leftJoin('{{%profile}}', '{{%profile}}.user_id = {{%user}}.id')
+                        ->all();
+                    echo $form->field($model, 'user_id')->widget(Select2::class, [
+                        'data' => ArrayHelper::map($query, 'id', 'name'),
+                        'size' => Select2::MEDIUM,
+                        'options' => ['placeholder' => Yii::t('app', 'Select User')],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="col-md-3">
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true,'class'=>'text-right form-control']) ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <?= $form->field($model, 'mobile')->textInput(['maxlength' => true,'class'=>'text-right form-control']) ?>
                 </div>
                 <div class="col-md-2">

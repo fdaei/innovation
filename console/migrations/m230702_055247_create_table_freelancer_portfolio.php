@@ -29,7 +29,7 @@ class m230702_055247_create_table_freelancer_portfolio extends Migration
                 'status' => $this->tinyInteger()->defaultValue(1)->notNull(),
                 'created_at' => $this->integer()->unsigned()->notNull(),
                 'updated_at' => $this->integer()->unsigned()->notNull(),
-                'created_by' => $this->integer()->unsigned(),
+                'created_by' => $this->integer()->unsigned()->notNull(),
                 'updated_by' => $this->integer()->unsigned(),
                 'deleted_at' => $this->integer()->unsigned()->notNull()->defaultValue('0'),
             ],

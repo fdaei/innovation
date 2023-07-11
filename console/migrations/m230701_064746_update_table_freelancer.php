@@ -13,6 +13,8 @@ class m230701_064746_update_table_freelancer extends Migration
     public function safeUp()
     {
         $this->alterColumn('{{%freelancer}}','created_at',$this->integer()->unsigned()->notNull());
+        $this->addColumn('{{%freelancer}}','user_id',$this->integer()->unsigned()->notNull());
+
         $this->dropColumn('{{%freelancer}}', 'portfolio');
 
         $this->update('{{%freelancer}}', ['skills' => []]);
@@ -39,6 +41,16 @@ class m230701_064746_update_table_freelancer extends Migration
             'RESTRICT'
         );
 
+        $this->addForeignKey(
+            'freelancer_user_ibfk_3',
+            '{{%freelancer}}',
+            ['user_id'],
+            '{{%user}}',
+            ['id'],
+            'RESTRICT',
+            'RESTRICT'
+        );
+
     }
 
     /**
@@ -46,10 +58,13 @@ class m230701_064746_update_table_freelancer extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('freelancer_user_ibfk_1','{{%freelancer}}');
+        $this->dropForeignKey('freelancer_user_ibfk_2','{{%freelancer}}');
+        $this->dropForeignKey('freelancer_user_ibfk_3','{{%freelancer}}');
+
         $this->alterColumn('{{%freelancer}}','created_at',$this->integer()->unsigned());
         $this->addColumn('{{%freelancer}}','portfolio',$this->json()->null());
 
-        $this->dropForeignKey('freelancer_user_ibfk_1','{{%freelancer}}');
-        $this->dropForeignKey('freelancer_user_ibfk_2','{{%freelancer}}');
+        $this->dropColumn('{{%freelancer}}','user_id');
     }
 }

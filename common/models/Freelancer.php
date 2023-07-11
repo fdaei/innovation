@@ -40,6 +40,13 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  * @property int|null $created_by
  * @property int $deleted_at
+ * @property int $user_id
+ *
+ * @property User $createdBy
+ * @property FreelancerCategories[] $freelancerCategories
+ * @property FreelancerPortfolio[] $freelancerPortfolios
+ * @property User $updatedBy
+ * @property User $user
  *
  * @mixin CdnUploadImageBehavior;
  */
@@ -83,18 +90,20 @@ class Freelancer extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience'], 'required'],
-            [['sex', 'city', 'province', 'experience_period', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at'], 'integer'],
+            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'user_id'], 'required'],
+            [['sex', 'city', 'province', 'experience_period', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at', 'user_id'], 'integer'],
             [['record_job', 'record_educational','skills','resume_file','header_picture_desktop','header_picture_mobile','freelancer_picture'], 'safe'],
             [['email'], 'email'],
             [['mobile'], 'string', 'max' => 11],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
+            [['skills', 'record_job', 'record_educational'], 'safe'],
             [['description_user','freelancer_description'], 'string'],
             ['status', 'default', 'value' => self::STATUS_PENDING, 'on' => self::SCENARIO_API],
             [['header_picture_desktop','header_picture_mobile','freelancer_picture'], 'image','extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
             [['name', 'email', 'mobile', 'activity_field', 'experience', 'experience_period'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -164,6 +173,36 @@ class Freelancer extends ActiveRecord
     public function getFreelancerPortfolios()
     {
         return $this->hasMany(FreelancerPortfolio::class, ['freelancer_id' => 'id'])->inverseOf('freelancer');
+    }
+
+    /**
+     * Gets query for [[CreatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by'])->inverseOf('freelancers');
+    }
+
+    /**
+     * Gets query for [[UpdatedBy]].
+     *
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by'])->inverseOf('freelancers0');
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id'])->inverseOf('freelancers1');
     }
 
     public function behaviors()

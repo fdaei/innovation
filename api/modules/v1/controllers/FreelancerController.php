@@ -148,6 +148,7 @@ class FreelancerController extends ActiveController
                 $model->header_picture_mobile = UploadedFile::getInstanceByName('header_picture_mobile');
                 $model->header_picture_desktop = UploadedFile::getInstanceByName('header_picture_desktop');
                 $model->freelancer_picture = UploadedFile::getInstanceByName('freelancer_picture');
+                $model->user_id = Yii::$app->user->id;
                 $model->save();
 
                 $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
