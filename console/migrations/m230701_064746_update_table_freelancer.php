@@ -13,7 +13,7 @@ class m230701_064746_update_table_freelancer extends Migration
     public function safeUp()
     {
         $this->alterColumn('{{%freelancer}}','created_at',$this->integer()->unsigned()->notNull());
-        $this->addColumn('{{%freelancer}}','user_id',$this->integer()->unsigned()->notNull());
+        $this->addColumn('{{%freelancer}}','user_id',$this->integer()->unsigned());
 
         $this->dropColumn('{{%freelancer}}', 'portfolio');
 
