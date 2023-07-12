@@ -29,7 +29,6 @@ class FreelancerSearch extends \api\models\Freelancer
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -44,8 +43,6 @@ class FreelancerSearch extends \api\models\Freelancer
     {
         $query = Freelancer::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -53,7 +50,6 @@ class FreelancerSearch extends \api\models\Freelancer
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
             $query->where('0=1');
             return $dataProvider;
         }
@@ -82,22 +78,12 @@ class FreelancerSearch extends \api\models\Freelancer
         }
 
         $query
-            ->andFilterWhere(['like', 'header_picture_desktop', $this->header_picture_desktop])
-            ->andFilterWhere(['like', 'header_picture_mobile', $this->header_picture_mobile])
-            ->andFilterWhere(['like', 'freelancer_picture', $this->freelancer_picture])
-            ->andFilterWhere(['like', 'freelancer_description', $this->freelancer_description])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'mobile', $this->mobile])
             ->andFilterWhere(['like', 'activity_field', $this->activity_field])
             ->andFilterWhere(['like', 'experience', $this->experience])
-            ->andFilterWhere(['like', 'experience_period', $this->experience_period])
-            ->andFilterWhere(['like', 'skills', $this->skills])
-            ->andFilterWhere(['like', 'record_job', $this->record_job])
-            ->andFilterWhere(['like', 'record_educational', $this->record_educational])
-            ->andFilterWhere(['like', 'resume_file', $this->resume_file])
-            ->andFilterWhere(['like', 'description_user', $this->description_user]);
-
+            ->andFilterWhere(['like', 'experience_period', $this->experience_period]);
         return $dataProvider;
     }
 }
