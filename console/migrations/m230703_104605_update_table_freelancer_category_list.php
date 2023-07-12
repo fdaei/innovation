@@ -12,7 +12,7 @@ class m230703_104605_update_table_freelancer_category_list extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%freelancer_category_list}}','created_by',$this->integer()->unsigned());
+        $this->addColumn('{{%freelancer_category_list}}','created_by',$this->integer()->unsigned()->notNull()->defaultValue(null));
 
         $this->alterColumn('{{%freelancer_category_list}}','updated_by',$this->integer()->unsigned());
         $this->alterColumn('{{%freelancer_category_list}}','status',$this->tinyInteger()->defaultValue(1)->notNull());
