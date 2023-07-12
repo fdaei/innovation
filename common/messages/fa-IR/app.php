@@ -341,4 +341,7 @@ return [
     'Level'=>'سطح',
     'Prefix'=>'پیشوند',
     'Message'=>'پیام',
+    'Select User' => 'انتخاب کاربر',
+    'Select...' => 'انتخاب',
+    'Select file ...' => 'انتخاب فایل',
 ];
