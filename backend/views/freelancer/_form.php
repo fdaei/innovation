@@ -140,14 +140,14 @@ use yii\db\Query;
         <div class="card-header">
             اطلاعات کاری
         </div>
-        <div class="card-body">k
+        <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'experience')->dropDownList(Freelancer::itemAlias('Experience')) ?>
-                </div>k
+                </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'status')->dropDownList(Freelancer::itemAlias('Status')) ?>
                 </div>
