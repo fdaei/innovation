@@ -1,5 +1,6 @@
 <?php
 
+use common\models\User;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use kartik\file\FileInput;
@@ -72,7 +73,18 @@ use yii\db\Query;
                 </div>
                 <div class="col-md-3">
                     <?php
-                    $query = (new Query())
+                    $query =
+                        User::find()
+                            ->joinWith(['profile'], false)
+                            ->andWhere([
+                                    'or',
+                                ['like', User::tableName() . '.username', $q],
+                                ['like', Profile::tableName() . '.first_name', $q],
+                                ['like', Profile::tableName() . '.last_name', $q],
+                            ])
+                            ->asArray()
+                            ->all();
+                        (new Query())
                         ->select(['{{%user}}.id', '{{%profile}}.name'])
                         ->from('{{%user}}')
                         ->leftJoin('{{%profile}}', '{{%profile}}.user_id = {{%user}}.id')
@@ -140,14 +152,14 @@ use yii\db\Query;
         <div class="card-header">
             اطلاعات کاری
         </div>
-        <div class="card-body">k
+        <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'activity_field')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'experience')->dropDownList(Freelancer::itemAlias('Experience')) ?>
-                </div>k
+                </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'status')->dropDownList(Freelancer::itemAlias('Status')) ?>
                 </div>

@@ -2,20 +2,19 @@
 
 namespace backend\models;
 
-use yii;
-use yii\base\Model;
+use common\models\Model;
+use yii\base\Model as BaseModel;
 
-class FreelancerSkills extends Model
+class FreelancerSkills extends BaseModel
 {
-
     public $isNewRecord = true;
     public $title;
 
     public function rules()
     {
         return [
-            [['title'],'required'],
-            [['title'],'string'],
+            [['title'], 'required'],
+            [['title'], 'string'],
         ];
     }
 
@@ -26,14 +25,14 @@ class FreelancerSkills extends Model
         ];
     }
 
-
-    public static function Handler($items = []){
+    public static function Handler($items = [])
+    {
         $data['FreelancerSkills'] = $items;
-        $items = \common\models\Model::createMultiple(FreelancerSkills::class,[],$items);
+        $items = Model::createMultiple(FreelancerSkills::class, [], $items);
         Model::loadMultiple($items, $data);
         $itemJson = [];
         foreach ($items as $index => $item) {
-            if($item->validate()){
+            if ($item->validate()) {
                 $itemJson[] = [
                     'title' => $item->title,
                 ];
@@ -41,7 +40,9 @@ class FreelancerSkills extends Model
         }
         return $itemJson;
     }
-    public static function loadDefaultValue($item){
+
+    public static function loadDefaultValue($item)
+    {
         $items = [];
         for ($i = 0; $i < count($item); $i++) {
             $items[$i] = new FreelancerSkills();
@@ -49,11 +50,11 @@ class FreelancerSkills extends Model
             $items[$i]->isNewRecord = false;
 
         }
-        if(empty($items)){
+
+        if (empty($items)) {
             $items = [new FreelancerSkills];
         }
+
         return $items;
-
     }
-
 }
