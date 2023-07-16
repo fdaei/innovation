@@ -302,4 +302,6 @@ return [
     'Level'=>'سطح',
     'Prefix'=>'پیشوند',
     'Message'=>'پیام',
+    'Log Time End'=>'زمان پایان',
+    'Log Time Start'=>'زمان شروع',
 ] ?>

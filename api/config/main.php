@@ -1,4 +1,5 @@
 <?php
+/**@var $logTargetMaskedVars array */
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/params.php'
@@ -55,6 +56,15 @@ return [
                 [
                     'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
+                    'logVars' => [
+                        '_GET',
+                        '_POST',
+                        '_FILES',
+                        '_COOKIE',
+                        '_SESSION',
+                        '_SERVER',
+                    ],
+                    'maskVars' => $logTargetMaskedVars,
                 ],
             ],
         ],

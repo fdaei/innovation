@@ -32,7 +32,7 @@ class EventSearch extends Event
             [['tag_ids'], 'filter', 'filter' => function ($value) {
                 return is_array($value) ? array_map('intval', $value) : [];
             }],
-            [['except'], 'filter', 'filter' => function ($value) {
+            [['except_event_id'], 'filter', 'filter' => function ($value) {
                 return is_array($value) ? array_map('intval', $value) : [];
             }],
             [['price', 'price_before_discount', 'longitude', 'latitude'], 'number'],
@@ -126,8 +126,8 @@ class EventSearch extends Event
                 ->groupBy(Event::tableName() . '.id');
         }
 
-        if($this->except){
-            $query->andWhere(['NOT IN','id',$this->except]);
+        if($this->except_event_id){
+            $query->andWhere(['NOT IN','id',$this->except_event_id]);
         }
 
         return $dataProvider;

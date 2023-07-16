@@ -1,4 +1,5 @@
 <?php
+/**@var $logTargetMaskedVars array */
 use common\components\Env;
 
 $config = [
@@ -17,6 +18,15 @@ if (!YII_DEBUG) {
         'class' => 'notamedia\sentry\SentryTarget',
         'dsn' => 'https://be51b2b0ad6f45d380aa5ac865c85b7b@sentry.avapardaz.org/16',
         'levels' => ['error', 'warning'],
+        'logVars' => [
+            '_GET',
+            '_POST',
+            '_FILES',
+            '_COOKIE',
+            '_SESSION',
+            '_SERVER',
+        ],
+        'maskVars' => $logTargetMaskedVars,
         'except' => [
             'yii\web\HttpException:401',
             'yii\web\HttpException:403',
