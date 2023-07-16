@@ -16,7 +16,7 @@ class EventSearch extends Event
     const FILTER_PASSED = 3;
 
     public $filter;
-    public $except=[];
+    public $except_event_id=[];
 
     public $tag_ids = [];
 

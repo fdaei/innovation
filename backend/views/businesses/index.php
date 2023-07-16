@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Business;
 use common\models\Businesses;
 use common\models\City;
 use common\models\CitySearch;
@@ -42,7 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'telegram',
                 'instagram',
                 'whatsapp',
-                'status',
+                [
+                    'attribute' => 'status',
+                    'value' => function ($model) {
+
+                        return Business::itemAlias('Status',$model->status);
+                    },
+                ],
                 [
                     'class' => ActionColumn::class,
                     'urlCreator' => function ($action, Businesses $model, $key, $index, $column) {
