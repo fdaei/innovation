@@ -1,7 +1,17 @@
 <?php
-
 use common\components\Env;
-
+ $logTargetMaskedVars = [
+    '_SERVER.DB_USERNAME',
+    '_SERVER.DB_PASSWORD',
+    '_SERVER.DB_TABLE_PREFIX',
+    '_SERVER.SLAVE_DB_USERNAME',
+    '_SERVER.SLAVE_DB_PASSWORD',
+    '_SERVER.SECONDARY_DB_USERNAME',
+    '_SERVER.SECONDARY_DB_PASSWORD',
+    '_SERVER.SECONDARY_DB_TABLE_PREFIX',
+    '_SERVER.BACKEND_COOKIE_VALIDATION_KEY',
+    '_SERVER.FRONTEND_COOKIE_VALIDATION_KEY',
+];
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -85,4 +95,6 @@ return [
             'class' => 'common\components\Cdn',
         ],
     ],
+
+
 ];

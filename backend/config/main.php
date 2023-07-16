@@ -1,9 +1,11 @@
 <?php
+
+/**@var $logTargetMaskedVars array */
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/params.php'
 );
-
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
@@ -35,13 +37,33 @@ return [
                 [
                     'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
-                ],[
+                    'logVars' => [
+                        '_GET',
+                        '_POST',
+                        '_FILES',
+                        '_COOKIE',
+                        '_SESSION',
+                        '_SERVER',
+                    ],
+                    'maskVars' => $logTargetMaskedVars,
+                ],
+                [
                     'class' => \yii\log\DbTarget::class,
                     'levels' => ['error', 'warning'],
+                    'logVars' => [
+                        '_GET',
+                        '_POST',
+                        '_FILES',
+                        '_COOKIE',
+                        '_SESSION',
+                        '_SERVER',
+                    ],
+                    'maskVars' => $logTargetMaskedVars,
                 ],
-
             ],
+
         ],
+
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
