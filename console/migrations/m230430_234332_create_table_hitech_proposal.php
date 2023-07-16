@@ -40,23 +40,7 @@ class m230430_234332_create_table_hitech_proposal extends Migration
      */
     public function safeDown()
     {
-        echo "m230430_234332_create_table_hitech_proposal cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%hitech_proposal}}');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230430_234332_create_table_hitech_proposal cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

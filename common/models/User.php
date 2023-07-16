@@ -5,6 +5,7 @@ namespace common\models;
 use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -22,6 +23,7 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property Profile $profile
  */
 
 class User extends ActiveRecord implements UserCredentialsInterface, IdentityInterface
@@ -318,6 +320,24 @@ class User extends ActiveRecord implements UserCredentialsInterface, IdentityInt
     public function fields()
     {
         return ['username'];
+    }
+
+    /**
+     * Gets query for [[Profile]].
+     *
+     * @return ActiveQuery|ProfileQuery
+     */
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::class, ['user_id' => 'id'])->inverseOf('user');
+    }
+    public function fullName(){
+        $profile = $this->getProfile()?->one();
+        if ($profile && ($profile->first_name || $profile->last_name)){
+            return $profile->first_name.' '.$profile->last_name;
+        }else{
+            return $this->username;
+        }
     }
 
 }

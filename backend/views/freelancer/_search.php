@@ -15,63 +15,20 @@ use yii\bootstrap4\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'header_picture_desktop') ?>
-
-    <?= $form->field($model, 'header_picture_mobile') ?>
-
-    <?= $form->field($model, 'freelancer_picture') ?>
-
-    <?= $form->field($model, 'freelancer_description') ?>
-
-    <?php // echo $form->field($model, 'name') ?>
-
-    <?php // echo $form->field($model, 'sex') ?>
-
-    <?php // echo $form->field($model, 'email') ?>
-
-    <?php // echo $form->field($model, 'mobile') ?>
-
-    <?php // echo $form->field($model, 'city') ?>
-
-    <?php // echo $form->field($model, 'province') ?>
-
-    <?php // echo $form->field($model, 'marital_status') ?>
-
-    <?php // echo $form->field($model, 'military_service_status') ?>
-
-    <?php // echo $form->field($model, 'activity_field') ?>
-
-    <?php // echo $form->field($model, 'experience') ?>
-
-    <?php // echo $form->field($model, 'experience_period') ?>
-
-    <?php // echo $form->field($model, 'skills') ?>
-
-    <?php // echo $form->field($model, 'record_job') ?>
-
-    <?php // echo $form->field($model, 'record_educational') ?>
-
-    <?php // echo $form->field($model, 'portfolio') ?>
-
-    <?php // echo $form->field($model, 'resume_file') ?>
-
-    <?php // echo $form->field($model, 'description_user') ?>
-
-    <?php // echo $form->field($model, 'project_number') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'deleted_at') ?>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'id') ?>
+        </div>
+        <div class="col-sm-6">
+            <?php  echo $form->field($model, 'name') ?>
+        </div>
+        <div class="col-sm-6">
+            <?php  echo $form->field($model, 'email') ?>
+        </div>
+        <div class="col-sm-6">
+            <?php  echo $form->field($model, 'mobile') ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

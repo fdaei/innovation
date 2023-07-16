@@ -48,23 +48,8 @@ class m230409_105312_create_table_event_organizer extends Migration
      */
     public function safeDown()
     {
-        echo "m230409_105312_create_table_event_organizer cannot be reverted.\n";
-
-        return false;
-    }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
+        $this->dropTable('{{%event_organizer}}');
 
     }
 
-    public function down()
-    {
-        echo "m230409_105312_create_table_event_organizer cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
