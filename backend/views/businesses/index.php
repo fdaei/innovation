@@ -42,7 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'telegram',
                 'instagram',
                 'whatsapp',
-                'status',
                 [
                     'class' => ActionColumn::class,
                     'urlCreator' => function ($action, Businesses $model, $key, $index, $column) {
