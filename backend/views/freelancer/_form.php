@@ -12,7 +12,7 @@ use kartik\depdrop\DepDrop;
 use yii\helpers\Url;
 use wbraganca\dynamicform\DynamicFormWidget;
 use common\models\FreelancerCategoryList;
-use yii\db\Query;
+use yii\web\JsExpression;
 
 /** @var yii\web\View $this */
 /** @var common\models\Freelancer $model */
@@ -68,36 +68,25 @@ use yii\db\Query;
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-4">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                </div>
                 <div class="col-md-3">
-                    <?php
-                    $query =
-                        User::find()
-                            ->joinWith(['profile'], false)
-                            ->andWhere([
-                                    'or',
-                                ['like', User::tableName() . '.username', $q],
-                                ['like', Profile::tableName() . '.first_name', $q],
-                                ['like', Profile::tableName() . '.last_name', $q],
-                            ])
-                            ->asArray()
-                            ->all();
-                        (new Query())
-                        ->select(['{{%user}}.id', '{{%profile}}.name'])
-                        ->from('{{%user}}')
-                        ->leftJoin('{{%profile}}', '{{%profile}}.user_id = {{%user}}.id')
-                        ->all();
-                    echo $form->field($model, 'user_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map($query, 'id', 'name'),
+                    <?= $form->field($model, 'user_id')->widget(Select2::class, [
                         'size' => Select2::MEDIUM,
                         'options' => ['placeholder' => Yii::t('app', 'Select User')],
+                        'data' => [$model?->user_id => User::findOne($model->user_id)?->fullName()],
                         'pluginOptions' => [
                             'allowClear' => true,
+                            'minimumInputLength' => 3,
+                            'ajax' => [
+                                'url' => Url::to(['/freelancer/get-users']),
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) {return {q:params.term}; }')
+                            ],
                         ],
                     ])->label(Yii::t('app','User'));
                     ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true,'class'=>'text-right form-control']) ?>

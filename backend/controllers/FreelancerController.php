@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use Yii;
+use common\models\Profile;
 use api\models\FreelancerCategoryList;
 use common\models\FreelancerCategories;
 use common\models\FreelancerPortfolio;
@@ -10,6 +12,7 @@ use backend\models\FreelancerRecordJob;
 use backend\models\FreelancerSkills;
 use common\models\Freelancer;
 use common\models\FreelancerSearch;
+use common\models\User;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -234,5 +237,31 @@ class FreelancerController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionGetUsers($q=null){
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $users = User::find()
+                ->leftJoin('{{%profile}}', '{{%profile}}.user_id = {{%user}}.id')
+                ->andWhere([
+                    'or',
+                    ['like', User::tableName() . '.username', $q],
+                    ['like', Profile::tableName() . '.first_name', $q],
+                    ['like', Profile::tableName() . '.last_name', $q],
+                ])
+                ->all();
+            $out['results'] = ArrayHelper::toArray($users,[
+                User::class => [
+                    'id',
+                    'text' => function($user){
+                        return $user->fullName();
+                    },
+                ],
+            ]);
+        }
+        return $out;
     }
 }
