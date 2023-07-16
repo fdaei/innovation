@@ -41,18 +41,4 @@ class m230404_084625_create_table_freelancer_categories extends Migration
 
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230404_084625_create_table_freelancer_categorys cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

@@ -52,18 +52,4 @@ class m230409_105312_create_table_event_organizer extends Migration
 
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230409_105312_create_table_event_organizer cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

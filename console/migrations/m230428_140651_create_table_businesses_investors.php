@@ -37,19 +37,4 @@ class m230428_140651_create_table_businesses_investors extends Migration
     {
         $this->dropTable('{{%businesses_investors}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230428_140651_create_table_businesses_investors cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

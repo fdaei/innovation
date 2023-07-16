@@ -64,19 +64,4 @@ class m230311_091420_create_table_freelancer extends Migration
     {
         $this->dropTable('{{%freelancer}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230311_091420_create_table_freelancer cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

@@ -62,18 +62,4 @@ class m230207_223404_create_table_businesses extends Migration
         $this->dropTable('{{%businesses}}');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230207_223404_create_table_businesses cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

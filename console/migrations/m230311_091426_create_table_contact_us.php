@@ -47,18 +47,4 @@ class m230311_091426_create_table_contact_us extends Migration
 
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230311_091426_create_table_contact_us cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
