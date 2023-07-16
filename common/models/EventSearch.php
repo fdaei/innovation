@@ -16,7 +16,7 @@ class EventSearch extends Event
     const FILTER_PASSED = 3;
 
     public $filter;
-    public $except_event_id=[];
+    public $except_event_id = [];
 
     public $tag_ids = [];
 
@@ -126,8 +126,8 @@ class EventSearch extends Event
                 ->groupBy(Event::tableName() . '.id');
         }
 
-        if($this->except_event_id){
-            $query->andWhere(['NOT IN','id',$this->except_event_id]);
+        if ($this->except_event_id) {
+            $query->andWhere(['NOT IN', 'id', $this->except_event_id]);
         }
 
         return $dataProvider;
