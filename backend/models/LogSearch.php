@@ -2,12 +2,11 @@
 
 namespace backend\models;
 
+use common\models\Log;
 use common\traits\CoreTrait;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\behaviors\TimestampBehavior;
-use common\models\Log;
 
 /**
  *
@@ -17,8 +16,10 @@ use common\models\Log;
 class LogSearch extends Log
 {
     use CoreTrait;
+
     public $log_time_start;
     public $log_time_end;
+
     /**
      * {@inheritdoc}
      */
@@ -63,13 +64,16 @@ class LogSearch extends Log
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC]
+            ]
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -78,17 +82,23 @@ class LogSearch extends Log
             'id' => $this->id,
             'level' => $this->level
         ]);
-        $query->andFilterWhere(['like', 'category', $this->category])
+
+        $query
+            ->andFilterWhere(['like', 'category', $this->category])
             ->andFilterWhere(['like', 'prefix', $this->prefix])
             ->andFilterWhere(['like', 'message', $this->message]);
 
-        if (!empty($this->log_time_start) && !empty($this->log_time_end)) {
+        if ($this->log_time_start) {
             $logTimeStart = $this->jalaliToTimestamp($this->log_time_start, "Y/m/d H:i");
+
+            $query->andFilterWhere(['>=', 'log_time', $logTimeStart]);
+        }
+
+        if ($this->log_time_end) {
             $logTimeEnd = $this->jalaliToTimestamp($this->log_time_end, "Y/m/d H:i");
 
-            $query->andFilterWhere(['between', 'log_time', $logTimeStart, $logTimeEnd]);
+            $query->andFilterWhere(['<=', 'log_time', $logTimeEnd]);
         }
-        $query->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }
