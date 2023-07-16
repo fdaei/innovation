@@ -45,3 +45,4 @@ phpunit.phar
 /backend/web/.htaccess
 /common/config/codeception-local
 /frontend/web/index-test.php
+/backend/web/anystring/

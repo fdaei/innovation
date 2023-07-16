@@ -21,23 +21,6 @@ class m230508_104024_add_column_status_to_event extends Migration
      */
     public function safeDown()
     {
-        echo "m230508_104024_add_column_status_to_event cannot be reverted.\n";
-
-        return false;
+        $this->dropColumn('{{%event}}', 'status');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230508_104024_add_column_status_to_event cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

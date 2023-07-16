@@ -45,23 +45,7 @@ class m230311_072035_create_table_businesses_story extends Migration
      */
     public function safeDown()
     {
-        echo "m230311_072035_create_table_businesses_story cannot be reverted.\n";
-
-        return false;
-    }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
+        $this->dropTable('{{%businesses_story}}');
 
     }
-
-    public function down()
-    {
-        echo "m230311_072035_create_table_businesses_story cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

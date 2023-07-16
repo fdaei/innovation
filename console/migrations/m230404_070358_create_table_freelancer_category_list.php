@@ -42,23 +42,8 @@ class m230404_070358_create_table_freelancer_category_list extends Migration
      */
     public function safeDown()
     {
-        echo "m230404_070358_create_table_freelancer_category_list cannot be reverted.\n";
-
-        return false;
-    }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
+        $this->dropTable('{{%freelancer_category_list}}');
 
     }
 
-    public function down()
-    {
-        echo "m230404_070358_create_table_freelancer_category_list cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

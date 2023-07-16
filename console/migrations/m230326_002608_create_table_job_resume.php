@@ -51,23 +51,8 @@ class m230326_002608_create_table_job_resume extends Migration
      */
     public function safeDown()
     {
-        echo "m230326_002608_create_table_job_resume cannot be reverted.\n";
-
-        return false;
-    }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
+        $this->dropTable('{{%job_resume}}');
 
     }
 
-    public function down()
-    {
-        echo "m230326_002608_create_table_job_resume cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

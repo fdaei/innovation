@@ -38,23 +38,7 @@ class m230427_120319_create_table_event_sponsors extends Migration
      */
     public function safeDown()
     {
-        echo "m230427_120319_create_table_event_sponsors cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%event_sponsors}}');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m230427_120319_create_table_event_sponsors cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
