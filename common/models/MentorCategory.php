@@ -25,6 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property User $createdBy
  * @property User $updatedBy
+ * @mixin SoftDeleteBehavior
  */
 class MentorCategory extends ActiveRecord
 {
@@ -44,7 +45,7 @@ class MentorCategory extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'created_at', 'created_by'], 'required'],
+            [['title'], 'required'],
             [['status', 'updated_by', 'updated_at', 'created_at', 'deleted_at', 'created_by'], 'integer'],
             [['title'], 'string', 'max' => 128],
             [['brief_description'], 'string', 'max' => 255],
@@ -99,7 +100,8 @@ class MentorCategory extends ActiveRecord
      */
     public static function find()
     {
-        return new MentorCategoryQuery(get_called_class());
+        $query = new MentorCategoryQuery(get_called_class());
+        return $query->notDeleted();
     }
 
     public static function itemAlias($type, $code = NULL)

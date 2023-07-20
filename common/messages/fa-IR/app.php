@@ -345,4 +345,8 @@ return [
     'Select User' => 'انتخاب کاربر',
     'Select...' => 'انتخاب',
     'Select file ...' => 'انتخاب فایل',
+    'Mentor Category' => 'دسته بندی مشاوران',
+    'Mentor Categories' => 'دسته بندی‌های مشاوران',
+    'Create Mentor Category' => 'ایجاد دسته بندی مشاوران',
+    'Update Mentor Category: {name}' => 'ویرایش دسته‌بندی: {name}',
 ];

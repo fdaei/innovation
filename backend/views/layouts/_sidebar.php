@@ -76,6 +76,12 @@ $menu_items = [
                 'icon' => 'fas fa-user',
                 'url' => ['/mentors-advice-request/']
             ],
+            [
+                'group' => 'Mentor',
+                'label' => Yii::t('app', 'Mentor Category'),
+                'icon' => 'fas fa-list',
+                'url' => ['/mentor-category/']
+            ],
 
         ]
     ],
