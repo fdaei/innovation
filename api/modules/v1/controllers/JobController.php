@@ -69,7 +69,7 @@ class JobController extends ActiveController
 
     public function actionJobList(){
         return new ActiveDataProvider([
-            'query' => FreelancerCategoryList::find()->where(['model_class'=>Job::className()])
+            'query' => FreelancerCategoryList::find()
         ]);
 
     }

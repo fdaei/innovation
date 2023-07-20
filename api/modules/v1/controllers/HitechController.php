@@ -79,7 +79,7 @@ class HitechController extends ActiveController
 
     public function actionHitechList(){
         return new ActiveDataProvider([
-            'query' => FreelancerCategoryList::find()->where(['model_class'=>Hitech::className()])
+            'query' => FreelancerCategoryList::find()
         ]);
     }
 
