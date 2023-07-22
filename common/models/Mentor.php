@@ -6,6 +6,7 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -44,6 +45,8 @@ class Mentor extends \yii\db\ActiveRecord
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 2;
     const SCENARIO_FORM = 'form';
+
+    public $categories_list = [];
     public static function tableName()
     {
         return '{{%mentor}}';
@@ -55,7 +58,8 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'activity_field', 'activity_description','telegram'], 'required','on' => [self::SCENARIO_FORM]],
+            [['user_id'],'integer'],
+            [['name', 'activity_field', 'activity_description','telegram','user_id'], 'required','on' => [self::SCENARIO_FORM]],
             [['activity_description','telegram'], 'string'],
             [[ 'services', 'records'], 'safe'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
@@ -66,7 +70,7 @@ class Mentor extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description','telegram'];
+        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description','telegram','user_id'];
         return $scenarios;
     }
 
@@ -148,16 +152,15 @@ class Mentor extends \yii\db\ActiveRecord
         return true;
     }
 
-    public function getMentorCategories()
+    public function getMentorCategories(): ActiveQuery
     {
-        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class'=>Mentor::className()]);
+        return $this->hasMany(MentorCategories::class, ['mentor_id' => 'id']);
     }
 
     public function getMentorServices()
     {
         return $this->hasMany(MentorServices::class, ['mentor_id' => 'id']);
     }
-
 
     public static function itemAlias($type, $code = NULL)
     {

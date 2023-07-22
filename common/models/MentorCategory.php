@@ -6,7 +6,9 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -92,6 +94,16 @@ class MentorCategory extends ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by'])->inverseOf('mentorCategories2');
+    }
+
+    /**
+     * Gets query for [[MentorCategories]].
+     *
+     * @return ActiveQuery|MentorCategoriesQuery
+     */
+    public function getMentorCategories()
+    {
+        return $this->hasMany(MentorCategories::class, ['category_id' => 'id'])->inverseOf('category');
     }
 
     /**

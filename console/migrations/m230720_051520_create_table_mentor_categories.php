@@ -40,16 +40,16 @@ class m230720_051520_create_table_mentor_categories extends Migration
             'mentor_category_ibfk_1',
             '{{%mentor_categories}}',
             ['mentor_id'],
-            '{{%freelancer}}',
+            '{{%mentor}}',
             ['id'],
             'RESTRICT',
             'RESTRICT'
         );
         $this->addForeignKey(
-            'freelancer_category_list_ibfk_1',
+            'mentor_category_list_ibfk_1',
             '{{%mentor_categories}}',
             ['category_id'],
-            '{{%freelancer_category_list}}',
+            '{{%mentor_category}}',
             ['id'],
             'RESTRICT',
             'RESTRICT'

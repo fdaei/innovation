@@ -5,6 +5,8 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -20,12 +22,12 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $status
  * @property int $deleted_at
  *
- * @property FreelancerCategoryList $category
+ * @property MentorCategory $category
  * @property User $createdBy
- * @property Freelancer $mentor
+ * @property Mentor $mentor
  * @property User $updatedBy
  */
-class MentorCategories extends \yii\db\ActiveRecord
+class MentorCategories extends ActiveRecord
 {
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
@@ -43,12 +45,12 @@ class MentorCategories extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['mentor_id', 'category_id', 'created_at', 'created_by', 'updated_by'], 'required'],
+            [['mentor_id', 'category_id'], 'required'],
             [['mentor_id', 'category_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status', 'deleted_at'], 'integer'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => FreelancerCategoryList::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => MentorCategory::class, 'targetAttribute' => ['category_id' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['mentor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Freelancer::class, 'targetAttribute' => ['mentor_id' => 'id']],
+            [['mentor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Mentor::class, 'targetAttribute' => ['mentor_id' => 'id']],
         ];
     }
 
@@ -73,17 +75,17 @@ class MentorCategories extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Category]].
      *
-     * @return \yii\db\ActiveQuery|FreelancerCategoryListQuery
+     * @return ActiveQuery|MentorCategoryQuery
      */
     public function getCategory()
     {
-        return $this->hasOne(FreelancerCategoryList::class, ['id' => 'category_id'])->inverseOf('mentorCategories');
+        return $this->hasOne(MentorCategory::class, ['id' => 'category_id'])->inverseOf('mentorCategories');
     }
 
     /**
      * Gets query for [[CreatedBy]].
      *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     * @return ActiveQuery|ActiveQuery
      */
     public function getCreatedBy()
     {
@@ -93,17 +95,17 @@ class MentorCategories extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Mentor]].
      *
-     * @return \yii\db\ActiveQuery|FreelancerQuery
+     * @return ActiveQuery|MentorQuery
      */
     public function getMentor()
     {
-        return $this->hasOne(Freelancer::class, ['id' => 'mentor_id'])->inverseOf('mentorCategories');
+        return $this->hasOne(Mentor::class, ['id' => 'mentor_id'])->inverseOf('mentorCategories');
     }
 
     /**
      * Gets query for [[UpdatedBy]].
      *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     * @return ActiveQuery|ActiveQuery
      */
     public function getUpdatedBy()
     {
