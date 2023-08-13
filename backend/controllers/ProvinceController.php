@@ -4,11 +4,12 @@ namespace backend\controllers;
 
 use common\models\Province;
 use common\models\ProvinceSearch;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use Yii;
+use yii\web\Response;
 
 /**
  * ProvinceController implements the CRUD actions for Province model.
@@ -82,7 +83,7 @@ class ProvinceController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->validate()) {
-                $model->status=1;
+                $model->status = 1;
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -134,6 +135,7 @@ class ProvinceController extends Controller
 
         return $this->redirect(['index']);
     }
+
     /**
      * Finds the Province model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -153,5 +155,26 @@ class ProvinceController extends Controller
     private function flash($type, $message)
     {
         Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);
+    }
+
+    public function actionGetCities()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $province_id = $parents[0];
+                $province = Province::findOne(['id' => $province_id]);
+                if (!$province) {
+                    return ['output' => [], 'selected' => ''];
+                }
+                foreach ($province->cities as $item) {
+                    $out[] = ['id' => $item->id, 'name' => $item->name];
+                }
+                return ['output' => $out, 'selected' => ''];
+            }
+        }
+        return ['output' => '', 'selected' => ''];
     }
 }

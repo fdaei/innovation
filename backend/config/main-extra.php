@@ -1,5 +1,5 @@
 <?php
-
+/**@var $logTargetMaskedVars array */
 use common\components\Env;
 use common\components\swagger\SwaggerApi;
 
@@ -64,6 +64,15 @@ if (!YII_DEBUG) {
         'class' => 'notamedia\sentry\SentryTarget',
         'dsn' => 'https://1d71a842350f442588b1eee331a82a71@sentry.avapardaz.org/17',
         'levels' => ['error', 'warning'],
+        'logVars' => [
+            '_GET',
+            '_POST',
+            '_FILES',
+            '_COOKIE',
+            '_SESSION',
+            '_SERVER',
+        ],
+        'maskVars' => $logTargetMaskedVars,
         'except' => [
             'yii\web\HttpException:401',
             'yii\web\HttpException:403',
