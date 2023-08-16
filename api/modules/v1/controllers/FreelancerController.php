@@ -3,6 +3,7 @@
 namespace api\modules\v1\controllers;
 
 use api\models\FreelancerCategoryList;
+use common\models\Event;
 use common\models\Freelancer;
 use common\models\FreelancerPortfolio;
 use common\models\FreelancerSearch;
@@ -13,6 +14,7 @@ use filsh\yii2\oauth2server\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 /**
@@ -76,6 +78,7 @@ class FreelancerController extends ActiveController
      *             @OA\Property(property="description_user", type="string", example="description..."),
      *             @OA\Property(property="sex", type="integer", example="1"),
      *             @OA\Property(property="project_number", type="integer", example="36"),
+     *             @OA\Property(property="accept_rules", type="boolean", example=true),
      *             @OA\Property(property="skills", type="array",
      *                 @OA\Items(@OA\Property(property="title", type="string"),)
      *              ),
@@ -148,7 +151,7 @@ class FreelancerController extends ActiveController
                 $model->header_picture_mobile = UploadedFile::getInstanceByName('header_picture_mobile');
                 $model->header_picture_desktop = UploadedFile::getInstanceByName('header_picture_desktop');
                 $model->freelancer_picture = UploadedFile::getInstanceByName('freelancer_picture');
-                $model->user_id = Yii::$app->user->id;
+                $model->user_id = 1;
                 $model->save();
 
                 $freelancerPortfolio = FreelancerPortfolio::Handler($this->request->post('FreelancerPortfolio'));
@@ -167,6 +170,11 @@ class FreelancerController extends ActiveController
         return $model;
     }
 
+    public function actionView($id)
+    {
+        return $this->findModel($id);
+    }
+
     public function actionIndex()
     {
         $searchModel = new FreelancerSearch();
@@ -181,5 +189,14 @@ class FreelancerController extends ActiveController
         return new ActiveDataProvider([
             'query' => FreelancerCategoryList::find()
         ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Freelancer::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }
