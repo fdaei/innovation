@@ -18,6 +18,7 @@ use yii\filters\VerbFilter;
 class MentorServicesController extends Controller
 {
     use AjaxValidationTrait;
+
     /**
      * @inheritDoc
      */
@@ -79,24 +80,27 @@ class MentorServicesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($id): \yii\web\Response|string
+    public function actionCreate(int $id): \yii\web\Response|string
     {
-        $model = new MentorServices();
-        $model->mentor_id=$id;
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+        $model = new MentorServices(
+          ['mentor_id'=>$id]
+        );
+        if ($model->load($this->request->post()) && $model->validate()) {
+            var_dump($model->save(false));die();
+            if($model->save(false)){
                 return $this->asJson([
                     'success' => true,
                     'msg' => Yii::t("app", 'Success')
                 ]);
+            }else{
+                return $this->asJson([
+                    'success' => false,
+                    'msg' => Yii::t("app", 'Error in Save Action')
+                ]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
         $this->performAjaxValidation($model);
-        return $this->renderAjax('create', [
-            'model' => $model,
-        ]);
+        return $this->renderAjax('create', ['model' => $model,]);
     }
 
     /**
@@ -106,7 +110,8 @@ class MentorServicesController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id,$model_id)
+    public
+    function actionUpdate($id, $model_id)
     {
         $model = $this->findModel($id);
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -128,7 +133,8 @@ class MentorServicesController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id,$model_id)
+    public
+    function actionDelete($id, $model_id)
     {
         if ($this->findModel($id)->delete()) {
             return $this->asJson([
@@ -150,7 +156,8 @@ class MentorServicesController extends Controller
      * @return MentorServices the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected
+    function findModel($id)
     {
         if (($model = MentorServices::findOne(['id' => $id])) !== null) {
             return $model;
