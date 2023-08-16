@@ -19,52 +19,56 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card material-card">
     <div class="p-4">
         <?php $this->beginBlock('mentor'); ?>
-        <div class="card">
-            <div class="card-header my-3">
-                <h3 class="float-left "> گالری عکس ها </h3>
-            </div>
+        <div class="card border-primary">
             <div class="card-body row">
                 <div class="col-12 row">
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'name')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'Name')?> :</label>
                         <p><?= $model->name ?></p>
                     </div>
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'activity_field')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'Activity Field')?> :</label>
                         <p><?= $model->activity_field ?></p>
                     </div>
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'instagram')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'Instagram')?> :</label>
                         <p><?= $model->instagram ?></p>
                     </div>
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'linkedin')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'LinkedIn')?> :</label>
                         <p><?= $model->linkedin ?></p>
                     </div>
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'twitter')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'Twitter')?> :</label>
                         <p><?= $model->twitter ?></p>
                     </div>
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'whatsapp')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'WhatsApp')?> :</label>
                         <p><?= $model->whatsapp ?></p>
                     </div>
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'telegram')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'Telegram')?> :</label>
                         <p><?= $model->telegram ?></p>
                     </div>
-                    <div class="col-3">
-                        <label><?= Yii::t('app', 'activity_description')?> :</label>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'Consultation Face-to-Face Cost')?> :</label>
+                        <p><?= $model->consultation_face_to_face_cost ?></p>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="fw-bold"><?= Yii::t('app', 'Consultation Online Cost')?> :</label>
+                        <p><?= $model->consultation_online_cost ?></p>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="fw-bold"><?= Yii::t('app', 'Activity Description')?> :</label>
                         <p><?= $model->activity_description ?></p>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
-                <?= Html::a('ویرایش', ['update', 'id' => $model->id],
-                    ['class' => 'btn btn-outline-primary ']) ?>
+                <?= Html::a('<i class="bi bi-pencil"></i> ویرایش', ['update', 'id' => $model->id],
+                    ['class' => 'btn btn-outline-primary']) ?>
             </div>
         </div>
-
         <?php $this->endBlock(); ?>
         <?php $this->beginBlock('services'); ?>
         <?php Pjax::begin(['id' => 'p-jax-mentor-services', 'enablePushState' => false]); ?>
@@ -76,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'data-pjax' => '0',
                             'class' => "btn btn-outline-success float-right ",
-                            'data-size' => 'modal-xl',
+                            'data-size' => 'modal-md',
                             'data-title' => Yii::t('app', 'create'),
                             'data-toggle' => 'modal',
                             'data-target' => '#modal-pjax',

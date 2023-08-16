@@ -49,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <p><?= $model->address ?></p>
                     </div>
                 </div>
-                <div class="col-5">
-                    <img style="height: 300px;width: 650px;" src="<?= $model->getUploadUrl('picture') ?>">
-                </div>
+<!--                <div class="col-5">-->
+<!--                    <img style="height: 300px;width: 650px;" src="--><?php //= $model->getUploadUrl('picture') ?><!--">-->
+<!--                </div>-->
                 <div class="col-12">
                     <label for="name"> <?= Yii::t('app', 'description') ?>:</label>
                     <p><?= $model->description ?></p>

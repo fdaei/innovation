@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card material-card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h3><?= Html::encode($this->title) ?></h3>
         <?= Html::a(Yii::t('app', 'Create Branches'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
     </div>
     <?php Pjax::begin(); ?>

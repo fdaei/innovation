@@ -16,7 +16,8 @@ use yii\widgets\MaskedInput;
 /** @var common\models\Event $model */
 /** @var yii\bootstrap4\ActiveForm $form */
 /** @var common\models\EventTime $EventTimes */
-/** @var common\models\Tag $searchedTags */
+/** @var array $searchedTags */
+
 
 ?>
 
@@ -68,47 +69,39 @@ use yii\widgets\MaskedInput;
             </div>
             <div class='col-md-4'>
                 <?= $form->field($model, 'tagNames')->widget(Select2::class, [
-                    'initValueText' => ArrayHelper::map($model->tagsArray, 'id', 'name'),
-                    'value' => ArrayHelper::map($model->tagsArray, 'id', 'id'),
+                    'initValueText' => ArrayHelper::map($searchedTags, 'tag_id', 'name'),
                     'options' => [
                         'multiple' => true,
-                        'placeholder' => 'یک یا چند برچسب را انتخاب نمایید...',
+                        'placeholder' => 'یک یا چند تگ را انتخاب نمایید...',
                         'dir' => 'rtl',
                         'data-id' => $model->id,
-                        'data-tags' => ArrayHelper::index(ArrayHelper::toArray(Tag::find()->all(), [
-                            'common\models\Tag' => [
-                                'tag_id',
-                                'type',
-                                'color'
-                            ]
-                        ]), 'tag_id'),
+                        'data-tags' => ArrayHelper::map($searchedTags, 'tag_id', 'type'),
+                        'data-tags-name' => ArrayHelper::map($searchedTags, 'tag_id', 'name'),
+                        'data-tags-type' => Tag::itemAlias('TypeClass'),
                         'class' => 'form-control TagInput',
-                        'data-tags-type' => Tag::itemAlias('TypeClass')
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'closeOnSelect' => false,
                         'minimumInputLength' => 2,
                         'ajax' => [
-                            'url' => Yii::$app->urlManager->createAbsoluteUrl(['/tag/list']),
+                            'url' => Url::to(['/tag/list', 'type' => null]),
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {query:params.term}; }'),
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
                         'templateResult' => new JsExpression('function (data) { return (data.html != undefined) ? data.text : null; }'),
-                        'templateSelection' => new JsExpression('function (data)
-                                    {
-                                        var selectElement = $(data.element).parent();
-                                        if(selectElement != undefined){
-                                            var type = data.type ? data.type : selectElement.data("tags")[data.id].type;
-                                            var color = data.color ? data.color : selectElement.data("tags")[data.id].color;
-                                            var typeClass = $(".TagInput").data("tags-type")[type];
-                                            return color == "" ? 
-                                            "<span class=\"mx-1 font-medium text-dark badge badge-" + typeClass + "\">" + data.text + "</span>"
-                                            :
-                                            "<span class=\"mx-1 font-medium text-dark\" style=\"background-color:#" + color + ";padding: .20em .5em;border-radius: 2px;font-size: 90%;\">" + data.text + "</span>";
-                                        }
-                                    }'),
+                        'templateSelection' => new JsExpression('function (data) 
+                    {
+                        var selectElement = $(data.element).parent();
+                        if(selectElement.data("tags")[data.id] != undefined){
+                            var type = selectElement.data("tags")[data.id];
+                            var typeClass = $(".TagInput").data("tags-type")[type];
+                            return "<span class=\"text-bold badge badge-" + typeClass + "\">" + data.text + "</span>";
+                        }else{
+                            return data.text;
+                        }
+                    }'),
                     ]
                 ]); ?>
             </div>
@@ -119,26 +112,26 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
             </div>
             <div class='col-md-6 '>
-                <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
-                    'options' => [
-                        'multiple' => false,
-                        //'accept' => 'image/*',
-                    ],
-                    'pluginOptions' => [
-                        'showCaption' => false,
-                        'showRemove' => false,
-                        'showUpload' => false,
-                        'showCancel' => false,
-                        'theme' => 'explorer-fas',
-                        'browseClass' => 'btn btn-primary btn-sm btn-preview',
-                        'browseIcon' => '<i class="fas fa-file"></i> ',
-                        'browseLabel' => Yii::t('app', 'Choose a file ...'),
-                        'previewFileType' => 'image',
-                        'initialPreviewAsData' => true,
-                        'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
-                        'initialPreviewFileType' => 'image',
-                    ]
-                ])->hint("Width:1180px,Height:504,Size:2Mb") ?>
+<!--                --><?php //= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
+//                    'options' => [
+//                        'multiple' => false,
+//                        //'accept' => 'image/*',
+//                    ],
+//                    'pluginOptions' => [
+//                        'showCaption' => false,
+//                        'showRemove' => false,
+//                        'showUpload' => false,
+//                        'showCancel' => false,
+//                        'theme' => 'explorer-fas',
+//                        'browseClass' => 'btn btn-primary btn-sm btn-preview',
+//                        'browseIcon' => '<i class="fas fa-file"></i> ',
+//                        'browseLabel' => Yii::t('app', 'Choose a file ...'),
+//                        'previewFileType' => 'image',
+//                        'initialPreviewAsData' => true,
+//                        'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
+//                        'initialPreviewFileType' => 'image',
+//                    ]
+//                ])->hint("Width:1180px,Height:504,Size:2Mb") ?>
             </div>
             <span class='col-md-6'>
                  <p class="card-title border-bottom">

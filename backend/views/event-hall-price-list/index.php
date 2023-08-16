@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-hall-price-list-index card material-card">
     <div class="card-header d-flex justify-content-between">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h3><?= Html::encode($this->title) ?></h3>
 
         <p>
             <?= Html::a(Yii::t('app', 'Create Event Hall Price List'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>

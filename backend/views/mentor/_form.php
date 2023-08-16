@@ -60,9 +60,6 @@ use yii\bootstrap4\ActiveForm;
         <div class='col-md-3'>
             <?= $form->field($model, 'consultation_online_status')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(Mentor::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
-        </div>
         <div class='col-md-12'>
             <?= $form->field($model, 'activity_description')->textarea(['rows' => 6]) ?>
         </div>

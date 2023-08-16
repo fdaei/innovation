@@ -339,7 +339,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'data-reload-pjax-container' => 'p-jax-business-timeline',
                                 'data-reload-pjax-container-on-show' => 0
                             ]) ?>
-                        <?= Html::a(Yii::t('app', 'create create Item'), "javascript:void(0)",
+                        <?= Html::a(Yii::t('app', 'create Item'), "javascript:void(0)",
                             [
                                 'data-pjax' => '0',
                                 'class' => "btn btn-primary",

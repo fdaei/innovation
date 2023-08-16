@@ -1,10 +1,13 @@
 <?php
 
+use common\models\Tag;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\Event $model */
 /** @var EventTime[] $EventTimes */
+/** @var array $searchedTags */
+
 
 $this->title = Yii::t('app', 'Update Event: {name}', [
     'name' => $model->title,
@@ -22,6 +25,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
             <?= $this->render('_form', [
                 'model' => $model,
                 'EventTimes' => $EventTimes,
+                'searchedTags' => $searchedTags,
             ]) ?>
         </div>
     </div>

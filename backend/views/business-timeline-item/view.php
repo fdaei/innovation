@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="business-timeline-item-view">
     <div class="card material-card">
         <div class="card-header d-flex justify-content-between">
-            <h1><?= Html::encode($this->title) ?></h1>
+            <h3><?= Html::encode($this->title) ?></h3>
 
             <p>
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
