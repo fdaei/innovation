@@ -8,6 +8,7 @@ use common\models\EventSearch;
 use common\models\EventTime;
 use common\models\Model;
 use common\models\Tag;
+use common\models\TagAssign;
 use common\traits\AjaxValidationTrait;
 use common\traits\CoreTrait;
 use Exception;
@@ -116,12 +117,9 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new Event;
-        $tag=new Tag();
         $model->scenario = Event::SCENARIO_CREATE;
         $modelsEventTime = [new EventTime];
-        $searchedTags = Tag::find()->all();
-
-
+        $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->all();
         if ($model->load(Yii::$app->request->post())) {
             $modelsEventTime = Model::createMultiple(EventTime::class);
             Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
@@ -131,6 +129,22 @@ class EventController extends Controller
             if ($valid) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
+                    $tagNames = Yii::$app->request->post('Event')['tagNames'];
+                    if (!empty($tagNames)) {
+                        $tagIds = [];
+                        foreach ($tagNames as $tagName) {
+                            $existingTag = Tag::findOne(['tag_id' => $tagName]);
+                            if ($existingTag) {
+                                $tagIds[] = $existingTag->tag_id;
+                            } else {
+                                $newTag = new Tag(['name' => $tagName, 'type' => '1']);
+                                $newTag->validate();
+                                $newTag->save(false);
+                                $tagIds[] = $newTag->tag_id;
+                            }
+                        }
+                        $model->tagNames = $tagIds;
+                    }
                     if ($flag = $model->save(false)) {
                         foreach ($modelsEventTime as $event) {
                             $event->event_id = $model->id;
@@ -157,6 +171,7 @@ class EventController extends Controller
             'searchedTags' => $searchedTags,
         ]);
     }
+
 
     public function actionCreateHeadlines($id)
     {
@@ -239,10 +254,26 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->asArray()->all();
 
         $modelsEventTime = $model->eventTimes;
         if ($model->load(Yii::$app->request->post())) {
-
+            $tagNames = Yii::$app->request->post('Event')['tagNames'];
+            if (!empty($tagNames)) {
+                $tagIds = [];
+                foreach ($tagNames as $tagName) {
+                    $existingTag = Tag::findOne(['tag_id' => $tagName]);
+                    if ($existingTag) {
+                        $tagIds[] = $existingTag->tag_id;
+                    } else {
+                        $newTag = new Tag(['name' => $tagName, 'type' => '1']);
+                        $newTag->validate();
+                        $newTag->save(false);
+                        $tagIds[] = $newTag->tag_id;
+                    }
+                }
+                $model->tagNames = $tagIds;
+            }
             $oldIDs = ArrayHelper::map($modelsEventTime, 'id', 'id');
             $modelsEventTime = Model::createMultiple(EventTime::class, $modelsEventTime);
             Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
@@ -278,9 +309,11 @@ class EventController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'EventTimes' => (empty($modelsEventTime)) ? [new EventTime] : $modelsEventTime
+            'EventTimes' => (empty($modelsEventTime)) ? [new EventTime] : $modelsEventTime,
+            'searchedTags' => $searchedTags,
         ]);
     }
+
 
     public function actionUpdateTime($id)
     {
