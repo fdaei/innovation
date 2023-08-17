@@ -3,6 +3,7 @@
 namespace api\modules\v1\controllers;
 
 use common\models\CareerApply;
+use common\models\MentorCategory;
 use common\models\MentorsAdviceRequest;
 use common\models\MentorSearch;
 use common\models\OrgUnitSearch;
@@ -84,7 +85,7 @@ class MentorController extends ActiveController
 
     public function actionCategoryList(){
         return new ActiveDataProvider([
-            'query' => FreelancerCategoryList::find()->where(['model_class'=>Mentor::className()])
+            'query' => MentorCategory::find()
         ]);
     }
 }
