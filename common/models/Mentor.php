@@ -32,10 +32,6 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_by
  * @property int $updated_at
  * @property int $deleted_at
- * @property int $consultation_face_to_face_status
- * @property int consultation_face_to_face_cost
- * @property int consultation_online_status
- * @property int consultation_online_cost
  *
  * @property User $createdBy
  * @property User $updatedBy
@@ -49,6 +45,8 @@ class Mentor extends \yii\db\ActiveRecord
     const STATUS_INACTIVE = 2;
     const SCENARIO_FORM = 'form';
 
+    public $categories_list = [];
+
     public static function tableName()
     {
         return '{{%mentor}}';
@@ -60,21 +58,18 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram',
-                'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost',
-                'consultation_online_cost', 'consultation_online_status'], 'required', 'on' => [self::SCENARIO_FORM]],
+            [['user_id'],'integer'],
+            [['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status','user_id'], 'required', 'on' => [self::SCENARIO_FORM]],
             [['activity_description', 'telegram', 'name'], 'string'],
-            [['services', 'records'], 'safe'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
             [['picture', 'picture_mentor'], 'image', 'extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
             ['video', 'file', 'enableClientValidation' => false],
         ];
     }
-
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status'];
+        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status','user_id'];
         return $scenarios;
     }
 
@@ -156,16 +151,15 @@ class Mentor extends \yii\db\ActiveRecord
         return true;
     }
 
-    public function getMentorCategories()
+    public function getMentorCategories(): ActiveQuery
     {
-        return $this->hasMany(FreelancerCategories::class, ['freelancer_id' => 'id'])->where(['model_class' => Mentor::className()]);
+        return $this->hasMany(MentorCategories::class, ['mentor_id' => 'id']);
     }
 
     public function getMentorServices()
     {
         return $this->hasMany(MentorServices::class, ['mentor_id' => 'id']);
     }
-
 
     public static function itemAlias($type, $code = NULL)
     {

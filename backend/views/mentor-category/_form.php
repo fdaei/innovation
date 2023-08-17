@@ -5,10 +5,11 @@ use yii\bootstrap4\ActiveForm;
 use kartik\file\FileInput;
 use yii\web\View;
 
-/** @var View $this */
-/** @var common\models\FreelancerCategoryList $model */
-/** @var ActiveForm $form */
+/** @var yii\web\View $this */
+/** @var common\models\MentorCategory $model */
+/** @var yii\widgets\ActiveForm $form */
 ?>
+
 
 <div class="card card-body">
     <?php $form = ActiveForm::begin(); ?>

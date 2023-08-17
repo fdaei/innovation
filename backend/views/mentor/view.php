@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
+use common\models\MentorCategories;
 
 /** @var yii\web\View $this */
 /** @var common\models\Mentor $model */
@@ -14,7 +15,10 @@ use yii\widgets\Pjax;
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Mentors'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
+/**
+ * @var MentorCategories $categories
+ */
 ?>
 <div class="card material-card">
     <div class="p-4">
@@ -61,6 +65,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-md-12">
                         <label class="fw-bold"><?= Yii::t('app', 'Activity Description')?> :</label>
                         <p><?= $model->activity_description ?></p>
+                    </div>
+                    <div class="col-3">
+                        <label><?= Yii::t('app', 'Mentor Category')?> :</label>
+                        <?php foreach ($categories as $catItem): ?>
+                        <div class="badge badge-info"><?= $catItem->category->title; ?></div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
