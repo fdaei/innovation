@@ -7,10 +7,9 @@ use common\models\MentorServicesSearch;
 use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\Url;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MentorServicesController implements the CRUD actions for MentorServices model.
@@ -83,15 +82,15 @@ class MentorServicesController extends Controller
     public function actionCreate(int $id): \yii\web\Response|string
     {
         $model = new MentorServices(
-          ['mentor_id'=>$id]
+            ['mentor_id' => $id]
         );
         if ($model->load($this->request->post()) && $model->validate()) {
-            if($model->save(false)){
+            if ($model->save(false)) {
                 return $this->asJson([
                     'success' => true,
                     'msg' => Yii::t("app", 'Success')
                 ]);
-            }else{
+            } else {
                 return $this->asJson([
                     'success' => false,
                     'msg' => Yii::t("app", 'Error in Save Action')
@@ -109,8 +108,7 @@ class MentorServicesController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public
-    function actionUpdate($id, $model_id)
+    public function actionUpdate($id, $model_id)
     {
         $model = $this->findModel($id);
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -132,8 +130,7 @@ class MentorServicesController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public
-    function actionDelete($id, $model_id)
+    public function actionDelete($id, $model_id)
     {
         if ($this->findModel($id)->delete()) {
             return $this->asJson([
@@ -155,8 +152,7 @@ class MentorServicesController extends Controller
      * @return MentorServices the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected
-    function findModel($id)
+    protected function findModel($id)
     {
         if (($model = MentorServices::findOne(['id' => $id])) !== null) {
             return $model;

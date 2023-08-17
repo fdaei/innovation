@@ -8,7 +8,6 @@ use common\models\EventSearch;
 use common\models\EventTime;
 use common\models\Model;
 use common\models\Tag;
-use common\models\TagAssign;
 use common\traits\AjaxValidationTrait;
 use common\traits\CoreTrait;
 use Exception;
@@ -53,30 +52,6 @@ class EventController extends Controller
             ]
         );
     }
-
-    public function actionAddTags($id)
-    {
-        $model = Event::findOne($id);
-        if (!$model) {
-            throw new \yii\web\NotFoundHttpException('The requested event does not exist.');
-        }
-
-        if (Yii::$app->request->isPost) {
-            $tagIds = Yii::$app->request->post('Event')['tagIds'] ?? [];
-            $model->tagIds = $tagIds;
-            if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Tags added successfully.');
-            } else {
-                Yii::$app->session->setFlash('error', 'Failed to add tags.');
-            }
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('add_tags', [
-            'model' => $model,
-        ]);
-    }
-
 
     /**
      * Lists all Event models.
@@ -132,18 +107,21 @@ class EventController extends Controller
                     if(Yii::$app->request->post('Event')['tagNames']){
                         $model->setTags(Yii::$app->request->post('Event')['tagNames'],$flag);
                     }
+
                     if ($flag = $model->save(false)) {
                         foreach ($modelsEventTime as $event) {
                             $event->event_id = $model->id;
                             if (!($flag = $event->save(false))) {
-                                $transaction->rollBack();
                                 break;
                             }
                         }
                     }
+
                     if ($flag) {
                         $transaction->commit();
                         return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        $transaction->rollBack();
                     }
                 } catch (Exception $e) {
                     $transaction->rollBack();
@@ -158,7 +136,6 @@ class EventController extends Controller
             'searchedTags' => $searchedTags,
         ]);
     }
-
 
     public function actionCreateHeadlines($id)
     {
