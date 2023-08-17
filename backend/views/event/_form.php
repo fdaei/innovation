@@ -112,26 +112,26 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
             </div>
             <div class='col-md-6 '>
-<!--                --><?php //= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
-//                    'options' => [
-//                        'multiple' => false,
-//                        //'accept' => 'image/*',
-//                    ],
-//                    'pluginOptions' => [
-//                        'showCaption' => false,
-//                        'showRemove' => false,
-//                        'showUpload' => false,
-//                        'showCancel' => false,
-//                        'theme' => 'explorer-fas',
-//                        'browseClass' => 'btn btn-primary btn-sm btn-preview',
-//                        'browseIcon' => '<i class="fas fa-file"></i> ',
-//                        'browseLabel' => Yii::t('app', 'Choose a file ...'),
-//                        'previewFileType' => 'image',
-//                        'initialPreviewAsData' => true,
-//                        'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
-//                        'initialPreviewFileType' => 'image',
-//                    ]
-//                ])->hint("Width:1180px,Height:504,Size:2Mb") ?>
+                <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
+                    'options' => [
+                        'multiple' => false,
+                        //'accept' => 'image/*',
+                    ],
+                    'pluginOptions' => [
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'showCancel' => false,
+                        'theme' => 'explorer-fas',
+                        'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                        'browseIcon' => '<i class="fas fa-file"></i> ',
+                        'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                        'previewFileType' => 'image',
+                        'initialPreviewAsData' => true,
+                        'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
+                        'initialPreviewFileType' => 'image',
+                    ]
+                ])->hint("Width:1180px,Height:504,Size:2Mb") ?>
             </div>
             <span class='col-md-6'>
                  <p class="card-title border-bottom">

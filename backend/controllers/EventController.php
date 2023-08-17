@@ -119,31 +119,18 @@ class EventController extends Controller
         $model = new Event;
         $model->scenario = Event::SCENARIO_CREATE;
         $modelsEventTime = [new EventTime];
-        $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->all();
+        $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->asArray()->all();
         if ($model->load(Yii::$app->request->post())) {
             $modelsEventTime = Model::createMultiple(EventTime::class);
             Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsEventTime) && $valid;
-
             if ($valid) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $tagNames = Yii::$app->request->post('Event')['tagNames'];
-                    if (!empty($tagNames)) {
-                        $tagIds = [];
-                        foreach ($tagNames as $tagName) {
-                            $existingTag = Tag::findOne(['tag_id' => $tagName]);
-                            if ($existingTag) {
-                                $tagIds[] = $existingTag->tag_id;
-                            } else {
-                                $newTag = new Tag(['name' => $tagName, 'type' => '1']);
-                                $newTag->validate();
-                                $newTag->save(false);
-                                $tagIds[] = $newTag->tag_id;
-                            }
-                        }
-                        $model->tagNames = $tagIds;
+                    $flag=true;
+                    if(Yii::$app->request->post('Event')['tagNames']){
+                        $model->setTags(Yii::$app->request->post('Event')['tagNames'],$flag);
                     }
                     if ($flag = $model->save(false)) {
                         foreach ($modelsEventTime as $event) {
@@ -255,24 +242,11 @@ class EventController extends Controller
     {
         $model = $this->findModel($id);
         $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->asArray()->all();
-
         $modelsEventTime = $model->eventTimes;
         if ($model->load(Yii::$app->request->post())) {
-            $tagNames = Yii::$app->request->post('Event')['tagNames'];
-            if (!empty($tagNames)) {
-                $tagIds = [];
-                foreach ($tagNames as $tagName) {
-                    $existingTag = Tag::findOne(['tag_id' => $tagName]);
-                    if ($existingTag) {
-                        $tagIds[] = $existingTag->tag_id;
-                    } else {
-                        $newTag = new Tag(['name' => $tagName, 'type' => '1']);
-                        $newTag->validate();
-                        $newTag->save(false);
-                        $tagIds[] = $newTag->tag_id;
-                    }
-                }
-                $model->tagNames = $tagIds;
+            $flag=true;
+            if(Yii::$app->request->post('Event')['tagNames']){
+                $model->setTags(Yii::$app->request->post('Event')['tagNames'],$flag);
             }
             $oldIDs = ArrayHelper::map($modelsEventTime, 'id', 'id');
             $modelsEventTime = Model::createMultiple(EventTime::class, $modelsEventTime);

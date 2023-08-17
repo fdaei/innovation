@@ -7,52 +7,53 @@ $menu_items = [
     [
         'group' => 'Business',
         'label' => Yii::t('app', 'Business'),
-        'icon' => 'fas fa-building',
+        'icon' => 'fas fa-briefcase',
         'url' => ['/businesses']
     ],
     [
         'group' => 'location',
         'label' => 'موقعیت مکانی',
-        'icon' => 'fas fa-map',
+        'icon' => 'fas fa-map-marked-alt',
         'level' => "first-level",
         'encode' => false,
         'items' => [
             [
                 'group' => 'City',
                 'label' => Yii::t('app', 'City'),
-                'icon' => 'fas fa-map-marker-alt',
+                'icon' => 'fas fa-city',
                 'url' => ['/city/']
             ],
             [
                 'group' => 'Province',
                 'label' => Yii::t('app', 'Province'),
-                'icon' => 'fas fa-map-marked-alt',
-                'url' => ['/province/']],
+                'icon' => 'fas fa-map',
+                'url' => ['/province/']
+            ],
         ]
     ],
     [
         'group' => 'CareerApply',
         'label' => 'موقعیت شغلی',
-        'icon' => 'fas fa-star',
+        'icon' => 'fas fa-briefcase',
         'level' => "first-level",
         'encode' => false,
         'items' => [
             [
                 'group' => 'CareerApply',
                 'label' => Yii::t('app', 'CareerApply'),
-                'icon' => 'fas fa-address-card',
+                'icon' => 'fas fa-clipboard-check',
                 'url' => ['/career-apply/']
             ],
             [
                 'group' => 'JobPosition',
                 'label' => Yii::t('app', 'JobPosition'),
-                'icon' => 'fas fa-clipboard',
+                'icon' => 'fas fa-user-tie',
                 'url' => ['/job-position/']
             ],
             [
                 'group' => 'OrgUnit',
                 'label' => Yii::t('app', 'OrgUnit'),
-                'icon' => 'fas fa-folder-open',
+                'icon' => 'fas fa-sitemap',
                 'url' => ['/org-unit/']
             ],
         ]
@@ -60,48 +61,47 @@ $menu_items = [
     [
         'group' => 'Mentor',
         'label' => 'مشاوره',
-        'icon' => 'fas fa-star',
+        'icon' => 'fas fa-chalkboard-teacher',
         'level' => "first-level",
         'encode' => false,
         'items' => [
             [
                 'group' => 'Mentor',
                 'label' => 'مشاوران',
-                'icon' => 'fas fa-user',
+                'icon' => 'fas fa-users',
                 'url' => ['/mentor/']
             ],
             [
                 'group' => 'Mentor',
                 'label' => Yii::t('app', 'mentors-advice-request'),
-                'icon' => 'fas fa-user',
+                'icon' => 'fas fa-comments',
                 'url' => ['/mentors-advice-request/']
             ],
-
         ]
     ],
     [
         'group' => 'Events',
         'label' => 'رویداد',
-        'icon' => 'fas fa-star',
+        'icon' => 'fas fa-calendar-alt',
         'level' => "first-level",
         'encode' => false,
         'items' => [
             [
                 'group' => 'Events',
                 'label' => Yii::t('app', 'Events'),
-                'icon' => 'fas fa-user',
+                'icon' => 'fas fa-calendar-check',
                 'url' => ['/event/']
             ],
             [
                 'group' => 'event-teachers',
                 'label' => 'برگذار کنندگان',
-                'icon' => 'fas fa-user',
+                'icon' => 'fas fa-users',
                 'url' => ['event-organizer/']
             ],
             [
                 'group' => 'EventHall',
                 'label' => Yii::t('app', 'EventHall'),
-                'icon' => 'fas fa-user',
+                'icon' => 'fas fa-building',
                 'url' => ['/event-hall/']
             ]
         ]
@@ -109,31 +109,31 @@ $menu_items = [
     [
         'group' => 'Activity',
         'label' => Yii::t('app', 'Activity'),
-        'icon' => 'fas fa-grip-lines',
+        'icon' => 'fas fa-chart-line',
         'url' => ['/activity/']
     ],
     [
         'group' => 'Tags',
         'label' => Yii::t('app', 'Tags'),
-        'icon' => 'fas fa-server',
+        'icon' => 'fas fa-tags',
         'url' => ['/tag/index']
     ],
     [
         'group' => 'Branches',
         'label' => Yii::t('app', 'Branches'),
-        'icon' => 'fas fa-city',
+        'icon' => 'fas fa-code-branch',
         'url' => ['/branches/']
     ],
     [
         'group' => 'Notification',
         'label' => Yii::t('app', 'Notification'),
-        'icon' => 'fas fa-check-square',
+        'icon' => 'fas fa-bell',
         'url' => ['/notification/']
     ],
     [
         'group' => 'freelancer',
         'label' => Yii::t('app', 'Freelancer'),
-        'icon' => 'fas fa-users',
+        'icon' => 'fas fa-user-friends',
         'level' => "first-level",
         'encode' => false,
         'items' => [
@@ -154,7 +154,7 @@ $menu_items = [
     [
         'group' => 'hitech',
         'label' => 'هایتک',
-        'icon' => 'fas fa-star',
+        'icon' => 'fas fa-rocket',
         'level' => "first-level",
         'encode' => false,
         'items' => [
@@ -167,7 +167,7 @@ $menu_items = [
             [
                 'group' => 'hitech',
                 'label' => Yii::t('app', 'Hitech Proposal'),
-                'icon' => 'fas fa-check-square',
+                'icon' => 'fas fa-file-alt',
                 'url' => ['/hitech-proposal/']
             ],
         ]
@@ -175,13 +175,13 @@ $menu_items = [
     [
         'group' => 'log',
         'label' => Yii::t('app', 'Logs'),
-        'icon' => 'fas fa-check-square',
+        'icon' => 'fas fa-file-alt',
         'url' => ['/log/']
     ],
     [
         'group' => 'swagger',
         'label' => 'مستندات API',
-        'icon' => 'fas fa-check-square',
+        'icon' => 'fas fa-file-code',
         'url' => ['/swagger'],
         'encode' => false,
         'template' => '<a class="sidebar-link" href="{url}" target="_blank">{icon} {label}</a>',
@@ -196,18 +196,19 @@ $menu_items = [
             [
                 'group' => 'Settings',
                 'label' => Yii::t('app', 'Manage Settings'),
-                'icon' => 'fas fa-cogs',
+                'icon' => 'fas fa-cog',
                 'url' => ['/moresettings/default/index']
             ],
             [
                 'group' => 'Settings',
                 'label' => Yii::t('app', 'Settings'),
-                'icon' => 'fas fa-cogs',
+                'icon' => 'fas fa-cog',
                 'url' => ['/site/setting']
             ],
         ]
     ],
 ];
+
 ?>
     <aside class="left-sidebar">
 

@@ -86,7 +86,6 @@ class MentorServicesController extends Controller
           ['mentor_id'=>$id]
         );
         if ($model->load($this->request->post()) && $model->validate()) {
-            var_dump($model->save(false));die();
             if($model->save(false)){
                 return $this->asJson([
                     'success' => true,

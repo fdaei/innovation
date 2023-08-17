@@ -121,6 +121,34 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
+    public function setTags(array $tagNames, bool $flag): void
+    {
+        if (!empty($tagNames)) {
+            $tagIds = [];
+            foreach ($tagNames as $tagName) {
+                if ($flag) {
+                    $existingTag = Tag::findOne(['tag_id' => $tagName]);
+                    if ($existingTag) {
+                        $tagIds[] = $existingTag->tag_id;
+                    } else {
+                        $newTag = new Tag(['name' => $tagName, 'type' => '1']);
+                        if ($newTag->save()) {
+                            $tagIds[] = $newTag->tag_id;
+                        } else {
+                            $flag = false;
+                        }
+                    }
+                } else {
+                    break;
+                }
+            }
+            $this->tagNames = $tagIds;
+        }
+        else{
+            $this->tagNames = [];
+        }
+    }
+
     public function normalizeNumber($value)
     {
         return Yii::$app->customHelper->toEn($value);
@@ -140,6 +168,7 @@ class Event extends \yii\db\ActiveRecord
     {
         return $this->hasOne(EventOrganizer::class, ['id' => 'event_organizer_id']);
     }
+
     /**
      * Gets query for [[EventAttendances]].
      *
