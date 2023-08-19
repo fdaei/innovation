@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card card-body">
     <div class="card-header d-flex justify-content-between">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h3><?= Html::encode($this->title) ?></h3>
 
         <p>
             <?= Html::a(Yii::t('app', 'هایتک جدید'), ['create'], ['class' => 'btn btn-primary ']) ?>

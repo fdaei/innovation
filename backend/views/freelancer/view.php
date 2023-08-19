@@ -64,6 +64,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'military_service_status',
                         'value' => $model->marital_status ? Freelancer::itemAlias('Military',$model->marital_status) : ''
                     ],
+                    [
+                        'label' => $model->getAttributeLabel('accept_rules'),
+                        'format' => 'raw',
+                        'value' => $model->accept_rules
+                            ? '<span style="color: green;">' . Freelancer::itemAlias('AcceptRules', $model->accept_rules) . '</span>'
+                            : '<span style="color: red;">' . Freelancer::itemAlias('AcceptRules', $model->accept_rules) . '</span>',
+                    ],
                     'activity_field',
                     [
                         'attribute' => 'experience',

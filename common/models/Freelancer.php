@@ -41,6 +41,7 @@ use yii\db\ActiveRecord;
  * @property int|null $created_by
  * @property int $deleted_at
  * @property int $user_id
+ * @property boolean $accept_rules
  *
  * @property User $createdBy
  * @property FreelancerCategories[] $freelancerCategories
@@ -90,9 +91,10 @@ class Freelancer extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'user_id'], 'required'],
+            [['name', 'email', 'mobile', 'city', 'province', 'marital_status', 'military_service_status', 'activity_field', 'experience', 'user_id','experience_period'], 'required'],
             [['sex', 'city', 'province', 'experience_period', 'marital_status', 'military_service_status', 'project_number', 'status', 'updated_by', 'updated_at', 'created_at', 'created_by', 'deleted_at', 'user_id'], 'integer'],
             [['record_job', 'record_educational','skills','resume_file','header_picture_desktop','header_picture_mobile','freelancer_picture'], 'safe'],
+            ['accept_rules', 'required', 'requiredValue' => 1, 'message' => Yii::t('app', 'You must accept the rules')],
             [['email'], 'email'],
             [['mobile'], 'string', 'max' => 11],
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
@@ -141,6 +143,8 @@ class Freelancer extends ActiveRecord
             'header_picture_mobile' => Yii::t('app', 'header picture mobile'),
             'freelancer_picture' => Yii::t('app', 'profile picture'),
             'freelancer_description' => Yii::t('app', 'freelancer description'),
+            'accept_rules' => Yii::t('app', 'Accept Rules'),
+
         ];
     }
 
@@ -285,6 +289,10 @@ class Freelancer extends ActiveRecord
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
+            'AcceptRules' => [
+                0 => Yii::t('app', 'I didn\'t accept the rules'),
+                1 => Yii::t('app', 'I accept all rules'),
+            ],
             'Status' => [
                 self::STATUS_ACTIVE => Yii::t('app', 'Ready to cooperate'),
                 self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),

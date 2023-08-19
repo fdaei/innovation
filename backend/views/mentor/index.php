@@ -31,9 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'mobile',
+            'whatsapp',
             'activity_field',
-            'activity_description:ntext',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Mentor $model, $key, $index, $column) {

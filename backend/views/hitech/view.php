@@ -7,12 +7,11 @@ use yii\widgets\DetailView;
 /** @var common\models\Hitech $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Hiteches', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Hiteches'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="card card-body">
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -23,30 +22,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>title</th>
-            <th>description</th>
-            <th>required_skills</th>
-            <th>minimum_budget</th>
-            <th>maximum_budget</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><?= $model->title ?></td>
-            <td><?= $model->description ?></td>
-            <td>
-                <?php foreach ($model->required_skills as $i => $item): ?>
-                        <span><i class="fa fa-check p-2"></i><?= $item ?></span>
-                <?php endforeach; ?>
-            </td>
-            <td><?= $model->minimum_budget ?></td>
-            <td><?= $model->maximum_budget ?></td>
-            <td class="float-right">
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'title',
+            'description',
+            [
+                'attribute' => 'required_skills',
+                'value' => function ($model) {
+                    $skills = '';
+                    foreach ($model->required_skills as $item) {
+                        $skills .= "<i class='fa fa-check p-2'></i>$item<br>";
+                    }
+                    return $skills;
+                },
+                'format' => 'raw',
+            ],
+            'minimum_budget',
+            'maximum_budget',
+        ],
+    ]) ?>
 </div>

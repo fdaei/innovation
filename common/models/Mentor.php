@@ -6,7 +6,6 @@ use common\behaviors\CdnUploadImageBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -47,6 +46,7 @@ class Mentor extends \yii\db\ActiveRecord
     const SCENARIO_FORM = 'form';
 
     public $categories_list = [];
+
     public static function tableName()
     {
         return '{{%mentor}}';
@@ -59,18 +59,17 @@ class Mentor extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'],'integer'],
-            [['name', 'activity_field', 'activity_description','telegram','user_id'], 'required','on' => [self::SCENARIO_FORM]],
-            [['activity_description','telegram'], 'string'],
-            [[ 'services', 'records'], 'safe'],
+            [['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status','user_id'], 'required', 'on' => [self::SCENARIO_FORM]],
+            [['activity_description', 'telegram', 'name'], 'string'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
-            [['picture','picture_mentor'], 'image','extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
-            ['video', 'file','enableClientValidation' => false],
+            [['picture', 'picture_mentor'], 'image', 'extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
+            ['video', 'file', 'enableClientValidation' => false],
         ];
     }
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description','telegram','user_id'];
+        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status','user_id'];
         return $scenarios;
     }
 

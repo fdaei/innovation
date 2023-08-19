@@ -10,14 +10,14 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var common\models\TagSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+$this->title = Yii::t('app', 'Tags');
 
-$this->title = 'Tags';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-index card material-card">
     <?php Pjax::begin(['id' => 'p-jax-tag-form']); ?>
     <div class="card-header d-flex justify-content-between">
-        <h1><?= Html::encode($this->title) ?></h1>
+        <h3><?= Html::encode($this->title) ?></h3>
         <p>
             <?= Html::a(Yii::t('app', 'create tag'), "javascript:void(0)",
                 [

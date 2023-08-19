@@ -10,38 +10,46 @@ use yii\bootstrap4\ActiveForm;
 ?>
 
 <div class="mentor-services-form">
+    <div class="row">
+        <div class="col-md-12 offset-md-2">
+            <?php $form = ActiveForm::begin(['id' => 'mentor_service_form']); ?>
 
-    <?php $form = ActiveForm::begin(['id'=>'mentor_service_form']); ?>
+            <div class="mb-3">
+                <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            </div>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <div class="mb-3">
+                <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
+            </div>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+            <div class="mb-3">
+                <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
+                    'options' => [
+                        'multiple' => false,
+                        //'accept' => 'image/*',
+                    ],
+                    'pluginOptions' => [
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'showCancel' => false,
+                        'theme' => 'explorer-fas',
+                        'browseClass' => 'btn btn-primary btn-sm btn-preview',
+                        'browseIcon' => '<i class="fas fa-file"></i> ',
+                        'browseLabel' => Yii::t('app', 'Choose a file ...'),
+                        'previewFileType' => 'image',
+                        'initialPreviewAsData' => true,
+                        'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
+                        'initialPreviewFileType' => 'image',
+                    ]
+                ]) ?>
+            </div>
 
-    <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
-        'options' => [
-            'multiple' => false,
-            //'accept' => 'image/*',
-        ],
-        'pluginOptions' => [
-            'showCaption' => false,
-            'showRemove' => false,
-            'showUpload' => false,
-            'showCancel' => false,
-            'theme' => 'explorer-fas',
-            'browseClass' => 'btn btn-primary btn-sm btn-preview',
-            'browseIcon' => '<i class="fas fa-file"></i> ',
-            'browseLabel' => Yii::t('app', 'Choose a file ...'),
-            'previewFileType' => 'image',
-            'initialPreviewAsData' => true,
-            'initialPreview' => (!$model->isNewRecord && $model->getUploadUrl("picture")) ? $model->getUploadUrl("picture") : false,
-            'initialPreviewFileType' => 'image',
-        ]
-    ]) ?>
+            <div class="text-center">
+                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

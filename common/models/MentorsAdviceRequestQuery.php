@@ -2,18 +2,24 @@
 
 namespace common\models;
 
+use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
+
 /**
  * This is the ActiveQuery class for [[MentorsAdviceRequest]].
  *
  * @see MentorsAdviceRequest
+ * @mixin SoftDeleteQueryBehavior
  */
 class MentorsAdviceRequestQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function behaviors(): array
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
+        return [
+            'SoftDeleteQueryBehavior' => [
+                'class' => SoftDeleteQueryBehavior::class,
+            ],
+        ];
+    }
     /**
      * {@inheritdoc}
      * @return MentorsAdviceRequest[]|array

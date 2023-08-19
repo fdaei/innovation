@@ -164,11 +164,12 @@ class MentorsAdviceRequestsController extends ActiveController
      */
     public function actionCreate()
     {
-        $model = new MentorsAdviceRequest();
+        $model = new MentorsAdviceRequest([
+            'user_id'=>Yii::$app->user->identity->id
+        ]);
         $model->loadDefaultValues();
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->user_id=Yii::$app->user->identity->id;
                 $model->save();
             } else {
                 $model->validate();

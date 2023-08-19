@@ -126,7 +126,9 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        return new MentorsAdviceRequestQuery(get_called_class());
+        $query = new MentorsAdviceRequestQuery(get_called_class());
+        $query->notDeleted();
+        return $query;
     }
 
     public function behaviors()
@@ -135,17 +137,29 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
             'timestamp' => [
                 'class' => TimestampBehavior::class
             ],
+            [
+                'class' => BlameableBehavior::class,
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [
                     'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED
                 ],
                 'restoreAttributeValues' => [
                     'deleted_at' => 0,
+                    'status' => self::STATUS_ACTIVE
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false
-            ],
+            ]
         ];
+    }
+
+    public function canDelete()
+    {
+        return true;
     }
 }

@@ -36,7 +36,9 @@
         "yiisoft/yii2-mongodb": "^2.1",
         "yiisoft/yii2-redis": "~2.0.0",
         "sadi01/yii2-swagger": "dev-master",
-        "wbraganca/yii2-dynamicform": "*",
+        "symfony/css-selector": "4.4.37 as 3.0.0",
+        "symfony/dom-crawler": "4.4.39 as 3.0.0",
+        "wbraganca/yii2-dynamicform": "v2.0.3",
         "notamedia/yii2-sentry": "^1.7",
         "lubosdz/yii2-captcha-extended": "^1.0",
         "kartik-v/yii2-widget-select2": "dev-master",
@@ -52,9 +54,7 @@
         "sadi01/yii2-more-settings": "*",
         "rosell-dk/webp-convert": "^2.6",
         "2amigos/yii2-selectize-widget": "~1.0",
-        "kartik-v/yii2-widget-depdrop": "dev-master",
-        "symfony/dom-crawler": "2.8",
-        "symfony/css-selector": "2.8"
+        "kartik-v/yii2-widget-depdrop": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -35,6 +35,7 @@ class MentorServices extends \yii\db\ActiveRecord
             [['mentor_id'], 'integer'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 255],
+            ['picture','image', 'extensions' => 'jpg, jpeg, png','enableClientValidation' => false],
         ];
     }
 
@@ -50,30 +51,6 @@ class MentorServices extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
         ];
     }
-    public static function handelData($eid,$defaultData = []){
-
-
-        $oldIDs = ArrayHelper::map($defaultData, 'id', 'id');
-        $postData = \common\models\Model::createMultiple(self::className(),$defaultData);
-        Model::loadMultiple($postData, Yii::$app->request->post());
-        $headlinesJson = [];
-        $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($postData, 'id', 'id')));
-
-
-        if (! empty($deletedIDs)) {
-            self::deleteAll(['id' => $deletedIDs]);
-        }
-
-
-        foreach ($postData as $index => $eachData) {
-            $eachData->mentor_id = $eid;
-            $eachData->instanceNames = ['picture' => "MentorServices[{$index}][picture]"];
-            if($eachData->validate()){
-                $eachData->save();
-            }
-        }
-        return true;
-    }
 
     public function behaviors()
     {
@@ -83,7 +60,6 @@ class MentorServices extends \yii\db\ActiveRecord
                 'attribute' => 'picture',
                 'scenarios' => [self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
-                //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
                 'createThumbsOnSave' => false,
                 'transferToCDN' => true,

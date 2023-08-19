@@ -225,6 +225,7 @@ class MentorController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = 'form';
 
         $categoriesChecked = MentorCategory::find()
             ->innerJoin('{{%mentor_categories}}', '{{%mentor_categories}}.`category_id` = {{%mentor_category}}.`id`')

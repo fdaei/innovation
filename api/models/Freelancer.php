@@ -36,6 +36,7 @@ class Freelancer extends \common\models\Freelancer
             'description_user',
             'project_number',
             'status',
+            'accept_rules'
         ];
     }
 }

@@ -169,7 +169,10 @@ use yii\web\JsExpression;
                         ]
                     ]) ?>
                 </div>
-                <div class="col-sm-5">
+                <div class="col-md-1 text-danger mt-4">
+                    <?= $form->field($model, 'accept_rules')->checkbox() ?>
+                </div>
+                <div class="col-sm-4">
                     <?= $form->field($model, 'categories_list')
                         ->label(Yii::t('app', 'Freelancer Category Lists'))
                         ->widget(Select2::class, [
