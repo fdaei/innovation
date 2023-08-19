@@ -69,7 +69,7 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief', 'picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['description', 'address', 'evand_link'], 'string'],
             [['headlines', 'sponsors', 'tagNames'], 'safe'],
@@ -92,8 +92,8 @@ class Event extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'title_brief' => Yii::t('app', 'Title Brief'),
-            'event_organizer_id'=>Yii::t('app','Event Organizer'),
-            'evand_link'=>Yii::t('app','Evand link'),
+            'event_organizer_id' => Yii::t('app', 'Event Organizer'),
+            'evand_link' => Yii::t('app', 'Evand link'),
             'price' => Yii::t('app', 'Price'),
             'price_before_discount' => Yii::t('app', 'Price Before Discount'),
             'description' => Yii::t('app', 'Description'),
@@ -126,25 +126,22 @@ class Event extends \yii\db\ActiveRecord
         if (!empty($tagNames)) {
             $tagIds = [];
             foreach ($tagNames as $tagName) {
-                if ($flag) {
-                    $existingTag = Tag::findOne(['tag_id' => $tagName]);
-                    if ($existingTag) {
-                        $tagIds[] = $existingTag->tag_id;
-                    } else {
-                        $newTag = new Tag(['name' => $tagName, 'type' => '1']);
-                        if ($newTag->save()) {
-                            $tagIds[] = $newTag->tag_id;
-                        } else {
-                            $flag = false;
-                        }
-                    }
-                } else {
+                if (!$flag) {
                     break;
+                }
+
+                $existingTag = Tag::findOne(['tag_id' => $tagName]);
+                if ($existingTag) {
+                    $tagIds[] = $existingTag->tag_id;
+                } else {
+                    $newTag = new Tag(['name' => $tagName, 'type' => '1']);
+                    if (($flag = $newTag->save()) {
+                        $tagIds[] = $newTag->tag_id;
+                    }
                 }
             }
             $this->tagNames = $tagIds;
-        }
-        else{
+        } else {
             $this->tagNames = [];
         }
     }
@@ -267,7 +264,7 @@ class Event extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'picture',
-                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE,self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE, self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -319,6 +316,7 @@ class Event extends \yii\db\ActiveRecord
             },
         ];
     }
+
     public function extraFields()
     {
         return [
