@@ -19,7 +19,7 @@ class BusinessesServices extends Model
     public function rules()
     {
         return [
-            [['title','description'],'required'],
+            [['title'],'required'],
             [['title','description','pic'],'string'],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
