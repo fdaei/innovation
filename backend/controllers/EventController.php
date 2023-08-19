@@ -103,9 +103,9 @@ class EventController extends Controller
             if ($valid) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $flag=true;
-                    if(Yii::$app->request->post('Event')['tagNames']){
-                        $model->setTags(Yii::$app->request->post('Event')['tagNames'],$flag);
+                    $flag = true;
+                    if (Yii::$app->request->post('Event')['tagNames']) {
+                        $model->setTags(Yii::$app->request->post('Event')['tagNames'], $flag);
                     }
 
                     if ($flag = $model->save(false)) {
@@ -221,9 +221,9 @@ class EventController extends Controller
         $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->asArray()->all();
         $modelsEventTime = $model->eventTimes;
         if ($model->load(Yii::$app->request->post())) {
-            $flag=true;
-            if(Yii::$app->request->post('Event')['tagNames']){
-                $model->setTags(Yii::$app->request->post('Event')['tagNames'],$flag);
+            $flag = true;
+            if (Yii::$app->request->post('Event')['tagNames']) {
+                $model->setTags(Yii::$app->request->post('Event')['tagNames'], $flag);
             }
             $oldIDs = ArrayHelper::map($modelsEventTime, 'id', 'id');
             $modelsEventTime = Model::createMultiple(EventTime::class, $modelsEventTime);
