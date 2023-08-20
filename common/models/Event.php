@@ -135,7 +135,7 @@ class Event extends \yii\db\ActiveRecord
                     $tagIds[] = $existingTag->tag_id;
                 } else {
                     $newTag = new Tag(['name' => $tagName, 'type' => '1']);
-                    if (($flag = $newTag->save()) {
+                    if ($flag = $newTag->save()){
                         $tagIds[] = $newTag->tag_id;
                     }
                 }
