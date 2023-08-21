@@ -28,8 +28,11 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  * @mixin CdnUploadImageBehavior
+ *
  */
 class BusinessGallery extends \yii\db\ActiveRecord
 {

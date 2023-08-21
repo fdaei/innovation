@@ -50,6 +50,10 @@ use yii\db\ActiveRecord;
  * @property User $user
  *
  * @mixin CdnUploadImageBehavior;
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
+ *
  */
 class Freelancer extends ActiveRecord
 {

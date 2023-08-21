@@ -20,6 +20,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property string|null $instagram
  * @property string|null $telegram
  * @property string|null $whatsapp
+ *
+ * @mixin CdnUploadImageBehavior
  */
 class EventSponsors extends \yii\db\ActiveRecord
 {

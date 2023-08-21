@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\BusinessesServices;
 use backend\models\BusinessesStatistics;
+use common\models\Business;
 use common\models\Businesses;
 use common\models\BusinessSearch;
 use common\models\BusinessTimeline;
@@ -96,7 +97,9 @@ class BusinessesController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Businesses();
+        $model = new Businesses([
+            'status'=>Business::itemAlias('Status',1)
+        ]);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

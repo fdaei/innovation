@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -30,6 +31,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $updatedBy
  * @property User $user
  *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
 class EventAttendance extends \yii\db\ActiveRecord
@@ -101,7 +104,7 @@ class EventAttendance extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
@@ -111,7 +114,7 @@ class EventAttendance extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|EventQuery
      */
-    public function getEvent()
+    public function getEvent(): ActiveQuery|EventQuery
     {
         return $this->hasOne(Event::class, ['id' => 'event_id']);
     }
@@ -121,7 +124,7 @@ class EventAttendance extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
-    public function getUpdatedBy()
+    public function getUpdatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
@@ -131,7 +134,7 @@ class EventAttendance extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
@@ -140,7 +143,7 @@ class EventAttendance extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return EventAttendanceQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): EventAttendanceQuery
     {
         $query = new EventAttendanceQuery(get_called_class());
         return $query->notDeleted();
@@ -150,7 +153,7 @@ class EventAttendance extends \yii\db\ActiveRecord
      * @param $insert
      * @return bool
      */
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         if ($insert) {
             $this->user_id = Yii::$app->user->identity?->id;
@@ -178,7 +181,7 @@ class EventAttendance extends \yii\db\ActiveRecord
     /**
      * @return array
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'timestamp' => [
@@ -208,7 +211,7 @@ class EventAttendance extends \yii\db\ActiveRecord
     /**
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return [
             'id',
@@ -232,7 +235,7 @@ class EventAttendance extends \yii\db\ActiveRecord
         ];
     }
 
-    public function extraFields()
+    public function extraFields(): array
     {
         return [
             'user',

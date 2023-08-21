@@ -7,6 +7,7 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "{{%mentor}}".
@@ -36,6 +37,11 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
+ * @mixin CdnUploadImageBehavior
  */
 class Mentor extends \yii\db\ActiveRecord
 {

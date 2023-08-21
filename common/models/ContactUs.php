@@ -22,6 +22,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int|null $updated_at
  * @property int $created_at
  * @property int $deleted_at
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  */
 class ContactUs extends \yii\db\ActiveRecord
 {

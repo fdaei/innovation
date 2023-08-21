@@ -26,6 +26,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property Businesses $business
  * @mixin CdnUploadImageBehavior
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
 class BusinessMember extends \yii\db\ActiveRecord

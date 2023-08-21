@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
+
 /**
  * This is the ActiveQuery class for [[Activity]].
  *
@@ -9,6 +11,14 @@ namespace common\models;
  */
 class ActivityQuery extends \yii\db\ActiveQuery
 {
+    public function behaviors()
+    {
+        return [
+            'softDelete' => [
+                'class' => SoftDeleteQueryBehavior::class,
+            ],
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -28,8 +38,5 @@ class ActivityQuery extends \yii\db\ActiveQuery
         return parent::one($db);
     }
 
-    public function active(): ActivityQuery
-    {
-        return $this->where(['deleted_at'=>0]);
-    }
+
 }

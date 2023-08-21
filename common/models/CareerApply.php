@@ -32,6 +32,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $user
  *
  * @mixin CdnUploadImageBehavior
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
 class CareerApply extends \yii\db\ActiveRecord

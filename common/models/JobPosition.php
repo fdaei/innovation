@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\CdnUploadImageBehavior;
 use common\components\CustomHelper;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -29,6 +30,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property OrgUnit $orgUnit
  * @property User $updatedBy
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
 class JobPosition extends \yii\db\ActiveRecord
