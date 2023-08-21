@@ -52,7 +52,7 @@ use yii\web\View;
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">
         <div class="col-md-10 d-flex justify-content-end">
-            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

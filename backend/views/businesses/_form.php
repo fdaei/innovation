@@ -18,50 +18,47 @@ use yii\bootstrap4\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-        <div class="col-sm-3">
-            <?= $form->field($model,'name')->textInput(['maxlength' => true]) ?>
+        <div class="col-sm-4">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model,'slug')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-4">
+            <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model,'site_name')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-4">
+            <?= $form->field($model, 'site_name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <?= $form->field($model, 'business_color')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <?= $form->field($model, 'business_en_name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-3">
-            <?= $form->field($model, 'description_brief')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <?= $form->field($model, 'website')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <?= $form->field($model, 'telegram')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <?= $form->field($model, 'whatsapp')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(Business::itemAlias('Status'), ['prompt' => Yii::t('app', 'Select Status')]) ?>
+        <div class="col-sm-4">
+            <?= $form->field($model, 'description_brief')->textarea(['rows' => 4]) ?>
         </div>
-        <div class="col-sm-6">
-            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        <div class="col-sm-4">
+            <?= $form->field($model, 'investor_description')->textarea(['rows' => 4]) ?>
         </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'investor_description')->textarea(['rows' => 6]) ?>
+        <div class="col-md-4">
+            <?= $form->field($model, 'short_description')->textarea(['rows' => 4]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'success_story')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'success_story')->textarea(['rows' => 4]) ?>
         </div>
         <div class='col-md-12'>
             <?= $form->field($model, "business_logo")->label(false)->widget(FileInput::class, [

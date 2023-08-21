@@ -43,8 +43,8 @@ foreach ($generator->getColumnNames() as $attribute) {
 ?>
     <?php echo '</div>' ?>
     <div class="form-group">
-        <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Search') ?>, ['class' => 'btn btn-info btn-rounded']) ?>
-        <?= "<?= " ?>Html::resetButton(<?= $generator->generateString('Reset') ?>, ['class' => 'btn btn-outline-info btn-rounded']) ?>
+        <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Search') ?>, ['class' => 'btn btn-primary']) ?>
+        <?= "<?= " ?>Html::resetButton(<?= $generator->generateString('Reset') ?>, ['class' => 'btn btn-outline-primary']) ?>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

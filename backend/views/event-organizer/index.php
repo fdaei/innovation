@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card card-body">
 
     <p>
-        <?= Html::a('برگذار کنننده جدید', ['create'], ['class' => 'btn btn-info btn-rounded float-right']) ?>
+        <?= Html::a('برگذار کنننده جدید', ['create'], ['class' => 'btn btn-primary float-right']) ?>
     </p>
 
     <?=  $this->render('_search', ['model' => $searchModel]); ?>

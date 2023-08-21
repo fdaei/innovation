@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="businesses-create bg-white p-3">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3 class="card-header"><?= Html::encode($this->title) ?></h3>
 
     <?= $this->render('_form', [
         'model' => $model,

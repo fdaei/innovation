@@ -151,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p><?= $model->description ?></p>
             </div>
         </div>
-        <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-info btn-rounded']) ?>
+        <?= Html::a(Yii::t('app', 'update'), ['/businesses/update','id'=>$model->id], ['class' => 'btn btn-primary']) ?>
         <?php $this->endBlock(); ?>
 
         <?php $this->beginBlock('Galleries'); ?>

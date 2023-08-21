@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </p>
                 <div class="p-2">
                     <h3 class="alert alert-light border border-1  p-3"><?= Yii::t('app', 'Galleries') ?>
-                        <?= Html::a(Yii::t('app', 'Create Galleries'), ['/branches-gallery/create', 'id' => $model->id], ['class' => 'btn btn-info btn-rounded float-right']) ?>
+                        <?= Html::a(Yii::t('app', 'Create Galleries'), ['/branches-gallery/create', 'id' => $model->id], ['class' => 'btn btn-primary float-right']) ?>
                 </div>
                 <?php foreach ($gallery as $i => $item): ?>
                     <div class="p-2">
@@ -62,8 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <img class="col-4   img-fluid " src=<?= $item->getUploadUrl('mobile_image') ?>></p>
                             <img class="col-4   img-fluid " src=<?= $item->getUploadUrl('tablet_image') ?>></p>
                             <div class="m-4">
-                                <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/branches-gallery/delete', 'id' => $item->id], ['class' => 'btn btn-info btn-rounded float-right btn-sm', 'data-method' => 'post']) ?>
-                                <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/branches-gallery/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-rounded float-right btn-sm']) ?>
+                                <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/branches-gallery/delete', 'id' => $item->id], ['class' => 'btn btn-primary float-right btn-sm', 'data-method' => 'post']) ?>
+                                <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/branches-gallery/update', 'id' => $item->id], ['class' => 'btn btn-outline-primary float-right btn-sm']) ?>
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </h3>
                 <div>
                     <h3 class="alert alert-light border border-1 p-3"><?= Yii::t('app', 'Facilities') ?>
-                        <?= Html::a(Yii::t('app', 'Create Facilities'), ['/branches-specification/create', 'id' => $model->id], ['class' => 'btn btn-info btn-rounded float-right']) ?>
+                        <?= Html::a(Yii::t('app', 'Create Facilities'), ['/branches-specification/create', 'id' => $model->id], ['class' => 'btn btn-primary float-right']) ?>
                     </h3>
                     <?php foreach ($facilities as $i => $item): ?>
                         <div class="p-2">
@@ -79,8 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <span><?= $item->key ?> : </span>
                             <span><?= $item->value ?></span>
                             <span>
-                            <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/branches-specification/delete', 'id' => $item->id], ['class' => 'btn btn-info btn-rounded float-right btn-sm', 'data-method' => 'post']) ?>
-                            <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/branches-specification/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-rounded float-right btn-sm']) ?>
+                            <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/branches-specification/delete', 'id' => $item->id], ['class' => 'btn btn-primary float-right btn-sm', 'data-method' => 'post']) ?>
+                            <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/branches-specification/update', 'id' => $item->id], ['class' => 'btn btn-outline-primary float-right btn-sm']) ?>
                         </span>
                         </div>
                     <?php endforeach; ?>
@@ -88,9 +88,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="mt-4">
                     <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
-                        ['class' => 'btn btn-outline-info btn-rounded']) ?>
+                        ['class' => 'btn btn-outline-primary']) ?>
                     <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                        'class' => 'btn btn-info btn-rounded',
+                        'class' => 'btn btn-primary',
                         'data' => [
                             'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                             'method' => 'post',
