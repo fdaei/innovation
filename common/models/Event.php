@@ -54,6 +54,8 @@ class Event extends \yii\db\ActiveRecord
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_CREATE = 'create';
 
+    public $event_tag;
+
     /**
      * @var mixed|null
      */
@@ -69,15 +71,16 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief','picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief', 'picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['event_tag'],'required'],
             [['description', 'address', 'evand_link'], 'string'],
-            [['headlines', 'sponsors', 'tagNames'], 'safe'],
+            [['headlines', 'sponsors', 'tagNames', '$event_tag'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['price', 'longitude', 'latitude', 'price_before_discount'], 'filter', 'filter' => function ($number) {
                 return Yii::$app->customHelper->toEn($number);
             }],
-            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
+            ['picture', 'image', 'minWidth' => 1180, 'maxWidth' => 1180, 'minHeight' => 504, 'maxHeight' => 504, 'extensions' => 'jpg,jpeg,png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -92,8 +95,8 @@ class Event extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'title_brief' => Yii::t('app', 'Title Brief'),
-            'event_organizer_id'=>Yii::t('app','Event Organizer'),
-            'evand_link'=>Yii::t('app','Evand link'),
+            'event_organizer_id' => Yii::t('app', 'Event Organizer'),
+            'evand_link' => Yii::t('app', 'Evand link'),
             'price' => Yii::t('app', 'Price'),
             'price_before_discount' => Yii::t('app', 'Price Before Discount'),
             'description' => Yii::t('app', 'Description'),
@@ -143,8 +146,7 @@ class Event extends \yii\db\ActiveRecord
                 }
             }
             $this->tagNames = $tagIds;
-        }
-        else{
+        } else {
             $this->tagNames = [];
         }
     }
@@ -267,7 +269,7 @@ class Event extends \yii\db\ActiveRecord
             [
                 'class' => CdnUploadImageBehavior::class,
                 'attribute' => 'picture',
-                'scenarios' => [self::SCENARIO_CREATE,self::SCENARIO_UPDATE,self::SCENARIO_DEFAULT],
+                'scenarios' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE, self::SCENARIO_DEFAULT],
                 'instanceByName' => false,
                 //'placeholder' => "/assets/images/default.jpg",
                 'deleteBasePathOnDelete' => false,
@@ -319,6 +321,7 @@ class Event extends \yii\db\ActiveRecord
             },
         ];
     }
+
     public function extraFields()
     {
         return [

@@ -17,8 +17,6 @@ use yii\widgets\MaskedInput;
 /** @var yii\bootstrap4\ActiveForm $form */
 /** @var common\models\EventTime $EventTimes */
 /** @var array $searchedTags */
-
-
 ?>
 
 <div class="event-form">
@@ -68,15 +66,16 @@ use yii\widgets\MaskedInput;
                     ])->label('قیمت قبل از تخفیف (تومان)') ?>
             </div>
             <div class='col-md-4'>
-                <?= $form->field($model, 'tagNames')->widget(Select2::class, [
-                    'initValueText' => ArrayHelper::map($searchedTags, 'tag_id', 'name'),
+
+                <?= $form->field($model, 'event_tag')->widget(Select2::class, [
+                    'initValueText' => $tagSelected ?? ArrayHelper::map($searchedTags, 'tag_id', 'name'),
                     'options' => [
                         'multiple' => true,
                         'placeholder' => 'یک یا چند تگ را انتخاب نمایید...',
                         'dir' => 'rtl',
                         'data-id' => $model->id,
-                        'data-tags' => ArrayHelper::map($searchedTags, 'tag_id', 'type'),
-                        'data-tags-name' => ArrayHelper::map($searchedTags, 'tag_id', 'name'),
+                        'data-tags' => $tagSelected ?? ArrayHelper::map($searchedTags, 'tag_id', 'type'),
+                        'data-tags-name' =>  $tagSelected ??  ArrayHelper::map($searchedTags, 'tag_id', 'name'),
                         'data-tags-type' => Tag::itemAlias('TypeClass'),
                         'class' => 'form-control TagInput',
                     ],
@@ -91,7 +90,7 @@ use yii\widgets\MaskedInput;
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
                         'templateResult' => new JsExpression('function (data) { return (data.html != undefined) ? data.text : null; }'),
-                        'templateSelection' => new JsExpression('function (data) 
+                        'templateSelection' => new JsExpression('function (data)
                     {
                         var selectElement = $(data.element).parent();
                         if(selectElement.data("tags")[data.id] != undefined){
@@ -115,7 +114,6 @@ use yii\widgets\MaskedInput;
                 <?= $form->field($model, "picture")->label(false)->widget(FileInput::class, [
                     'options' => [
                         'multiple' => false,
-                        //'accept' => 'image/*',
                     ],
                     'pluginOptions' => [
                         'showCaption' => false,
