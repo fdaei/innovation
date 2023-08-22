@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row">
                     <div class="col-12 border-bottom my-2">
                         <?= Html::a(Yii::t('app', 'add price'),
-                            ['/event-hall-price-list/create', 'id' => $model->id], ['class' => 'btn btn-info btn-rounded btn-sm']) ?>  </div>
+                            ['/event-hall-price-list/create', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>  </div>
                         <?php foreach ($price as $i => $item): ?>
                     <div class="col-sm-4 my-5 ">
                             <i class="fas fa-circle"></i>
@@ -94,8 +94,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <label class="kohl">قیمت :</label>
                             <span><?= $item->price ?></span>
                             <span>
-                            <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/event-hall-price-list/delete', 'id' => $item->id], ['class' => 'btn btn-info btn-rounded float-right btn-sm', 'data-method' => 'post']) ?>
-                            <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/event-hall-price-list/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-rounded float-right btn-sm']) ?>
+                            <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/event-hall-price-list/delete', 'id' => $item->id], ['class' => 'btn btn-primary float-right btn-sm', 'data-method' => 'post']) ?>
+                            <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/event-hall-price-list/update', 'id' => $item->id], ['class' => 'btn btn-outline-primary float-right btn-sm']) ?>
                         </span>
                         </div>
                     <?php endforeach; ?>
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row">
                     <div class="col-12 border-bottom my-2 ">
                         <?= Html::a(Yii::t('app', 'add reserve'),
-                            ['/event-hall-reserved/create', 'id' => $model->id], ['class' => 'btn btn-info btn-rounded btn-sm']) ?>
+                            ['/event-hall-reserved/create', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
                     </div>
                     <?php foreach ($reserve as $i => $item): ?>
                         <div class="row">
@@ -111,8 +111,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <h6><?= $item->timestamp_start ?></h6>
                             <span><?= $item->timestamp_end ?></span>
                             <span>
-                            <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/event-hall-price-list/delete', 'id' => $item->id], ['class' => 'btn btn-info btn-rounded float-right btn-sm', 'data-method' => 'post']) ?>
-                            <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/event-hall-price-list/update', 'id' => $item->id], ['class' => 'btn btn-outline-info btn-rounded float-right btn-sm']) ?>
+                            <?= Html::a(Yii::t('app', ' <i class="fas fa-trash"></i>'), ['/event-hall-price-list/delete', 'id' => $item->id], ['class' => 'btn btn-primary float-right btn-sm', 'data-method' => 'post']) ?>
+                            <?= Html::a(Yii::t('app', ' <i class="fas fa-pen"></i>'), ['/event-hall-price-list/update', 'id' => $item->id], ['class' => 'btn btn-outline-primary float-right btn-sm']) ?>
                         </span>
                         </div>
                     <?php endforeach; ?>

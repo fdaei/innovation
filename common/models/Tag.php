@@ -93,6 +93,22 @@ class Tag extends ActiveRecord
     {
         return true;
     }
+    public function makeArrayOfTagId($tagSelected,$searchedTags): array
+    {
+        $tagIdNameMap = [];
+        foreach ($searchedTags as $tag) {
+            $tagIdNameMap[$tag['tag_id']] = $tag['name'];
+        }
+        $combinedTagInfo = [];
+        foreach ($tagSelected as $tagId) {
+            if (isset($tagIdNameMap[$tagId])) {
+                $combinedTagInfo[] = $tagIdNameMap[$tagId];
+            } else {
+                $combinedTagInfo[] = $tagId;
+            }
+        }
+        return $combinedTagInfo;
+    }
 
     public function canDelete()
     {

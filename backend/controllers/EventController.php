@@ -95,7 +95,14 @@ class EventController extends Controller
         $model->scenario = Event::SCENARIO_CREATE;
         $modelsEventTime = [new EventTime];
         $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->asArray()->all();
+        $tagSelected = [];
         if ($model->load(Yii::$app->request->post())) {
+
+            $model->event_tag = Yii::$app->request->post('Event')['event_tag'];
+            $tagSelected = Yii::$app->request->post('Event')['event_tag'];
+            $searchedTags = Tag::find()->select(['tag_id', 'name'])->andWhere(['in', 'tag_id', $tagSelected])->asArray()->all();
+            $Tag=new Tag();
+            $tagSelected = $Tag->makeArrayOfTagId($tagSelected,$searchedTags);
             $modelsEventTime = Model::createMultiple(EventTime::class);
             Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
             $valid = $model->validate();
@@ -104,8 +111,8 @@ class EventController extends Controller
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
                     $flag = true;
-                    if (Yii::$app->request->post('Event')['tagNames']) {
-                        $model->setTags(Yii::$app->request->post('Event')['tagNames'], $flag);
+                    if ($tagSelected) {
+                        $model->setTags($tagSelected, $flag);
                     }
 
                     if ($flag = $model->save(false)) {
@@ -134,6 +141,7 @@ class EventController extends Controller
             'model' => $model,
             'EventTimes' => (empty($EventTimes)) ? [new EventTime] : $modelsEventTime,
             'searchedTags' => $searchedTags,
+            'tagSelected' => $tagSelected,
         ]);
     }
 
@@ -221,9 +229,8 @@ class EventController extends Controller
         $searchedTags = Tag::find()->andWhere(['in', 'tag_id', $model->tagNames])->asArray()->all();
         $modelsEventTime = $model->eventTimes;
         if ($model->load(Yii::$app->request->post())) {
-            $flag = true;
-            if (Yii::$app->request->post('Event')['tagNames']) {
-                $model->setTags(Yii::$app->request->post('Event')['tagNames'], $flag);
+            if (Yii::$app->request->post('Event')['event_tag']) {
+                $model->setTags(Yii::$app->request->post('Event')['event_tag'], true);
             }
             $oldIDs = ArrayHelper::map($modelsEventTime, 'id', 'id');
             $modelsEventTime = Model::createMultiple(EventTime::class, $modelsEventTime);
@@ -231,8 +238,8 @@ class EventController extends Controller
             $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsEventTime, 'id', 'id')));
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsEventTime) && $valid;
-
             if ($valid) {
+                $model->event_tag = ArrayHelper::map($searchedTags, 'tag_id', 'tag_id');
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
                     if ($flag = $model->save(false)) {
@@ -258,10 +265,12 @@ class EventController extends Controller
             }
         }
 
+        $model->event_tag = $model->tagNames;
         return $this->render('update', [
             'model' => $model,
             'EventTimes' => (empty($modelsEventTime)) ? [new EventTime] : $modelsEventTime,
             'searchedTags' => $searchedTags,
+            'tagSelected' => [],
         ]);
     }
 

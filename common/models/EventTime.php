@@ -22,6 +22,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $deleted_at
  *
  * @property Event $event
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class EventTime extends \yii\db\ActiveRecord
 {
@@ -115,7 +118,7 @@ class EventTime extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Event]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return array
      */
 
     public function behaviors()
@@ -139,7 +142,7 @@ class EventTime extends \yii\db\ActiveRecord
                     'deleted_at' => 0,
                     'status' => self::STATUS_ACTIVE
                 ],
-                'replaceRegularDelete' => false, // mutate native `delete()` method
+                'replaceRegularDelete' => false,
                 'invokeDeleteEvents' => false
             ],
         ];

@@ -26,6 +26,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property Mentor $mentor
  * @property User $updatedBy
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class MentorCategories extends ActiveRecord
 {

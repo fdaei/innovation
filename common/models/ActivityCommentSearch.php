@@ -27,7 +27,7 @@ class ActivityCommentSearch extends ActivityComment
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
+
         return Model::scenarios();
     }
 
@@ -38,7 +38,7 @@ class ActivityCommentSearch extends ActivityComment
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params): ActiveDataProvider
     {
         $query = ActivityComment::find();
 

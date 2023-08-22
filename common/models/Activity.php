@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -21,6 +22,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property User $createdBy
  * @property ActivityComment[] $ActivityComments
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class Activity extends \yii\db\ActiveRecord
 {
@@ -32,6 +36,7 @@ class Activity extends \yii\db\ActiveRecord
     {
         return '{{%activity}}';
     }
+
     /**
      * {@inheritdoc}
      */
@@ -45,6 +50,7 @@ class Activity extends \yii\db\ActiveRecord
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -69,29 +75,32 @@ class Activity extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
-    public function getUpadatedBy()
+
+    public function getUpadatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
+
     /**
      * Gets query for [[ActivityComments]].
      *
      * @return \yii\db\ActiveQuery|ActivityCommentQuery
      */
-    public function getActivityComments()
+    public function getActivityComments(): ActiveQuery|ActivityCommentQuery
     {
         return $this->hasMany(ActivityComment::class, ['activity_id' => 'id']);
     }
+
     /**
      * Gets query for [[ActivityUserAssignments]].
      *
      * @return \yii\db\ActiveQuery|ActivityUserAssignmentQuery
      */
-    public function getActivityUserAssignments()
+    public function getActivityUserAssignments(): ActiveQuery|ActivityUserAssignmentQuery
     {
         return $this->hasMany(ActivityUserAssignment::class, ['activity_id' => 'id']);
     }
@@ -100,27 +109,29 @@ class Activity extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return ActivityQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): ActivityQuery
     {
         $query = new ActivityQuery(get_called_class());
-        return $query->active();
+        return $query->notDeleted();
     }
 
-    public function canDelete()
+    public function canDelete(): bool
     {
         return true;
     }
+
     public static function itemAlias($type, $code = NULL)
     {
         $_items = [
             'Status' => Statuses::find()->all(),
-            ];
+        ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
         else
             return isset($_items[$type]) ? $_items[$type] : false;
     }
-    public function behaviors()
+
+    public function behaviors(): array
     {
         return [
             'timestamp' => [
@@ -144,21 +155,24 @@ class Activity extends \yii\db\ActiveRecord
             ],
         ];
     }
-    public function status(){
+
+    public function status(): void
+    {
         Statuses::find()->all();
     }
-    public function fields()
+
+    public function fields(): array
     {
         return [
-            'id' ,
-            'title' ,
-            'send_sms' ,
-            'send_email' ,
-            'status' ,
+            'id',
+            'title',
+            'send_sms',
+            'send_email',
+            'status',
         ];
     }
 
-    public function extraFields()
+    public function extraFields(): array
     {
         return [];
     }

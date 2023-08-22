@@ -280,7 +280,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="p-2">
                                 <h5 class="card-title"> <?= $item->title ?></h5>
                                 <p class="card-text"><?= $item->subtitle ?></p>
-                                <p class="card-text"><?= $item->type ?></p>
                                 <div class="text-right">
                                     <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
                                         [

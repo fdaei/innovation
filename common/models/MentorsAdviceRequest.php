@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\behaviors\CdnUploadImageBehavior;
+
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -28,6 +28,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property Mentor $mentor
  * @property User $updatedBy
  * @property User $user
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class MentorsAdviceRequest extends \yii\db\ActiveRecord
 {

@@ -24,8 +24,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property BusinessTimeline $businessTimeline
  *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
-
  */
 class BusinessTimelineItem extends \yii\db\ActiveRecord
 {

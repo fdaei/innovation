@@ -28,6 +28,11 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $deleted_at
  *
  * @property Freelancer $freelancer
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
+ * @mixin CdnUploadImageBehavior
  */
 class FreelancerPortfolio extends ActiveRecord
 {

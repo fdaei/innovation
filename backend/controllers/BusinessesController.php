@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\BusinessesServices;
 use backend\models\BusinessesStatistics;
+use common\models\Business;
 use common\models\Businesses;
 use common\models\BusinessSearch;
 use common\models\BusinessTimeline;
@@ -100,7 +101,6 @@ class BusinessesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->status = 1;
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }

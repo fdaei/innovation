@@ -37,6 +37,11 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
+ * @mixin CdnUploadImageBehavior
  */
 class Mentor extends \yii\db\ActiveRecord
 {

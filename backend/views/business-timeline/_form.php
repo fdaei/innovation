@@ -54,7 +54,7 @@ use yii\web\View;
                             <div class="row justify-content-center">
                                 <div class="col-sm-8">
                                     <button type="button" class="add-item btn btn-info btn-xs btn-rounded"><?=Yii::t('app', 'add')?></button>
-                                    <button type="button" class="remove-item btn btn-outline-info btn-rounded btn-xs"><?=Yii::t('app', 'remove')?></button>
+                                    <button type="button" class="remove-item btn btn-outline-primary btn-xs"><?=Yii::t('app', 'remove')?></button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -80,7 +80,7 @@ use yii\web\View;
             </div>
             <div class="form-group mb-0 card-footer d-flex justify-content-between">
                 <div class="col-md-10 d-flex justify-content-end">
-                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

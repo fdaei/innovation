@@ -27,6 +27,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property FreelancerCategories[] $freelancerCategories
  * @property User $updatedBy
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
+ *
  */
 class FreelancerCategoryList extends ActiveRecord
 {

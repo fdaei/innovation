@@ -19,11 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="m-4">
             <div class="row">
                 <div class="col-7 row">
-                    <div class="col-12 ">
-                        <?php foreach ($model->tagsArray as $tag ): ?>
-                            <span class="text-muted">#<?= $tag['name'] ?></span>
-                        <?php endforeach; ?>
-                    </div>
                     <div class="col-4">
                         <label for="name"> <?= Yii::t('app', 'title') ?>:</label>
                         <p><?= $model->title ?></p>
@@ -55,6 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-12">
                     <label for="name"> <?= Yii::t('app', 'description') ?>:</label>
                     <p><?= $model->description ?></p>
+                </div>
+                <div class="col-md-12">
+                        <?php foreach ($model->tagsArray as $tag): ?>
+                            <span class="badge badge-info">#<?= $tag['name'] ?></span>
+                        <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -211,20 +211,20 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">
                 <div>
                     <h3 class="float-left"> تایم </h3>
-                        <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
-                            [
-                                'data-pjax' => '0',
-                                'class' => "btn btn-outline-info float-right ",
-                                'data-size' => 'modal-xl',
-                                'data-title' => Yii::t('app', 'update'),
-                                'data-toggle' => 'modal',
-                                'data-target' => '#modal-pjax',
-                                'data-url' => Url::to(['/event/update-time','id'=>$model->id]),
-                                'data-handle-form-submit' => 1,
-                                'data-show-loading' => 0,
-                                'data-reload-pjax-container' => 'p-jax-Event-time',
-                                'data-reload-pjax-container-on-show' => 0
-                            ]) ?>
+                    <?= Html::a(Yii::t('app', 'update'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-info float-right ",
+                            'data-size' => 'modal-xl',
+                            'data-title' => Yii::t('app', 'update'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/event/update-time', 'id' => $model->id]),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-jax-Event-time',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
                 </div>
             </div>
             <table class="table table-striped">

@@ -30,6 +30,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property BranchesAdmin[] $branchesAdmins
  * @property BranchesSpecification[] $branchesSpecifications
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class Branches extends \yii\db\ActiveRecord
 {

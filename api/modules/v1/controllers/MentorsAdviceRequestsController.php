@@ -33,13 +33,6 @@ class MentorsAdviceRequestsController extends ActiveController
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
-            'authenticator' => [
-                'class' => CompositeAuth::class,
-                'authMethods' => [
-                    ['class' => HttpBearerAuth::class],
-                    ['class' => QueryParamAuth::class, 'tokenParam' => 'accessToken'],
-                ]
-            ],
             'exceptionFilter' => [
                 'class' => ErrorToExceptionFilter::class
             ],
@@ -53,6 +46,7 @@ class MentorsAdviceRequestsController extends ActiveController
         unset($actions['index'], $actions['create'], $actions['delete'], $actions['view'], $actions['update']);
         return $actions;
     }
+
     /**
      * @OA\Post(
      *   path="/mentors-advice-requests/create",
@@ -102,7 +96,6 @@ class MentorsAdviceRequestsController extends ActiveController
      *                   type="file",
      *                  format="binary"
      *               ),
-
      *           )
      *       )
      *   ),
@@ -165,7 +158,7 @@ class MentorsAdviceRequestsController extends ActiveController
     public function actionCreate()
     {
         $model = new MentorsAdviceRequest([
-            'user_id'=>Yii::$app->user->identity->id
+            'user_id' => Yii::$app->user->identity->id
         ]);
         $model->loadDefaultValues();
         if ($this->request->isPost) {

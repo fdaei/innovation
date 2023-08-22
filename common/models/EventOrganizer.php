@@ -24,6 +24,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int $created_at
  * @property int $created_by
  * @property int $deleted_at
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class EventOrganizer extends \yii\db\ActiveRecord
 {

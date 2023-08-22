@@ -28,6 +28,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property Province[] $provinces
  * @property User $updatedBy
  *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
 class City extends \yii\db\ActiveRecord
