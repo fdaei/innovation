@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'mentor_id',
                     'value' => function ($model) {
-                        return $model->mentor->name;
+                        return $model->mentor?->name;
                     },
                 ],
                 [
@@ -40,18 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->user->username;
                     },
                 ],
-                'description:ntext',
                 [
                     'class' => ActionColumn::class,
-                    'buttons' => [
-                        'view' => function ($url, $model, $key) {
-                            return Html::a('<span class="glyphicon glyphicon-eye-close"></span>', 'javascript:void(0)', [
-                                'title' => Yii::t('yii', 'View'),
-                                'class' => 'btn btn-xs btn-default disabled', // Add the "disabled" class to disable the button
-                                'disabled' => true, // Disable the button
-                            ]);
-                        },
-                    ],
                     'urlCreator' => function ($action, MentorsAdviceRequest $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
                     },
