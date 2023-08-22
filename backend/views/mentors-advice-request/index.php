@@ -36,8 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'user_id',
-                    'value' => function ($model) {
-                        return $model->user->username;
+                    'value' => function (MentorsAdviceRequest $model) {
+                        return $model->user?->username;
                     },
                 ],
                 [
