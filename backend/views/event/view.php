@@ -19,11 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="m-4">
             <div class="row">
                 <div class="col-7 row">
-                    <div class="col-12 ">
-                        <?php foreach ($model->tagsArray as $tag): ?>
-                            <span class="text-muted">#<?= $tag['name'] ?></span>
-                        <?php endforeach; ?>
-                    </div>
                     <div class="col-4">
                         <label for="name"> <?= Yii::t('app', 'title') ?>:</label>
                         <p><?= $model->title ?></p>
@@ -55,6 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-12">
                     <label for="name"> <?= Yii::t('app', 'description') ?>:</label>
                     <p><?= $model->description ?></p>
+                </div>
+                <div class="col-md-12">
+                        <?php foreach ($model->tagsArray as $tag): ?>
+                            <span class="badge badge-info">#<?= $tag['name'] ?></span>
+                        <?php endforeach; ?>
                 </div>
             </div>
         </div>

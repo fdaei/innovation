@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /** @var common\models\Event $model */
 /** @var EventTime[] $EventTimes */
 /** @var array $searchedTags */
+/** @var array $tagSelected */
 
 
 $this->title = Yii::t('app', 'Update Event: {name}', [
@@ -26,6 +27,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 'model' => $model,
                 'EventTimes' => $EventTimes,
                 'searchedTags' => $searchedTags,
+                'tagSelected' => $tagSelected,
             ]) ?>
         </div>
     </div>

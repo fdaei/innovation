@@ -17,6 +17,7 @@ use yii\widgets\MaskedInput;
 /** @var yii\bootstrap4\ActiveForm $form */
 /** @var common\models\EventTime $EventTimes */
 /** @var array $searchedTags */
+/** @var array $tagSelected */
 ?>
 
 <div class="event-form">
@@ -68,14 +69,14 @@ use yii\widgets\MaskedInput;
             <div class='col-md-4'>
 
                 <?= $form->field($model, 'event_tag')->widget(Select2::class, [
-                    'initValueText' => $tagSelected ?? ArrayHelper::map($searchedTags, 'tag_id', 'name'),
+                    'initValueText' => $model->isNewRecord ? $tagSelected : ArrayHelper::map($searchedTags, 'tag_id', 'name'),
                     'options' => [
                         'multiple' => true,
                         'placeholder' => 'یک یا چند تگ را انتخاب نمایید...',
                         'dir' => 'rtl',
                         'data-id' => $model->id,
-                        'data-tags' => $tagSelected ?? ArrayHelper::map($searchedTags, 'tag_id', 'type'),
-                        'data-tags-name' =>  $tagSelected ??  ArrayHelper::map($searchedTags, 'tag_id', 'name'),
+                        'data-tags' => $model->isNewRecord ? $tagSelected : ArrayHelper::map($searchedTags, 'tag_id', 'type'),
+                        'data-tags-name' => $model->isNewRecord ? $tagSelected : ArrayHelper::map($searchedTags, 'tag_id', 'name'),
                         'data-tags-type' => Tag::itemAlias('TypeClass'),
                         'class' => 'form-control TagInput',
                     ],

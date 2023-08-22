@@ -265,10 +265,12 @@ class EventController extends Controller
             }
         }
 
+        $model->event_tag = $model->tagNames;
         return $this->render('update', [
             'model' => $model,
             'EventTimes' => (empty($modelsEventTime)) ? [new EventTime] : $modelsEventTime,
             'searchedTags' => $searchedTags,
+            'tagSelected' => [],
         ]);
     }
 
