@@ -23,6 +23,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int $deleted_at
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class Hitech extends \yii\db\ActiveRecord
 {

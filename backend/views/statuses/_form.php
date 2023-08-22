@@ -33,7 +33,7 @@ use yii\bootstrap4\ActiveForm;
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">
         <div class="col-md-10 d-flex justify-content-end">
-            <button type="submit" class="btn btn-info btn-rounded">ثبت</button>
+            <button type="submit" class="btn btn-primary">ثبت</button>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

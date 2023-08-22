@@ -14,6 +14,8 @@ use yii\helpers\ArrayHelper;
  * @property string|null $picture
  * @property string $title
  * @property string $description
+ * @mixin CdnUploadImageBehavior
+ *
  */
 class MentorServices extends \yii\db\ActiveRecord
 {

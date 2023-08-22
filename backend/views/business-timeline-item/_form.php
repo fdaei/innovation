@@ -37,7 +37,7 @@ use yii\bootstrap4\ActiveForm;
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-between">
         <div class="col-md-10 d-flex justify-content-end">
-            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-info btn-rounded']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

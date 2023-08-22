@@ -23,6 +23,10 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property EventHall $eventHall
  * @property User $updatedBy
+ *
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class EventHallPriceList extends \yii\db\ActiveRecord
 {

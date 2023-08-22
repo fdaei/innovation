@@ -9,7 +9,7 @@ $this->title = Yii::t('app', 'Create Business Gallery');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Business Galleries'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="card material-card text-left">
+<div class=" text-left">
     <div class="card-header">
         <h3><?= Html::encode($this->title) ?></h3>
     </div>

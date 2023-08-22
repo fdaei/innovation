@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\helpers\HtmlPurifier;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
@@ -22,6 +23,9 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property User $createdBy
  * @property Activity $Activity
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
+ * @mixin SoftDeleteBehavior
  */
 class ActivityComment extends \yii\db\ActiveRecord
 {
@@ -34,7 +38,7 @@ class ActivityComment extends \yii\db\ActiveRecord
     const STATUS_INACTIVE = 2;
 
 
-    public static function tableName()
+    public static function tableName(): string
     {
         return '{{%activity_comment}}';
     }
@@ -42,7 +46,7 @@ class ActivityComment extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [[ 'comment'], 'required'],
@@ -57,7 +61,7 @@ class ActivityComment extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => Yii::t('app', 'ID'),
@@ -76,11 +80,11 @@ class ActivityComment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
-    public function getCreatedBy()
+    public function getCreatedBy():ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
-    public function getUpadatedBy()
+    public function getUpadatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
@@ -89,7 +93,7 @@ class ActivityComment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery|ActivityQuery
      */
-    public function getActivity()
+    public function getActivity(): ActiveQuery|ActivityQuery
     {
         return $this->hasOne(Activity::class, ['id' => 'activity_id']);
     }
@@ -98,22 +102,22 @@ class ActivityComment extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return ActivityCommentQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): ActivityCommentQuery
     {
         $query = new ActivityCommentQuery(get_called_class());
-        return $query->active();
+        return $query->notDeleted();
     }
 
-    public function canDelete()
+    public function canDelete(): bool
     {
         return true;
     }
-    public function beforeSave($insert)
+    public function beforeSave($insert): bool
     {
         $this->comment = HtmlPurifier::process($this->comment);
         return parent::beforeSave($insert);
     }
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'timestamp' => [
@@ -141,14 +145,14 @@ class ActivityComment extends \yii\db\ActiveRecord
     }
 
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'comment',
         ];
     }
 
-    public function extraFields()
+    public function extraFields(): array
     {
         return [];
     }

@@ -41,9 +41,11 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $user
  * @property array $metaTags
  * @mixin CdnUploadImageBehavior
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
-class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
+class Business extends \yii\db\ActiveRecord implements RateLimitInterface
 {
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 0;
@@ -54,6 +56,7 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
     public $rateLimit = 1;
     public $allowance;
     public $allowance_updated_at;
+
     public static function tableName()
     {
         return '{{%business}}';
@@ -65,11 +68,11 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
     public function rules()
     {
         return [
-            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper','tablet_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug', 'logo', 'wallpaper', 'mobile_wallpaper', 'tablet_wallpaper'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['user_id', 'city_id', 'title', 'short_description', 'success_story', 'status', 'slug'], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['user_id', 'city_id',], 'integer'],
             [['short_description', 'success_story', 'investor_description'], 'string'],
-            [['logo', "wallpaper", "mobile_wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg','svg'], 'checkExtensionByMimeType' => false],
+            [['logo', "wallpaper", "mobile_wallpaper"], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'svg'], 'checkExtensionByMimeType' => false],
             [['link'], 'url'],
             [['slug'], 'unique'],
             ['wallpaper', 'image', 'minWidth' => 1920, 'maxWidth' => 1920, 'minHeight' => 348, 'maxHeight' => 348, 'extensions' => 'jpg, jpeg, png', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
@@ -86,7 +89,7 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
     {
         $scenarios = parent::scenarios();
 
-        $scenarios[self::SCENARIO_CREATE] = ['city_id', 'user_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'link', 'investor_description', 'logo', 'wallpaper', 'mobile_wallpaper','tablet_wallpaper'];
+        $scenarios[self::SCENARIO_CREATE] = ['city_id', 'user_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'link', 'investor_description', 'logo', 'wallpaper', 'mobile_wallpaper', 'tablet_wallpaper'];
         $scenarios[self::SCENARIO_UPDATE] = ['user_id', 'city_id', 'title', 'short_description', 'success_story', 'slug', 'status', 'investor_description'];
 
         return $scenarios;
@@ -197,33 +200,34 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
     {
         return $this->hasOne(City::class, ['id' => 'city_id']);
     }
+
     public function getMetaTags(): array
     {
-        $metaTags=[];
+        $metaTags = [];
         $metaTags[] = [
-            "hid"=>"title",
-            "name"=>"title",
-            "content"=>$this->title
+            "hid" => "title",
+            "name" => "title",
+            "content" => $this->title
         ];
         $metaTags[] = [
-            "hid"=>"short_description",
-            "name"=>"short_description",
-            "content"=>$this->short_description
+            "hid" => "short_description",
+            "name" => "short_description",
+            "content" => $this->short_description
         ];
         $metaTags[] = [
-            "hid"=>"investor_description",
-            "name"=>"investor_description",
-            "content"=>$this->investor_description
+            "hid" => "investor_description",
+            "name" => "investor_description",
+            "content" => $this->investor_description
         ];
         $metaTags[] = [
-            "hid"=>"success_story",
-            "name"=>"success_story",
-            "content"=>$this->success_story
+            "hid" => "success_story",
+            "name" => "success_story",
+            "content" => $this->success_story
         ];
         $metaTags[] = [
-            "hid"=>"success_story",
-            "name"=>"success_story",
-            "content"=>$this->success_story
+            "hid" => "success_story",
+            "name" => "success_story",
+            "content" => $this->success_story
         ];
         return $metaTags;
     }
@@ -405,8 +409,9 @@ class Business extends \yii\db\ActiveRecord implements  RateLimitInterface
         ];
     }
 
-    public function getRateLimit($request, $action) {
-        return [$this->rateLimit,1];
+    public function getRateLimit($request, $action)
+    {
+        return [$this->rateLimit, 1];
     }
 
     public function loadAllowance($request, $action)

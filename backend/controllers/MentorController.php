@@ -301,4 +301,22 @@ class MentorController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function actionSearchMentors($q = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $mentors = Mentor::find()
+            ->select(['id', 'name'])
+            ->where(['like', 'name', $q])
+            ->limit(10)
+            ->all();
+
+        $results = [];
+        foreach ($mentors as $mentor) {
+            $results[] = ['id' => $mentor->id, 'text' => $mentor->name];
+        }
+
+        return ['results' => $results];
+    }
 }

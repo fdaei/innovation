@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </a>
     </h4>
     <p>
-        <?= Html::a(Yii::t('app', 'Create Mentor Category'), ['create'], ['class' => 'btn btn-info btn-rounded']) ?>
+        <?= Html::a(Yii::t('app', 'Create Mentor Category'), ['create'], ['class' => 'btn btn-primary']) ?>
     </p>
         <div id="collapseSearchModel" class="panel-collapse collapse p-3" aria-expanded="false" style="">
             <?php echo $this->render('_search', ['model' => $searchModel]); ?>

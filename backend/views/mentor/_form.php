@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Mentor;
+use common\models\MentorCategory;
 use common\models\User;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -82,7 +83,7 @@ use common\models\MentorCategory;
     </div>
     <div class="form-group mb-0 card-footer d-flex justify-content-start">
         <div class="col-md-10">
-            <button type="submit" class="btn btn-info btn-rounded">ثبت</button>
+            <button type="submit" class="btn btn-primary">ثبت</button>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

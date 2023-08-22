@@ -29,6 +29,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @mixin CdnUploadImageBehavior
+ * @mixin TimestampBehavior
+ * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
 class BusinessStat extends \yii\db\ActiveRecord
@@ -53,8 +55,8 @@ class BusinessStat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['business_id', 'type', 'title', 'subtitle', 'status', 'icon'], 'required', 'on' => [self::SCENARIO_CREATE]],
-            [['business_id', 'type', 'title', 'subtitle', 'status'], 'required', 'on' => [self::SCENARIO_UPDATE]],
+            [['business_id', 'type', 'title', 'subtitle', 'icon'], 'required', 'on' => [self::SCENARIO_CREATE]],
+            [['business_id', 'type', 'title', 'subtitle', ], 'required', 'on' => [self::SCENARIO_UPDATE]],
             [['business_id', 'status', 'type'], 'integer'],
             [['title', 'subtitle'], 'string', 'max' => 255],
             ['icon', 'image', 'minWidth' => 96, 'maxWidth' => 96, 'minHeight' => 96, 'maxHeight' => 96, 'extensions' => 'jpg, jpeg, png, svg', 'maxSize' => 1024 * 1024 * 2, 'enableClientValidation' => false],
@@ -64,8 +66,8 @@ class BusinessStat extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'type', 'title', 'subtitle', 'status','icon'];
-        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'type', 'title', 'subtitle', 'status'];
+        $scenarios[self::SCENARIO_CREATE] = ['business_id', 'type', 'title', 'subtitle','icon'];
+        $scenarios[self::SCENARIO_UPDATE] = ['business_id', 'type', 'title', 'subtitle'];
 
         return $scenarios;
     }

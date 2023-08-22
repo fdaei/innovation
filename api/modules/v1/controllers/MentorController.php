@@ -40,13 +40,6 @@ class MentorController extends ActiveController
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
-//            'authenticator' => [
-//                'class' => CompositeAuth::class,
-//                'authMethods' => [
-//                    ['class' => HttpBearerAuth::class],
-//                    ['class' => QueryParamAuth::class, 'tokenParam' => 'accessToken'],
-//                ]
-//            ],
             'exceptionFilter' => [
                 'class' => ErrorToExceptionFilter::class
             ],
@@ -58,21 +51,22 @@ class MentorController extends ActiveController
         $actions = parent::actions();
         $actions['create']['modelClass'] = 'api\models\MentorCreate';
         // disable the "delete" and "create" actions
-        unset( $actions['delete'], $actions['update'], $actions['index']);
+        unset($actions['delete'], $actions['update'], $actions['index']);
         return $actions;
     }
 
     public function actionIndex()
     {
         $searchModel = new MentorSearch();
-        $searchModel->status = Mentor::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
         return $dataProvider;
     }
 
-    public function actionAdviceRequest(){
-        $model = new \api\models\MentorsAdviceRequest;
-
+    public function actionAdviceRequest()
+    {
+        $model = new MentorsAdviceRequest([
+            'user_id' => Yii::$app->user->identity->id
+        ]);
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->save()) {
             $response = Yii::$app->getResponse();
@@ -83,7 +77,8 @@ class MentorController extends ActiveController
         return $model;
     }
 
-    public function actionCategoryList(){
+    public function actionCategoryList()
+    {
         return new ActiveDataProvider([
             'query' => MentorCategory::find()
         ]);
