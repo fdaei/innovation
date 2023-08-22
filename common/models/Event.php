@@ -129,20 +129,18 @@ class Event extends \yii\db\ActiveRecord
         if (!empty($tagNames)) {
             $tagIds = [];
             foreach ($tagNames as $tagName) {
-                if ($flag) {
-                    $existingTag = Tag::findOne(['tag_id' => $tagName]);
-                    if ($existingTag) {
-                        $tagIds[] = $existingTag->tag_id;
-                    } else {
-                        $newTag = new Tag(['name' => $tagName, 'type' => '1']);
-                        if ($newTag->save()) {
-                            $tagIds[] = $newTag->tag_id;
-                        } else {
-                            $flag = false;
-                        }
-                    }
-                } else {
+                if (!$flag) {
                     break;
+                }
+
+                $existingTag = Tag::findOne(['tag_id' => $tagName]);
+                if ($existingTag) {
+                    $tagIds[] = $existingTag->tag_id;
+                } else {
+                    $newTag = new Tag(['name' => $tagName, 'type' => '1']);
+                    if ($flag = $newTag->save()){
+                        $tagIds[] = $newTag->tag_id;
+                    }
                 }
             }
             $this->tagNames = $tagIds;
