@@ -19,6 +19,7 @@ use kartik\select2\Select2;
             'data-pjax' => 1
         ],
     ]); ?>
+
     <div class="row">
         <div class="col-md-3">
             <?= $form->field($model, 'mobile') ?>

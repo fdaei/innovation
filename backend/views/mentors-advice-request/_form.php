@@ -53,8 +53,8 @@ use yii\bootstrap4\ActiveForm;
         </div>
     </div>
     <div class="form-group mb-0 card-footer ">
-        <div class="col-md-10 d-flex justify-content-end">
-            <button type="submit" class="btn btn-success">ثبت</button>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">ثبت</button>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

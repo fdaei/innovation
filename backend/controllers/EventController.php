@@ -110,9 +110,8 @@ class EventController extends Controller
             if ($valid) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $flag = true;
-                    if ($tagSelected) {
-                        $model->setTags($tagSelected, $flag);
+                    if ($searchedTags) {
+                        $model->setTags($searchedTags, true);
                     }
 
                     if ($flag = $model->save(false)) {

@@ -37,6 +37,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @property User $createdBy
  * @property User $updatedBy
  * @property User $user
+ * @property MentorsAdviceRequest[] $mentorsAdviceRequests
  *
  * @mixin TimestampBehavior
  * @mixin BlameableBehavior
@@ -64,18 +65,20 @@ class Mentor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'],'integer'],
-            [['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status','user_id'], 'required', 'on' => [self::SCENARIO_FORM]],
+            [['user_id'], 'integer'],
+            [['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_online_status'], 'required', 'on' => [self::SCENARIO_FORM]],
             [['activity_description', 'telegram', 'name'], 'string'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
-            [['picture', 'picture_mentor'], 'image', 'extensions' => 'jpg, jpeg, png', 'enableClientValidation' => false],
-            ['video', 'file', 'enableClientValidation' => false],
+            [['consultation_face_to_face_cost', 'consultation_online_cost'], 'number'],
+            [['picture', 'picture_mentor'], 'image', 'extensions' => ['jpg', 'jpeg', 'png'], 'skipOnEmpty' => true],
+            [['video'], 'file', 'extensions' => ['mp4', 'avi'], 'skipOnEmpty' => true],
         ];
     }
+
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status','user_id'];
+        $scenarios[self::SCENARIO_FORM] = ['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_face_to_face_cost', 'consultation_online_cost', 'consultation_online_status', 'user_id'];
         return $scenarios;
     }
 
@@ -149,17 +152,22 @@ class Mentor extends \yii\db\ActiveRecord
     public static function find()
     {
         $query = new MentorQuery(get_called_class());
-        return $query->active();
+        return $query->notDeleted();
     }
 
     public function canDelete()
     {
-        return true;
+        return $this->mentorsAdviceRequests;
     }
 
     public function getMentorCategories(): ActiveQuery
     {
         return $this->hasMany(MentorCategories::class, ['mentor_id' => 'id']);
+    }
+
+    public function getMentorsAdviceRequests(): ActiveQuery
+    {
+        return $this->hasMany(MentorsAdviceRequest::class, ['mentor_id' => 'id']);
     }
 
     public function getMentorServices()
@@ -197,9 +205,13 @@ class Mentor extends \yii\db\ActiveRecord
                 'class' => SoftDeleteBehavior::class,
                 'softDeleteAttributeValues' => [
                     'deleted_at' => time(),
+                    'status' => self::STATUS_DELETED
+
                 ],
                 'restoreAttributeValues' => [
                     'deleted_at' => 0,
+                    'status' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]
+
                 ],
                 'replaceRegularDelete' => false, // mutate native `delete()` method
                 'invokeDeleteEvents' => false

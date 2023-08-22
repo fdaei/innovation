@@ -6,6 +6,7 @@ namespace common\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 /**
@@ -33,11 +34,12 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  * @mixin BlameableBehavior
  * @mixin SoftDeleteBehavior
  */
-class MentorsAdviceRequest extends \yii\db\ActiveRecord
+class MentorsAdviceRequest extends ActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -53,7 +55,7 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'mentor_id', 'status', 'deleted_at', 'updated_by', 'updated_at', 'created_at', 'created_by'], 'integer'],
-            [['mentor_id', 'name', 'mobile', 'status'], 'required'],
+            [['mentor_id', 'name', 'mobile'], 'required'],
             [['description'], 'string'],
             [['name', 'mobile'], 'string', 'max' => 255],
             [['mentor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Mentor::class, 'targetAttribute' => ['mentor_id' => 'id']],
@@ -72,7 +74,7 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'mentor_id' => Yii::t('app', 'Mentor ID'),
-            'name' => Yii::t('app', 'Name'),
+            '' => Yii::t('app', 'Name'),
             'mobile' => Yii::t('app', 'Mobile'),
             'description' => Yii::t('app', 'Description'),
             'status' => Yii::t('app', 'Status'),
@@ -133,6 +135,21 @@ class MentorsAdviceRequest extends \yii\db\ActiveRecord
         $query = new MentorsAdviceRequestQuery(get_called_class());
         $query->notDeleted();
         return $query;
+    }
+
+    public static function itemAlias($type, $code = NULL)
+    {
+        $_items = [
+            'Status' => [
+                self::STATUS_DELETED => Yii::t('app', 'DELETED'),
+                self::STATUS_ACTIVE => Yii::t('app', 'ACTIVE'),
+                self::STATUS_INACTIVE => Yii::t('app', 'INACTIVE'),
+            ]
+        ];
+        if (isset($code))
+            return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+        else
+            return isset($_items[$type]) ? $_items[$type] : false;
     }
 
     public function behaviors()

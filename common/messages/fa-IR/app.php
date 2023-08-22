@@ -361,4 +361,7 @@ return [
     'Mentor Categories' => 'دسته بندی‌های مشاوران',
     'Create Mentor Category' => 'ایجاد دسته بندی مشاوران',
     'Update Mentor Category: {name}' => 'ویرایش دسته‌بندی: {name}',
+    'Update Mentors Advice Request: {name}'=>'به روز رسانی درخواست مشاوره : {name}',
+    'Mentor Request'=>'درخواست مشاور',
+    'Mentor Requests'=>'درخواست مشاور',
 ];
