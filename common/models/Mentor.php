@@ -8,7 +8,6 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
-use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "{{%mentor}}".
