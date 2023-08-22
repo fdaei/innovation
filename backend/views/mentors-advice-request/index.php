@@ -30,14 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'mobile',
                 [
                     'attribute' => 'mentor_id',
-                    'value' => function ($model) {
+                    'value' => function (MentorsAdviceRequest $model) {
                         return $model->mentor->name;
                     },
                 ],
                 [
                     'attribute' => 'user_id',
-                    'value' => function ($model) {
-                        return $model->user->username;
+                    'value' => function (MentorsAdviceRequest $model) {
+                        return $model->user?->username;
                     },
                 ],
                 'description:ntext',
