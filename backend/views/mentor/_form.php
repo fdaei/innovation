@@ -7,7 +7,6 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 use yii\bootstrap4\ActiveForm;
-use common\models\MentorCategory;
 
 
 /** @var View $this */
