@@ -18,7 +18,7 @@ class MentorsAdviceRequestSearch extends MentorsAdviceRequest
     {
         return [
             [['id', 'user_id', 'mentor_id', 'status', 'deleted_at', 'updated_by', 'updated_at', 'created_at', 'created_by'], 'integer'],
-            [['description'], 'safe'],
+            [['name', 'mobile', 'description'], 'safe'],
         ];
     }
 
@@ -69,7 +69,9 @@ class MentorsAdviceRequestSearch extends MentorsAdviceRequest
             'created_by' => $this->created_by,
         ]);
 
-        $query->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'mobile', $this->mobile])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
