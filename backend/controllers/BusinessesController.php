@@ -97,13 +97,10 @@ class BusinessesController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Businesses([
-            'status'=>Business::itemAlias('Status',1)
-        ]);
+        $model = new Businesses();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->status = 1;
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
