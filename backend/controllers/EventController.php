@@ -101,19 +101,8 @@ class EventController extends Controller
             $model->event_tag = Yii::$app->request->post('Event')['event_tag'];
             $tagSelected = Yii::$app->request->post('Event')['event_tag'];
             $searchedTags = Tag::find()->select(['tag_id', 'name'])->andWhere(['in', 'tag_id', $tagSelected])->asArray()->all();
-            $tagIdNameMap = [];
-            foreach ($searchedTags as $tag) {
-                $tagIdNameMap[$tag['tag_id']] = $tag['name'];
-            }
-            $combinedTagInfo = [];
-            foreach ($tagSelected as $tagId) {
-                if (isset($tagIdNameMap[$tagId])) {
-                    $combinedTagInfo[] = $tagIdNameMap[$tagId];
-                } else {
-                    $combinedTagInfo[] = $tagId;
-                }
-            }
-            $tagSelected = $combinedTagInfo;
+            $Tag=new Tag();
+            $tagSelected = $Tag->makeArrayOfTagId($tagSelected,$searchedTags);
             $modelsEventTime = Model::createMultiple(EventTime::class);
             Model::loadMultiple($modelsEventTime, Yii::$app->request->post());
             $valid = $model->validate();
