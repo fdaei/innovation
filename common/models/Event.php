@@ -124,11 +124,11 @@ class Event extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
-    public function setTags(array $tagNames, bool $flag): void
+    public function setTags(array $searchedTags, bool $flag): void
     {
-        if (!empty($tagNames)) {
+        if (!empty($searchedTags)) {
             $tagIds = [];
-            foreach ($tagNames as $tagName) {
+            foreach ($searchedTags as $tagName) {
                 if (!$flag) {
                     break;
                 }
