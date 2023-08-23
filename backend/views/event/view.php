@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                         <div class="col-2 m-2">
-<!--                            <img style="width: 100px; height: 100px;" src="--><?php //= $item->getUploadUrl('picture') ?><!--">-->
+                            <img style="width: 100px; height: 100px;" src="<?= $item->getUploadUrl('picture') ?>">
                         </div>
                         <div class="col-12">
                             <div class="card-footer m-0">
