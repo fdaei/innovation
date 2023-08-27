@@ -32,33 +32,6 @@ $menu_items = [
         ]
     ],
     [
-        'group' => 'CareerApply',
-        'label' => 'موقعیت شغلی',
-        'icon' => 'fas fa-briefcase',
-        'level' => "first-level",
-        'encode' => false,
-        'items' => [
-            [
-                'group' => 'CareerApply',
-                'label' => Yii::t('app', 'CareerApply'),
-                'icon' => 'fas fa-clipboard-check',
-                'url' => ['/career-apply/']
-            ],
-            [
-                'group' => 'JobPosition',
-                'label' => Yii::t('app', 'JobPosition'),
-                'icon' => 'fas fa-user-tie',
-                'url' => ['/job-position/']
-            ],
-            [
-                'group' => 'OrgUnit',
-                'label' => Yii::t('app', 'OrgUnit'),
-                'icon' => 'fas fa-sitemap',
-                'url' => ['/org-unit/']
-            ],
-        ]
-    ],
-    [
         'group' => 'Mentor',
         'label' => 'مشاوره',
         'icon' => 'fas fa-chalkboard-teacher',

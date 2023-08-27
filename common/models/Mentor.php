@@ -66,7 +66,7 @@ class Mentor extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'integer'],
-            [['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_online_status'], 'required', 'on' => [self::SCENARIO_FORM]],
+            [['name', 'activity_field', 'activity_description', 'telegram', 'user_id', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'consultation_face_to_face_status', 'consultation_online_status','consultation_online_cost', 'consultation_online_status'], 'required', 'on' => [self::SCENARIO_FORM]],
             [['activity_description', 'telegram', 'name'], 'string'],
             [['instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field'], 'string', 'max' => 255],
             [['consultation_face_to_face_cost', 'consultation_online_cost'], 'number'],

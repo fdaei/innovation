@@ -63,10 +63,9 @@ class Freelancer extends ActiveRecord
     const STATUS_DELETED = 3;
 
     const EXPERIENCE_ENTRY = 1;
-    const EXPERIENCE_INTERMEDIATE = 2;
-    const EXPERIENCE_MID_LEVEL= 3;
-    const EXPERIENCE_SENIOR= 4;
-    const EXPERIENCE_TECHNICAL= 5;
+    const EXPERIENCE_MID_LEVEL= 2;
+    const EXPERIENCE_SENIOR= 3;
+    const EXPERIENCE_TECHNICAL= 4;
 
     const SEX_MAN = 1;
     const SEX_WOMAN = 2;
@@ -317,7 +316,6 @@ class Freelancer extends ActiveRecord
             ],
             'Experience' => [
                 self::EXPERIENCE_ENTRY => Yii::t('app', 'Entry'),
-                self::EXPERIENCE_INTERMEDIATE => Yii::t('app', 'Intermediate'),
                 self::EXPERIENCE_MID_LEVEL => Yii::t('app', 'Mid level'),
                 self::EXPERIENCE_SENIOR => Yii::t('app', 'Senior'),
                 self::EXPERIENCE_TECHNICAL => Yii::t('app', 'Technical'),
