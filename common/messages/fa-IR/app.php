@@ -364,4 +364,6 @@ return [
     'Update Mentors Advice Request: {name}'=>'به روز رسانی درخواست مشاوره : {name}',
     'Mentor Request'=>'درخواست مشاور',
     'Mentor Requests'=>'درخواست مشاور',
+    'This mobile number has already been taken for this event.'=>'این شماره موبایل قبلا در این رویداد ثبت شده است',
+    'Event ID'=>'شناسه رویداد',
 ];

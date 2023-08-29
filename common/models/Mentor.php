@@ -159,11 +159,17 @@ class Mentor extends \yii\db\ActiveRecord
     {
         return $this->mentorsAdviceRequests;
     }
-
     public function getMentorCategories(): ActiveQuery
     {
         return $this->hasMany(MentorCategories::class, ['mentor_id' => 'id']);
     }
+
+    public function getNameMentorCategories(): ActiveQuery
+    {
+        return $this->hasMany(MentorCategory::class, ['id' => 'category_id'])
+            ->viaTable('ince_mentor_categories', ['mentor_id' => 'id']);
+    }
+
 
     public function getMentorsAdviceRequests(): ActiveQuery
     {

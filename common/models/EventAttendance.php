@@ -65,7 +65,10 @@ class EventAttendance extends \yii\db\ActiveRecord
             [['mobile'], 'match', 'pattern' => '^09[0-9]{9}$^'],
             [['email'], 'email'],
             [['email'], 'string', 'max' => 255],
-            [['mobile', 'event_id'], 'unique', 'targetAttribute' => ['event_id', 'mobile']],
+            ['mobile', 'unique', 'targetAttribute' => ['event_id', 'mobile'], 'message' => Yii::t('app', 'This mobile number has already been taken for this event.') , 'when' => function ($model) {
+                return !empty($model->mobile);
+            }],
+            [['event_id'], 'unique', 'targetAttribute' => ['event_id', 'mobile']],
             [['user_id', 'event_id'], 'unique', 'targetAttribute' => ['event_id', 'user_id'], 'when' => function (self $model) {
                 return $model->user_id;
             }],

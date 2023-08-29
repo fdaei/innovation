@@ -39,15 +39,18 @@ class FreelancerSearch extends \api\models\Freelancer
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$formName = null)
     {
         $query = Freelancer::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC]
+            ]
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
 
         if (!$this->validate()) {
             $query->where('0=1');
@@ -74,7 +77,7 @@ class FreelancerSearch extends \api\models\Freelancer
         if ($this->categories) {
             $query
                 ->joinWith('freelancerCategories')
-                ->andFilterWhere(['in', 'categories_id', $this->categories]);
+                ->andFilterWhere(['categories_id'=>$this->categories]);
         }
 
         $query

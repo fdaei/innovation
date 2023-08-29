@@ -19,7 +19,7 @@ class MentorSearch extends Mentor
     public function rules()
     {
         return [
-            [['id', 'status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at'], 'integer'],
+            [['id', 'status', 'user_id', 'updated_by', 'created_at', 'created_by', 'updated_at', 'deleted_at','categories'], 'integer'],
             [['picture', 'video', 'instagram', 'linkedin', 'twitter', 'whatsapp', 'telegram', 'activity_field', 'activity_description', 'services', 'records','categories'], 'safe'],
         ];
     }
@@ -40,7 +40,7 @@ class MentorSearch extends Mentor
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$formName = null)
     {
         $query = Mentor::find();
         $query->andWhere(Mentor::getTableSchema()->fullName.'.id != 1'); // id 1 for request mentor and must not show
@@ -50,21 +50,19 @@ class MentorSearch extends Mentor
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC]
+            ]
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
+
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        if($this->categories){
-            $query->joinWith('mentorCategories')
-                ->andFilterWhere(['in', 'categories_id', $this->categories]);
-        }
-
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -85,7 +83,10 @@ class MentorSearch extends Mentor
             ->andFilterWhere(['like', 'telegram', $this->telegram])
             ->andFilterWhere(['like', 'activity_field', $this->activity_field])
             ->andFilterWhere(['like', 'activity_description', $this->activity_description]);
-
+        if($this->categories){
+            $query->joinWith('mentorCategories')
+                ->andFilterWhere(['category_id'=>$this->categories]);
+        }
         return $dataProvider;
     }
 }

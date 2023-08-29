@@ -34,4 +34,10 @@ class Mentor extends \common\models\Mentor
             'resume_file'
         ];
     }
+    public function extraFields()
+    {
+        return [
+            'Category' => 'nameMentorCategories',
+        ];
+    }
 }

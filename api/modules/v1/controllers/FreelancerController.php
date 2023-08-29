@@ -61,43 +61,64 @@ class FreelancerController extends ActiveController
      * @OA\Post(
      *     path="/freelancer/create",
      *     summary="freelancer create",
-     *     tags={"Freelancer"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="saeed"),
-     *             @OA\Property(property="mobile", type="string", example="09136638049"),
-     *             @OA\Property(property="email", type="string", example="test@gmail.com"),
-     *             @OA\Property(property="city", type="integer", example="1"),
-     *             @OA\Property(property="province", type="integer", example="1"),
-     *             @OA\Property(property="marital_status", type="integer", example="1"),
-     *             @OA\Property(property="military_service_status", type="integer", example="1"),
-     *             @OA\Property(property="activity_field", type="string", example="backend"),
-     *             @OA\Property(property="experience", type="integer", example="1"),
-     *             @OA\Property(property="experience_period", type="integer", example="1"),
-     *             @OA\Property(property="description_user", type="string", example="description..."),
-     *             @OA\Property(property="sex", type="integer", example="1"),
-     *             @OA\Property(property="project_number", type="integer", example="36"),
-     *             @OA\Property(property="accept_rules", type="boolean", example=true),
-     *             @OA\Property(property="skills", type="array",
-     *                 @OA\Items(@OA\Property(property="title", type="string"),)
-     *              ),
-     *             @OA\Property(property="record_job", type="array",
-     *                 @OA\Items(@OA\Property(property="title", type="string"),)
-     *              ),
-     *             @OA\Property(property="record_educational", type="array",
-     *                 @OA\Items(@OA\Property(property="title", type="string"),)
-     *              ),
-     *             @OA\Property(property="portfolio", type="array",
-     *                 @OA\Items(
-     *                    @OA\Property(property="title", type="string"),
-     *                    @OA\Property(property="description", type="string"),
-     *                    @OA\Property(property="link", type="string"),
-     *                    @OA\Property(property="image", type="file"),
+     *     tags={"Freelancers"},
+     *     security={{ "bearerAuth": {} }},
+     *   @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  required={
+     *                      "name",
+     *                      "mobile",
+     *                      "email",
+     *                      "city",
+     *                      "province",
+     *                      "marital_status",
+     *                      "military_service_status",
+     *                      "activity_field",
+     *                      "experience",
+     *                      "experience_period",
+     *                      "description_user",
+     *                      "sex",
+     *                      "project_number",
+     *                      "accept_rules",
+     *                      "skills"
+     *                  },
+     *                  @OA\Property(property="name", type="string"),
+     *                  @OA\Property(property="mobile", type="string"),
+     *                  @OA\Property(property="email", type="string"),
+     *                  @OA\Property(property="city", type="integer"),
+     *                  @OA\Property(property="province", type="integer"),
+     *                  @OA\Property(property="marital_status", type="integer"),
+     *                  @OA\Property(property="military_service_status", type="integer"),
+     *                  @OA\Property(property="activity_field", type="string"),
+     *                  @OA\Property(property="experience", type="integer"),
+     *                  @OA\Property(property="experience_period", type="integer"),
+     *                  @OA\Property(property="description_user", type="string"),
+     *                  @OA\Property(property="sex", type="integer"),
+     *                  @OA\Property(property="project_number", type="integer"),
+     *                  @OA\Property(property="accept_rules", type="boolean"),
+     *                  @OA\Property(property="skills", type="array",
+     *                      @OA\Items(@OA\Property(property="title", type="string"))
+     *                  ),
+     *                  @OA\Property(property="record_job", type="array",
+     *                      @OA\Items(@OA\Property(property="title", type="string"))
+     *                  ),
+     *                  @OA\Property(property="record_educational", type="array",
+     *                      @OA\Items(@OA\Property(property="title", type="string"))
+     *                  ),
+     *                  @OA\Property(property="portfolio", type="array",
+     *                      @OA\Items(
+     *                         @OA\Property(property="title", type="string"),
+     *                         @OA\Property(property="description", type="string"),
+     *                         @OA\Property(property="link", type="string"),
+     *                         @OA\Property(property="image", type="string")
+     *                      )
      *                  )
-     *              ),
-     *        )
-     *     ),
+     *              )
+     *          )
+     *      ),
      *    @OA\Parameter(name="name",in="path",required=true),
      *    @OA\Parameter(name="mobile",in="query",required=true),
      *    @OA\Parameter(name="email",in="query",required=true),
@@ -170,26 +191,169 @@ class FreelancerController extends ActiveController
         return $model;
     }
 
+    /**
+     * View details of a mentor by ID.
+     *
+     * Returns details of a mentor based on the provided ID.
+     *
+     * @param integer $id The ID of the mentor.
+     * @return Mentor|array
+     * @throws NotFoundHttpException if the mentor cannot be found.
+     * @OA\Get(
+     *    path="/mentor/{id}",
+     *    tags={"Mentors"},
+     *    summary="View details of a mentor by ID",
+     *    description="Returns details of a mentor based on the provided ID",
+     *    operationId="viewMentor",
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="The ID of the mentor",
+     *        required=true,
+     *        @OA\Schema(
+     *            type="integer"
+     *        )
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success",
+     *    ),
+     *    @OA\Response(response=404, description="Not Found")
+     * )
+     * @throws NotFoundHttpException
+     */
     public function actionView($id)
     {
         return $this->findModel($id);
     }
 
+
+    /**
+     * Get a list of active freelancers.
+     *
+     * Returns a list of active freelancers based on the provided filter criteria.
+     *
+     * @return ActiveDataProvider
+     * @OA\Get(
+     *    path="/freelancer",
+     *    tags={"Freelancers"},
+     *    summary="Get a list of active freelancers",
+     *    description="Returns a list of active freelancers based on the provided filter criteria",
+     *    operationId="getActiveFreelancers",
+     *    @OA\Parameter(
+     *        name="categories",
+     *        in="query",
+     *        description="An array of category IDs to filter mentors by",
+     *        required=false,
+     *        @OA\Schema(
+     *            type="array",
+     *            @OA\Items(type="integer")
+     *        )
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success",
+     *        @OA\JsonContent(
+     *            type="object",
+     *            @OA\Property(property="items", type="array",
+     *                @OA\Items(
+     *                    @OA\Property(property="id", type="integer"),
+     *                    @OA\Property(property="name", type="string"),
+     *                    @OA\Property(property="mobile", type="string"),
+     *                    @OA\Property(property="email", type="string"),
+     *                    @OA\Property(property="city", type="integer"),
+     *                    @OA\Property(property="province", type="integer"),
+     *                    @OA\Property(property="marital_status", type="integer"),
+     *                    @OA\Property(property="military_service_status", type="integer"),
+     *                    @OA\Property(property="activity_field", type="string"),
+     *                    @OA\Property(property="experience", type="integer"),
+     *                    @OA\Property(property="experience_period", type="integer"),
+     *                    @OA\Property(property="description_user", type="string"),
+     *                    @OA\Property(property="sex", type="integer"),
+     *                    @OA\Property(property="project_number", type="integer"),
+     *                    @OA\Property(property="accept_rules", type="boolean"),
+     *                    @OA\Property(property="skills", type="array",
+     *                        @OA\Items(
+     *                            @OA\Property(property="title", type="string")
+     *                        )
+     *                    ),
+     *                    @OA\Property(property="record_job", type="array",
+     *                        @OA\Items(
+     *                            @OA\Property(property="title", type="string")
+     *                        )
+     *                    ),
+     *                    @OA\Property(property="record_educational", type="array",
+     *                        @OA\Items(
+     *                            @OA\Property(property="title", type="string")
+     *                        )
+     *                    ),
+     *                    @OA\Property(property="portfolio", type="array",
+     *                        @OA\Items(
+     *                            @OA\Property(property="title", type="string"),
+     *                            @OA\Property(property="description", type="string"),
+     *                            @OA\Property(property="link", type="string")
+     *                        )
+     *                    )
+     *                )
+     *            )
+     *        )
+     *    ),
+     *    @OA\Response(response=400, description="Bad Request")
+     * )
+     * @throws NotFoundHttpException
+     */
     public function actionIndex()
     {
         $searchModel = new FreelancerSearch();
-        $searchModel->status = Freelancer::STATUS_ACTIVE;
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, '');
 
         return $dataProvider;
     }
 
+
+    /**
+     * Get a list of freelancer categories.
+     *
+     * Returns a list of freelancer categories.
+     *
+     * @return ActiveDataProvider
+     * @OA\Get(
+     *    path="/freelancer/category-list",
+     *    tags={"Freelancers"},
+     *    summary="Get a list of freelancer categories",
+     *    description="Returns a list of freelancer categories",
+     *    operationId="getFreelancerCategories",
+     *    @OA\Response(
+     *        response=200,
+     *        description="Success",
+     *        @OA\JsonContent(
+     *            type="object",
+     *            @OA\Property(property="items", type="array",
+     *                @OA\Items(
+     *                    @OA\Property(property="id", type="integer"),
+     *                    @OA\Property(property="title", type="string"),
+     *                    @OA\Property(property="brief_description", type="string"),
+     *                    @OA\Property(property="picture", type="string"),
+     *                    @OA\Property(property="status", type="integer"),
+     *                    @OA\Property(property="updated_by", type="integer"),
+     *                    @OA\Property(property="updated_at", type="integer"),
+     *                    @OA\Property(property="created_at", type="integer"),
+     *                    @OA\Property(property="deleted_at", type="integer"),
+     *                    @OA\Property(property="created_by", type="integer")
+     *                )
+     *            )
+     *        )
+     *    ),
+     *    @OA\Response(response=400, description="Bad Request")
+     * )
+     */
     public function actionCategoryList()
     {
         return new ActiveDataProvider([
             'query' => FreelancerCategoryList::find()
         ]);
     }
+
 
     protected function findModel($id)
     {
