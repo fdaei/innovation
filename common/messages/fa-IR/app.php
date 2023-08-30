@@ -366,4 +366,6 @@ return [
     'Mentor Requests'=>'درخواست مشاور',
     'This mobile number has already been taken for this event.'=>'این شماره موبایل قبلا در این رویداد ثبت شده است',
     'Event ID'=>'شناسه رویداد',
+    'Event Tag'=>'تگ رویداد',
+    'EventAttendances'=>'حضور در رویداد'
 ];

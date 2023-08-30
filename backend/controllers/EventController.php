@@ -315,6 +315,15 @@ class EventController extends Controller
         ]);
     }
 
+    public function actionEventAttendance(int $id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('eventAttendances', [
+            'model' => $model,
+        ]);
+    }
+
 
     /**
      * Deletes an existing Event model.

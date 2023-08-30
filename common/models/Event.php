@@ -73,7 +73,7 @@ class Event extends \yii\db\ActiveRecord
         return [
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief', 'picture'], 'required', 'on' => [self::SCENARIO_CREATE]],
             [['event_organizer_id', 'title', 'price', 'price_before_discount', 'description', 'address', 'longitude', 'latitude', 'evand_link', 'title_brief'], 'required', 'on' => [self::SCENARIO_UPDATE]],
-            [['event_tag'],'required'],
+            [['event_tag'], 'required'],
             [['description', 'address', 'evand_link'], 'string'],
             [['headlines', 'sponsors', 'tagNames', '$event_tag'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -111,6 +111,7 @@ class Event extends \yii\db\ActiveRecord
             'created_by' => Yii::t('app', 'Created By'),
             'deleted_at' => Yii::t('app', 'Deleted At'),
             'tagNames' => Yii::t('app', 'Tags'),
+            'event_tag' => Yii::t('app', 'Event Tag'),
         ];
     }
 
@@ -138,7 +139,7 @@ class Event extends \yii\db\ActiveRecord
                     $tagIds[] = $existingTag->tag_id;
                 } else {
                     $newTag = new Tag(['name' => $tagName, 'type' => '1']);
-                    if ($flag = $newTag->save()){
+                    if ($flag = $newTag->save()) {
                         $tagIds[] = $newTag->tag_id;
                     }
                 }
