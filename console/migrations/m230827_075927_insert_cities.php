@@ -14,7 +14,7 @@ class m230827_075927_insert_cities extends Migration
     {
         $this->batchInsert(
             '{{%city}}',
-            ['province_id', 'name','latitude','longitude','created_at','updated_at','created_by','updated_by'],
+            ['province_id', 'name', 'latitude', 'longitude', 'created_at', 'updated_at', 'created_by', 'updated_by'],
             [
                 [1, 'تبریز', '38.0809', '46.2919', time(), time(), '1', '1'],
                 [2, 'ارومیه', '37.5528', '45.0761', time(), time(), '1', '1'],
@@ -50,6 +50,38 @@ class m230827_075927_insert_cities extends Migration
                 [32, 'مرکزی', '34.08', '49.70', time(), time(), '1', '1'],
             ]
         );
+        $this->update('{{%province}}', ['center_id' => 1], ['id' => 1]);
+        $this->update('{{%province}}', ['center_id' => 2], ['id' => 2]);
+        $this->update('{{%province}}', ['center_id' => 3], ['id' => 3]);
+        $this->update('{{%province}}', ['center_id' => 4], ['id' => 4]);
+        $this->update('{{%province}}', ['center_id' => 5], ['id' => 5]);
+        $this->update('{{%province}}', ['center_id' => 6], ['id' => 6]);
+        $this->update('{{%province}}', ['center_id' => 7], ['id' => 7]);
+        $this->update('{{%province}}', ['center_id' => 8], ['id' => 8]);
+        $this->update('{{%province}}', ['center_id' => 9], ['id' => 9]);
+        $this->update('{{%province}}', ['center_id' => 10], ['id' => 10]);
+        $this->update('{{%province}}', ['center_id' => 11], ['id' => 11]);
+        $this->update('{{%province}}', ['center_id' => 12], ['id' => 12]);
+        $this->update('{{%province}}', ['center_id' => 13], ['id' => 13]);
+        $this->update('{{%province}}', ['center_id' => 14], ['id' => 14]);
+        $this->update('{{%province}}', ['center_id' => 15], ['id' => 15]);
+        $this->update('{{%province}}', ['center_id' => 16], ['id' => 16]);
+        $this->update('{{%province}}', ['center_id' => 17], ['id' => 17]);
+        $this->update('{{%province}}', ['center_id' => 18], ['id' => 18]);
+        $this->update('{{%province}}', ['center_id' => 19], ['id' => 19]);
+        $this->update('{{%province}}', ['center_id' => 20], ['id' => 20]);
+        $this->update('{{%province}}', ['center_id' => 21], ['id' => 21]);
+        $this->update('{{%province}}', ['center_id' => 22], ['id' => 22]);
+        $this->update('{{%province}}', ['center_id' => 23], ['id' => 23]);
+        $this->update('{{%province}}', ['center_id' => 24], ['id' => 24]);
+        $this->update('{{%province}}', ['center_id' => 25], ['id' => 25]);
+        $this->update('{{%province}}', ['center_id' => 26], ['id' => 26]);
+        $this->update('{{%province}}', ['center_id' => 27], ['id' => 27]);
+        $this->update('{{%province}}', ['center_id' => 28], ['id' => 28]);
+        $this->update('{{%province}}', ['center_id' => 29], ['id' => 29]);
+        $this->update('{{%province}}', ['center_id' => 30], ['id' => 30]);
+        $this->update('{{%province}}', ['center_id' => 31], ['id' => 31]);
+        $this->update('{{%province}}', ['center_id' => 32], ['id' => 32]);
     }
 
     /**
@@ -57,6 +89,5 @@ class m230827_075927_insert_cities extends Migration
      */
     public function safeDown()
     {
-        $this->delete('{{%city}}');
     }
 }
