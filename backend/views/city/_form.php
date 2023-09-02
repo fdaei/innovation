@@ -13,30 +13,22 @@ use yii\bootstrap4\ActiveForm;
 /** @var ActiveForm $form */
 ?>
 <div class="card">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'create-city-form']); ?>
     <div class="card-body">
-        <div class="row">
-            <div class="col-sm-3">
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-sm-3">
-                <?= $form->field($model, 'province_id')->widget(Select2::class, [
-                    'data' => ArrayHelper::map(Province::find()->all(), 'id', 'name'),
-                    'size' => Select2::MEDIUM,
-                    'options' => ['placeholder' => Yii::t('app', 'Select Province')],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]);
-                ?>
-            </div>
-            <div class="col-sm-3">
-                <?= $form->field($model, 'latitude')->textInput() ?>
-            </div>
-            <div class='col-sm-3'>
-                <?= $form->field($model, 'longitude')->textInput() ?>
+        <div>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'province_id')->widget(Select2::class, [
+                'data' => ArrayHelper::map(Province::find()->all(), 'id', 'name'),
+                'size' => Select2::MEDIUM,
+                'options' => ['placeholder' => Yii::t('app', 'Select Province')],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+            ?>
 
-            </div>
+            <?= $form->field($model, 'latitude')->textInput() ?>
+            <?= $form->field($model, 'longitude')->textInput() ?>
         </div>
 
     </div>

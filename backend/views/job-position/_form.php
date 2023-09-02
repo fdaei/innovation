@@ -15,7 +15,7 @@ use yii\web\View;
 ?>
 
 <div class="card">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'job-position-form']); ?>
     <div class="card-body">
         <div class="row justify-content-center">
             <div class="col-sm-4">

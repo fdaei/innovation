@@ -11,6 +11,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\Pjax;
+
 /** @var View $this */
 /** @var CitySearch $searchModel */
 /** @var ActiveDataProvider $dataProvider */
@@ -19,17 +20,27 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Businesses');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="city-index card material-card">
-    <div class="card-header d-flex justify-content-between">
-        <h2><?= Html::encode($this->title) ?></h2>
-        <p>
-            <?= Html::a(Yii::t('app', 'Create Businesses'), ['create'], ['class' => 'btn btn-primary']) ?>
-        </p>
+<div class="job-position-index card material-card">
+    <?php Pjax::begin(['id' => 'p-businesses-form', 'enablePushState' => false]); ?>
+    <div class="card-header">
+        <div class="work-report-index card ">
+            <div class="panel-group m-bot20" id="accordion">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseSearch" aria-expanded="false">
+                            <i class="fa fa-search"></i> جستجو
+                        </a>
+                    </h3>
+                    <?= Html::a(Yii::t('app', 'Create Businesses'), ['create'], ['class' => 'btn btn-primary']) ?>
+                </div>
+            </div>
+        </div>
     </div>
-    <?php Pjax::begin(); ?>
     <div class="card-body">
-        <?=  $this->render('_search', ['model' => $searchModel]); ?>
-
+        <div id="collapseSearch" class="panel-collapse collapse" aria-expanded="false">
+            <?= $this->render('_search', ['model' => $searchModel]); ?>
+        </div>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
@@ -37,8 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'name',
                 'business_color',
                 'business_en_name',
-                'description_brief',
-                'description:ntext',
                 'website',
                 'telegram',
                 'instagram',
@@ -47,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'status',
                     'value' => function ($model) {
 
-                        return Business::itemAlias('Status',$model->status);
+                        return Business::itemAlias('Status', $model->status);
                     },
                 ],
                 [
@@ -60,5 +69,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
     <?php Pjax::end(); ?>
-
 </div>

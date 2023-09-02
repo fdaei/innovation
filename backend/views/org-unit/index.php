@@ -17,16 +17,44 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Org Units');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="org-unit-index card material-card">
-    <div class="card-header d-flex justify-content-between">
-        <h2><?= Html::encode($this->title) ?></h2>
-        <button type="button" class="btn btn-primary m-t-10 mb-2 float-right " data-toggle="modal" data-target="#add-contact">
-            <?= Html::a(Yii::t('app', 'Create Org Unit'), ['create'], ['class' => 'text-white']) ?>
-        </button>
+    <?php Pjax::begin(['id' => 'p-org-unit-form', 'enablePushState' => false]); ?>
+
+    <div class="card-header">
+        <div class="work-report-index card ">
+            <div class="panel-group m-bot20" id="accordion">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseSearch" aria-expanded="false">
+                            <i class="fa fa-search"></i> جستجو
+                        </a>
+                    </h3>
+                    <?= Html::a(Yii::t('app', 'Create Org Unit'), "javascript:void(0)",
+                        [
+                            'data-pjax' => '0',
+                            'class' => "btn btn-outline-primary",
+                            'data-size' => 'modal-md',
+                            'data-title' => Yii::t('app', 'create'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal-pjax',
+                            'data-url' => Url::to(['/org-unit/create']),
+                            'data-handle-form-submit' => 1,
+                            'data-show-loading' => 0,
+                            'data-reload-pjax-container' => 'p-org-unit-form',
+                            'data-reload-pjax-container-on-show' => 0
+                        ]) ?>
+                </div>
+            </div>
+        </div>
     </div>
-    <?php Pjax::begin(); ?>
+
     <div class="card-body">
-        <?= $this->render('_search', ['model' => $searchModel]); ?>
+        <div id="collapseSearch" class="panel-collapse collapse" aria-expanded="false">
+            <?= $this->render('_search', ['model' => $searchModel]); ?>
+        </div>
+
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
@@ -34,15 +62,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'title',
                 [
                     'attribute' => 'description',
-                    'value'=> function ($model) {
-
-                        return substr($model->description,0,100);
+                    'value' => function (OrgUnit $model) {
+                        return substr($model->description, 0, 100);
                     },
                 ],
                 [
                     'attribute' => 'status',
-                    'value' => function ($model) {
-
+                    'value' => function (OrgUnit $model) {
                         return OrgUnit::itemAlias('Status', $model->status);
                     },
                 ],
@@ -50,11 +76,39 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ActionColumn::class,
                     'urlCreator' => function ($action, OrgUnit $model, $key, $index, $column) {
                         return Url::toRoute([$action, 'id' => $model->id]);
-                    }
+                    },
+                    'template' => '{update} {delete}',
+                    'buttons' => [
+                        'delete' => function ($url, OrgUnit $model, $key) {
+                            return Html::a('<i class="fa fa-trash"></i>', 'javascript:void(0)', [
+                                'title' => Yii::t('yii', 'Delete'),
+                                'aria-label' => Yii::t('yii', 'Delete'),
+                                'data-reload-pjax-container' => 'p-org-unit-form',
+                                'data-pjax' => '0',
+                                'data-url' => Url::to(['org-unit/delete', 'id' => $model->id]),
+                                'class' => 'p-jax-btn text-danger',
+                                'data-title' => Yii::t('yii', 'Delete'),
+                                'data-toggle' => 'tooltip',
+                            ]);
+                        },
+                        'update' => function ($url, OrgUnit $model, $key) {
+                            return Html::a('<i class="fa fa-pen"></i>', "javascript:void(0)", [
+                                'data-pjax' => '0',
+                                'class' => "btn text-primary",
+                                'data-size' => 'modal-md',
+                                'data-title' => Yii::t('app', 'update'),
+                                'data-toggle' => 'modal',
+                                'data-target' => '#modal-pjax',
+                                'data-url' => Url::to(['org-unit/update', 'id' => $model->id]),
+                                'data-handle-form-submit' => 1,
+                                'data-reload-pjax-container' => 'p-org-unit-form',
+                            ]);
+                        },
+                    ],
                 ],
             ],
         ]); ?>
     </div>
-    <?php Pjax::end(); ?>
 
+    <?php Pjax::end(); ?>
 </div>

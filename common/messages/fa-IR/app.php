@@ -367,5 +367,11 @@ return [
     'This mobile number has already been taken for this event.'=>'این شماره موبایل قبلا در این رویداد ثبت شده است',
     'Event ID'=>'شناسه رویداد',
     'Event Tag'=>'تگ رویداد',
-    'EventAttendances'=>'حضور در رویداد'
+    'EventAttendances'=>'حضور در رویداد',
+    'Error creating new organization'=>'خطا در ایجاد سازمان جدید',
+    'Error updating organization'=>'خطا در به‌روزرسانی سازمان',
+    'Create Job Positions'=>'ایجاد موقعیت های شغلی ',
+    'Organization Unit'=>'واحد سازمان',
+    'Job Position Details'=>'جزئیات موقعیت شغلی',
+    'Error creating new city'=>'خطا در ایجاد شهر'
 ];

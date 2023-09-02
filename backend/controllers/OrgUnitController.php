@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\OrgUnit;
 use common\models\OrgUnitSearch;
+use common\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -15,6 +16,8 @@ use yii\filters\VerbFilter;
  */
 class OrgUnitController extends Controller
 {
+    use AjaxValidationTrait;
+
     /**
      * @inheritDoc
      */
@@ -79,17 +82,22 @@ class OrgUnitController extends Controller
     public function actionCreate()
     {
         $model = new OrgUnit();
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate()) {
-                $model->save();
-
-                return $this->redirect(['view', 'id' => $model->id]);
+        $model->loadDefaultValues();
+        if ($model->load($this->request->post()) && $model->validate()) {
+            if ($model->save(false)) {
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            } else {
+                return $this->asJson([
+                    'success' => false,
+                    'msg' => Yii::t("app", 'Error creating new organization')
+                ]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
-        return $this->render('create', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -104,12 +112,21 @@ class OrgUnitController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load($this->request->post()) && $model->validate()) {
+            if ($model->save(false)) {
+                return $this->asJson([
+                    'success' => true,
+                    'msg' => Yii::t("app", 'Success')
+                ]);
+            } else {
+                return $this->asJson([
+                    'success' => false,
+                    'msg' => Yii::t("app", 'Error updating organization')
+                ]);
+            }
         }
-
-        return $this->render('update', [
+        $this->performAjaxValidation($model);
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
@@ -124,14 +141,17 @@ class OrgUnitController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-
         if ($model->canDelete() && $model->softDelete()) {
-            $this->flash('success', Yii::t('app', 'Item Deleted'));
+            return $this->asJson([
+                'status' => true,
+                'message' => Yii::t("app", 'Item Deleted')
+            ]);
         } else {
-            $this->flash('error', $model->errors ? array_values($model->errors)[0][0] : Yii::t('app', 'Error In Delete Action'));
+            return $this->asJson([
+                'status' => false,
+                'message' => Yii::t("app", 'Error In Delete Action')
+            ]);
         }
-
-        return $this->redirect(['index']);
     }
 
 
@@ -150,6 +170,7 @@ class OrgUnitController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
     private function flash($type, $message)
     {
         Yii::$app->getSession()->setFlash($type == 'error' ? 'danger' : $type, $message);

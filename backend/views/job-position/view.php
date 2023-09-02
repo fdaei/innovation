@@ -1,5 +1,4 @@
 <?php
-
 use common\models\JobPosition;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -13,32 +12,22 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="org-unit-view">
-    <div class="card ">
+    <div class="card">
         <div class="card-header">
-            <?= Yii::t('app', 'title') ?>
-            <h6 class="card-title  m-2 pb-3"><?= $model->title ?></h6>
+            <h4 class="card-title"><?= Yii::t('app', 'Job Position Details') ?></h4>
         </div>
         <div class="card-body">
-        <label><?= Yii::t('app', 'org_unit') ?></label>
-        <h6 class="card-title border-bottom m-2 pb-3"><?= $model->orgUnit->title ?></h6>
-        <label><?= Yii::t('app', 'description') ?></label>
-        <h6 class="card-title border-bottom m-2 pb-3"><?= $model->description ?></h6>
-        <label><?= Yii::t('app', 'requirements') ?></label>
-        <h6 class="card-title border-bottom m-2 pb-3">
-            <?= $model->requirements ?>
-        </h6>
-        <div class="mt-4">
-            <p>
-                <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id],
-                    ['class' => 'btn btn-primary ']) ?>
-                <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-outline-primary ',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </p>
+            <h5 class="card-subtitle mb-2 text-muted"><?= Yii::t('app', 'Title') ?></h5>
+            <p class="card-text"><?= $model->title ?></p>
+
+            <h5 class="card-subtitle mb-2 text-muted"><?= Yii::t('app', 'Organization Unit') ?></h5>
+            <p class="card-text"><?= $model->orgUnit->title ?></p>
+
+            <h5 class="card-subtitle mb-2 text-muted"><?= Yii::t('app', 'Description') ?></h5>
+            <p class="card-text"><?= $model->description ?></p>
+
+            <h5 class="card-subtitle mb-2 text-muted"><?= Yii::t('app', 'Requirements') ?></h5>
+            <p class="card-text"><?= $model->requirements ?></p>
         </div>
     </div>
 </div>
