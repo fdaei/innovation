@@ -12,7 +12,6 @@ use yii\helpers\Url;
                         <span class="text-info display-6"><i class="fas fa-home"></i></span>
                     </div>
                     <div class="ml-auto">
-                        <h4 class="text-info">آواپرداز</h4>
                     </div>
                 </a>
             </div>

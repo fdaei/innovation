@@ -5,223 +5,76 @@ use common\components\Menu;
 $menu_items = [];
 $menu_items = [
     [
-        'group' => 'Business',
-        'label' => Yii::t('app', 'Business'),
-        'icon' => 'fas fa-briefcase',
-        'url' => ['/businesses']
+        'group' => 'Dashboard',
+        'label' => 'داشبورد ',
+        'icon' => 'fas fa-tachometer-alt', // ایکون داشبورد
+        'url' => ['/dashboard']
     ],
     [
-        'group' => 'location',
-        'label' => 'موقعیت مکانی',
-        'icon' => 'fas fa-map-marked-alt',
+        'group' => 'Secretariat',
+        'label' => ' واحد دبیرخانه',
+        'icon' => 'fas fa-envelope-open-text', // ایکون دبیرخانه
         'level' => "first-level",
         'encode' => false,
         'items' => [
             [
-                'group' => 'City',
-                'label' => Yii::t('app', 'City'),
-                'icon' => 'fas fa-city',
+                'group' => 'contact',
+                'label' => 'مخاطبین',
+                'icon' => 'fas fa-address-book', // ایکون مخاطبین
                 'url' => ['/city/']
             ],
             [
-                'group' => 'Province',
-                'label' => Yii::t('app', 'Province'),
-                'icon' => 'fas fa-map',
-                'url' => ['/province/']
+                'group' => 'archive',
+                'label' => 'بایگانی ',
+                'icon' => 'fas fa-archive', // ایکون بایگانی
+                'url' => ['/archive']
+            ],
+            [
+                'group' => 'letters',
+                'label' => 'نامه ها ',
+                'icon' => 'fas fa-mail-bulk', // ایکون نامه‌ها
+                'url' => ['/letters']
             ],
         ]
     ],
     [
-        'group' => 'CareerApply',
-        'label' => 'موقعیت شغلی',
-        'icon' => 'fas fa-briefcase',
+        'group' => 'Business',
+        'label' => 'واحد بازرگانی ',
+        'icon' => 'fas fa-store', // ایکون بازرگانی
         'level' => "first-level",
         'encode' => false,
         'items' => [
             [
-                'group' => 'CareerApply',
-                'label' => Yii::t('app', 'CareerApply'),
-                'icon' => 'fas fa-clipboard-check',
+                'group' => 'Buy',
+                'label' => ' واحد خرید',
+                'icon' => 'fas fa-shopping-cart', // ایکون خرید
                 'url' => ['/career-apply/']
             ],
             [
-                'group' => 'JobPosition',
-                'label' => Yii::t('app', 'JobPosition'),
-                'icon' => 'fas fa-user-tie',
+                'group' => 'Sell',
+                'label' => 'واحد فروش',
+                'icon' => 'fas fa-cash-register', // ایکون فروش
                 'url' => ['/job-position/']
             ],
-            [
-                'group' => 'OrgUnit',
-                'label' => Yii::t('app', 'OrgUnit'),
-                'icon' => 'fas fa-sitemap',
-                'url' => ['/org-unit/']
-            ],
         ]
     ],
     [
-        'group' => 'Mentor',
-        'label' => 'مشاوره',
-        'icon' => 'fas fa-chalkboard-teacher',
-        'level' => "first-level",
-        'encode' => false,
-        'items' => [
-            [
-                'group' => 'Mentor',
-                'label' => 'مشاوران',
-                'icon' => 'fas fa-users',
-                'url' => ['/mentor/']
-            ],
-            [
-                'group' => 'Mentor',
-                'label' => Yii::t('app', 'mentors-advice-request'),
-                'icon' => 'fas fa-comments',
-                'url' => ['/mentors-advice-request/']
-            ],
-            [
-                'group' => 'Mentor',
-                'label' => Yii::t('app', 'Mentor Category'),
-                'icon' => 'fas fa-list',
-                'url' => ['/mentor-category/']
-            ],
-
-        ]
+        'group' => 'base',
+        'label' => 'اطلاعات پایه ',
+        'icon' => 'fas fa-database', // ایکون اطلاعات پایه
+        'url' => ['/dashboard']
     ],
     [
-        'group' => 'Events',
-        'label' => 'رویداد',
-        'icon' => 'fas fa-calendar-alt',
-        'level' => "first-level",
-        'encode' => false,
-        'items' => [
-            [
-                'group' => 'Events',
-                'label' => Yii::t('app', 'Events'),
-                'icon' => 'fas fa-calendar-check',
-                'url' => ['/event/']
-            ],
-            [
-                'group' => 'event-teachers',
-                'label' => 'برگذار کنندگان',
-                'icon' => 'fas fa-users',
-                'url' => ['event-organizer/']
-            ],
-            [
-                'group' => 'EventHall',
-                'label' => Yii::t('app', 'EventHall'),
-                'icon' => 'fas fa-building',
-                'url' => ['/event-hall/']
-            ]
-        ]
-    ],
-    [
-        'group' => 'Activity',
-        'label' => Yii::t('app', 'Activity'),
-        'icon' => 'fas fa-chart-line',
-        'url' => ['/activity/']
-    ],
-    [
-        'group' => 'Tags',
-        'label' => Yii::t('app', 'Tags'),
-        'icon' => 'fas fa-tags',
-        'url' => ['/tag/index']
-    ],
-    [
-        'group' => 'Branches',
-        'label' => Yii::t('app', 'Branches'),
-        'icon' => 'fas fa-code-branch',
-        'url' => ['/branches/']
-    ],
-    [
-        'group' => 'Notification',
-        'label' => Yii::t('app', 'Notification'),
-        'icon' => 'fas fa-bell',
-        'url' => ['/notification/']
-    ],
-    [
-        'group' => 'freelancer',
-        'label' => Yii::t('app', 'Freelancer'),
-        'icon' => 'fas fa-user-friends',
-        'level' => "first-level",
-        'encode' => false,
-        'items' => [
-            [
-                'group' => 'freelancer',
-                'label' => Yii::t('app', 'Freelancers'),
-                'icon' => 'fas fa-users',
-                'url' => ['/freelancer/'],
-            ],
-            [
-                'group' => 'freelancer',
-                'label' => Yii::t('app', 'Freelancer Categrory'),
-                'icon' => 'fas fa-check-square',
-                'url' => ['/freelancer-category-list/']
-            ],
-        ]
-    ],
-    [
-        'group' => 'hitech',
-        'label' => 'هایتک',
-        'icon' => 'fas fa-rocket',
-        'level' => "first-level",
-        'encode' => false,
-        'items' => [
-            [
-                'group' => 'hitech',
-                'label' => Yii::t('app', 'Hitech'),
-                'icon' => 'fas fa-check-square',
-                'url' => ['/hitech/']
-            ],
-            [
-                'group' => 'hitech',
-                'label' => Yii::t('app', 'Hitech Proposal'),
-                'icon' => 'fas fa-file-alt',
-                'url' => ['/hitech-proposal/']
-            ],
-        ]
-    ],
-    [
-        'group' => 'log',
-        'label' => Yii::t('app', 'Logs'),
-        'icon' => 'fas fa-file-alt',
-        'url' => ['/log/']
-    ],
-    [
-        'group' => 'swagger',
-        'label' => 'مستندات API',
-        'icon' => 'fas fa-file-code',
-        'url' => ['/swagger'],
-        'encode' => false,
-        'template' => '<a class="sidebar-link" href="{url}" target="_blank">{icon} {label}</a>',
-    ],
-    [
-        'group' => 'Settings',
-        'label' => 'تنظیمات',
-        'icon' => 'fas fa-cogs',
-        'level' => "first-level",
-        'encode' => false,
-        'items' => [
-            [
-                'group' => 'Settings',
-                'label' => Yii::t('app', 'Manage Settings'),
-                'icon' => 'fas fa-cog',
-                'url' => ['/moresettings/default/index']
-            ],
-            [
-                'group' => 'Settings',
-                'label' => Yii::t('app', 'Settings'),
-                'icon' => 'fas fa-cog',
-                'url' => ['/site/setting']
-            ],
-        ]
+        'group' => 'setting',
+        'label' => 'تنظیمات  ',
+        'icon' => 'fas fa-cogs', // ایکون تنظیمات
+        'url' => ['/dashboard']
     ],
 ];
 
 ?>
     <aside class="left-sidebar">
-
-        <!-- Sidebar scroll-->
         <div class="scroll-sidebar">
-            <!-- Sidebar navigation-->
             <nav class="sidebar-nav">
 
                 <?= Menu::widget(
@@ -232,9 +85,7 @@ $menu_items = [
                     ]
                 ) ?>
             </nav>
-            <!-- End Sidebar navigation -->
         </div>
-        <!-- End Sidebar scroll-->
     </aside>
 
 <?php

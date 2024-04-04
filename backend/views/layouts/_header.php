@@ -13,11 +13,9 @@ use yii\web\View;
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
                 <i class="fal fa-bars"></i></a>
             <a class="navbar-brand" href="<?= Url::to(['/site/index']) ?>">
+                کاربر مدیر
                 <!-- Logo icon -->
                 <b class="logo-icon">
-                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <?= Html::img('@web/img/state2.png', ['style' => 'width:55px;height:60px;display:none;','href'=>'javascript:void(0)','id'=>'logo-close']) ?>
-                    <?= Html::img('@web/img/logo2.svg', ['style' => 'width:200px;height:60px;display:block;','href'=>'javascript:void(0)','id'=>'logo-expand']) ?>
                 </b>
                 <!--End Logo icon -->
             </a>
